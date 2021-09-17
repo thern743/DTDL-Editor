@@ -1,5 +1,7 @@
 # DtdlEditor
 
+A general-purpose editor inspired by [Azure IoT Central's model editor](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-set-up-template). 
+
 Currently working on supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
