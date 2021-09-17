@@ -1,13 +1,25 @@
-<div id="mainEditorWrapper">
-    <label for="displayName">Display Name: </label>
-    <input id="displayName" type="text" [formControl]="displayName">
-
-    <label for="name">Name: </label>
-    <input id="name" type="text" [formControl]="name">
-
-    <label for="capabilityType">Capability Type: </label>
-    <select id="capabilityType" [formControl]="capabilityType"></select>
-
-    <label for="semanticType">Capability Type: </label>
-    <select id="semanticType" [formControl]="semanticType"></select>
+<div id="editorContainer">
+    <mat-form-field appearance="fill">
+        <mat-label for="displayName">Display Name:</mat-label>
+        <input matInput id="displayName" type="text" [formControl]="displayName">
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <mat-form-field appearance="fill">
+        <mat-label for="name">Name:</mat-label>
+        <input matInput id="name" type="text" [formControl]="name">
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <mat-form-field appearance="fill">
+        <mat-label for="capabilityType">Capability Type:</mat-label>
+        <mat-select matNativeControl id="capabilityType" [formControl]="capabilityType">
+            <mat-option *ngFor="let capabillity of capabilities" [value]="capabillity"> {{ capabillity }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <mat-form-field appearance="fill">
+        <mat-label for="semanticType">Semantic Type:</mat-label>
+        <mat-select matNativeControl id="semanticType" [formControl]="semanticType">
+            <mat-option *ngFor="let semantic of semantics" [value]="semantic"> {{ semantic }} </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>

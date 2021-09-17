@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MainEditorServiceService } from './main-editor-service.service'
 
 @Component({
   selector: 'main-editor',
@@ -12,8 +13,13 @@ export class MainEditorComponent implements OnInit {
   name = new FormControl('');
   capabilityType = new FormControl('');
   semanticType = new FormControl('');
+  capabilities: string[];
+  semantics: string[];
 
-  constructor() { }
+  constructor(MainEditorServiceService: MainEditorServiceService) { 
+    this.capabilities = MainEditorServiceService.getCapabilityTypes();
+    this.semantics= MainEditorServiceService.getSemanticTypes();
+  }
 
   ngOnInit(): void {
 
