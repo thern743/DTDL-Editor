@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MainEditorServiceService } from '../services/mainEditor/main-editor-service.service'
+import { EditorService } from '../services/editor/editor-service.service'
 
 @Component({
   selector: 'main-editor',
@@ -9,6 +9,8 @@ import { MainEditorServiceService } from '../services/mainEditor/main-editor-ser
 })
 
 export class MainEditorComponent implements OnInit {
+  panelOpenState = true;
+  editorService: EditorService;
   context = new FormControl('');
   id = new FormControl('');
   classType = new FormControl('');
@@ -21,22 +23,10 @@ export class MainEditorComponent implements OnInit {
   schema = new FormControl('');
   extends = new FormControl('');
   writable = new FormControl('');
+  commandType = new FormControl('');
 
-  classTypes: string[];
-  capabilities: string[];
-  semantics: string[];
-  schemaTypes: string[];
-  complexShcemaTypes: string[];
-  interfaces: string[];
-
-  constructor(MainEditorServiceService: MainEditorServiceService) { 
-    this.classTypes = MainEditorServiceService.getClassTypes();
-    this.capabilities = MainEditorServiceService.getCapabilityTypes();
-    this.semantics= MainEditorServiceService.getSemanticTypes();
-    this.schemaTypes = MainEditorServiceService.getSchemaTypes();
-    this.complexShcemaTypes = MainEditorServiceService.getComplexSchemaTypes();
-    this.interfaces = new Array();
-
+  constructor(editorService: EditorService) {
+    this.editorService = editorService;
     this.context.setValue("dtmi:dtdl:context;2");
   }
 
@@ -44,4 +34,5 @@ export class MainEditorComponent implements OnInit {
 
   }
 
+  action(): void {}
 }

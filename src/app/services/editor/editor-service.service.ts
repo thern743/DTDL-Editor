@@ -5,10 +5,23 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 
-export class MainEditorServiceService {
+export class EditorService {
+  classTypes: string[];
+  capabilities: string[];
+  semantics: string[];
+  schemaTypes: string[];
+  complexShcemaTypes: string[];
+  interfaces: string[];
+  commandTypes: string[];
 
   constructor(private http: HttpClient) { 
-
+    this.classTypes = this.getClassTypes();
+    this.capabilities = this.getCapabilityTypes();
+    this.semantics= this.getSemanticTypes();
+    this.schemaTypes = this.getSchemaTypes();
+    this.complexShcemaTypes = this.getComplexSchemaTypes();
+    this.interfaces = new Array();
+    this.commandTypes = this.getCommandTypes();
   }
 
   public getClassTypes() : string[] {
@@ -29,5 +42,9 @@ export class MainEditorServiceService {
 
   public getComplexSchemaTypes() : string[] {
     return ["Array", "Enum", "Map", "Object"];
+  }
+
+  public getCommandTypes() : string[] {
+    return ["synchronous", "asynchronous"];
   }
 }

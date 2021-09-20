@@ -14,14 +14,17 @@ import { MatInputModule}  from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
+import { CommandPayloadComponent } from './command-payload/command-payload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainEditorComponent,
-    PreviewPanelComponent
+    PreviewPanelComponent,
+    CommandPayloadComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
     MatInputModule,
     MatSelectModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

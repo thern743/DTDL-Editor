@@ -8,6 +8,7 @@ import { GeneratorService } from '../services/generator/generator.service';
 })
 export class PreviewPanelComponent implements OnInit {
   jsonDoc: string;
+  panelOpenState = false;
 
   constructor(GeneratorService : GeneratorService) { 
     GeneratorService.generate();
@@ -17,4 +18,5 @@ export class PreviewPanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  action(): void {}
 }
