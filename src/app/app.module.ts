@@ -13,6 +13,7 @@ import { MatListModule }  from '@angular/material/list';
 import { MatInputModule}  from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 
@@ -31,7 +32,8 @@ import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
     MatListModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
