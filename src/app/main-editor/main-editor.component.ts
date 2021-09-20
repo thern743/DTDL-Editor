@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MainEditorServiceService } from './main-editor-service.service'
+import { MainEditorServiceService } from '../services/mainEditor/main-editor-service.service'
 
 @Component({
   selector: 'main-editor',
