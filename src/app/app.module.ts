@@ -18,13 +18,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import { CommandPayloadComponent } from './command-payload/command-payload.component';
+import { JsonLdPipe } from './filters/jsonld.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainEditorComponent,
     PreviewPanelComponent,
-    CommandPayloadComponent
+    CommandPayloadComponent,
+    JsonLdPipe
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EditorService } from '../services/editor/editor-service.service'
+import { DtdlModelForm } from "../models/DtdlModelForm";
 
 @Component({
   selector: 'main-editor',
@@ -11,13 +12,8 @@ import { EditorService } from '../services/editor/editor-service.service'
 export class MainEditorComponent implements OnInit {
   panelOpenState = true;
   editorService: EditorService;
-  context = new FormControl('');
-  id = new FormControl('');
-  classType = new FormControl('');
-  comment = new FormControl('');
-  description = new FormControl('');
-  displayName = new FormControl('');
-  name = new FormControl('');
+  dtdlModelMainForm: FormGroup;
+
   capabilityType = new FormControl('');
   semanticType = new FormControl('');
   schema = new FormControl('');
@@ -25,14 +21,17 @@ export class MainEditorComponent implements OnInit {
   writable = new FormControl('');
   commandType = new FormControl('');
 
-  constructor(editorService: EditorService) {
+  constructor(editorService: EditorService, dtdlModelForm: DtdlModelForm) {
     this.editorService = editorService;
-    this.context.setValue("dtmi:dtdl:context;2");
+    this.dtdlModelMainForm = dtdlModelForm.mainForm;
+    this.dtdlModelMainForm.patchValue({ context: "dtmi:dtdl:context;2" });
   }
 
   ngOnInit(): void {
 
   }
 
-  action(): void {}
+  action(): void {
+    
+  }
 }

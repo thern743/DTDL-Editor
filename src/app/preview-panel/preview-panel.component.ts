@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GeneratorService } from '../services/generator/generator.service';
+import { FormGroup } from '@angular/forms';
+import { DtdlModelForm } from '../models/DtdlModelForm';
 
 @Component({
   selector: 'preview-panel',
@@ -7,12 +8,11 @@ import { GeneratorService } from '../services/generator/generator.service';
   styleUrls: ['./preview-panel.component.less']
 })
 export class PreviewPanelComponent implements OnInit {
-  jsonDoc: string;
   panelOpenState = false;
+  dtdlModelMainForm: FormGroup;
 
-  constructor(GeneratorService : GeneratorService) { 
-    GeneratorService.generate();
-    this.jsonDoc = GeneratorService.jsonDoc;
+  constructor(dtdlModelForm: DtdlModelForm) { 
+    this.dtdlModelMainForm =  dtdlModelForm.mainForm;
   }
 
   ngOnInit(): void {

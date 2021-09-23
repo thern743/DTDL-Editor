@@ -1,5 +1,6 @@
 <mat-expansion-panel    (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
+                        (closed)="panelOpenState = false"
+                        [formGroup]="dtdlModelMainForm">
     <mat-expansion-panel-header>
     <mat-panel-title>Model Definition</mat-panel-title>
     <mat-panel-description>Define a DTDL Model</mat-panel-description>
@@ -7,13 +8,13 @@
 
     <mat-form-field appearance="fill">
         <mat-label for="context">Context</mat-label>
-        <input matInput id="context" type="text" [formControl]="context" readonly />
+        <input matInput id="context" type="text" formControlName="context" readonly />
     </mat-form-field>
     <br/>
-    
+
     <mat-form-field appearance="fill">
         <mat-label for="classType">Class Type</mat-label>
-        <mat-select matNativeControl id="classType" [formControl]="classType">
+        <mat-select matNativeControl id="classType" formControlName="classType">
             <mat-option *ngFor="let type of editorService.classTypes" [value]="type"> {{ type }} </mat-option>
         </mat-select>
     </mat-form-field>
@@ -21,31 +22,31 @@
 
     <mat-form-field appearance="fill">
         <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" [formControl]="id" placeholder="dtmi:com:example:Thermostat;1" />
+        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
     <span class="formSpacer"></span>  
 
     <mat-form-field appearance="fill">
         <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" [formControl]="comment" />
+        <input matInput id="comment" type="text" formControlName="comment" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
         <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" [formControl]="description" />
+        <input matInput id="description" type="text" formControlName="description" />
     </mat-form-field>
     <br/><br/>
 
     <mat-form-field appearance="fill">
         <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" [formControl]="displayName" />
+        <input matInput id="displayName" type="text" formControlName="displayName" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
         <mat-label for="name">Name</mat-label>
-        <input matInput id="name" type="text" [formControl]="name" />
+        <input matInput id="name" type="text" formControlName="name" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
@@ -82,6 +83,10 @@
     <span class="formSpacer"></span>
 
     <mat-checkbox matNativeControl id="writable" [formControl]="writable">Writable</mat-checkbox>
+
+    <br/><br/>
+
+    <button mat-button (click)="action()" color="primary">Primary</button>
 
 </mat-expansion-panel>
 

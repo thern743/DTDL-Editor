@@ -10,7 +10,7 @@
             cdkTextareaAutosize
             cdkAutosizeMinRows="5"
             cdkAutosizeMaxRows="100" readonly>
-                {{ jsonDoc }}
+            {{ dtdlModelMainForm.value | jsonld }}
         </textarea>
     </mat-form-field>
 
