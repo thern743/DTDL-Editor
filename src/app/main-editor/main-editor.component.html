@@ -1,11 +1,10 @@
-<mat-expansion-panel    
-                        [expanded]="panelOpenState"
+<mat-expansion-panel    [expanded]="panelOpenState"
                         (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false"
                         [formGroup]="mainForm">
     <mat-expansion-panel-header>
-    <mat-panel-title>Model Definition</mat-panel-title>
-    <mat-panel-description>Define a DTDL Model</mat-panel-description>
+        <mat-panel-title>Model Definition</mat-panel-title>
+        <mat-panel-description>Define a DTDL Model</mat-panel-description>
     </mat-expansion-panel-header>
 
     <mat-form-field appearance="fill">
@@ -73,7 +72,3 @@
     <button mat-button (click)="action()" color="primary">+</button>
 
 </mat-expansion-panel>
-
-<command-definition></command-definition>
-<property-definition></property-definition>
-<telemetry-definition></telemetry-definition>
