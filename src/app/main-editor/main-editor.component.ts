@@ -6,7 +6,7 @@ import { DtdlModelForm } from "../models/DtdlModelForm";
 @Component({
   selector: 'main-editor',
   templateUrl: './main-editor.component.html',
-  styleUrls: ['./main-editor.component.less']
+  styleUrls: ['./main-editor.component.scss']
 })
 
 export class MainEditorComponent implements OnInit {

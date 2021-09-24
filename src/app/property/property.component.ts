@@ -6,7 +6,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 @Component({
   selector: 'property-definition',
   templateUrl: './property.component.html',
-  styleUrls: ['./property.component.less']
+  styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
   editorService: EditorService;

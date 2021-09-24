@@ -7,7 +7,7 @@ import { EditorService } from '../services/editor/editor-service.service'
 @Component({
   selector: 'command-definition',
   templateUrl: './command.component.html',
-  styleUrls: ['./command.component.less']
+  styleUrls: ['./command.component.scss']
 })
 export class CommandPayloadComponent implements OnInit {
   editorService: EditorService;

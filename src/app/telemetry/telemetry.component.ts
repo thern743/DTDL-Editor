@@ -6,7 +6,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 @Component({
   selector: 'telemetry-definition',
   templateUrl: './telemetry.component.html',
-  styleUrls: ['./telemetry.component.less']
+  styleUrls: ['./telemetry.component.scss']
 })
 export class TelemetryComponent implements OnInit {
   editorService: EditorService;

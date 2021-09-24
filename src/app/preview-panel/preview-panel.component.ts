@@ -5,10 +5,10 @@ import { DtdlModelForm } from '../models/DtdlModelForm';
 @Component({
   selector: 'preview-panel',
   templateUrl: './preview-panel.component.html',
-  styleUrls: ['./preview-panel.component.less']
+  styleUrls: ['./preview-panel.component.scss']
 })
 export class PreviewPanelComponent implements OnInit {
-  panelOpenState = false;
+  panelOpenState = true;
   dtdlModelMainForm: FormGroup;
 
   constructor(dtdlModelForm: DtdlModelForm) { 
