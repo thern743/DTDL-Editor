@@ -1,0 +1,55 @@
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="telemetryForm">
+    <mat-expansion-panel-header>
+    <mat-panel-title>Telemetry</mat-panel-title>
+    <mat-panel-description>Define Telemetry</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetryId">Id</mat-label>
+        <input matInput id="telemetryId" type="text" formControlName="telemetryId" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetryComment">Comment</mat-label>
+        <input matInput id="telemetryComment" type="text" formControlName="telemetryComment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetryDescription">Description</mat-label>
+        <input matInput id="telemetryDescription" type="text" formControlName="telemetryDescription" />
+    </mat-form-field>
+    <br/><br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetryDisplayName">Display Name</mat-label>
+        <input matInput id="telemetryDisplayName" type="text" formControlName="telemetryDisplayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetryName">Name</mat-label>
+        <input matInput id="telemetryName" type="text" formControlName="telemetryName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetrySchema">Schema</mat-label>
+        <mat-select matNativeControl id="telemetrySchema" formControlName="telemetrySchema">
+            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="telemetrySemanticType">Semantic Type</mat-label>
+        <mat-select matNativeControl id="telemetrySemanticType" formControlName="telemetrySemanticType">
+            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+</mat-expansion-panel>

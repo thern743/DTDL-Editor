@@ -17,8 +17,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
-import { CommandPayloadComponent } from './command-payload/command-payload.component';
+import { CommandPayloadComponent } from './command/command.component';
 import { JsonLdPipe } from './filters/jsonld.pipe';
+import { TelemetryComponent } from './telemetry/telemetry.component';
+import { PropertyComponent } from './property/property.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { JsonLdPipe } from './filters/jsonld.pipe';
     MainEditorComponent,
     PreviewPanelComponent,
     CommandPayloadComponent,
-    JsonLdPipe
+    JsonLdPipe,
+    TelemetryComponent,
+    PropertyComponent
   ],
   imports: [
     BrowserModule,

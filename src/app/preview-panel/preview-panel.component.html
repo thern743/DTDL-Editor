@@ -1,4 +1,5 @@
-<mat-expansion-panel    (opened)="panelOpenState = true"
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
     <mat-panel-title>DTDL Preview</mat-panel-title>

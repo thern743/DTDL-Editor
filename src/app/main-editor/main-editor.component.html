@@ -1,6 +1,8 @@
-<mat-expansion-panel    (opened)="panelOpenState = true"
+<mat-expansion-panel    
+                        [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false"
-                        [formGroup]="dtdlModelMainForm">
+                        [formGroup]="mainForm">
     <mat-expansion-panel-header>
     <mat-panel-title>Model Definition</mat-panel-title>
     <mat-panel-description>Define a DTDL Model</mat-panel-description>
@@ -13,8 +15,8 @@
     <br/>
 
     <mat-form-field appearance="fill">
-        <mat-label for="classType">Class Type</mat-label>
-        <mat-select matNativeControl id="classType" formControlName="classType">
+        <mat-label for="type">Type</mat-label>
+        <mat-select matNativeControl id="classType" formControlName="type">
             <mat-option *ngFor="let type of editorService.classTypes" [value]="type"> {{ type }} </mat-option>
         </mat-select>
     </mat-form-field>
@@ -51,38 +53,20 @@
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
-        <mat-label for="capabilityType">Capability Type</mat-label>
-        <mat-select matNativeControl id="capabilityType" [formControl]="capabilityType">
-            <mat-option *ngFor="let capabillity of editorService.capabilities" [value]="capabillity"> {{ capabillity }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
-        <mat-label for="schema">Schema</mat-label>
-        <mat-select matNativeControl id="schema" [formControl]="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
-        <mat-label for="semanticType">Semantic Type</mat-label>
-        <mat-select matNativeControl id="semanticType" [formControl]="semanticType">
-            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
         <mat-label for="extends">Extends</mat-label>
-        <mat-select matNativeControl id="extends" [formControl]="extends">
+        <mat-select matNativeControl id="extends" formControlName="extends">
             <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface"> {{ interface }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-checkbox matNativeControl id="writable" [formControl]="writable">Writable</mat-checkbox>
+    <mat-form-field appearance="fill">
+        <mat-label for="capabilityType">Add Capability Type</mat-label>
+        <mat-select matNativeControl id="capabilityType" [formControl]="capabilityType">
+            <mat-option *ngFor="let capabillity of editorService.capabilities" [value]="capabillity"> {{ capabillity }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
 
     <br/><br/>
 
@@ -90,4 +74,6 @@
 
 </mat-expansion-panel>
 
-<command-payload></command-payload>
+<command-definition></command-definition>
+<property-definition></property-definition>
+<telemetry-definition></telemetry-definition>

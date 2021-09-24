@@ -12,19 +12,14 @@ import { DtdlModelForm } from "../models/DtdlModelForm";
 export class MainEditorComponent implements OnInit {
   panelOpenState = true;
   editorService: EditorService;
-  dtdlModelMainForm: FormGroup;
-
-  capabilityType = new FormControl('');
-  semanticType = new FormControl('');
-  schema = new FormControl('');
-  extends = new FormControl('');
-  writable = new FormControl('');
-  commandType = new FormControl('');
+  mainForm: FormGroup;
+  capabilityType: FormControl;
 
   constructor(editorService: EditorService, dtdlModelForm: DtdlModelForm) {
     this.editorService = editorService;
-    this.dtdlModelMainForm = dtdlModelForm.mainForm;
-    this.dtdlModelMainForm.patchValue({ context: "dtmi:dtdl:context;2" });
+    this.mainForm = dtdlModelForm.mainForm;
+    this.mainForm.patchValue({ context: "dtmi:dtdl:context;2" });
+    this.capabilityType = new FormControl();
   }
 
   ngOnInit(): void {

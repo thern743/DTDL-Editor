@@ -1,0 +1,51 @@
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="commandForm">
+    <mat-expansion-panel-header>
+    <mat-panel-title>Command</mat-panel-title>
+    <mat-panel-description>Define a Command</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandId">Id</mat-label>
+        <input matInput id="commandId" type="text" formControlName="commandId" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandName">Name</mat-label>
+        <input matInput id="commandName" type="text" formControlName="commandName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandDisplayName">Display Name</mat-label>
+        <input matInput id="commandDisplayName" type="text" formControlName="commandDisplayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandComment">Comment</mat-label>
+        <input matInput id="commandComment" type="text" formControlName="commandComment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandDescription">Description</mat-label>
+        <input matInput id="commandDescription" type="text" formControlName="commandDescription" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    
+    <mat-form-field appearance="fill">
+        <mat-label for="commandRequest">Description</mat-label>
+        <input matInput id="commandRequest" type="text" formControlName="commandRequest" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="commandResponse">Description</mat-label>
+        <input matInput id="commandResponse" type="text" formControlName="commandResponse" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+</mat-expansion-panel>

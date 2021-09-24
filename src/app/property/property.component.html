@@ -1,0 +1,57 @@
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="propertyForm">
+    <mat-expansion-panel-header>
+    <mat-panel-title>Property</mat-panel-title>
+    <mat-panel-description>Define a Property</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertyId">Id</mat-label>
+        <input matInput id="propertyId" type="text" formControlName="propertyId" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertyComment">Comment</mat-label>
+        <input matInput id="propertyComment" type="text" formControlName="propertyComment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertyDescription">Description</mat-label>
+        <input matInput id="propertyDescription" type="text" formControlName="propertyDescription" />
+    </mat-form-field>
+    <br/><br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertyDisplayName">Display Name</mat-label>
+        <input matInput id="propertyDisplayName" type="text" formControlName="propertyDisplayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertyName">Name</mat-label>
+        <input matInput id="propertyName" type="text" formControlName="propertyName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertySchema">Schema</mat-label>
+        <mat-select matNativeControl id="propertySchema" formControlName="propertySchema">
+            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="propertySemanticType">Semantic Type</mat-label>
+        <mat-select matNativeControl id="propertySemanticType" formControlName="propertySemanticType">
+            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-checkbox matNativeControl id="propertyWritable" formControlName="propertyWritable">Writable</mat-checkbox>
+</mat-expansion-panel>
