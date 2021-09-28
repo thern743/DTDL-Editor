@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Type } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DtdlModelForm } from '../models/DtdlModelForm';
 import { EditorService } from '../services/editor/editor-service.service';
@@ -9,13 +9,12 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-  editorService: EditorService;
+  @Input() formIndex: number = 0;
+  propertyForm: FormGroup = this.fb.group({});
   panelOpenState = false;
-  propertyForm: FormGroup;
 
-  constructor(editorService: EditorService, dtdlModelForm: DtdlModelForm) { 
-    this.editorService = editorService;
-    this.propertyForm = dtdlModelForm.propertyForm;
+  constructor(public editorService: EditorService, private fb: FormBuilder) { 
+    
   }
 
   ngOnInit(): void {

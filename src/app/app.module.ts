@@ -22,6 +22,8 @@ import { JsonLdPipe } from './filters/jsonld.pipe';
 import { TelemetryComponent } from './telemetry/telemetry.component';
 import { PropertyComponent } from './property/property.component';
 
+import {MatIconModule} from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { PropertyComponent } from './property/property.component';
     MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

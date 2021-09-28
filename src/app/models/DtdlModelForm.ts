@@ -14,9 +14,7 @@ export class DtdlModelForm {
     comment: [''],
     description: [''],
     extends: [''],
-    contents: this.fb.array([
-      this.fb.control('')
-    ])
+    contents: this.fb.array([])
   });
 
   commandForm = this.fb.group({
@@ -53,6 +51,5 @@ export class DtdlModelForm {
     telemetrySemanticType: ['']
   });
   
-  constructor(private fb: FormBuilder) {
-  }  
+  constructor(private fb: FormBuilder) {  }
 }

@@ -69,6 +69,16 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <button mat-button (click)="action()" color="primary">+</button>
+    <button mat-fab color="primary" [disabled]="capabilityType.value == null" (click)="addCapability(capabilities.controls.length + 1)">
+        <mat-icon>add_circle</mat-icon>
+    </button>
+
+    <div formArrayName="contents">
+         <ng-container *ngFor="let item of capabilities.controls; let i = index;">
+            <div [formGroupName]="i">
+                <input matInput id="cap_id" type="text" formControlName="propertyId" /><input matInput id="cap_name" type="text" formControlName="propertyName" />
+            </div>
+        </ng-container>
+    </div>
 
 </mat-expansion-panel>

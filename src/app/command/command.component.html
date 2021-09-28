@@ -8,44 +8,66 @@
     </mat-expansion-panel-header>
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandId">Id</mat-label>
-        <input matInput id="commandId" type="text" formControlName="commandId" placeholder="dtmi:com:example:Thermostat;1" />
+        <mat-label attr.for="command_id_{{formIndex}}">Id</mat-label>
+        <input matInput id="command_id_{{formIndex}}" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
     <span class="formSpacer"></span>  
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandName">Name</mat-label>
-        <input matInput id="commandName" type="text" formControlName="commandName" />
+        <mat-label attr.for="command_type_{{formIndex}}">Type</mat-label>
+        <input matInput id="command_type_{{formIndex}}" type="text" formControlName="type" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandDisplayName">Display Name</mat-label>
-        <input matInput id="commandDisplayName" type="text" formControlName="commandDisplayName" />
+        <mat-label attr.for="command_name_{{formIndex}}">Name</mat-label>
+        <input matInput id="command_name_{{formIndex}}" type="text" formControlName="name" />
     </mat-form-field>
-    <span class="formSpacer"></span>  
+    <br/><br/>
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandComment">Comment</mat-label>
-        <input matInput id="commandComment" type="text" formControlName="commandComment" />
+        <mat-label attr.for="command_displayName_{{formIndex}}">Display Name</mat-label>
+        <input matInput id="command_displayName_{{formIndex}}" type="text" formControlName="displayName" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandDescription">Description</mat-label>
-        <input matInput id="commandDescription" type="text" formControlName="commandDescription" />
+        <mat-label attr.for="command_description_{{formIndex}}">Description</mat-label>
+        <input matInput id="command_description_{{formIndex}}" type="text" formControlName="description" />
     </mat-form-field>
     <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label attr.for="command_comment_{{formIndex}}">Comment</mat-label>
+        <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
+    </mat-form-field>
+    <br/><br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label attr.for="command_schema_{{formIndex}}">Schema</mat-label>
+        <mat-select matNativeControl id="command_schema_{{formIndex}}" formControlName="schema">
+            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label attr.for="command_semanticType_{{formIndex}}">Semantic Type</mat-label>
+        <mat-select matNativeControl id="command_semanticType_{{formIndex}}" formControlName="semanticType">
+            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br/><br/>
     
     <mat-form-field appearance="fill">
-        <mat-label for="commandRequest">Description</mat-label>
-        <input matInput id="commandRequest" type="text" formControlName="commandRequest" />
+        <mat-label attr.for="command_request_{{formIndex}}">Request</mat-label>
+        <input matInput id="command_request__{{formIndex}}" type="text" formControlName="request" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
-        <mat-label for="commandResponse">Description</mat-label>
-        <input matInput id="commandResponse" type="text" formControlName="commandResponse" />
+        <mat-label attr.for="comman_response_{{formIndex}}">Response</mat-label>
+        <input matInput id="comman_response_{{formIndex}}" type="text" formControlName="response" />
     </mat-form-field>
     <span class="formSpacer"></span>
 </mat-expansion-panel>
