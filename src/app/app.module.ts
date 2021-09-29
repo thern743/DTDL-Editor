@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import { CommandPayloadComponent } from './command/command.component';
@@ -22,7 +23,7 @@ import { JsonLdPipe } from './filters/jsonld.pipe';
 import { TelemetryComponent } from './telemetry/telemetry.component';
 import { PropertyComponent } from './property/property.component';
 
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { InterfaceComponent } from './interface/interface.component';
 
 @NgModule({
@@ -48,7 +49,8 @@ import { InterfaceComponent } from './interface/interface.component';
     MatCardModule,
     MatCheckboxModule,
     MatExpansionModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

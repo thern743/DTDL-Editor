@@ -60,18 +60,6 @@
     <span class="formSpacer"></span>
     <br/>
 
-    <mat-form-field appearance="fill">
-        <mat-label for="capabilityType">Add Capability Type</mat-label>
-        <mat-select matNativeControl id="capabilityType" [formControl]="capabilityType">
-            <mat-option *ngFor="let capabillity of editorService.capabilities" [value]="capabillity"> {{ capabillity }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <button mat-fab color="primary" [disabled]="capabilityType.value == null" (click)="addCapability()">
-        <mat-icon>add_circle</mat-icon>
-    </button>
-
     <div formArrayName="contents">
          <ng-container *ngFor="let content of interface.contents.reverse(); let i = index;">
             <ng-container [ngSwitch]="content.type">
@@ -87,5 +75,19 @@
             </ng-container>
         </ng-container>
     </div>
+
+    <mat-action-row>
+        <button mat-raised-button color="primary" (click)="editorService.addProperty(interface)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Property
+        </button>
+        <span class="formSpacer"></span>
+        <button mat-raised-button color="primary" (click)="editorService.addCommand(interface)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Command
+        </button>
+        <span class="formSpacer"></span>
+        <button mat-raised-button color="primary" (click)="editorService.addTelemetry(interface)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Telemetry
+        </button>
+    </mat-action-row>
 </mat-expansion-panel>
 <preview-panel [interfaceForm]="interfaceForm"></preview-panel>

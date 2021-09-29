@@ -38,15 +38,11 @@ export class InterfaceCapability implements ICapability {
       // Interface specific
       context: [this.context],
       extends: [this.extends],
-      contents: this.contentsFormArray
+      contents: this.fb.array([this.contents])
     });
   }
 
   get contents(): any[] {
     return new Array<any>(...this.commands, ...this.properties, ...this.telemetries).sort(x => (x as ICapability)?.index);
-  }
-
-  get contentsFormArray(): FormArray {
-    return new FormArray(this.contents);
   }
 }
