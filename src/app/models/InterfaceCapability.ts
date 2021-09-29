@@ -16,9 +16,9 @@ export class InterfaceCapability implements ICapability {
   context: string = "dtmi:dtdl:context;2";  
   extends: string = "";
 
-  commands: any[];
-  properties: any[];
-  telemetries: any[];
+  commands: CommandCapability[];
+  properties: PropertyCapability[];
+  telemetries: TelemetryCapability[];
 
   constructor(private fb: FormBuilder) {  
     this.commands = new Array<CommandCapability>();

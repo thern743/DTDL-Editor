@@ -45,7 +45,6 @@ export class InterfaceComponent implements OnInit {
         this.interface.telemetries.push(new TelemetryCapability(this.fb));
         break;
       default:
-        capability = this.fb.group({});
         break;
     }
   }
