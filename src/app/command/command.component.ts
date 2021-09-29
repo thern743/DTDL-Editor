@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { CommandCapability } from '../models/CommandCapability';
 import { EditorService } from '../services/editor/editor-service.service'
 
 
@@ -10,12 +11,15 @@ import { EditorService } from '../services/editor/editor-service.service'
 })
 export class CommandPayloadComponent implements OnInit {
   @Input() formIndex: number = 0;
-  commandForm: FormGroup = this.fb.group({});
+  @Input() command!: CommandCapability;
+  commandForm!: FormGroup;
   panelOpenState = false;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
     
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {  
+    this.commandForm = this.command.toFormGroup();
+  }
 }

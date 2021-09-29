@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TelemetryCapability } from '../models/TelemetryCapability';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -9,12 +10,15 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class TelemetryComponent implements OnInit {
   @Input() formIndex: number = 0;
-  telemetryForm: FormGroup = this.fb.group({});
+  @Input() telemetry!: TelemetryCapability;
+  telemetryForm!: FormGroup;
   panelOpenState = false;
-    
+  
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
     
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {  
+    this.telemetryForm = this.telemetry.toFormGroup();
+  }
 }

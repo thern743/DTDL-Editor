@@ -42,22 +42,6 @@
         <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
     </mat-form-field>
     <br/><br/>
-
-    <mat-form-field appearance="fill">
-        <mat-label attr.for="command_schema_{{formIndex}}">Schema</mat-label>
-        <mat-select matNativeControl id="command_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
-        <mat-label attr.for="command_semanticType_{{formIndex}}">Semantic Type</mat-label>
-        <mat-select matNativeControl id="command_semanticType_{{formIndex}}" formControlName="semanticType">
-            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <br/><br/>
     
     <mat-form-field appearance="fill">
         <mat-label attr.for="command_request_{{formIndex}}">Request</mat-label>

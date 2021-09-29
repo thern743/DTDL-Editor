@@ -77,13 +77,13 @@
          <ng-container *ngFor="let content of interface.contents; let i = index;">
             <ng-container [ngSwitch]="content.type">
                 <ng-container *ngSwitchCase="'Property'">
-                    <property-definition></property-definition>        
+                    <property-definition [formIndex]="i" [property]="content"></property-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Command'">
-                    <command-definition></command-definition>        
+                    <command-definition [formIndex]="i" [command]="content"></command-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Telemetry'">
-                    <telemetry-definition></telemetry-definition>        
+                    <telemetry-definition [formIndex]="i" [telemetry]="content"></telemetry-definition>        
                 </ng-container>
             </ng-container>
         </ng-container>
