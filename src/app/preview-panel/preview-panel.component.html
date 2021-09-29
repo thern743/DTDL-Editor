@@ -12,7 +12,7 @@
             cdkAutosizeMinRows="5"
             cdkAutosizeMaxRows="100"
             readonly
-            [value]="interfaceDefinition | jsonld">
+            [value]="interfaceForm.getRawValue() | jsonld">
         </textarea>
     </mat-form-field>
 </mat-expansion-panel>
