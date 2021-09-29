@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Type } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { DtdlModelForm } from '../models/DtdlModelForm';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditorService } from '../services/editor/editor-service.service'
 
 
@@ -18,9 +17,5 @@ export class CommandPayloadComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {
-  }
-
-  action(): void {}
-
+  ngOnInit(): void {  }
 }

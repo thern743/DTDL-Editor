@@ -1,55 +1,13 @@
 import { Injectable } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { InterfaceCapability } from "./InterfaceCapability";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DtdlModelForm {
-  mainForm = this.fb.group({
-    id: [''],
-    type: [''],
-    displayName: [''],
-    name: [''],
-    context: [''],
-    comment: [''],
-    description: [''],
-    extends: [''],
-    contents: this.fb.array([])
-  });
-
-  commandForm = this.fb.group({
-    commandId: [''],
-    commandType: [''],
-    commandDisplayName: [''],
-    commandName: [''],
-    commandComment: [''],
-    commandDescription: [''],
-    commandRequest: [''],
-    commandResponse: ['']
-  });
-
-  propertyForm = this.fb.group({
-    propertyId: [''],
-    propertyType: [''],
-    propertyDisplayName: [''],
-    propertyName: [''],
-    propertySchema: [''],
-    propertyComment: [''],
-    propertyDescription: [''],
-    propertyWritable: [''],
-    propertySemanticType: ['']
-  });
-
-  telemetryForm = this.fb.group({
-    telemetryId: [''],
-    telemetryType: [''],
-    telemetryDisplayName: [''],
-    telemetryName: [''],
-    telemetrySchema: [''],
-    telemetryComment: [''],
-    telemetryDescription: [''],
-    telemetrySemanticType: ['']
-  });
+  interfaces: InterfaceCapability[];
   
-  constructor(private fb: FormBuilder) {  }
+  constructor() {  
+    this.interfaces = new Array<InterfaceCapability>();    
+  }
 }

@@ -2,13 +2,14 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapability } from "./ICapability";
 
 export class PropertyCapability implements ICapability {
+  index: number = -1;
   id: string = "";
-  type: string = "";
+  type: string = "Property";
   name: string = "";
   displayName: string = "";
   description: string = "";
   comment: string = "";
-
+  // Property specific
   schema: string = "";  
   semanticType: string = "";
   writable: boolean = false;
@@ -17,18 +18,19 @@ export class PropertyCapability implements ICapability {
     
   }
   
-  newFormItem(id: string, name?: string): FormGroup {
+  toFormGroup(): FormGroup {
     return this.fb.group({
-      id: [id],
-      type: [''],
-      name: [name],
-      displayName: [''],
-      description: [''],
-      comment: [''],
-
-      schema: [''],
-      semanticType: [''],
-      writable: [''],
+      index: [this.index],
+      id: [this.id],
+      type: [this.type],
+      displayName: [this.displayName],
+      name: [this.name],
+      comment: [this.comment],
+      description: [this.description],
+      // Property specific
+      schema: [this.schema],
+      semanticType: [this.semanticType],
+      writable: [this.writable],
     });
   }
 }

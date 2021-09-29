@@ -1,0 +1,86 @@
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="interfaceForm">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Interface Definition</mat-panel-title>
+        <mat-panel-description>Define a DTDL Model Interface<mat-icon>delete</mat-icon></mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="context">Context</mat-label>
+        <input matInput id="context" type="text" formControlName="context" readonly />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="type">Type</mat-label>
+        <mat-select matNativeControl id="classType" formControlName="type">
+            <mat-option *ngFor="let type of editorService.classTypes" [value]="type"> {{ type }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="id">Id</mat-label>
+        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="comment">Comment</mat-label>
+        <input matInput id="comment" type="text" formControlName="comment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="description">Description</mat-label>
+        <input matInput id="description" type="text" formControlName="description" />
+    </mat-form-field>
+    <br/><br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="displayName">Display Name</mat-label>
+        <input matInput id="displayName" type="text" formControlName="displayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="name">Name</mat-label>
+        <input matInput id="name" type="text" formControlName="name" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="extends">Extends</mat-label>
+        <mat-select matNativeControl id="extends" formControlName="extends">
+            <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface"> {{ interface }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <br/><br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="capabilityType">Add Capability Type</mat-label>
+        <mat-select matNativeControl id="capabilityType" [formControl]="capabilityType">
+            <mat-option *ngFor="let capabillity of editorService.capabilities" [value]="capabillity"> {{ capabillity }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <button mat-fab color="primary" [disabled]="capabilityType.value == null" (click)="addCapability()">
+        <mat-icon>add_circle</mat-icon>
+    </button>
+
+    <div formArrayName="contents">
+         <ng-container *ngFor="let content of interface.contents; let i = index;">
+            <div formGroupName="{{content.type}}_{{i}}">
+                <label id="cap_type_{{i}}">{{content.type}}</label>
+                <label id="cap_id_{{i}}">{{content.id}}</label>
+                <label id="cap_name_{{i}}">{{content.name}}</label>
+            </div>
+        </ng-container>
+    </div>
+
+</mat-expansion-panel>

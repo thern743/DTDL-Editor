@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DtdlModelForm } from '../models/DtdlModelForm';
+import { InterfaceCapability } from '../models/InterfaceCapability';
 
 @Component({
   selector: 'preview-panel',
@@ -9,13 +10,14 @@ import { DtdlModelForm } from '../models/DtdlModelForm';
 })
 export class PreviewPanelComponent implements OnInit {
   panelOpenState = true;
-  dtdlModelMainForm: FormGroup;
+  interfaceDefinition!: InterfaceCapability;
 
-  constructor(dtdlModelForm: DtdlModelForm) { 
-    this.dtdlModelMainForm =  dtdlModelForm.mainForm;
+  constructor(private dtdlModelForm: DtdlModelForm) { 
+    
   }
 
   ngOnInit(): void {
+    this.interfaceDefinition =  this.dtdlModelForm.interfaces[0];
   }
 
   action(): void {}

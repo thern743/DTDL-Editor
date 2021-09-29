@@ -23,6 +23,7 @@ import { TelemetryComponent } from './telemetry/telemetry.component';
 import { PropertyComponent } from './property/property.component';
 
 import {MatIconModule} from '@angular/material/icon';
+import { InterfaceComponent } from './interface/interface.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatIconModule} from '@angular/material/icon';
     CommandPayloadComponent,
     JsonLdPipe,
     TelemetryComponent,
-    PropertyComponent
+    PropertyComponent,
+    InterfaceComponent
   ],
   imports: [
     BrowserModule,

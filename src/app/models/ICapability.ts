@@ -1,4 +1,5 @@
 export interface ICapability {
+    index: number;
     id: string;
     type: string;
     name: string;
