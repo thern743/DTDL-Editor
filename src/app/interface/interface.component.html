@@ -73,7 +73,7 @@
     </button>
 
     <div formArrayName="contents">
-         <ng-container *ngFor="let content of interface.contents; let i = index;">
+         <ng-container *ngFor="let content of interface.contents.reverse(); let i = index;">
             <ng-container [ngSwitch]="content.type">
                 <ng-container *ngSwitchCase="'Property'">
                     <property-definition [formIndex]="i" [property]="content"></property-definition>        
