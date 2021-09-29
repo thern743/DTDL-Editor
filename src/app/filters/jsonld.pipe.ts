@@ -9,6 +9,7 @@ export class JsonLdPipe implements PipeTransform {
         return JSON.stringify(val, JsonLdPipe.stringify, 2);
     }
 
+    // TODO: Identify and exclude private members.
     static stringify(key: any, value: any) {
         if (value && typeof value === 'object') {
             var replacement: any = {};

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DtdlModelForm } from "../models/DtdlModelForm";
 import { InterfaceCapability } from '../models/InterfaceCapability';
+import { PropertyCapability } from '../models/PropertyCapability';
 
 @Component({
   selector: 'main-editor',

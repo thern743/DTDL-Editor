@@ -36,20 +36,17 @@ export class InterfaceComponent implements OnInit {
     
     switch(this.capabilityType.value) {
       case 'Property':        
-        capability = new PropertyCapability(this.fb).toFormGroup();
+        this.interface.properties.push(new PropertyCapability(this.fb));
         break;
       case 'Command':
-        capability = new CommandCapability(this.fb).toFormGroup();
+        this.interface.commands.push(new CommandCapability(this.fb));
         break;
       case 'Telemetry':
-        capability = new TelemetryCapability(this.fb).toFormGroup();
+        this.interface.telemetries.push(new TelemetryCapability(this.fb));
         break;
       default:
         capability = this.fb.group({});
         break;
     }
-
-    let contents = this.interfaceForm.get("contents") as FormArray;
-    contents.push(capability);
   }
 }

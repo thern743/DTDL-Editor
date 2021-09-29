@@ -75,11 +75,17 @@
 
     <div formArrayName="contents">
          <ng-container *ngFor="let content of interface.contents; let i = index;">
-            <div formGroupName="{{content.type}}_{{i}}">
-                <label id="cap_type_{{i}}">{{content.type}}</label>
-                <label id="cap_id_{{i}}">{{content.id}}</label>
-                <label id="cap_name_{{i}}">{{content.name}}</label>
-            </div>
+            <ng-container [ngSwitch]="content.type">
+                <ng-container *ngSwitchCase="'Property'">
+                    <property-definition></property-definition>        
+                </ng-container>
+                <ng-container *ngSwitchCase="'Command'">
+                    <command-definition></command-definition>        
+                </ng-container>
+                <ng-container *ngSwitchCase="'Telemetry'">
+                    <telemetry-definition></telemetry-definition>        
+                </ng-container>
+            </ng-container>
         </ng-container>
     </div>
 
