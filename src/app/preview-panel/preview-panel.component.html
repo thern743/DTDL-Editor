@@ -10,9 +10,9 @@
         <textarea matInput id="previewPanel"
             cdkTextareaAutosize
             cdkAutosizeMinRows="5"
-            cdkAutosizeMaxRows="100" readonly>
-{{ interfaceDefinition | jsonld }}
+            cdkAutosizeMaxRows="100"
+            readonly
+            [value]="interfaceDefinition | jsonld">
         </textarea>
     </mat-form-field>
-
 </mat-expansion-panel>
