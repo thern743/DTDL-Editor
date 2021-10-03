@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { InterfaceCapability } from 'src/app/models/InterfaceCapability';
-import { FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { CommandCapability } from 'src/app/models/CommandCapability';
 import { PropertyCapability } from 'src/app/models/PropertyCapability';
 import { TelemetryCapability } from 'src/app/models/TelemetryCapability';
+import { PathLocationStrategy } from '@angular/common';
+import { ICapability } from 'src/app/models/ICapability';
 
 @Injectable({
   providedIn: 'root'
@@ -53,15 +55,25 @@ export class EditorService {
     return ["synchronous", "asynchronous"];
   }
 
-  addProperty(interfaceInstance: InterfaceCapability): void {   
-    interfaceInstance.properties.push(new PropertyCapability(this.fb));      
+  addProperty(interfaceInstance: InterfaceCapability): void {
+    let capability = new PropertyCapability(this.fb);
+    this.push(interfaceInstance, capability);
   }
 
   addCommand(interfaceInstance: InterfaceCapability): void {   
-    interfaceInstance.commands.push(new CommandCapability(this.fb));      
+    let capability = new CommandCapability(this.fb);
+    this.push(interfaceInstance, capability);
   }
 
-  addTelemetry(interfaceInstance: InterfaceCapability): void {   
-    interfaceInstance.telemetries.push(new TelemetryCapability(this.fb));      
-  } 
+  addTelemetry(interfaceInstance: InterfaceCapability): void {
+    let capability = new TelemetryCapability(this.fb);
+    this.push(interfaceInstance, capability);
+  }
+
+  private push(interfaceInstance: InterfaceCapability, capability: ICapability): void {
+    let temp = interfaceInstance.form.get("contents") as FormArray;
+    interfaceInstance.contents.push(capability);
+    temp.push(capability.toFormGroup());
+    console.log("Capabilities: " + interfaceInstance.contents.length + ". Properties: " + interfaceInstance.properties.length + ", Commands: " + interfaceInstance.commands.length + ", Telemetry: " + interfaceInstance.telemetries.length);
+  }
 }

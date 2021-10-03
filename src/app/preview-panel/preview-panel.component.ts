@@ -10,7 +10,7 @@ import { InterfaceCapability } from '../models/InterfaceCapability';
 })
 export class PreviewPanelComponent implements OnInit {
   panelOpenState = true;
-  @Input() interfaceForm!: FormGroup;
+  @Input() interface!: InterfaceCapability;
 
   constructor() { 
     

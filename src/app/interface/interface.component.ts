@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
 import { InterfaceCapability } from '../models/InterfaceCapability';
-import { FormGroup } from '@angular/forms';
+import { ICapability } from '../models/ICapability';
+import { PropertyCapability } from '../models/PropertyCapability';
+import { CommandCapability } from '../models/CommandCapability';
+import { TelemetryCapability } from '../models/TelemetryCapability';
 
 @Component({
   selector: 'interface-definition',
@@ -14,7 +17,6 @@ export class InterfaceComponent implements OnInit {
   //@Input() formIndex: number = 0;
   formIndex: number = 0;
   @Input() interface!: InterfaceCapability;
-  interfaceForm!: FormGroup;
   panelOpenState = true;
   
   constructor(public editorService: EditorService) {
@@ -22,6 +24,18 @@ export class InterfaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.interfaceForm = this.interface?.toFormGroup();
+    this.interface?.toFormGroup();
+  }
+
+  getProperty(capability: ICapability): PropertyCapability {
+    return capability as PropertyCapability;
+  }
+
+  getCommand(capability: ICapability): CommandCapability {
+    return capability as CommandCapability;
+  }
+
+  getTelemetry(capability: ICapability): TelemetryCapability {
+    return capability as TelemetryCapability;
   }
 }

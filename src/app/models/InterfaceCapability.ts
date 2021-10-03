@@ -15,19 +15,28 @@ export class InterfaceCapability implements ICapability {
   // Interface specific
   context: string = "dtmi:dtdl:context;2";  
   extends: string = "";
+  contents: ICapability[];
 
-  commands: CommandCapability[];
-  properties: PropertyCapability[];
-  telemetries: TelemetryCapability[];
+  form!: FormGroup;
 
   constructor(private fb: FormBuilder) {  
-    this.commands = new Array<CommandCapability>();
-    this.properties = new Array<PropertyCapability>();
-    this.telemetries = new Array<TelemetryCapability>();
+    this.contents = new Array<ICapability>();   
   }
   
+  get commands(): CommandCapability[] {
+    return this.contents.filter(x => x.type === "Command") as CommandCapability[];
+  }
+
+  get properties(): PropertyCapability[] {
+    return this.contents.filter(x => x.type === "Property") as PropertyCapability[];
+  }
+
+  get telemetries(): TelemetryCapability[] {
+    return this.contents.filter(x => x.type === "Telemetry") as TelemetryCapability[];
+  }
+
   toFormGroup(): FormGroup {
-    return this.fb.group({
+    this.form = this.fb.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -38,11 +47,9 @@ export class InterfaceCapability implements ICapability {
       // Interface specific
       context: [this.context],
       extends: [this.extends],
-      contents: this.fb.array([this.contents])
+      contents: this.fb.array(this.contents)
     });
-  }
 
-  get contents(): any[] {
-    return new Array<any>(...this.commands, ...this.properties, ...this.telemetries).sort(x => (x as ICapability)?.index);
+    return this.form;
   }
 }

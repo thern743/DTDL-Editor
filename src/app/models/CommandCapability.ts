@@ -14,12 +14,14 @@ export class CommandCapability implements ICapability {
   request: any = {};
   response: any = {}; 
 
+  form!: FormGroup;
+
   constructor(private fb: FormBuilder) {  
     
   }
   
   toFormGroup(): FormGroup {
-    return this.fb.group({
+    this.form = this.fb.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -32,6 +34,8 @@ export class CommandCapability implements ICapability {
       request: [this.request],
       response: [this.response]
     });
+
+    return this.form;
   }
 }
 

@@ -14,12 +14,14 @@ export class PropertyCapability implements ICapability {
   semanticType: string = "";
   writable: boolean = false;
 
+  form!: FormGroup;
+
   constructor(private fb: FormBuilder) {  
     
   }
   
   toFormGroup(): FormGroup {
-    return this.fb.group({
+    this.form = this.fb.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -30,7 +32,9 @@ export class PropertyCapability implements ICapability {
       // Property specific
       schema: [this.schema],
       semanticType: [this.semanticType],
-      writable: [this.writable],
+      writable: [this.writable]
     });
+
+    return this.form;
   }
 }

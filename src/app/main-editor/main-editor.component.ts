@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DtdlModelForm } from "../models/DtdlModelForm";
 import { InterfaceCapability } from '../models/InterfaceCapability';
-import { PropertyCapability } from '../models/PropertyCapability';
 
 @Component({
   selector: 'main-editor',
@@ -16,7 +15,7 @@ export class MainEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let interface1 = new InterfaceCapability(this.fb);
-    this.dtdlModelform.interfaces.push(interface1);
+    let interfaceInstance = new InterfaceCapability(this.fb);
+    this.dtdlModelform.interfaces.push(interfaceInstance);
   }
 }

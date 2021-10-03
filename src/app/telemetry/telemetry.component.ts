@@ -11,7 +11,6 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class TelemetryComponent implements OnInit {
   @Input() formIndex: number = 0;
   @Input() telemetry!: TelemetryCapability;
-  telemetryForm!: FormGroup;
   panelOpenState = false;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
@@ -19,6 +18,6 @@ export class TelemetryComponent implements OnInit {
   }
 
   ngOnInit(): void {  
-    this.telemetryForm = this.telemetry.toFormGroup();
+    
   }
 }

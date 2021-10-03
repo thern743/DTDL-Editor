@@ -1,3 +1,5 @@
+import { FormGroup } from "@angular/forms";
+
 export interface ICapability {
     index: number;
     id: string;
@@ -6,4 +8,5 @@ export interface ICapability {
     displayName: string;
     description: string;
     comment: string;
+    toFormGroup(): FormGroup;
 }

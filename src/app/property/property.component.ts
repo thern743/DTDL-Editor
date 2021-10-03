@@ -11,14 +11,13 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class PropertyComponent implements OnInit {
   @Input() formIndex: number = 0;
   @Input() property!: PropertyCapability;
-  propertyForm!: FormGroup;
   panelOpenState = false;
 
-  constructor(public editorService: EditorService, private fb: FormBuilder) { 
+  constructor(public editorService: EditorService) { 
     
   }
 
   ngOnInit(): void { 
-    this.propertyForm = this.property.toFormGroup();
+    
   }
 }

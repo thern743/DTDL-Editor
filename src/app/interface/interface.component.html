@@ -1,7 +1,7 @@
 <mat-expansion-panel    [expanded]="panelOpenState"
                         (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false"
-                        [formGroup]="interfaceForm">
+                        [formGroup]="interface.form">
     <mat-expansion-panel-header>
         <mat-panel-title>Interface Definition</mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
@@ -61,16 +61,16 @@
     <br/>
 
     <div formArrayName="contents">
-         <ng-container *ngFor="let content of interface.contents.reverse(); let i = index;">
-            <ng-container [ngSwitch]="content.type">
+         <ng-container *ngFor="let capability of interface.contents; let i = index;">
+            <ng-container [ngSwitch]="capability.type">
                 <ng-container *ngSwitchCase="'Property'">
-                    <property-definition [formIndex]="i" [property]="content"></property-definition>        
+                    <property-definition [formIndex]="i" [property]="getProperty(capability)"></property-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Command'">
-                    <command-definition [formIndex]="i" [command]="content"></command-definition>        
+                    <command-definition [formIndex]="i" [command]="getCommand(capability)"></command-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Telemetry'">
-                    <telemetry-definition [formIndex]="i" [telemetry]="content"></telemetry-definition>        
+                    <telemetry-definition [formIndex]="i" [telemetry]="getTelemetry(capability)"></telemetry-definition>        
                 </ng-container>
             </ng-container>
         </ng-container>
@@ -90,4 +90,4 @@
         </button>
     </mat-action-row>
 </mat-expansion-panel>
-<preview-panel [interfaceForm]="interfaceForm"></preview-panel>
+<preview-panel [interface]="interface"></preview-panel>

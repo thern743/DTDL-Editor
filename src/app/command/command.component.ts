@@ -12,14 +12,13 @@ import { EditorService } from '../services/editor/editor-service.service'
 export class CommandPayloadComponent implements OnInit {
   @Input() formIndex: number = 0;
   @Input() command!: CommandCapability;
-  commandForm!: FormGroup;
   panelOpenState = false;
-  
-  constructor(public editorService: EditorService, private fb: FormBuilder) { 
+
+  constructor(public editorService: EditorService) { 
     
   }
 
   ngOnInit(): void {  
-    this.commandForm = this.command.toFormGroup();
+    
   }
 }

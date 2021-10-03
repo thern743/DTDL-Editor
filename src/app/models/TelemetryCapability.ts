@@ -13,12 +13,14 @@ export class TelemetryCapability implements ICapability {
   schema: string = "";
   semanticType: string = "";
 
+  form!: FormGroup;
+
   constructor(private fb: FormBuilder) {  
     
   }
 
   toFormGroup(): FormGroup {
-    return this.fb.group({
+    this.form = this.fb.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -30,6 +32,8 @@ export class TelemetryCapability implements ICapability {
       schema: [this.schema],
       semanticType: [this.semanticType]
     });
+
+    return this.form;
   }
 }
 
