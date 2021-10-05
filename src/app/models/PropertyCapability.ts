@@ -37,4 +37,20 @@ export class PropertyCapability implements ICapability {
 
     return this.form;
   }
+
+  getValue(): PropertyCapability {
+    this.index = -1;
+    this.id = this.form.get("id")?.value;
+    this.type = this.form.get("type")?.value;
+    this.name = this.form.get("name")?.value;
+    this.displayName = this.form.get("displayName")?.value;
+    this.description = this.form.get("description")?.value;
+    this.comment = this.form.get("comment")?.value;
+    // Property specific
+    this.schema = this.form.get("schema")?.value;
+    this.semanticType = this.form.get("semanticType")?.value;
+    this.writable = this.form.get("writable")?.value;
+
+    return this;
+  }
 }

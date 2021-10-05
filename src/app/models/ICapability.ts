@@ -9,4 +9,5 @@ export interface ICapability {
     description: string;
     comment: string;
     toFormGroup(): FormGroup;
+    getValue(): ICapability;
 }

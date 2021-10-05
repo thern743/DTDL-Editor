@@ -37,5 +37,21 @@ export class CommandCapability implements ICapability {
 
     return this.form;
   }
+
+  getValue(): CommandCapability {
+    this.index = -1;
+    this.id = this.form.get("id")?.value;
+    this.type = this.form.get("type")?.value;
+    this.name = this.form.get("name")?.value;
+    this.displayName = this.form.get("displayName")?.value;
+    this.description = this.form.get("description")?.value;
+    this.comment = this.form.get("comment")?.value;
+    // Command specific
+    this.commandType = this.form.get("commandType")?.value;
+    this.request = this.form.get("request")?.value;
+    this.response = this.form.get("response")?.value;
+
+    return this;
+  }
 }
 

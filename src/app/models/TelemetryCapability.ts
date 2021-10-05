@@ -35,5 +35,20 @@ export class TelemetryCapability implements ICapability {
 
     return this.form;
   }
+
+  getValue(): TelemetryCapability {
+    this.index = -1;
+    this.id = this.form.get("id")?.value;
+    this.type = this.form.get("type")?.value;
+    this.name = this.form.get("name")?.value;
+    this.displayName = this.form.get("displayName")?.value;
+    this.description = this.form.get("description")?.value;
+    this.comment = this.form.get("comment")?.value;
+    // Telemetry specific
+    this.schema = this.form.get("schema")?.value;
+    this.semanticType = this.form.get("semanticType")?.value;
+
+    return this;
+  }
 }
 

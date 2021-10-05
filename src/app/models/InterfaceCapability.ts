@@ -16,7 +16,7 @@ export class InterfaceCapability implements ICapability {
   context: string = "dtmi:dtdl:context;2";  
   extends: string = "";
   contents: ICapability[];
-
+  
   form!: FormGroup;
 
   constructor(private fb: FormBuilder) {  
@@ -51,5 +51,26 @@ export class InterfaceCapability implements ICapability {
     });
 
     return this.form;
+  }
+
+  getValue(): InterfaceCapability {
+    this.index = -1;
+    this.id = this.form.get("id")?.value;
+    this.type = this.form.get("type")?.value;
+    this.name = this.form.get("name")?.value;
+    this.displayName = this.form.get("displayName")?.value;
+    this.description = this.form.get("description")?.value;
+    this.comment = this.form.get("comment")?.value;
+    // Interface specific
+    this.context = this.form.get("context")?.value;  
+    this.extends = this.form.get("extends")?.value;
+
+    let temp = this.form.get("contents") as FormArray;
+    
+    temp.controls.forEach((control) => {
+      this.contents.push(control.value);
+    });
+
+    return this;
   }
 }
