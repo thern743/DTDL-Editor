@@ -7,6 +7,8 @@ import { PropertyCapability } from 'src/app/models/PropertyCapability';
 import { TelemetryCapability } from 'src/app/models/TelemetryCapability';
 import { PathLocationStrategy } from '@angular/common';
 import { ICapability } from 'src/app/models/ICapability';
+import { RelationshipCapability } from 'src/app/models/RelationshipCapability';
+import { ComponentCapability } from 'src/app/models/ComponentCapability';
 
 @Injectable({
   providedIn: 'root'
@@ -55,25 +57,52 @@ export class EditorService {
     return ["synchronous", "asynchronous"];
   }
 
-  addProperty(interfaceInstance: InterfaceCapability): void {
+  addPropertyToInterface(interfaceInstance: InterfaceCapability): void {
     let capability = new PropertyCapability(this.fb);
-    this.push(interfaceInstance, capability);
+    this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  addCommand(interfaceInstance: InterfaceCapability): void {   
+  addCommandToInterface(interfaceInstance: InterfaceCapability): void {   
     let capability = new CommandCapability(this.fb);
-    this.push(interfaceInstance, capability);
+    this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  addTelemetry(interfaceInstance: InterfaceCapability): void {
+  addTelemetryToInterface(interfaceInstance: InterfaceCapability): void {
     let capability = new TelemetryCapability(this.fb);
-    this.push(interfaceInstance, capability);
+    this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  private push(interfaceInstance: InterfaceCapability, capability: ICapability): void {
+  addComponentToInterface(interfaceInstance: InterfaceCapability): void {
+    let capability = new ComponentCapability(this.fb);
+    this.pushInterfaceContents(interfaceInstance, capability);
+  }
+
+  addRelationshipToInterface(interfaceInstance: InterfaceCapability): void {
+    let capability = new RelationshipCapability(this.fb);
+    this.pushInterfaceContents(interfaceInstance, capability);
+  }
+
+  private pushInterfaceContents(interfaceInstance: InterfaceCapability, capability: ICapability): void {
     let temp = interfaceInstance.form.get("contents") as FormArray;
     interfaceInstance.contents.push(capability);
     temp.push(capability.toFormGroup());
-    console.log("Capabilities: " + interfaceInstance.contents.length + ". Properties: " + interfaceInstance.properties.length + ", Commands: " + interfaceInstance.commands.length + ", Telemetry: " + interfaceInstance.telemetries.length);
+    console.log("Capabilities: " + interfaceInstance.contents.length + 
+        ". Properties: " + interfaceInstance.properties.length + 
+        ", Commands: " + interfaceInstance.commands.length + 
+        ", Telemetry: " + interfaceInstance.telemetries.length +
+        ", Components: " + interfaceInstance.components.length +
+        ", Relationships: " + interfaceInstance.relationships.length);
+  }
+
+  addPropertyToRelationship(relationshipInstance: RelationshipCapability): void {
+    let capability = new PropertyCapability(this.fb);
+    this.pushRelationshipProperties(relationshipInstance, capability);
+  }
+
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapability, capability: ICapability): void {
+    let temp = relationshipInstance.form.get("properties") as FormArray;
+    relationshipInstance.properties.push(capability);
+    temp.push(capability.toFormGroup());
+    console.log("Properties: " + relationshipInstance.properties.length);
   }
 }

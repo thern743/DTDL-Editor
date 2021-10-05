@@ -25,6 +25,8 @@ import { PropertyComponent } from './property/property.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { InterfaceComponent } from './interface/interface.component';
+import { RelationshipComponent } from './relationship/relationship.component';
+import { ComponentComponent } from './component/component.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { InterfaceComponent } from './interface/interface.component';
     JsonLdPipe,
     TelemetryComponent,
     PropertyComponent,
-    InterfaceComponent
+    InterfaceComponent,
+    RelationshipComponent,
+    ComponentComponent
   ],
   imports: [
     BrowserModule,

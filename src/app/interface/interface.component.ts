@@ -5,6 +5,8 @@ import { ICapability } from '../models/ICapability';
 import { PropertyCapability } from '../models/PropertyCapability';
 import { CommandCapability } from '../models/CommandCapability';
 import { TelemetryCapability } from '../models/TelemetryCapability';
+import { ComponentCapability } from '../models/ComponentCapability';
+import { RelationshipCapability } from '../models/RelationshipCapability';
 
 @Component({
   selector: 'interface-definition',
@@ -37,5 +39,13 @@ export class InterfaceComponent implements OnInit {
 
   getTelemetry(capability: ICapability): TelemetryCapability {
     return capability as TelemetryCapability;
+  }
+
+  getComponent(capability: ICapability): ComponentCapability {
+    return capability as ComponentCapability;
+  }
+
+  getRelationship(capability: ICapability): RelationshipCapability {
+    return capability as RelationshipCapability;
   }
 }

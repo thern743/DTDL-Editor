@@ -72,21 +72,35 @@
                 <ng-container *ngSwitchCase="'Telemetry'">
                     <telemetry-definition [formIndex]="i" [telemetry]="getTelemetry(capability)"></telemetry-definition>        
                 </ng-container>
+                <ng-container *ngSwitchCase="'Component'">
+                    <component-definition [formIndex]="i" [component]="getComponent(capability)"></component-definition>        
+                </ng-container>
+                <ng-container *ngSwitchCase="'Relationship'">
+                    <relationship-definition [formIndex]="i" [relationship]="getRelationship(capability)"></relationship-definition>        
+                </ng-container>
             </ng-container>
         </ng-container>
     </div>
 
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="editorService.addProperty(interface)">
+        <button mat-raised-button color="primary" (click)="editorService.addPropertyToInterface(interface)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Property
         </button>
         <span class="formSpacer"></span>
-        <button mat-raised-button color="primary" (click)="editorService.addCommand(interface)">
+        <button mat-raised-button color="primary" (click)="editorService.addCommandToInterface(interface)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Command
         </button>
         <span class="formSpacer"></span>
-        <button mat-raised-button color="primary" (click)="editorService.addTelemetry(interface)">
+        <button mat-raised-button color="primary" (click)="editorService.addTelemetryToInterface(interface)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Telemetry
+        </button>
+        <span class="formSpacer"></span>
+        <button mat-raised-button color="primary" (click)="editorService.addComponentToInterface(interface)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Component
+        </button>
+        <span class="formSpacer"></span>
+        <button mat-raised-button color="primary" (click)="editorService.addRelationshipToInterface(interface)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Relationship
         </button>
     </mat-action-row>
 </mat-expansion-panel>

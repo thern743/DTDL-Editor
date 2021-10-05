@@ -1,7 +1,9 @@
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { CommandCapability } from "./CommandCapability";
+import { ComponentCapability } from "./ComponentCapability";
 import { ICapability } from "./ICapability";
 import { PropertyCapability } from "./PropertyCapability";
+import { RelationshipCapability } from "./RelationshipCapability";
 import { TelemetryCapability } from "./TelemetryCapability";
 
 export class InterfaceCapability implements ICapability {
@@ -33,6 +35,14 @@ export class InterfaceCapability implements ICapability {
 
   get telemetries(): TelemetryCapability[] {
     return this.contents.filter(x => x.type === "Telemetry") as TelemetryCapability[];
+  }
+
+  get components(): ComponentCapability[] {
+    return this.contents.filter(x => x.type === "Component") as ComponentCapability[];
+  }
+
+  get relationships(): RelationshipCapability[] {
+    return this.contents.filter(x => x.type === "Relationship") as RelationshipCapability[];
   }
 
   toFormGroup(): FormGroup {
