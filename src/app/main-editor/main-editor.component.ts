@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { DtdlModelForm } from "../models/DtdlModelForm";
-import { InterfaceCapability } from '../models/InterfaceCapability';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
   selector: 'main-editor',
@@ -10,12 +8,11 @@ import { InterfaceCapability } from '../models/InterfaceCapability';
 })
 export class MainEditorComponent implements OnInit {
 
-  constructor(public dtdlModelform: DtdlModelForm, private fb: FormBuilder) {
-    
+  constructor(public editorService: EditorService) {
+
   }
 
   ngOnInit(): void {
-    let interfaceInstance = new InterfaceCapability(this.fb);
-    this.dtdlModelform.interfaces.push(interfaceInstance);
+    
   }
 }

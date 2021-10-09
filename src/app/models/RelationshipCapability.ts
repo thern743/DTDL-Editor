@@ -18,12 +18,12 @@ export class RelationshipCapability implements ICapability {
 
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {  
+  constructor(private formBuilder: FormBuilder) {  
     
   }
   
   toFormGroup(): FormGroup {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -36,7 +36,7 @@ export class RelationshipCapability implements ICapability {
       maxMultiplicity: [this.maxMultiplicity],
       target: [this.target],
       writable: [this.writable],
-      properties: this.fb.array(this.properties)
+      properties: this.formBuilder.array(this.properties)
     });
 
     return this.form;

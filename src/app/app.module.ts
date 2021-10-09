@@ -31,6 +31,8 @@ import { ComponentComponent } from './component/component.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ModelTreeComponent } from './model-tree/model-tree.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     PropertyComponent,
     InterfaceComponent,
     RelationshipComponent,
-    ComponentComponent
+    ComponentComponent,
+    ModelTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatButtonModule,
     MatSidenavModule,
     MatTreeModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

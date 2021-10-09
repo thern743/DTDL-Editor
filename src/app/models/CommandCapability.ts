@@ -16,12 +16,12 @@ export class CommandCapability implements ICapability {
 
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {  
+  constructor(private formBuilder: FormBuilder) {  
     
   }
   
   toFormGroup(): FormGroup {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],

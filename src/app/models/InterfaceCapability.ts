@@ -21,7 +21,7 @@ export class InterfaceCapability implements ICapability {
   
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {  
+  constructor(private formBuilder: FormBuilder) {  
     this.contents = new Array<ICapability>();   
   }
   
@@ -46,7 +46,7 @@ export class InterfaceCapability implements ICapability {
   }
 
   toFormGroup(): FormGroup {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       index: [this.index],
       id: [this.id],
       type: [this.type],
@@ -57,7 +57,7 @@ export class InterfaceCapability implements ICapability {
       // Interface specific
       context: [this.context],
       extends: [this.extends],
-      contents: this.fb.array(this.contents)
+      contents: this.formBuilder.array(this.contents)
     });
 
     return this.form;
