@@ -28,6 +28,10 @@ import { InterfaceComponent } from './interface/interface.component';
 import { RelationshipComponent } from './relationship/relationship.component';
 import { ComponentComponent } from './component/component.component';
 
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +58,10 @@ import { ComponentComponent } from './component/component.component';
     MatCheckboxModule,
     MatExpansionModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSidenavModule,
+    MatTreeModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

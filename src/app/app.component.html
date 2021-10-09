@@ -1,1 +1,11 @@
-<main-editor></main-editor>
+<mat-toolbar>
+    <button type="button" mat-button (click)="nav.toggle()"><mat-icon>menu</mat-icon></button>
+</mat-toolbar>
+<mat-sidenav-container autosiz>    
+    <mat-sidenav #nav mode="side">
+        TODO: Interface List
+    </mat-sidenav>
+    <mat-sidenav-content>        
+        <main-editor></main-editor>
+    </mat-sidenav-content>
+</mat-sidenav-container>
