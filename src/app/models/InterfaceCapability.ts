@@ -21,7 +21,7 @@ export class InterfaceCapability implements ICapability {
   
   form!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {  
+  constructor(public formBuilder: FormBuilder) {  
     this.contents = new Array<ICapability>();   
   }
   

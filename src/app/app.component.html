@@ -1,5 +1,7 @@
 <mat-toolbar>
-    <button type="button" mat-button (click)="nav.toggle()"><mat-icon>menu</mat-icon></button>
+    <button type="button" mat-button (click)="nav.toggle()"><mat-icon>menu</mat-icon></button> 
+    <span class="toolbar-spacer"></span>   
+    <file-select></file-select>
 </mat-toolbar>
 <mat-sidenav-container autosiz>    
     <mat-sidenav #nav mode="side">

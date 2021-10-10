@@ -33,6 +33,11 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ModelTreeComponent } from './model-tree/model-tree.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { FolderSelectComponent } from './file-select/file-select.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,9 @@ import { MatDividerModule } from '@angular/material/divider';
     InterfaceComponent,
     RelationshipComponent,
     ComponentComponent,
-    ModelTreeComponent
+    ModelTreeComponent,
+    FolderSelectComponent,
+    ErrorSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +72,10 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSidenavModule,
     MatTreeModule,
     MatToolbarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
