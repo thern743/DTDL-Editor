@@ -1,20 +1,23 @@
+import 'reflect-metadata';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapability } from "./ICapability";
+import { jsonMember, jsonObject } from "typedjson";
 
+@jsonObject
 export class RelationshipCapability implements ICapability {
   index: number = -1;
-  id: string = "";
-  type: string = "Relationship";
-  name: string = "";
-  displayName: string = "";
-  description: string = "";
-  comment: string = "";
+  @jsonMember id: string = "";
+  @jsonMember type: string = "Relationship";
+  @jsonMember name: string = "";
+  @jsonMember displayName: string = "";
+  @jsonMember description: string = "";
+  @jsonMember comment: string = "";
   // Relationship specific
-  minMultiplicity: number = 0;  
-  maxMultiplicity: number = 0;  
-  target: string = "";
-  writable: boolean = false;
-  properties: ICapability[] = [];
+  @jsonMember minMultiplicity: number = 0;  
+  @jsonMember maxMultiplicity: number = 0;  
+  @jsonMember target: string = "";
+  @jsonMember writable: boolean = false;
+  @jsonMember properties: ICapability[] = [];
 
   form!: FormGroup;
 

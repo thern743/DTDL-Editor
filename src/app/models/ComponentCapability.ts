@@ -1,16 +1,19 @@
+import 'reflect-metadata';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapability } from "./ICapability";
+import { jsonMember, jsonObject } from "typedjson";
 
+@jsonObject
 export class ComponentCapability implements ICapability {
   index: number = -1;
-  id: string = "";
-  type: string = "Component";
-  name: string = "";
-  displayName: string = "";
-  description: string = "";
-  comment: string = "";
+  @jsonMember id: string = "";
+  @jsonMember type: string = "Component";
+  @jsonMember name: string = "";
+  @jsonMember displayName: string = "";
+  @jsonMember description: string = "";
+  @jsonMember comment: string = "";
   // Component specific
-  schema: string = "";  
+  @jsonMember schema: string = "";  
 
   form!: FormGroup;
 

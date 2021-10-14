@@ -1,18 +1,21 @@
+import 'reflect-metadata';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapability } from "./ICapability";
+import { jsonMember, jsonObject } from "typedjson";
 
+@jsonObject
 export class CommandCapability implements ICapability {
   index: number = -1;
-  id: string = "";
-  type: string = "Command";
-  name: string = "";
-  displayName: string = "";
-  description: string = "";
-  comment: string = "";
+  @jsonMember id: string = "";
+  @jsonMember type: string = "Command";
+  @jsonMember name: string = "";
+  @jsonMember displayName: string = "";
+  @jsonMember description: string = "";
+  @jsonMember comment: string = "";
   // Command specific
-  commandType: string = "";
-  request: any = {};
-  response: any = {}; 
+  @jsonMember commandType: string = "";
+  @jsonMember request: any = {};
+  @jsonMember response: any = {}; 
 
   form!: FormGroup;
 

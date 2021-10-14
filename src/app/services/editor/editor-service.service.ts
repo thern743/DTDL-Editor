@@ -22,7 +22,7 @@ export class EditorService {
   semantics: string[];
   schemaTypes: string[];
   complexShcemaTypes: string[];
-  interfaces: string[];
+  interfaces: InterfaceCapability[];
   commandTypes: string[];
   treeDataSource: MatTreeNestedDataSource<ICapability>;
   
@@ -33,7 +33,7 @@ export class EditorService {
     this.semantics= this.getSemanticTypes();
     this.schemaTypes = this.getSchemaTypes();
     this.complexShcemaTypes = this.getComplexSchemaTypes();
-    this.interfaces = new Array();
+    this.interfaces = new Array<InterfaceCapability>();
     this.commandTypes = this.getCommandTypes();
     this.treeDataSource = new MatTreeNestedDataSource<ICapability>();  
     

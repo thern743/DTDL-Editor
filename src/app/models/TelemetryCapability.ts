@@ -1,17 +1,20 @@
+import 'reflect-metadata';
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapability } from "./ICapability";
+import { jsonMember, jsonObject } from "typedjson";
 
+@jsonObject
 export class TelemetryCapability implements ICapability {
   index: number = -1;
-  id: string = "";
-  type: string = "Telemetry";
-  name: string = "";
-  displayName: string = "";
-  description: string = "";
-  comment: string = "";
+  @jsonMember id: string = "";
+  @jsonMember type: string = "Telemetry";
+  @jsonMember name: string = "";
+  @jsonMember displayName: string = "";
+  @jsonMember description: string = "";
+  @jsonMember comment: string = "";
   // Telemetry specific
-  schema: string = "";
-  semanticType: string = "";
+  @jsonMember schema: string = "";
+  @jsonMember semanticType: string = "";
 
   form!: FormGroup;
 

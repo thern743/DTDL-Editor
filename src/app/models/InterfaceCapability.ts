@@ -1,4 +1,6 @@
+import 'reflect-metadata';
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { jsonMember, jsonObject } from "typedjson";
 import { CommandCapability } from "./CommandCapability";
 import { ComponentCapability } from "./ComponentCapability";
 import { ICapability } from "./ICapability";
@@ -6,18 +8,19 @@ import { PropertyCapability } from "./PropertyCapability";
 import { RelationshipCapability } from "./RelationshipCapability";
 import { TelemetryCapability } from "./TelemetryCapability";
 
+@jsonObject
 export class InterfaceCapability implements ICapability {
   index: number = -1;
-  id: string = "";
-  type: string = "Interface";
-  name: string = "";
-  displayName: string = "";
-  description: string = "";
-  comment: string = "";
+  @jsonMember id: string = "";
+  @jsonMember type: string = "Interface";
+  @jsonMember name: string = "";
+  @jsonMember displayName: string = "";
+  @jsonMember description: string = "";
+  @jsonMember comment: string = "";
   // Interface specific
-  context: string = "dtmi:dtdl:context;2";  
-  extends: string = "";
-  contents: ICapability[];
+  @jsonMember context: string = "dtmi:dtdl:context;2";  
+  @jsonMember extends: string = "";
+  @jsonMember contents: ICapability[]; //TODO: Figure out how to treat as Set 
   
   form!: FormGroup;
 
