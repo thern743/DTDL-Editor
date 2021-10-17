@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CommandCapability } from '../models/CommandCapability';
+import { CommandCapabilityFormControl } from '../models/CommandCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service'
 
 
@@ -11,7 +11,7 @@ import { EditorService } from '../services/editor/editor-service.service'
 })
 export class CommandPayloadComponent implements OnInit {
   @Input() formIndex: number = 0;
-  @Input() command!: CommandCapability;
+  @Input() command!: CommandCapabilityFormControl;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 

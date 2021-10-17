@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PropertyCapability } from '../models/PropertyCapability';
+import { PropertyCapabilityFormControl } from '../models/PropertyCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class PropertyComponent implements OnInit {
   @Input() formIndex: number = 0;
-  @Input() property!: PropertyCapability;
+  @Input() property!: PropertyCapabilityFormControl;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 

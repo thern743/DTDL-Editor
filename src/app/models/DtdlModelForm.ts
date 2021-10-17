@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
-import { InterfaceCapability } from "./InterfaceCapability";
+import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DtdlModelForm {
-  interfaces: InterfaceCapability[];
+  interfaces: InterfaceCapabilityFormControl[];
   
   constructor() {  
-    this.interfaces = new Array<InterfaceCapability>();    
+    this.interfaces = new Array<InterfaceCapabilityFormControl>();    
   }
 }

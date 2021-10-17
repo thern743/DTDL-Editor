@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { InterfaceCapability } from 'src/app/models/InterfaceCapability';
+import { InterfaceCapabilityFormControl } from 'src/app/models/InterfaceCapabilityFormControl';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { CommandCapability } from 'src/app/models/CommandCapability';
-import { PropertyCapability } from 'src/app/models/PropertyCapability';
-import { TelemetryCapability } from 'src/app/models/TelemetryCapability';
-import { ICapability } from 'src/app/models/ICapability';
-import { RelationshipCapability } from 'src/app/models/RelationshipCapability';
-import { ComponentCapability } from 'src/app/models/ComponentCapability';
+import { CommandCapabilityFormControl } from 'src/app/models/CommandCapabilityFormControl';
+import { PropertyCapabilityFormControl } from 'src/app/models/PropertyCapabilityFormControl';
+import { TelemetryCapabilityFormControl } from 'src/app/models/TelemetryCapabilityFormControl';
+import { ICapabilityFormControl } from 'src/app/models/ICapabilityFormControl';
+import { RelationshipCapabilityFormControl } from 'src/app/models/RelationshipCapabilityFormControl';
+import { ComponentCapabilityFormControl } from 'src/app/models/ComponentCapabilityFormControl';
 import { DtdlModelForm } from 'src/app/models/DtdlModelForm';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { ICapabilityDto } from 'src/app/models/ICapabilityDto';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,9 @@ export class EditorService {
   semantics: string[];
   schemaTypes: string[];
   complexShcemaTypes: string[];
-  interfaces: InterfaceCapability[];
+  interfaces: InterfaceCapabilityFormControl[];
   commandTypes: string[];
-  treeDataSource: MatTreeNestedDataSource<ICapability>;
+  treeDataSource: MatTreeNestedDataSource<ICapabilityFormControl<ICapabilityDto>>;
   
   constructor(private http: HttpClient, dtdlModelForm: DtdlModelForm, public formBuilder: FormBuilder) { 
     this.dtdlModelForm = dtdlModelForm;
@@ -33,11 +34,11 @@ export class EditorService {
     this.semantics= this.getSemanticTypes();
     this.schemaTypes = this.getSchemaTypes();
     this.complexShcemaTypes = this.getComplexSchemaTypes();
-    this.interfaces = new Array<InterfaceCapability>();
+    this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.commandTypes = this.getCommandTypes();
-    this.treeDataSource = new MatTreeNestedDataSource<ICapability>();  
+    this.treeDataSource = new MatTreeNestedDataSource<ICapabilityFormControl>();  
     
-    let interfaceInstance = new InterfaceCapability(this.formBuilder);
+    let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
     interfaceInstance.name = "Default Interface";
     this.addInterface(interfaceInstance);
   }
@@ -66,40 +67,40 @@ export class EditorService {
     return ["synchronous", "asynchronous"];
   }
 
-  public addInterface(interfaceInstance: InterfaceCapability): void {
+  public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     this.dtdlModelForm.interfaces.push(interfaceInstance);
   }
 
-  public addPropertyToInterface(interfaceInstance: InterfaceCapability): void {
-    let capability = new PropertyCapability(this.formBuilder);
+  public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
+    let capability = new PropertyCapabilityFormControl(this.formBuilder);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  public addCommandToInterface(interfaceInstance: InterfaceCapability): void {   
-    let capability = new CommandCapability(this.formBuilder);
+  public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {   
+    let capability = new CommandCapabilityFormControl(this.formBuilder);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  public addTelemetryToInterface(interfaceInstance: InterfaceCapability): void {
-    let capability = new TelemetryCapability(this.formBuilder);
+  public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
+    let capability = new TelemetryCapabilityFormControl(this.formBuilder);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  public addComponentToInterface(interfaceInstance: InterfaceCapability): void {
-    let capability = new ComponentCapability(this.formBuilder);
+  public addComponentToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
+    let capability = new ComponentCapabilityFormControl(this.formBuilder);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  public addRelationshipToInterface(interfaceInstance: InterfaceCapability): void {
-    let capability = new RelationshipCapability(this.formBuilder);
+  public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
+    let capability = new RelationshipCapabilityFormControl(this.formBuilder);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  private pushInterfaceContents(interfaceInstance: InterfaceCapability, capability: ICapability): void {
+  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
     let temp = interfaceInstance.form.get("contents") as FormArray;
-    interfaceInstance.contents.push(capability);
+    interfaceInstance.contents.add(capability);
     temp.push(capability.toFormGroup());
-    console.log("Capabilities: " + interfaceInstance.contents.length + 
+    console.log("Capabilities: " + interfaceInstance.contents.size + 
         ". Properties: " + interfaceInstance.properties.length + 
         ", Commands: " + interfaceInstance.commands.length + 
         ", Telemetry: " + interfaceInstance.telemetries.length +
@@ -107,12 +108,12 @@ export class EditorService {
         ", Relationships: " + interfaceInstance.relationships.length);
   }
 
-  public  addPropertyToRelationship(relationshipInstance: RelationshipCapability): void {
-    let capability = new PropertyCapability(this.formBuilder);
+  public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
+    let capability = new PropertyCapabilityFormControl(this.formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: RelationshipCapability, capability: ICapability): void {
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
     let temp = relationshipInstance.form.get("properties") as FormArray;
     relationshipInstance.properties.push(capability);
     temp.push(capability.toFormGroup());

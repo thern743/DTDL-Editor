@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ComponentCapability } from '../models/ComponentCapability';
+import { ComponentCapabilityFormControl } from '../models/ComponentCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class ComponentComponent implements OnInit {
   @Input() formIndex: number = 0;
-  @Input() component!: ComponentCapability;
+  @Input() component!: ComponentCapabilityFormControl;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 

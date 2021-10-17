@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapability } from '../models/ICapability';
-import { PropertyCapability } from '../models/PropertyCapability';
-import { RelationshipCapability } from '../models/RelationshipCapability';
+import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
+import { PropertyCapabilityFormControl } from '../models/PropertyCapabilityFormControl';
+import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class RelationshipComponent implements OnInit {
   @Input() formIndex: number = 0;
-  @Input() relationship!: RelationshipCapability;
+  @Input() relationship!: RelationshipCapabilityFormControl;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
@@ -22,7 +22,7 @@ export class RelationshipComponent implements OnInit {
     
   }
 
-  getProperty(capability: ICapability): PropertyCapability {
-    return capability as PropertyCapability;
+  getProperty(capability: ICapabilityFormControl): PropertyCapabilityFormControl {
+    return capability as PropertyCapabilityFormControl;
   }
 }
