@@ -7,7 +7,7 @@
         <mat-tree-node>
             <button mat-icon-button matTreeNodeToggle>
                 <mat-icon>{{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
-                {{node.name}}
+                {{node.model.name}}
             </button>            
             <mat-divider></mat-divider>
         </mat-tree-node>            
