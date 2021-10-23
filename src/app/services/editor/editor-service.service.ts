@@ -100,14 +100,14 @@ export class EditorService {
     interfaceInstance.contents.push(capability);
     interfaceInstance.model.contents.add(capability.model);
 
-    console.log("Form Capabilities: " + interfaceInstance.contents.length + 
+    console.log("Interface Form Capabilities: " + interfaceInstance.contents.length + 
         ". Properties: " + interfaceInstance.properties.length + 
         ", Commands: " + interfaceInstance.commands.length + 
         ", Telemetry: " + interfaceInstance.telemetries.length +
         ", Components: " + interfaceInstance.components.length +
         ", Relationships: " + interfaceInstance.relationships.length);
 
-    console.log("Model Capabilities: " + interfaceInstance.model.contents.size + 
+    console.log("Interface Model Capabilities: " + interfaceInstance.model.contents.size + 
         ". Properties: " + interfaceInstance.model.properties.length + 
         ", Commands: " + interfaceInstance.model.commands.length + 
         ", Telemetry: " + interfaceInstance.model.telemetries.length +
@@ -122,6 +122,9 @@ export class EditorService {
 
   private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {
     relationshipInstance.properties.push(capability);
-    console.log("Properties: " + relationshipInstance.properties.length);
+    relationshipInstance.model.properties.add(capability.model);
+
+    console.log("Relationship Form Properties: " + relationshipInstance.properties.length);
+    console.log("Relationship Model Properties: " + relationshipInstance.model.properties.size);
   }
 }
