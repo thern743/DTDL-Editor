@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { CommandCapabilityFormControl } from "./CommandCapabilityFormControl";
 import { ComponentCapabilityFormControl } from "./ComponentCapabilityFormControl";
 import { PropertyCapabilityFormControl } from "./PropertyCapabilityFormControl";
@@ -7,16 +7,14 @@ import { TelemetryCapabilityFormControl } from "./TelemetryCapabilityFormControl
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { InterfaceCapabilityDto } from './InterfaceCapabilityDto';
 import { ICapabilityDto } from './ICapabilityDto';
+import { ICapabilityFormControl } from "./ICapabilityFormControl";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityDto> {
-  public index: number = -1;
-  public formBuilder: FormBuilder
-  public capability: InterfaceCapabilityDto;  
-  public form!: FormGroup;
-
+  public contents: ICapabilityFormControl<ICapabilityDto>[];
+  
   constructor(formBuilder: FormBuilder) {  
-    super();
-    this.formBuilder = formBuilder;   
+    super(formBuilder);
+    this.contents = new Array<ICapabilityFormControl<ICapabilityDto>>();
     this.capability = new InterfaceCapabilityDto();
   }
   

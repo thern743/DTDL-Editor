@@ -5,16 +5,9 @@ import { ICapabilityDto } from './ICapabilityDto';
 import { PropertyCapabilityDto } from './PropertyCapabilityDto';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
-@jsonObject
 export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityDto> {
-  public index: number = -1;
-  public formBuilder: FormBuilder
-  public capability: PropertyCapabilityDto;  
-  public form!: FormGroup;
-
   constructor(formBuilder: FormBuilder) {  
-    super();
-    this.formBuilder = formBuilder;   
+    super(formBuilder);
     this.capability = new PropertyCapabilityDto();
   }
   

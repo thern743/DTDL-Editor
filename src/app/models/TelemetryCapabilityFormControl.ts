@@ -1,20 +1,12 @@
-import 'reflect-metadata';
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { jsonObject } from "typedjson";
 import { ICapabilityDto } from './ICapabilityDto';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { TelemetryCapabilityDto } from './TelemetryCapabilityDto';
 
-@jsonObject
 export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityDto> {
-  public index: number = -1;
-  public formBuilder: FormBuilder
-  public capability: TelemetryCapabilityDto;  
-  public form!: FormGroup;
-
+  
   constructor(formBuilder: FormBuilder) {  
-    super();
-    this.formBuilder = formBuilder;   
+    super(formBuilder);
     this.capability = new TelemetryCapabilityDto();
   }
 

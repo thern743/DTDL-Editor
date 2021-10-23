@@ -4,14 +4,8 @@ import { ComponentCapabilityDto } from './ComponentCapabilityDto';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 export class ComponentCapabilityFormControl extends AbstractCapabilityFormControl<ComponentCapabilityDto>  {
-  public index: number = -1;
-  public formBuilder: FormBuilder
-  public capability: ComponentCapabilityDto;  
-  public form!: FormGroup;
-
   constructor(formBuilder: FormBuilder) {  
-    super();
-    this.formBuilder = formBuilder;   
+    super(formBuilder);
     this.capability = new ComponentCapabilityDto();
   }
   

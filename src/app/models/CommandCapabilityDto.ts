@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import { jsonMember } from "typedjson";
+import { jsonMember, jsonObject } from "typedjson";
 import { ICapabilityDto } from './ICapabilityDto';
 
+@jsonObject
 export class CommandCapabilityDto implements ICapabilityDto {
     @jsonMember id: string = "";
     @jsonMember type: string = "Command";

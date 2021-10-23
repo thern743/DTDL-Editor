@@ -5,14 +5,8 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { CommandCapabilityDto } from './CommandCapabilityDto';
 
 export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityDto> {
-  public index: number = -1;
-  public formBuilder: FormBuilder
-  public capability: CommandCapabilityDto;  
-  public form!: FormGroup;
-
   constructor(formBuilder: FormBuilder) {  
-    super();
-    this.formBuilder = formBuilder;   
+    super(formBuilder);
     this.capability = new CommandCapabilityDto();
   }
   

@@ -1,8 +1,9 @@
 import 'reflect-metadata';
-import { jsonMember, jsonSetMember } from "typedjson";
+import { jsonMember, jsonObject, jsonSetMember } from "typedjson";
 import { AbstractCapabilityDto } from './AbstractCapabilityDto';
 import { ICapabilityDto } from "./ICapabilityDto";
 
+@jsonObject
 export class InterfaceCapabilityDto implements ICapabilityDto {
     @jsonMember id: string = "";
     @jsonMember type: string = "Interface";

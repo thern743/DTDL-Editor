@@ -36,10 +36,10 @@ export class EditorService {
     this.complexShcemaTypes = this.getComplexSchemaTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.commandTypes = this.getCommandTypes();
-    this.treeDataSource = new MatTreeNestedDataSource<ICapabilityFormControl>();  
+    this.treeDataSource = new MatTreeNestedDataSource<ICapabilityFormControl<ICapabilityDto>>();  
     
     let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
-    interfaceInstance.name = "Default Interface";
+    interfaceInstance.capability.name = "Default Interface";
     this.addInterface(interfaceInstance);
   }
 
@@ -97,26 +97,32 @@ export class EditorService {
   }
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
-    let temp = interfaceInstance.form.get("contents") as FormArray;
-    interfaceInstance.contents.add(capability);
-    temp.push(capability.toFormGroup());
-    console.log("Capabilities: " + interfaceInstance.contents.size + 
-        ". Properties: " + interfaceInstance.properties.length + 
-        ", Commands: " + interfaceInstance.commands.length + 
-        ", Telemetry: " + interfaceInstance.telemetries.length +
-        ", Components: " + interfaceInstance.components.length +
-        ", Relationships: " + interfaceInstance.relationships.length);
+    let form = capability.toFormGroup();
+    (<FormArray>interfaceInstance.form.get("contents")).push(form);
+
+    // let contentsArray = interfaceInstance.form.get("contents") as FormArray;
+    // contentsArray.push(capability.toFormGroup());
+    // interfaceInstance.contents = contentsArray;    
+    // console.log("Capabilities: " + interfaceInstance.contents.length + 
+    //     ". Properties: " + interfaceInstance.properties + 
+    //     ", Commands: " + interfaceInstance.commands.length + 
+    //     ", Telemetry: " + interfaceInstance.telemetries.length +
+    //     ", Components: " + interfaceInstance.components.length +
+    //     ", Relationships: " + interfaceInstance.relationships.length);
   }
 
-  public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
+  public  addPropertyToRelationship(relationshipInstance: ICapabilityFormControl<ICapabilityDto>): void {
     let capability = new PropertyCapabilityFormControl(this.formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
-    let temp = relationshipInstance.form.get("properties") as FormArray;
-    relationshipInstance.properties.push(capability);
-    temp.push(capability.toFormGroup());
-    console.log("Properties: " + relationshipInstance.properties.length);
+  private pushRelationshipProperties(relationshipInstance: ICapabilityFormControl<ICapabilityDto>, capability: ICapabilityFormControl<ICapabilityDto>): void {
+    let form = capability.toFormGroup();
+    let formArray = <FormArray>relationshipInstance.form.get("properties") as FormArray;
+    formArray.push(form);
+    // let propertiesArray = (<FormArray>relationshipInstance.form.get("properties")).push(capability.toFormGroup());
+    // propertiesArray.push(capability.toFormGroup());
+    // relationshipInstance.properties = propertiesArray;    
+    console.log("Properties: " + formArray.length);
   }
 }

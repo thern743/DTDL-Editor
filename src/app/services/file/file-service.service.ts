@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { InterfaceCapabilityFormControl } from 'src/app/models/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityDto } from 'src/app/models/InterfaceCapabilityDto';
 import { TypedJSON } from 'typedjson';
 
 @Injectable({
@@ -12,16 +12,16 @@ import { TypedJSON } from 'typedjson';
 export class FileService {
   fileAttr = 'Choose Files...';
   files: File[];
-  interfaces: Subject<InterfaceCapabilityFormControl>;
-  typedJson: TypedJSON<InterfaceCapabilityFormControl>;  
+  interfaces: Subject<InterfaceCapabilityDto>;
+  typedJson: TypedJSON<InterfaceCapabilityDto>;  
 
   constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar) { 
     this.files = new Array<File>(); 
-    this.interfaces = new Subject<InterfaceCapabilityFormControl>();
-    this.typedJson = new TypedJSON(InterfaceCapabilityFormControl);
+    this.interfaces = new Subject<InterfaceCapabilityDto>();
+    this.typedJson = new TypedJSON(InterfaceCapabilityDto);
   }
 
-  public uploadFiles(file: any): Subject<InterfaceCapabilityFormControl> {
+  public uploadFiles(file: any): Subject<InterfaceCapabilityDto> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
       
@@ -34,8 +34,7 @@ export class FileService {
           try {                        
             //let capability = JSON.parse(file) as InterfaceCapability;
             let capability = this.typedJson.parse(file);
-            capability instanceof InterfaceCapabilityFormControl;
-            capability!.formBuilder = this._formBuilder;
+            capability instanceof InterfaceCapabilityDto;
             this.files.push(file);      
             this.interfaces.next(capability);                                    
           } catch(error) {
@@ -63,31 +62,5 @@ export class FileService {
     }
 
     return this.interfaces;
-  }
-
-  private onLoad(data: any) {
-    let file = data.target.result;
-    console.log("Reading File: \n\n" + file);
-
-    try {            
-      let capability = JSON.parse(file) as InterfaceCapabilityFormControl;
-      capability.formBuilder = this._formBuilder;
-      this.files.push(file);      
-      this.interfaces.next(capability);                                    
-    } catch(error) {
-      const msg = "Invalid DTDL (JSON-LD) File";
-      console.error(msg + ": " + error); 
-
-      // TODO: Handle in a new ErrorService
-      this._snackBar.openFromComponent(ErrorSnackbarComponent, {
-        horizontalPosition: "center",
-        verticalPosition: "top",
-        duration: 5000,
-        panelClass: ['mat-toolbar', 'mat-warn'],
-        data: { msg: msg }
-      });
-
-      this.fileAttr = "Choose Files...";           
-    }
   }
 }

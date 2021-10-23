@@ -7,6 +7,9 @@ import { CommandCapabilityFormControl } from '../models/CommandCapabilityFormCon
 import { TelemetryCapabilityFormControl } from '../models/TelemetryCapabilityFormControl';
 import { ComponentCapabilityFormControl } from '../models/ComponentCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabilityFormControl';
+import { IDtdlComponent } from '../models/IDtdlComponent';
+import { FormArray } from '@angular/forms';
+import { ICapabilityDto } from '../models/ICapabilityDto';
 
 @Component({
   selector: 'interface-definition',
@@ -14,7 +17,7 @@ import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabil
   styleUrls: ['./interface.component.scss']
 })
 
-export class InterfaceComponent implements OnInit {
+export class InterfaceComponent implements IDtdlComponent, OnInit {
   // TODO: Support multiple interfaces from main editor.
   //@Input() formIndex: number = 0;
   formIndex: number = 0;
@@ -27,6 +30,10 @@ export class InterfaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.interface?.toFormGroup();
+  }
+
+  getContents(): Array<ICapabilityFormControl<ICapabilityDto>> {
+    return this.interface.contents;
   }
 
   getProperty(capability: PropertyCapabilityFormControl): PropertyCapabilityFormControl {
@@ -45,7 +52,7 @@ export class InterfaceComponent implements OnInit {
     return capability as ComponentCapabilityFormControl;
   }
 
-  getRelationship(capability: RelationshipCapabilityFormControl): RelationshipCapabilityFormControl {
-    return capability as RelationshipCapabilityFormControl;
+  getRelationship(capability: RelationshipCapabilityFormControl): ICapabilityFormControl<ICapabilityDto> {
+    return capability as ICapabilityFormControl<ICapabilityDto>;
   }
 }
