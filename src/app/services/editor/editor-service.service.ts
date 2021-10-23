@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { InterfaceCapabilityFormControl } from 'src/app/models/InterfaceCapabilityFormControl';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { CommandCapabilityFormControl } from 'src/app/models/CommandCapabilityFormControl';
-import { PropertyCapabilityFormControl } from 'src/app/models/PropertyCapabilityFormControl';
-import { TelemetryCapabilityFormControl } from 'src/app/models/TelemetryCapabilityFormControl';
-import { ICapabilityFormControl } from 'src/app/models/ICapabilityFormControl';
-import { RelationshipCapabilityFormControl } from 'src/app/models/RelationshipCapabilityFormControl';
-import { ComponentCapabilityFormControl } from 'src/app/models/ComponentCapabilityFormControl';
-import { DtdlModelForm } from 'src/app/models/DtdlModelForm';
+import { InterfaceCapabilityFormControl } from 'src/app/formControls/InterfaceCapabilityFormControl';
+import { FormBuilder } from '@angular/forms';
+import { CommandCapabilityFormControl } from 'src/app/formControls/CommandCapabilityFormControl';
+import { PropertyCapabilityFormControl } from 'src/app/formControls/PropertyCapabilityFormControl';
+import { TelemetryCapabilityFormControl } from 'src/app/formControls/TelemetryCapabilityFormControl';
+import { ICapabilityFormControl } from 'src/app/formControls/ICapabilityFormControl';
+import { RelationshipCapabilityFormControl } from 'src/app/formControls/RelationshipCapabilityFormControl';
+import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCapabilityFormControl';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { ICapabilityDto } from 'src/app/models/ICapabilityDto';
+import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class EditorService {
-  dtdlModelForm: DtdlModelForm;
-  classTypes: string[];
-  capabilities: string[];
-  semantics: string[];
-  schemaTypes: string[];
-  complexShcemaTypes: string[];
-  interfaces: InterfaceCapabilityFormControl[];
-  commandTypes: string[];
-  treeDataSource: MatTreeNestedDataSource<ICapabilityFormControl<ICapabilityDto>>;
+  public classTypes: string[];
+  public capabilities: string[];
+  public semantics: string[];
+  public schemaTypes: string[];
+  public complexShcemaTypes: string[];
+  public interfaces: InterfaceCapabilityFormControl[];
+  public commandTypes: string[];
+  public treeDataSource: MatTreeNestedDataSource<InterfaceCapabilityFormControl>;
+
+  private _httpClient: HttpClient;
   
-  constructor(private http: HttpClient, dtdlModelForm: DtdlModelForm, public formBuilder: FormBuilder) { 
-    this.dtdlModelForm = dtdlModelForm;
+  constructor(httpClient: HttpClient, public formBuilder: FormBuilder) { 
+    this._httpClient = httpClient;
     this.classTypes = this.getClassTypes();
     this.capabilities = this.getCapabilityTypes();
     this.semantics= this.getSemanticTypes();
@@ -36,10 +36,10 @@ export class EditorService {
     this.complexShcemaTypes = this.getComplexSchemaTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.commandTypes = this.getCommandTypes();
-    this.treeDataSource = new MatTreeNestedDataSource<ICapabilityFormControl<ICapabilityDto>>();  
+    this.treeDataSource = new MatTreeNestedDataSource<InterfaceCapabilityFormControl>();  
     
     let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
-    interfaceInstance.capability.name = "Default Interface";
+    interfaceInstance.model.name = "Default Interface";
     this.addInterface(interfaceInstance);
   }
 
@@ -68,11 +68,12 @@ export class EditorService {
   }
 
   public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    this.dtdlModelForm.interfaces.push(interfaceInstance);
+    this.interfaces.push(interfaceInstance);
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let capability = new PropertyCapabilityFormControl(this.formBuilder);
+    interfaceInstance.model.contents.add(capability.model);
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
@@ -96,7 +97,7 @@ export class EditorService {
     this.pushInterfaceContents(interfaceInstance, capability);
   }
 
-  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
+  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
     interfaceInstance.contents.push(capability);
 
     console.log("Capabilities: " + interfaceInstance.contents.length + 
@@ -112,7 +113,7 @@ export class EditorService {
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {
     relationshipInstance.properties.push(capability);
     console.log("Properties: " + relationshipInstance.properties.length);
   }

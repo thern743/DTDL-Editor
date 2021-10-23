@@ -1,3 +1,4 @@
-<ng-container *ngFor="let interface of editorService.dtdlModelForm.interfaces">
+<ng-container *ngFor="let interface of editorService.interfaces">
     <interface-definition [interface]="interface"></interface-definition>
+    <preview-panel [interface]="interface"></preview-panel>
 </ng-container>

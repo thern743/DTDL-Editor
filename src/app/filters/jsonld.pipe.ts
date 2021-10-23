@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-    name: 'jsonld'
+    name: 'jsonld',
+    pure: false
 })
 
 export class JsonLdPipe implements PipeTransform {
-    transform(val: any) {
+    transform(val: any): string {        
         return JSON.stringify(val, JsonLdPipe.stringify, 2);
     }
 
@@ -27,4 +28,3 @@ export class JsonLdPipe implements PipeTransform {
         return value;
     }
 }
-  

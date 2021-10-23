@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ICapabilityDto } from '../models/ICapabilityDto';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { TelemetryCapabilityFormControl } from '../models/TelemetryCapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -12,7 +11,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class TelemetryComponent implements OnInit {
   @Input() public formIndex: number = 0;
-  @Input() public telemetry!: ICapabilityFormControl<ICapabilityDto>;
+  @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
   panelOpenState = false;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
@@ -20,6 +19,6 @@ export class TelemetryComponent implements OnInit {
   }
 
   public ngOnInit(): void {  
-    
+    this.telemetry.subscribe();
   }
 }

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
-import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFormControl';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabilityFormControl';
-import { ICapabilityDto } from '../models/ICapabilityDto';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
+import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
 
 @Component({
   selector: 'interface-definition',
@@ -13,9 +13,8 @@ import { ICapabilityDto } from '../models/ICapabilityDto';
 
 export class InterfaceComponent implements OnInit {
   // TODO: Support multiple interfaces from main editor.
-  //@Input() formIndex: number = 0;
-  formIndex: number = 0;
-  @Input() interface!: InterfaceCapabilityFormControl;
+  public formIndex: number = 0;
+  @Input() public interface!: InterfaceCapabilityFormControl;
   panelOpenState = true;
   
   constructor(public editorService: EditorService) {
@@ -23,14 +22,14 @@ export class InterfaceComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.interface?.toFormGroup();
+    this.interface.subscribe();
   }
 
-  public getContents(): Array<ICapabilityFormControl<ICapabilityDto>> {
+  public getContents(): Array<ICapabilityFormControl<ICapabilityModel>> {
     return this.interface.contents;
   }
 
-  public getRelationship(capability: ICapabilityFormControl<ICapabilityDto>): RelationshipCapabilityFormControl {
+  public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
     return capability as RelationshipCapabilityFormControl;
   }
 }

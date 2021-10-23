@@ -62,7 +62,7 @@
 
     <div formArrayName="contents">
          <ng-container *ngFor="let capability of getContents(); let i = index;">
-            <ng-container [ngSwitch]="capability.capability.type">
+            <ng-container [ngSwitch]="capability.model.type">
                 <ng-container *ngSwitchCase="'Property'">
                     <property-definition [formIndex]="i" [property]="capability"></property-definition>        
                 </ng-container>
@@ -104,4 +104,3 @@
         </button>
     </mat-action-row>
 </mat-expansion-panel>
-<preview-panel [interface]="interface"></preview-panel>

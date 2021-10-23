@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityDto } from '../models/ICapabilityDto';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
+import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -19,10 +19,10 @@ export class RelationshipComponent implements OnInit {
   }
  
   public ngOnInit(): void { 
-    
+    this.relationship.subscribe();
   }
 
-  public getProperties(): Array<ICapabilityFormControl<ICapabilityDto>> {
+  public getProperties(): Array<ICapabilityFormControl<ICapabilityModel>> {
     return (<RelationshipCapabilityFormControl>this.relationship).properties;
   }
 }

@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { DtdlModelForm } from '../models/DtdlModelForm';
-import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 
 @Component({
   selector: 'preview-panel',
@@ -9,7 +7,7 @@ import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFor
   styleUrls: ['./preview-panel.component.scss']
 })
 export class PreviewPanelComponent implements OnInit {
-  panelOpenState = true;
+  public panelOpenState = true;
   @Input() public interface!: InterfaceCapabilityFormControl;
 
   constructor() { 

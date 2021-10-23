@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ICapabilityDto } from '../models/ICapabilityDto';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { PropertyCapabilityFormControl } from '../models/PropertyCapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -12,7 +10,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 })
 export class PropertyComponent implements OnInit {
   @Input() public formIndex: number = 0;
-  @Input() public property!: ICapabilityFormControl<ICapabilityDto>;
+  @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
@@ -20,6 +18,6 @@ export class PropertyComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    
+    this.property.subscribe();
   }
 }

@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { InterfaceCapabilityDto } from 'src/app/models/InterfaceCapabilityDto';
+import { InterfaceCapabilityDto } from 'src/app/models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
 
 @Injectable({

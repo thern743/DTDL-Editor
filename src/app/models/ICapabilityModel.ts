@@ -1,4 +1,4 @@
-export interface ICapabilityDto {
+export interface ICapabilityModel {
     id: string;
     type: string;
     name: string;

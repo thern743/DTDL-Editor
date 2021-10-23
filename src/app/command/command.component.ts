@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { CommandCapabilityFormControl } from '../models/CommandCapabilityFormControl';
-import { ICapabilityDto } from '../models/ICapabilityDto';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service'
 
 
@@ -13,7 +11,7 @@ import { EditorService } from '../services/editor/editor-service.service'
 })
 export class CommandPayloadComponent implements OnInit {
   @Input() formIndex: number = 0;
-  @Input() command!: ICapabilityFormControl<ICapabilityDto>;
+  @Input() command!: ICapabilityFormControl<ICapabilityModel>;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
@@ -21,6 +19,6 @@ export class CommandPayloadComponent implements OnInit {
   }
 
   public ngOnInit(): void {  
-    
+    this.command.subscribe();
   }
 }

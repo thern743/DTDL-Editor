@@ -1,6 +1,6 @@
-import { ICapabilityDto } from "./ICapabilityDto";
+import { ICapabilityModel } from "./ICapabilityModel";
 
-export class AbstractCapabilityDto implements ICapabilityDto {
+export class AbstractCapabilityDto implements ICapabilityModel {
     public id!: string;
     public type!: string;
     public name!: string;

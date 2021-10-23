@@ -1,17 +1,17 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject } from "typedjson";
-import { ICapabilityDto } from './ICapabilityDto';
+import { ICapabilityModel } from './ICapabilityModel';
 
 @jsonObject
-export class PropertyCapabilityDto implements ICapabilityDto {
+export class TelemetryCapabilityDto implements ICapabilityModel {
   @jsonMember id: string = "";
-  @jsonMember type: string = "Property";
+  @jsonMember type: string = "Telemetry";
   @jsonMember name: string = "";
   @jsonMember displayName: string = "";
   @jsonMember description: string = "";
   @jsonMember comment: string = "";
-  // Property specific
-  @jsonMember schema: string = "";  
+  // Telemetry specific
+  @jsonMember schema: string = "";
   @jsonMember semanticType: string = "";
-  @jsonMember writable: boolean = false;
 }
+

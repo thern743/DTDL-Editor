@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { EditorService } from '../services/editor/editor-service.service';
-import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFormControl';
-import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { ICapabilityDto } from '../models/ICapabilityDto';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 
 @Component({
   selector: 'model-tree',
@@ -11,18 +9,20 @@ import { ICapabilityDto } from '../models/ICapabilityDto';
   styleUrls: ['./model-tree.component.scss']
 })
 export class ModelTreeComponent implements OnInit {
-  treeControl: NestedTreeControl<ICapabilityFormControl<ICapabilityDto>>;
-  showFiller: boolean = true;
+  public treeControl!: NestedTreeControl<InterfaceCapabilityFormControl>;
+  public showFiller: boolean = true;
+  public editorService: EditorService;
 
-  constructor(public editorService: EditorService) {
-    this.treeControl = new NestedTreeControl<ICapabilityFormControl<ICapabilityDto>>(this.getChildren);       
+  constructor(editorService: EditorService) {
+    this.editorService = editorService;
+    this.treeControl = new NestedTreeControl<InterfaceCapabilityFormControl>(this.getChildren);
   }
 
   ngOnInit(): void {
-    this.editorService.treeDataSource.data = this.editorService.dtdlModelForm.interfaces;
+    this.editorService.treeDataSource.data = this.editorService.interfaces;
   }
 
-  getChildren = (node: ICapabilityFormControl<ICapabilityDto>) => node instanceof InterfaceCapabilityFormControl ? [...node?.contents] : null;
+  getChildren = (node: InterfaceCapabilityFormControl) => node instanceof InterfaceCapabilityFormControl ? node?.contents as InterfaceCapabilityFormControl[] : null;
 
-  hasChild = (_: number, node: ICapabilityFormControl<ICapabilityDto>) => node instanceof InterfaceCapabilityFormControl ? !!node.contents && node.contents.length > 0 : false;
+  hasChild = (_: number, node: InterfaceCapabilityFormControl) => node instanceof InterfaceCapabilityFormControl ? !!node.contents && node.contents.length > 0 : false;
 }

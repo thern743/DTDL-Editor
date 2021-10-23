@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { InterfaceCapabilityDto } from '../models/InterfaceCapabilityDto';
-import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityDto } from '../models/InterfaceCapabilityModel';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { FileService } from '../services/file/file-service.service';
 
@@ -29,7 +29,7 @@ export class FolderSelectComponent implements OnInit {
     this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityDto) => { 
       console.log("Received " + capability.name);
       var formControl = new InterfaceCapabilityFormControl(this._formBuilder);
-      formControl.capability = capability;
+      formControl.model = capability;
       this.editorService.addInterface(formControl);
     });
     this.fileInput.nativeElement.value = "";
