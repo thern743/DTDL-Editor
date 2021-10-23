@@ -36,4 +36,29 @@ export class InterfaceCapabilityDto implements ICapabilityModel {
     constructor() {
         this.contents = new Set<ICapabilityModel>();
     }
+
+    get commands(): ICapabilityModel[] {        
+        return this.capabilityByType("Command");
+      }
+    
+      get properties(): ICapabilityModel[] {
+        return this.capabilityByType("Property");
+      }
+    
+      get telemetries(): ICapabilityModel[] {
+        return this.capabilityByType("Telemetry");
+      }
+    
+      get components(): ICapabilityModel[] {
+        return this.capabilityByType("Component");
+      }
+    
+      get relationships(): ICapabilityModel[] {
+        return this.capabilityByType("Relationship");
+      }
+    
+      private capabilityByType(type: string): ICapabilityModel[] {    
+        let capabilities = [...this.contents].filter(x => x.type === type);
+        return capabilities;
+      }
 }

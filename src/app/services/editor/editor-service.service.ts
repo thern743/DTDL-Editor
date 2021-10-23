@@ -73,8 +73,7 @@ export class EditorService {
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let capability = new PropertyCapabilityFormControl(this.formBuilder);
-    interfaceInstance.model.contents.add(capability.model);
-    this.pushInterfaceContents(interfaceInstance, capability);
+        this.pushInterfaceContents(interfaceInstance, capability);
   }
 
   public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {   
@@ -99,13 +98,21 @@ export class EditorService {
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
     interfaceInstance.contents.push(capability);
+    interfaceInstance.model.contents.add(capability.model);
 
-    console.log("Capabilities: " + interfaceInstance.contents.length + 
-        ". Properties: " + interfaceInstance.properties + 
+    console.log("Form Capabilities: " + interfaceInstance.contents.length + 
+        ". Properties: " + interfaceInstance.properties.length + 
         ", Commands: " + interfaceInstance.commands.length + 
         ", Telemetry: " + interfaceInstance.telemetries.length +
         ", Components: " + interfaceInstance.components.length +
         ", Relationships: " + interfaceInstance.relationships.length);
+
+    console.log("Model Capabilities: " + interfaceInstance.model.contents.size + 
+        ". Properties: " + interfaceInstance.model.properties.length + 
+        ", Commands: " + interfaceInstance.model.commands.length + 
+        ", Telemetry: " + interfaceInstance.model.telemetries.length +
+        ", Components: " + interfaceInstance.model.components.length +
+        ", Relationships: " + interfaceInstance.model.relationships.length);
   }
 
   public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
