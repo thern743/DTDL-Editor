@@ -2,9 +2,27 @@
 
 A general-purpose editor inspired by [Azure IoT Central's model editor](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-set-up-template). 
 
-Currently working on supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md)
+Currently working on supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+
+This Angular project uses [Angular Material](https://material.angular.io/).
+
+## Setup
+
+1. Install NodeJS and `npm`.
+
+2. Install Angular globally:
+
+        `npm install -g @angular/cli`
+
+3. Install reflect-metadata:
+
+        `npm install reflect-metadata`
+
+4. Install npm packages:
+
+        `npm update`
 
 ## Development server
 
