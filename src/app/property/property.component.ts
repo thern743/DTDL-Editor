@@ -18,6 +18,6 @@ export class PropertyComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.property.subscribe();
+    this.property.subscribeModelToForm();
   }
 }

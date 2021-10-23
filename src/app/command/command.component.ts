@@ -19,6 +19,6 @@ export class CommandPayloadComponent implements OnInit {
   }
 
   public ngOnInit(): void {  
-    this.command.subscribe();
+    this.command.subscribeModelToForm();
   }
 }

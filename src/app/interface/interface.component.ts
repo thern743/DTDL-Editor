@@ -22,7 +22,7 @@ export class InterfaceComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.interface.subscribe();
+    this.interface.subscribeModelToForm();
   }
 
   public getContents(): Array<ICapabilityFormControl<ICapabilityModel>> {

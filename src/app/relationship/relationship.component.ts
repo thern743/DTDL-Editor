@@ -19,7 +19,7 @@ export class RelationshipComponent implements OnInit {
   }
  
   public ngOnInit(): void { 
-    this.relationship.subscribe();
+    this.relationship.subscribeModelToForm();
   }
 
   public getProperties(): Array<ICapabilityFormControl<ICapabilityModel>> {

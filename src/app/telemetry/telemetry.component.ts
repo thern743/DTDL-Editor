@@ -19,6 +19,6 @@ export class TelemetryComponent implements OnInit {
   }
 
   public ngOnInit(): void {  
-    this.telemetry.subscribe();
+    this.telemetry.subscribeModelToForm();
   }
 }

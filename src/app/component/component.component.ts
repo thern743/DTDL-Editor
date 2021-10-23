@@ -18,6 +18,6 @@ export class ComponentComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.component.subscribe();
+    this.component.subscribeModelToForm();
   }
 }

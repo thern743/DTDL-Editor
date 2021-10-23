@@ -8,5 +8,5 @@ export interface ICapabilityFormControl<TCapabilityModel extends ICapabilityMode
     form: FormGroup;   
     toFormGroup(): FormGroup;
     getValue(): ICapabilityModel;
-    subscribe(): void;
+    subscribeModelToForm(): void;
 }
