@@ -12,7 +12,7 @@ export class MainEditorComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     
   }
 }

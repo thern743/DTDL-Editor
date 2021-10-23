@@ -10,15 +10,15 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./component.component.scss']
 })
 export class ComponentComponent implements OnInit {
-  @Input() formIndex: number = 0;
-  @Input() component!: ICapabilityFormControl<ICapabilityDto>;
+  @Input() public formIndex: number = 0;
+  @Input() public component!: ICapabilityFormControl<ICapabilityDto>;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     
   }
 
-  ngOnInit(): void { 
+  public ngOnInit(): void { 
     
   }
 }

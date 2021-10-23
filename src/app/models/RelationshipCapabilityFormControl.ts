@@ -12,6 +12,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     super(formBuilder);
     this.properties = new Array<PropertyCapabilityFormControl>();
     this.capability = new RelationshipCapabilityDto();
+    this.toFormGroup();
   }
 
   public toFormGroup(): FormGroup {

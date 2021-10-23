@@ -9,6 +9,7 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.capability = new PropertyCapabilityDto();
+    this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {

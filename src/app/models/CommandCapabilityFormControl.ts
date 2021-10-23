@@ -8,6 +8,7 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.capability = new CommandCapabilityDto();
+    this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {

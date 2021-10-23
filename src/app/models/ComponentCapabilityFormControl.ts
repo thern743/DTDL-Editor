@@ -7,6 +7,7 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.capability = new ComponentCapabilityDto();
+    this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {

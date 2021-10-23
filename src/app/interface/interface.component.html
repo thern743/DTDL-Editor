@@ -76,7 +76,7 @@
                     <component-definition [formIndex]="i" [component]="capability"></component-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Relationship'">
-                    <relationship-definition [formIndex]="i" [relationship]="capability"></relationship-definition>        
+                    <relationship-definition [formIndex]="i" [relationship]="getRelationship(capability)"></relationship-definition>        
                 </ng-container>
             </ng-container>
         </ng-container>

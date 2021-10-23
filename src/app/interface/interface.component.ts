@@ -2,13 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
 import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFormControl';
 import { ICapabilityFormControl } from '../models/ICapabilityFormControl';
-import { PropertyCapabilityFormControl } from '../models/PropertyCapabilityFormControl';
-import { CommandCapabilityFormControl } from '../models/CommandCapabilityFormControl';
-import { TelemetryCapabilityFormControl } from '../models/TelemetryCapabilityFormControl';
-import { ComponentCapabilityFormControl } from '../models/ComponentCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../models/RelationshipCapabilityFormControl';
-import { IDtdlComponent } from '../models/IDtdlComponent';
-import { FormArray } from '@angular/forms';
 import { ICapabilityDto } from '../models/ICapabilityDto';
 
 @Component({
@@ -17,7 +11,7 @@ import { ICapabilityDto } from '../models/ICapabilityDto';
   styleUrls: ['./interface.component.scss']
 })
 
-export class InterfaceComponent implements IDtdlComponent, OnInit {
+export class InterfaceComponent implements OnInit {
   // TODO: Support multiple interfaces from main editor.
   //@Input() formIndex: number = 0;
   formIndex: number = 0;
@@ -28,31 +22,15 @@ export class InterfaceComponent implements IDtdlComponent, OnInit {
    
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.interface?.toFormGroup();
   }
 
-  getContents(): Array<ICapabilityFormControl<ICapabilityDto>> {
+  public getContents(): Array<ICapabilityFormControl<ICapabilityDto>> {
     return this.interface.contents;
   }
 
-  getProperty(capability: PropertyCapabilityFormControl): PropertyCapabilityFormControl {
-    return capability as PropertyCapabilityFormControl;
-  }
-
-  getCommand(capability: CommandCapabilityFormControl): CommandCapabilityFormControl {
-    return capability as CommandCapabilityFormControl;
-  }
-
-  getTelemetry(capability: TelemetryCapabilityFormControl): TelemetryCapabilityFormControl {
-    return capability as TelemetryCapabilityFormControl;
-  }
-
-  getComponent(capability: ComponentCapabilityFormControl): ComponentCapabilityFormControl {
-    return capability as ComponentCapabilityFormControl;
-  }
-
-  getRelationship(capability: RelationshipCapabilityFormControl): ICapabilityFormControl<ICapabilityDto> {
-    return capability as ICapabilityFormControl<ICapabilityDto>;
+  public getRelationship(capability: ICapabilityFormControl<ICapabilityDto>): RelationshipCapabilityFormControl {
+    return capability as RelationshipCapabilityFormControl;
   }
 }

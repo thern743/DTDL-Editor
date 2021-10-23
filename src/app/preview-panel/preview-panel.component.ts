@@ -10,15 +10,13 @@ import { InterfaceCapabilityFormControl } from '../models/InterfaceCapabilityFor
 })
 export class PreviewPanelComponent implements OnInit {
   panelOpenState = true;
-  @Input() interface!: InterfaceCapabilityFormControl;
+  @Input() public interface!: InterfaceCapabilityFormControl;
 
   constructor() { 
     
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     
   }
-
-  action(): void {}
 }

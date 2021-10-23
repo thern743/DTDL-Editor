@@ -97,32 +97,23 @@ export class EditorService {
   }
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
-    let form = capability.toFormGroup();
-    (<FormArray>interfaceInstance.form.get("contents")).push(form);
+    interfaceInstance.contents.push(capability);
 
-    // let contentsArray = interfaceInstance.form.get("contents") as FormArray;
-    // contentsArray.push(capability.toFormGroup());
-    // interfaceInstance.contents = contentsArray;    
-    // console.log("Capabilities: " + interfaceInstance.contents.length + 
-    //     ". Properties: " + interfaceInstance.properties + 
-    //     ", Commands: " + interfaceInstance.commands.length + 
-    //     ", Telemetry: " + interfaceInstance.telemetries.length +
-    //     ", Components: " + interfaceInstance.components.length +
-    //     ", Relationships: " + interfaceInstance.relationships.length);
+    console.log("Capabilities: " + interfaceInstance.contents.length + 
+        ". Properties: " + interfaceInstance.properties + 
+        ", Commands: " + interfaceInstance.commands.length + 
+        ", Telemetry: " + interfaceInstance.telemetries.length +
+        ", Components: " + interfaceInstance.components.length +
+        ", Relationships: " + interfaceInstance.relationships.length);
   }
 
-  public  addPropertyToRelationship(relationshipInstance: ICapabilityFormControl<ICapabilityDto>): void {
+  public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
     let capability = new PropertyCapabilityFormControl(this.formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: ICapabilityFormControl<ICapabilityDto>, capability: ICapabilityFormControl<ICapabilityDto>): void {
-    let form = capability.toFormGroup();
-    let formArray = <FormArray>relationshipInstance.form.get("properties") as FormArray;
-    formArray.push(form);
-    // let propertiesArray = (<FormArray>relationshipInstance.form.get("properties")).push(capability.toFormGroup());
-    // propertiesArray.push(capability.toFormGroup());
-    // relationshipInstance.properties = propertiesArray;    
-    console.log("Properties: " + formArray.length);
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityDto>): void {
+    relationshipInstance.properties.push(capability);
+    console.log("Properties: " + relationshipInstance.properties.length);
   }
 }

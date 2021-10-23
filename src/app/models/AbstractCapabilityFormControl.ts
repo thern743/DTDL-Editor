@@ -12,7 +12,7 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public form!: FormGroup;
     
     constructor(formBuilder: FormBuilder) {
-        this.formBuilder = formBuilder;
+        this.formBuilder = formBuilder;        
     }
 
     public abstract toFormGroup(): FormGroup;

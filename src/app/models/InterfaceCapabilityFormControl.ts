@@ -18,25 +18,30 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     this.capability = new InterfaceCapabilityDto();
   }
   
-  // get commands(): CommandCapabilityFormControl[] {
-  //   return [...this.capability.contents].filter(x => x.capability.type === "Command") as CommandCapabilityFormControl[];
-  // }
+  get commands(): ICapabilityDto[] {        
+    return this.capabilityByType("Command");
+  }
 
-  // get properties(): PropertyCapabilityFormControl[] {
-  //   return [...this.capability.contents].filter(x => x.capability.type === "Property") as PropertyCapabilityFormControl[];
-  // }
+  get properties(): ICapabilityDto[] {
+    return this.capabilityByType("Property");
+  }
 
-  // get telemetries(): TelemetryCapabilityFormControl[] {
-  //   return [...this.capability.contents].filter(x => x.capability.type === "Telemetry") as TelemetryCapabilityFormControl[];
-  // }
+  get telemetries(): ICapabilityDto[] {
+    return this.capabilityByType("Telemetry");
+  }
 
-  // get components(): ComponentCapabilityFormControl[] {
-  //   return [...this.capability.contents].filter(x => x.capability.type === "Component") as ComponentCapabilityFormControl[];
-  // }
+  get components(): ICapabilityDto[] {
+    return this.capabilityByType("Component");
+  }
 
-  // get relationships(): RelationshipCapabilityFormControl[] {
-  //   return [...this.capability.contents].filter(x => x.capability.type === "Relationship") as RelationshipCapabilityFormControl[];
-  // }
+  get relationships(): ICapabilityDto[] {
+    return this.capabilityByType("Relationship");
+  }
+
+  private capabilityByType(type: string): ICapabilityDto[] {    
+    let capabilities = [...this.capability.contents].filter(x => x.type === type);
+    return capabilities;
+  }
 
   public toFormGroup(): FormGroup {
     this.form = this.formBuilder.group({

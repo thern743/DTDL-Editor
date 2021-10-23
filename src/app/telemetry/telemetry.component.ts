@@ -11,15 +11,15 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./telemetry.component.scss']
 })
 export class TelemetryComponent implements OnInit {
-  @Input() formIndex: number = 0;
-  @Input() telemetry!: ICapabilityFormControl<ICapabilityDto>;
+  @Input() public formIndex: number = 0;
+  @Input() public telemetry!: ICapabilityFormControl<ICapabilityDto>;
   panelOpenState = false;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
     
   }
 
-  ngOnInit(): void {  
+  public ngOnInit(): void {  
     
   }
 }

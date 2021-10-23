@@ -8,6 +8,7 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.capability = new TelemetryCapabilityDto();
+    this.toFormGroup();
   }
 
   public toFormGroup(): FormGroup {

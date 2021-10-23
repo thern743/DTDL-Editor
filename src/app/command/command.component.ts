@@ -20,7 +20,7 @@ export class CommandPayloadComponent implements OnInit {
     
   }
 
-  ngOnInit(): void {  
+  public ngOnInit(): void {  
     
   }
 }
