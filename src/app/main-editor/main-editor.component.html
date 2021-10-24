@@ -1,4 +1,4 @@
-<ng-container *ngFor="let interface of editorService.interfaces">
+<ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
 
     <mat-expansion-panel    [expanded]="panelOpenState"
                             (opened)="panelOpenState = true"
@@ -8,8 +8,8 @@
         <mat-panel-description>Define a DTDL Model</mat-panel-description>
     </mat-expansion-panel-header>
 
-        <interface-definition [interface]="interface"></interface-definition>
-        <preview-panel [interface]="interface"></preview-panel>
+        <interface-definition [interface]="interface" [formIndex]="i"></interface-definition>
+        <preview-panel [interface]="interface" [formIndex]="i"></preview-panel>
 
         <mat-action-row>
             <button mat-raised-button color="primary" (click)="addInterface()">

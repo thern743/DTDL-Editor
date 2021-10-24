@@ -120,7 +120,7 @@ export class EditorService {
     console.groupEnd();
   }
 
-  public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
+  public addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
     let capability = new PropertyCapabilityFormControl(this.formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }

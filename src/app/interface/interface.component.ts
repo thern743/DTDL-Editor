@@ -12,8 +12,7 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 })
 
 export class InterfaceComponent implements OnInit {
-  // TODO: Support multiple interfaces from main editor.
-  public formIndex: number = 0;
+  @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
   public panelOpenState = true;
   

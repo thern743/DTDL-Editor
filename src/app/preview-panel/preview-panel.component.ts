@@ -8,6 +8,7 @@ import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabil
 })
 export class PreviewPanelComponent implements OnInit {
   public panelOpenState = true;
+  @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
 
   constructor() { 
