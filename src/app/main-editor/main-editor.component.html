@@ -1,4 +1,22 @@
 <ng-container *ngFor="let interface of editorService.interfaces">
-    <interface-definition [interface]="interface"></interface-definition>
-    <preview-panel [interface]="interface"></preview-panel>
+
+    <mat-expansion-panel    [expanded]="panelOpenState"
+                            (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Model Definition</mat-panel-title>
+        <mat-panel-description>Define a DTDL Model</mat-panel-description>
+    </mat-expansion-panel-header>
+
+        <interface-definition [interface]="interface"></interface-definition>
+        <preview-panel [interface]="interface"></preview-panel>
+
+        <mat-action-row>
+            <button mat-raised-button color="primary" (click)="addInterface()">
+                <mat-icon>add_circle</mat-icon>&nbsp;New Interface
+            </button>
+        </mat-action-row>
+        
+    </mat-expansion-panel>
+
 </ng-container>

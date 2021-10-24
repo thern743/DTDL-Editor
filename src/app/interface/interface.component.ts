@@ -15,7 +15,7 @@ export class InterfaceComponent implements OnInit {
   // TODO: Support multiple interfaces from main editor.
   public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
-  panelOpenState = true;
+  public panelOpenState = true;
   
   constructor(public editorService: EditorService) {
    
