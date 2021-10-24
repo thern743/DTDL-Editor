@@ -11,6 +11,7 @@ import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCa
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { Observable, of, Subject } from 'rxjs';
+import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -37,8 +38,8 @@ export class EditorService {
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();
 
-    let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
-    interfaceInstance.model.name = "Default Interface";
+    let model = new InterfaceCapabilityModel("Default Interface");
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this.formBuilder);
     this.addInterface(interfaceInstance);
   }
 

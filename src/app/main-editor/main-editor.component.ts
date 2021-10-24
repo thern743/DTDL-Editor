@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -23,8 +24,8 @@ export class MainEditorComponent implements OnInit {
   }
 
   public addInterface(): void {
-    let interfaceInstance = new InterfaceCapabilityFormControl(this._formBuilder);
-    interfaceInstance.model.name = "New Interface";
+    let model = new InterfaceCapabilityModel("New Interface");
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder);
     this.editorService.addInterface(interfaceInstance);
   }
 }

@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject, jsonSetMember, toJson } from "typedjson";
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
-import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
 
 @jsonObject
@@ -34,8 +33,9 @@ export class InterfaceCapabilityModel implements ICapabilityModel {
     @jsonArrayMember(AbstractCapabilityFormControl)
     contents: ICapabilityModel[];
 
-    constructor() {
-        this.contents = new Array<ICapabilityModel>();
+    constructor(name: string) {
+      this.name = name;
+      this.contents = new Array<ICapabilityModel>();
     }
 
     get commands(): ICapabilityModel[] {        
