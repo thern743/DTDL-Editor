@@ -3,7 +3,8 @@ import { NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
 import { CapabilityNode } from "src/app/models/CapabilityNode";
 import { ICapabilityModel } from "src/app/models/ICapabilityModel";
-import { InterfaceCapabilityModel } from "src/app/models/InterfaceCapabilityModel";
+import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
+import { ICapabilityFormControl } from "src/app/formControls/ICapabilityFormControl";
 
 @Injectable({
     providedIn: 'root'
@@ -18,11 +19,11 @@ export class ModelTreeService {
         this.treeControl = new NestedTreeControl<CapabilityNode>(this.getChildren);
     }
 
-    public mapDataSource(interfaces: InterfaceCapabilityModel[]): void {
+    public mapDataSource(interfaces: InterfaceCapabilityFormControl[]): void {
         let data = new Array<CapabilityNode>();
         
-        interfaces.forEach((interfaceInstance: InterfaceCapabilityModel) => {
-            let node = new CapabilityNode(interfaceInstance.name);
+        interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
+            let node = new CapabilityNode(interfaceInstance.model.name);
             this.mapChildren(interfaceInstance, node);
             data.push(node);
             
@@ -31,15 +32,21 @@ export class ModelTreeService {
         this.treeDataSource.data = data;
     }
     
-    public mapChildren(interfaceInstance: InterfaceCapabilityModel, node: CapabilityNode): void {
+    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): void {
         node.children = new Array<CapabilityNode>();
-        interfaceInstance.contents.forEach((capability: ICapabilityModel) => {
-            let child = new CapabilityNode(capability.name);
+        interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {
+            let child = new CapabilityNode(capability.model.name);
             node.children?.push(child);
         }); 
     }
 
+    public addNode(interfaceInstance: InterfaceCapabilityFormControl) {
+        console.log("Pushing new node");
+        let node = new CapabilityNode(interfaceInstance.model.name);
+        this.treeDataSource.data.push(node);
+    }
+
     public getChildren = (node: CapabilityNode) => node instanceof CapabilityNode ? node.children : null;
 
-    public hasChild = (_: number, node: CapabilityNode) => node instanceof CapabilityNode ? !!node.children && node.children.length > 0 : false;
+    public hasChild = (_: number, node: CapabilityNode) => node instanceof CapabilityNode ? node.children && node.children.length > 0 : false;
 }

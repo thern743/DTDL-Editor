@@ -10,6 +10,7 @@ import { RelationshipCapabilityFormControl } from 'src/app/formControls/Relation
 import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCapabilityFormControl';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +21,22 @@ export class EditorService {
   public capabilities: string[];
   public semantics: string[];
   public schemaTypes: string[];
-  public complexShcemaTypes: string[];
-  public interfaces: InterfaceCapabilityFormControl[];
+  public complexShcemaTypes: string[];  
   public commandTypes: string[];
-  private _httpClient: HttpClient;
+  public interfaces: InterfaceCapabilityFormControl[];
+  public interfaces$: Subject<InterfaceCapabilityFormControl>;
   
-  constructor(httpClient: HttpClient, public formBuilder: FormBuilder) { 
-    this._httpClient = httpClient;
+  
+  constructor(public formBuilder: FormBuilder) { 
     this.classTypes = this.getClassTypes();
     this.capabilities = this.getCapabilityTypes();
     this.semantics= this.getSemanticTypes();
     this.schemaTypes = this.getSchemaTypes();
-    this.complexShcemaTypes = this.getComplexSchemaTypes();
-    this.interfaces = new Array<InterfaceCapabilityFormControl>();
+    this.complexShcemaTypes = this.getComplexSchemaTypes();    
     this.commandTypes = this.getCommandTypes();
-    
+    this.interfaces = new Array<InterfaceCapabilityFormControl>();
+    this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();
+
     let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
     interfaceInstance.model.name = "Default Interface";
     this.addInterface(interfaceInstance);
@@ -66,6 +68,7 @@ export class EditorService {
 
   public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     this.interfaces.push(interfaceInstance);
+    this.interfaces$.next(interfaceInstance);
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {

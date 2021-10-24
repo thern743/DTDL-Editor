@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 
@@ -17,6 +18,15 @@ export class ModelTreeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.modelTreeService.mapDataSource(this.editorService.interfaces.map(x => x.model));
+    this.modelTreeService.mapDataSource(this.editorService.interfaces);
+    this.subscribe();
   }  
+
+  private subscribe() {
+    // TODO: Make this more efficient.
+    this.editorService.interfaces$.subscribe((interfaceInstance: InterfaceCapabilityFormControl) => {
+      this.modelTreeService.mapDataSource(this.editorService.interfaces);
+      //this.modelTreeService.addNode(interfaceInstance);
+    });
+  } 
 }
