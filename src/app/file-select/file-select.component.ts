@@ -27,7 +27,7 @@ export class FolderSelectComponent implements OnInit {
 
   uploadFiles(file: any) {
     this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
-      console.log("Received " + capability.name);
+      console.log("Received file '%s'", capability.name);
       var formControl = new InterfaceCapabilityFormControl(this._formBuilder);
       formControl.model = capability;
       this.editorService.addInterface(formControl);

@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 export class JsonLdPipe implements PipeTransform {
     transform(val: any): string {      
-        console.group("Stringify JSON-LD:");
+        console.groupCollapsed("Stringify JSON-LD");
         let result = JSON.stringify(val, JsonLdPipe.stringify, 2);
         console.groupEnd();
         return result;

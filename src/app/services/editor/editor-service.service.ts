@@ -97,23 +97,30 @@ export class EditorService {
   }
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
-    interfaceInstance.contents.push(capability);
-    (interfaceInstance.form.get("contents") as FormArray).push(capability.form);
+    let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
+    contentsFormArray.push(capability.form);
+    interfaceInstance.contents.push(capability);    
     interfaceInstance.model.contents.push(capability.model);
 
-    console.log("Interface Form Capabilities: " + interfaceInstance.contents.length + 
-        ". Properties: " + interfaceInstance.properties.length + 
-        ", Commands: " + interfaceInstance.commands.length + 
-        ", Telemetry: " + interfaceInstance.telemetries.length +
-        ", Components: " + interfaceInstance.components.length +
-        ", Relationships: " + interfaceInstance.relationships.length);
+    console.groupCollapsed("Interface Form Capabilities");
 
-    console.log("Interface Model Capabilities: " + interfaceInstance.model.contents.length + 
-        ". Properties: " + interfaceInstance.model.properties.length + 
-        ", Commands: " + interfaceInstance.model.commands.length + 
-        ", Telemetry: " + interfaceInstance.model.telemetries.length +
-        ", Components: " + interfaceInstance.model.components.length +
-        ", Relationships: " + interfaceInstance.model.relationships.length);
+    console.log("FormArray: %i, Contents: %i, Properties: %i, Commands: %i, Telemetry: %i, Components: %i, Relationships: %i",
+      contentsFormArray.length, interfaceInstance.contents.length, interfaceInstance.properties.length,
+      interfaceInstance.commands.length, interfaceInstance.telemetries.length, 
+      interfaceInstance.components.length, interfaceInstance.relationships.length
+    );
+    
+    console.groupEnd();
+
+    console.groupCollapsed("Interface Model Capabilities");
+
+    console.log("Contents: %i, Properties: %i, Commands: %i, Telemetry: %i, Components: %i, Relationships: %i",
+      interfaceInstance.model.contents.length, interfaceInstance.model.properties.length,
+      interfaceInstance.model.commands.length, interfaceInstance.model.telemetries.length, 
+      interfaceInstance.model.components.length, interfaceInstance.model.relationships.length
+    );
+
+    console.groupEnd();
   }
 
   public  addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
@@ -122,11 +129,17 @@ export class EditorService {
   }
 
   private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {
+    let formArray = relationshipInstance.form.get("properties") as FormArray;
     relationshipInstance.properties.push(capability);
-    (relationshipInstance.form.get("properties") as FormArray).push(capability.form);
+    formArray.push(capability.form);
     relationshipInstance.model.properties.add(capability.model);
 
-    console.log("Relationship Form Properties: " + relationshipInstance.properties.length);
-    console.log("Relationship Model Properties: " + relationshipInstance.model.properties.size);
+    console.groupCollapsed("Relationship Form Capabilities");
+    console.log("FormArray: %i, Properties: %i", formArray.length, relationshipInstance.properties.length);
+    console.groupEnd();
+
+    console.groupCollapsed("Relationship Model Capabilities");
+    console.log("Properties: %i", relationshipInstance.model.properties.size);
+    console.groupEnd();
   }
 }

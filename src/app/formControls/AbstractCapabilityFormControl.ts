@@ -19,7 +19,7 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public abstract getValue(): ICapabilityModel;
 
     public subscribeModelToForm(): void {
-      console.group("Creating Subscriptions: ");
+      console.groupCollapsed("Creating Subscriptions");
 
       Object.keys(this.form.controls).forEach(key => {        
         console.debug(key);
