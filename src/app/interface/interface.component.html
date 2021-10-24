@@ -54,7 +54,7 @@
     <mat-form-field appearance="fill">
         <mat-label for="extends">Extends</mat-label>
         <mat-select matNativeControl id="extends" formControlName="extends">
-            <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface"> {{ interface }} </mat-option>
+            <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface.model.id"> {{ interface.model.id }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
