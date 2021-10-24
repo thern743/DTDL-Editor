@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NestedTreeControl } from '@angular/cdk/tree';
 import { EditorService } from '../services/editor/editor-service.service';
-import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 
 @Component({
   selector: 'model-tree',
@@ -9,20 +8,15 @@ import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabil
   styleUrls: ['./model-tree.component.scss']
 })
 export class ModelTreeComponent implements OnInit {
-  public treeControl!: NestedTreeControl<InterfaceCapabilityFormControl>;
-  public showFiller: boolean = true;
-  public editorService: EditorService;
+  public editorService: EditorService
+  public modelTreeService: ModelTreeService;
 
-  constructor(editorService: EditorService) {
+  constructor(editorService: EditorService, modelTreeService: ModelTreeService) {
     this.editorService = editorService;
-    this.treeControl = new NestedTreeControl<InterfaceCapabilityFormControl>(this.getChildren);
+    this.modelTreeService = modelTreeService;
   }
 
-  ngOnInit(): void {
-    this.editorService.treeDataSource.data = this.editorService.interfaces;
-  }
-
-  getChildren = (node: InterfaceCapabilityFormControl) => node instanceof InterfaceCapabilityFormControl ? node?.contents as InterfaceCapabilityFormControl[] : null;
-
-  hasChild = (_: number, node: InterfaceCapabilityFormControl) => node instanceof InterfaceCapabilityFormControl ? !!node.contents && node.contents.length > 0 : false;
+  public ngOnInit(): void {
+    this.modelTreeService.mapDataSource(this.editorService.interfaces.map(x => x.model));
+  }  
 }

@@ -23,8 +23,6 @@ export class EditorService {
   public complexShcemaTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
   public commandTypes: string[];
-  public treeDataSource: MatTreeNestedDataSource<InterfaceCapabilityFormControl>;
-
   private _httpClient: HttpClient;
   
   constructor(httpClient: HttpClient, public formBuilder: FormBuilder) { 
@@ -36,7 +34,6 @@ export class EditorService {
     this.complexShcemaTypes = this.getComplexSchemaTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.commandTypes = this.getCommandTypes();
-    this.treeDataSource = new MatTreeNestedDataSource<InterfaceCapabilityFormControl>();  
     
     let interfaceInstance = new InterfaceCapabilityFormControl(this.formBuilder);
     interfaceInstance.model.name = "Default Interface";
