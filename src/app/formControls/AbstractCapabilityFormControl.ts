@@ -19,8 +19,10 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public abstract getValue(): ICapabilityModel;
 
     public subscribeModelToForm(): void {
-      Object.keys(this.form.controls).forEach(key => {
-        console.debug("Creating subscription for: '" + key + "'");
+      console.group("Creating Subscriptions: ");
+
+      Object.keys(this.form.controls).forEach(key => {        
+        console.debug(key);
 
         let control = this.form.controls[key];        
         
@@ -28,11 +30,13 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
           control.valueChanges.subscribe(
             (value) => {
               (<any>this.model)[key] = value;
-              console.log("Value changed to " + value);                        
-          }, (error) => {
-              console.error("Error in subscription: " + error);
+              console.log("Value changed to '%s'", value);                        
+          }, (error: Error) => {
+              console.error("Error in subscription: %o", error);
           });
         }
       });
+
+      console.groupEnd();
     }
 }

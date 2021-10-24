@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { InterfaceCapabilityFormControl } from 'src/app/formControls/InterfaceCapabilityFormControl';
-import { FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from 'src/app/formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from 'src/app/formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from 'src/app/formControls/TelemetryCapabilityFormControl';
@@ -98,6 +98,7 @@ export class EditorService {
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
     interfaceInstance.contents.push(capability);
+    (interfaceInstance.form.get("contents") as FormArray).push(capability.form);
     interfaceInstance.model.contents.push(capability.model);
 
     console.log("Interface Form Capabilities: " + interfaceInstance.contents.length + 
@@ -122,6 +123,7 @@ export class EditorService {
 
   private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {
     relationshipInstance.properties.push(capability);
+    (relationshipInstance.form.get("properties") as FormArray).push(capability.form);
     relationshipInstance.model.properties.add(capability.model);
 
     console.log("Relationship Form Properties: " + relationshipInstance.properties.length);
