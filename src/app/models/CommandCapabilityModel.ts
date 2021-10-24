@@ -3,7 +3,7 @@ import { jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from './ICapabilityModel';
 
 @jsonObject
-export class CommandCapabilityDto implements ICapabilityModel {
+export class CommandCapabilityModel implements ICapabilityModel {
     @jsonMember id: string = "";
     @jsonMember type: string = "Command";
     @jsonMember name: string = "";

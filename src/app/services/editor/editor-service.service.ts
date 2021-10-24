@@ -98,7 +98,7 @@ export class EditorService {
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
     interfaceInstance.contents.push(capability);
-    interfaceInstance.model.contents.add(capability.model);
+    interfaceInstance.model.contents.push(capability.model);
 
     console.log("Interface Form Capabilities: " + interfaceInstance.contents.length + 
         ". Properties: " + interfaceInstance.properties.length + 
@@ -107,7 +107,7 @@ export class EditorService {
         ", Components: " + interfaceInstance.components.length +
         ", Relationships: " + interfaceInstance.relationships.length);
 
-    console.log("Interface Model Capabilities: " + interfaceInstance.model.contents.size + 
+    console.log("Interface Model Capabilities: " + interfaceInstance.model.contents.length + 
         ". Properties: " + interfaceInstance.model.properties.length + 
         ", Commands: " + interfaceInstance.model.commands.length + 
         ", Telemetry: " + interfaceInstance.model.telemetries.length +

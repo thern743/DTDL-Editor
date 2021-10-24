@@ -20,12 +20,17 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
 
     public subscribeModelToForm(): void {
       Object.keys(this.form.controls).forEach(key => {
-        let control = this.form.controls[key];
-        console.log(control instanceof FormArray);
-        if(!(control instanceof FormArray)) {
-          control.valueChanges.subscribe((value) => {
-            (<any>this.model)[key] = value;
-            console.log("Value changed to " + value);            
+        console.debug("Creating subscription for: '" + key + "'");
+
+        let control = this.form.controls[key];        
+        
+        if(!(control instanceof FormArray)) {          
+          control.valueChanges.subscribe(
+            (value) => {
+              (<any>this.model)[key] = value;
+              console.log("Value changed to " + value);                        
+          }, (error) => {
+              console.error("Error in subscription: " + error);
           });
         }
       });

@@ -1,12 +1,12 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/ICapabilityModel';
-import { PropertyCapabilityDto } from '../models/PropertyCapabilityModel';
+import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
-export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityDto> {
+export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityModel> {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new PropertyCapabilityDto();
+    this.model = new PropertyCapabilityModel();
     this.toFormGroup();
   }
   

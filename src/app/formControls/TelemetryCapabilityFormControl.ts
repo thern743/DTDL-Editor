@@ -1,13 +1,13 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
-import { TelemetryCapabilityDto } from '../models/TelemetryCapabilityModel';
+import { TelemetryCapabilityModel } from '../models/TelemetryCapabilityModel';
 
-export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityDto> {
+export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityModel> {
   
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new TelemetryCapabilityDto();
+    this.model = new TelemetryCapabilityModel();
     this.toFormGroup();
   }
 

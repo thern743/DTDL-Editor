@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { InterfaceCapabilityDto } from 'src/app/models/InterfaceCapabilityModel';
+import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
 
 @Injectable({
@@ -12,16 +12,16 @@ import { TypedJSON } from 'typedjson';
 export class FileService {
   fileAttr = 'Choose Files...';
   files: File[];
-  interfaces: Subject<InterfaceCapabilityDto>;
-  typedJson: TypedJSON<InterfaceCapabilityDto>;  
+  interfaces: Subject<InterfaceCapabilityModel>;
+  typedJson: TypedJSON<InterfaceCapabilityModel>;  
 
   constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar) { 
     this.files = new Array<File>(); 
-    this.interfaces = new Subject<InterfaceCapabilityDto>();
-    this.typedJson = new TypedJSON(InterfaceCapabilityDto);
+    this.interfaces = new Subject<InterfaceCapabilityModel>();
+    this.typedJson = new TypedJSON(InterfaceCapabilityModel);
   }
 
-  public uploadFiles(file: any): Subject<InterfaceCapabilityDto> {
+  public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
       
@@ -34,7 +34,7 @@ export class FileService {
           try {                        
             //let capability = JSON.parse(file) as InterfaceCapability;
             let capability = this.typedJson.parse(file);
-            capability instanceof InterfaceCapabilityDto;
+            capability instanceof InterfaceCapabilityModel;
             this.files.push(file);      
             this.interfaces.next(capability);                                    
           } catch(error) {

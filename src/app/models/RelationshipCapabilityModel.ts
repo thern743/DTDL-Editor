@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject, jsonSetMember } from "typedjson";
 import { ICapabilityModel } from './ICapabilityModel';
-import { AbstractCapabilityDto } from './AbstractCapabilityModel';
+import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
-export class RelationshipCapabilityDto implements ICapabilityModel {
+export class RelationshipCapabilityModel implements ICapabilityModel {
   @jsonMember id: string = "";
   @jsonMember type: string = "Relationship";
   @jsonMember name: string = "";
@@ -16,7 +16,7 @@ export class RelationshipCapabilityDto implements ICapabilityModel {
   @jsonMember maxMultiplicity: number = 0;  
   @jsonMember target: string = "";
   @jsonMember writable: boolean = false;
-  @jsonSetMember(AbstractCapabilityDto) properties: Set<ICapabilityModel>;
+  @jsonSetMember(AbstractCapabilityModel) properties: Set<ICapabilityModel>;
 
   constructor() {
     this.properties = new Set<ICapabilityModel>();

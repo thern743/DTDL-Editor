@@ -1,11 +1,11 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { ComponentCapabilityDto } from '../models/ComponentCapabilityModel';
+import { ComponentCapabilityModel } from '../models/ComponentCapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
-export class ComponentCapabilityFormControl extends AbstractCapabilityFormControl<ComponentCapabilityDto>  {
+export class ComponentCapabilityFormControl extends AbstractCapabilityFormControl<ComponentCapabilityModel>  {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new ComponentCapabilityDto();
+    this.model = new ComponentCapabilityModel();
     this.toFormGroup();
   }
   
@@ -25,7 +25,7 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
     return this.form;
   }
 
-  public getValue(): ComponentCapabilityDto {
+  public getValue(): ComponentCapabilityModel {
     return this.model;
   }
 }

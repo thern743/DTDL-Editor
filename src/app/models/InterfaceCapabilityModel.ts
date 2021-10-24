@@ -1,10 +1,11 @@
 import 'reflect-metadata';
-import { jsonMember, jsonObject, jsonSetMember, toJson } from "typedjson";
-import { AbstractCapabilityDto } from './AbstractCapabilityModel';
+import { jsonArrayMember, jsonMember, jsonObject, jsonSetMember, toJson } from "typedjson";
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
 
 @jsonObject
-export class InterfaceCapabilityDto implements ICapabilityModel {
+export class InterfaceCapabilityModel implements ICapabilityModel {
     @jsonMember
     public id: string = "";
 
@@ -30,11 +31,11 @@ export class InterfaceCapabilityDto implements ICapabilityModel {
     @jsonMember
     public extends: string = "";
 
-    @jsonSetMember(AbstractCapabilityDto)
-    contents: Set<ICapabilityModel>;
+    @jsonArrayMember(AbstractCapabilityFormControl)
+    contents: ICapabilityModel[];
 
     constructor() {
-        this.contents = new Set<ICapabilityModel>();
+        this.contents = new Array<ICapabilityModel>();
     }
 
     get commands(): ICapabilityModel[] {        

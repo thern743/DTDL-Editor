@@ -1,17 +1,17 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
-import { RelationshipCapabilityDto } from '../models/RelationshipCapabilityModel';
+import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
 import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';
 import { ICapabilityFormControl } from './ICapabilityFormControl';
 
-export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityDto> {
+export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: ICapabilityFormControl<ICapabilityModel>[];
   
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.properties = new Array<PropertyCapabilityFormControl>();
-    this.model = new RelationshipCapabilityDto();
+    this.model = new RelationshipCapabilityModel();
     this.toFormGroup();
   }
 
@@ -29,7 +29,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
       maxMultiplicity: [this.model.maxMultiplicity],
       target: [this.model.target],
       writable: [this.model.writable],
-      properties: [this.properties]
+      properties: this.formBuilder.array([...this.model.properties])
     });
 
     return this.form;

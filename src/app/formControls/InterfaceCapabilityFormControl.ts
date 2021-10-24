@@ -1,17 +1,17 @@
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { CommandCapabilityFormControl } from "./CommandCapabilityFormControl";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
-import { InterfaceCapabilityDto } from '../models/InterfaceCapabilityModel';
+import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
 
-export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityDto> {
+export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   public contents: ICapabilityFormControl<ICapabilityModel>[];
   
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
-    this.model = new InterfaceCapabilityDto();    
+    this.model = new InterfaceCapabilityModel();    
     this.toFormGroup();
   }
   

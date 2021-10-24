@@ -1,12 +1,12 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
-import { CommandCapabilityDto } from '../models/CommandCapabilityModel';
+import { CommandCapabilityModel } from '../models/CommandCapabilityModel';
 
-export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityDto> {
+export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityModel> {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new CommandCapabilityDto();
+    this.model = new CommandCapabilityModel();
     this.toFormGroup();
   }
   
