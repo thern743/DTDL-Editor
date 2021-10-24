@@ -10,14 +10,19 @@ import { TypedJSON } from 'typedjson';
   providedIn: 'root'
 })
 export class FileService {
-  fileAttr = 'Choose Files...';
-  files: File[];
-  interfaces: Subject<InterfaceCapabilityModel>;
-  typedJson: TypedJSON<InterfaceCapabilityModel>;  
+  public fileAttr = 'Choose Files...';
+  public files: File[];
+  public interfaces$: Subject<InterfaceCapabilityModel>;
+  public typedJson: TypedJSON<InterfaceCapabilityModel>;  
+  private _formBuilder: FormBuilder;
 
-  constructor(private _formBuilder: FormBuilder, private _snackBar: MatSnackBar) { 
+  private _snackBar: MatSnackBar
+
+  constructor(formBuilder: FormBuilder, snackBar: MatSnackBar) { 
+    this._formBuilder = formBuilder;
+    this._snackBar = snackBar;
     this.files = new Array<File>(); 
-    this.interfaces = new Subject<InterfaceCapabilityModel>();
+    this.interfaces$ = new Subject<InterfaceCapabilityModel>();
     this.typedJson = new TypedJSON(InterfaceCapabilityModel);
   }
 
@@ -29,14 +34,14 @@ export class FileService {
         let reader = new FileReader();
         reader.onload = (data: any) => {
           let file = data.target.result;
-          console.log("Reading File: \n\n" + file);
+
+          console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
       
-          try {                        
-            //let capability = JSON.parse(file) as InterfaceCapability;
+          try {
             let capability = this.typedJson.parse(file);
             capability instanceof InterfaceCapabilityModel;
             this.files.push(file);      
-            this.interfaces.next(capability);                                    
+            this.interfaces$.next(capability);                                    
           } catch(error) {
             const msg = "Invalid DTDL (JSON-LD) File";
             console.error(msg + ": " + error); 
@@ -61,6 +66,6 @@ export class FileService {
       this.fileAttr = "Choose Files...";
     }
 
-    return this.interfaces;
+    return this.interfaces$;
   }
 }
