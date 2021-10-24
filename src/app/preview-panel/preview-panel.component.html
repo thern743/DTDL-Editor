@@ -14,5 +14,9 @@
             readonly
             [value]="interface.form.getRawValue() | jsonld">
         </textarea>
-    </mat-form-field>
+        <button mat-raised-button color="accent" aria-hidden="false" aria-label="Copy Model" style="float:right"
+            [cdkCopyToClipboard]="interface.form.getRawValue() | jsonld">
+            <mat-icon >content_copy</mat-icon>
+        </button>  
+    </mat-form-field>      
 </mat-expansion-panel>

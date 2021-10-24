@@ -10,6 +10,7 @@ export class PreviewPanelComponent implements OnInit {
   public panelOpenState = true;
   @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
+  @Input('cdkCopyToClipboard') public text!: string
 
   constructor() { 
     

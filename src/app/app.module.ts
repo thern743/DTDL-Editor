@@ -39,6 +39,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +77,8 @@ import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.componen
     MatDividerModule,
     MatFormFieldModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
