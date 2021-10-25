@@ -24,23 +24,23 @@ export class ModelTreeService {
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
             let node = new CapabilityNode(interfaceInstance.model.name);
-            this.mapChildren(interfaceInstance, node);
-            data.push(node);
-            
+            node = this.mapChildren(interfaceInstance, node);
+            data.push(node);            
         });
     
         this.treeDataSource.data = data;
     }
     
-    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): void {        
-        interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {
-            let child = new CapabilityNode(capability.model.name);
+    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): CapabilityNode {        
+        interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {     
+            let child = new CapabilityNode(capability.model.type + " - " + capability.model.name);
             node.children?.push(child);
-        }); 
+        });
+
+        return node;
     }
 
     public addNode(interfaceInstance: InterfaceCapabilityFormControl) {
-        console.log("Pushing new node");
         let node = new CapabilityNode(interfaceInstance.model.name);
         this.treeDataSource.data.push(node);
     }

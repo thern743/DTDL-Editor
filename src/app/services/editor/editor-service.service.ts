@@ -102,6 +102,7 @@ export class EditorService {
     contentsFormArray.push(capability.form);
     interfaceInstance.contents.push(capability);    
     interfaceInstance.model.contents.push(capability.model);
+    this.interfaces$.next(interfaceInstance);
 
     console.groupCollapsed("Interface Form Capabilities");
 
