@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ComponentCapability } from '../models/ComponentCapability';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -8,15 +9,15 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./component.component.scss']
 })
 export class ComponentComponent implements OnInit {
-  @Input() formIndex: number = 0;
-  @Input() component!: ComponentCapability;
+  @Input() public formIndex: number = 0;
+  @Input() public component!: ICapabilityFormControl<ICapabilityModel>;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     
   }
 
-  ngOnInit(): void { 
-    
+  public ngOnInit(): void { 
+    this.component.subscribeModelToForm();
   }
 }

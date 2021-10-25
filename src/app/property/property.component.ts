@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { PropertyCapability } from '../models/PropertyCapability';
+import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -9,15 +9,15 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-  @Input() formIndex: number = 0;
-  @Input() property!: PropertyCapability;
+  @Input() public formIndex: number = 0;
+  @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
   panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     
   }
 
-  ngOnInit(): void { 
-    
+  public ngOnInit(): void { 
+    this.property.subscribeModelToForm();
   }
 }

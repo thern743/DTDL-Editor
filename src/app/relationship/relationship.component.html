@@ -64,8 +64,8 @@
     <mat-checkbox matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-checkbox>
 
     <div formArrayName="properties">
-        <ng-container *ngFor="let capability of relationship.properties; let i = index;">
-            <property-definition [formIndex]="i" [property]="getProperty(capability)"></property-definition>        
+        <ng-container *ngFor="let capability of getProperties(); let i = index;">
+            <property-definition [formIndex]="i" [property]="capability"></property-definition>        
        </ng-container>
     </div>
     <span class="formSpacer"></span>

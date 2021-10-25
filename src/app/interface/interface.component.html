@@ -54,26 +54,26 @@
     <mat-form-field appearance="fill">
         <mat-label for="extends">Extends</mat-label>
         <mat-select matNativeControl id="extends" formControlName="extends">
-            <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface"> {{ interface }} </mat-option>
+            <mat-option *ngFor="let interface of editorService.interfaces" [value]="interface.model.id"> {{ interface.model.id }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
     <br/>
 
     <div formArrayName="contents">
-         <ng-container *ngFor="let capability of interface.contents; let i = index;">
-            <ng-container [ngSwitch]="capability.type">
+         <ng-container *ngFor="let capability of getContents(); let i = index;">
+            <ng-container [ngSwitch]="capability.model.type">
                 <ng-container *ngSwitchCase="'Property'">
-                    <property-definition [formIndex]="i" [property]="getProperty(capability)"></property-definition>        
+                    <property-definition [formIndex]="i" [property]="capability"></property-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Command'">
-                    <command-definition [formIndex]="i" [command]="getCommand(capability)"></command-definition>        
+                    <command-definition [formIndex]="i" [command]="capability"></command-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Telemetry'">
-                    <telemetry-definition [formIndex]="i" [telemetry]="getTelemetry(capability)"></telemetry-definition>        
+                    <telemetry-definition [formIndex]="i" [telemetry]="capability"></telemetry-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Component'">
-                    <component-definition [formIndex]="i" [component]="getComponent(capability)"></component-definition>        
+                    <component-definition [formIndex]="i" [component]="capability"></component-definition>        
                 </ng-container>
                 <ng-container *ngSwitchCase="'Relationship'">
                     <relationship-definition [formIndex]="i" [relationship]="getRelationship(capability)"></relationship-definition>        
@@ -104,4 +104,3 @@
         </button>
     </mat-action-row>
 </mat-expansion-panel>
-<preview-panel [interface]="interface"></preview-panel>

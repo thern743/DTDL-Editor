@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
-import { InterfaceCapability } from '../models/InterfaceCapability';
-import { ICapability } from '../models/ICapability';
-import { PropertyCapability } from '../models/PropertyCapability';
-import { CommandCapability } from '../models/CommandCapability';
-import { TelemetryCapability } from '../models/TelemetryCapability';
-import { ComponentCapability } from '../models/ComponentCapability';
-import { RelationshipCapability } from '../models/RelationshipCapability';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
+import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
+import { ICapabilityModel } from '../models/ICapabilityModel';
 
 @Component({
   selector: 'interface-definition',
@@ -15,37 +12,23 @@ import { RelationshipCapability } from '../models/RelationshipCapability';
 })
 
 export class InterfaceComponent implements OnInit {
-  // TODO: Support multiple interfaces from main editor.
-  //@Input() formIndex: number = 0;
-  formIndex: number = 0;
-  @Input() interface!: InterfaceCapability;
-  panelOpenState = true;
+  @Input() public formIndex: number = 0;
+  @Input() public interface!: InterfaceCapabilityFormControl;
+  public panelOpenState = true;
   
   constructor(public editorService: EditorService) {
    
   }
 
-  ngOnInit(): void {
-    this.interface?.toFormGroup();
+  public ngOnInit(): void {
+    this.interface.subscribeModelToForm();
   }
 
-  getProperty(capability: ICapability): PropertyCapability {
-    return capability as PropertyCapability;
+  public getContents(): Array<ICapabilityFormControl<ICapabilityModel>> {
+    return this.interface.contents;
   }
 
-  getCommand(capability: ICapability): CommandCapability {
-    return capability as CommandCapability;
-  }
-
-  getTelemetry(capability: ICapability): TelemetryCapability {
-    return capability as TelemetryCapability;
-  }
-
-  getComponent(capability: ICapability): ComponentCapability {
-    return capability as ComponentCapability;
-  }
-
-  getRelationship(capability: ICapability): RelationshipCapability {
-    return capability as RelationshipCapability;
+  public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
+    return capability as RelationshipCapabilityFormControl;
   }
 }

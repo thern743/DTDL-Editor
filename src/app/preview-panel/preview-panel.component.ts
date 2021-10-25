@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { DtdlModelForm } from '../models/DtdlModelForm';
-import { InterfaceCapability } from '../models/InterfaceCapability';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 
 @Component({
   selector: 'preview-panel',
@@ -9,16 +7,16 @@ import { InterfaceCapability } from '../models/InterfaceCapability';
   styleUrls: ['./preview-panel.component.scss']
 })
 export class PreviewPanelComponent implements OnInit {
-  panelOpenState = true;
-  @Input() interface!: InterfaceCapability;
+  public panelOpenState = true;
+  @Input() public formIndex: number = 0;
+  @Input() public interface!: InterfaceCapabilityFormControl;
+  @Input('cdkCopyToClipboard') public text!: string
 
   constructor() { 
     
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     
   }
-
-  action(): void {}
 }

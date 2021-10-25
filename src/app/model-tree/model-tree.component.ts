@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NestedTreeControl } from '@angular/cdk/tree';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
-import { InterfaceCapability } from '../models/InterfaceCapability';
-import { ICapability } from '../models/ICapability';
+import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 
 @Component({
   selector: 'model-tree',
@@ -10,18 +9,24 @@ import { ICapability } from '../models/ICapability';
   styleUrls: ['./model-tree.component.scss']
 })
 export class ModelTreeComponent implements OnInit {
-  treeControl: NestedTreeControl<ICapability>;
-  showFiller: boolean = true;
+  public editorService: EditorService
+  public modelTreeService: ModelTreeService;
 
-  constructor(public editorService: EditorService) {
-    this.treeControl = new NestedTreeControl<ICapability>(this.getChildren);       
+  constructor(editorService: EditorService, modelTreeService: ModelTreeService) {
+    this.editorService = editorService;
+    this.modelTreeService = modelTreeService;
   }
 
-  ngOnInit(): void {
-    this.editorService.treeDataSource.data = this.editorService.dtdlModelForm.interfaces;
-  }
+  public ngOnInit(): void {
+    this.modelTreeService.mapDataSource(this.editorService.interfaces);
+    this.subscribe();
+  }  
 
-  getChildren = (node: ICapability) => node instanceof InterfaceCapability ? node?.contents : null;
-
-  hasChild = (_: number, node: ICapability) => node instanceof InterfaceCapability ? !!node.contents && node.contents.length > 0 : false;
+  private subscribe() {
+    // TODO: Make this more efficient.
+    this.editorService.interfaces$.subscribe((interfaceInstance: InterfaceCapabilityFormControl) => {
+      this.modelTreeService.mapDataSource(this.editorService.interfaces);
+      //this.modelTreeService.addNode(interfaceInstance);
+    });
+  } 
 }

@@ -1,4 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
 
 @Component({
@@ -7,12 +10,22 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./main-editor.component.scss']
 })
 export class MainEditorComponent implements OnInit {
+  public editorService: EditorService;
+  private _formBuilder: FormBuilder;
+  public panelOpenState = true;
 
-  constructor(public editorService: EditorService) {
-
+  constructor(editorService: EditorService, formBuilder: FormBuilder) {
+    this.editorService = editorService;
+    this._formBuilder = formBuilder;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     
+  }
+
+  public addInterface(): void {
+    let model = new InterfaceCapabilityModel("New Interface");
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder);
+    this.editorService.addInterface(interfaceInstance);
   }
 }
