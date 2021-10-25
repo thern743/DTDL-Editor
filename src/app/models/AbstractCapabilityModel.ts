@@ -7,4 +7,8 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     public displayName!: string;
     public description!: string;
     public comment!: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
 }

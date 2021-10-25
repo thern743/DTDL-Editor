@@ -3,8 +3,10 @@
     <span class="toolbar-spacer"></span>   
     <file-select></file-select>
 </mat-toolbar>
-<mat-sidenav-container autosiz>    
-    <mat-sidenav #nav mode="side">
+<mat-sidenav-container>    
+    <mat-sidenav #nav mode="side" [opened]="navOpenState"
+                                  (opened)="navOpenState = true"
+                                  (closed)="navOpenState = false">
         <model-tree></model-tree>
     </mat-sidenav>
     <mat-sidenav-content>        

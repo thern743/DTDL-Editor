@@ -1,40 +1,41 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject, jsonSetMember, toJson } from "typedjson";
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
 
 @jsonObject
-export class InterfaceCapabilityModel implements ICapabilityModel {
+export class InterfaceCapabilityModel extends AbstractCapabilityModel {
     @jsonMember
-    public id: string = "";
+    public id!: string;
 
     @jsonMember
     public type: string = "Interface";
 
     @jsonMember
-    public name: string = "";
+    public name!: string;
 
     @jsonMember
-    public displayName: string = "";
+    public displayName!: string;
 
     @jsonMember
-    public description: string = "";
+    public description!: string;
     
     @jsonMember
-    comment: string = "";
+    public comment!: string;
 
     // Interface specific
     @jsonMember
     public context: string = "dtmi:dtdl:context;2";  
 
     @jsonMember
-    public extends: string = "";
+    public extends!: string;
 
     @jsonArrayMember(AbstractCapabilityFormControl)
     contents: ICapabilityModel[];
 
     constructor(name: string) {
-      this.name = name;
+      super(name);
       this.contents = new Array<ICapabilityModel>();
     }
 

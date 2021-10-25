@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
@@ -12,7 +12,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class TelemetryComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
-  panelOpenState = false;
+  public panelOpenState = false;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
     

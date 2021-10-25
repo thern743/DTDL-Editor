@@ -1,13 +1,12 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { CommandCapabilityModel } from '../models/CommandCapabilityModel';
 
 export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityModel> {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new CommandCapabilityModel();
-    this.toFormGroup();
+    this.model = new CommandCapabilityModel("New Command");
+    this.form = this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {
@@ -26,10 +25,6 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
     });
 
     return this.form;
-  }
-
-  public getValue(): ICapabilityModel {
-    return this.model;
   }
 }
 

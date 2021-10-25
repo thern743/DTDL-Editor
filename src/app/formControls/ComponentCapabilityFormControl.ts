@@ -5,8 +5,8 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 export class ComponentCapabilityFormControl extends AbstractCapabilityFormControl<ComponentCapabilityModel>  {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new ComponentCapabilityModel();
-    this.toFormGroup();
+    this.model = new ComponentCapabilityModel("New Component");
+    this.form = this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {
@@ -23,9 +23,5 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
     });
 
     return this.form;
-  }
-
-  public getValue(): ComponentCapabilityModel {
-    return this.model;
   }
 }

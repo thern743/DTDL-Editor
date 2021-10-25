@@ -10,9 +10,9 @@ import { EditorService } from '../services/editor/editor-service.service'
   styleUrls: ['./command.component.scss']
 })
 export class CommandPayloadComponent implements OnInit {
-  @Input() formIndex: number = 0;
-  @Input() command!: ICapabilityFormControl<ICapabilityModel>;
-  panelOpenState = false;
+  @Input() public formIndex: number = 0;
+  @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
+  public panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     

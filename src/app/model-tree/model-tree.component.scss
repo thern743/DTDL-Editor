@@ -15,7 +15,7 @@
 * This padding sets alignment of the nested nodes.
 */
 .interface-tree .mat-nested-tree-node div[role=group] {
-    padding-left: 25px;
+    padding-left: 0px;
 }
 
 /*
@@ -29,4 +29,8 @@
 
 .mat-tree-node {
     min-height: 32px;
+}
+
+.mat-icon-button {
+    width: 20px;
 }

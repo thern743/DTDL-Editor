@@ -1,20 +1,22 @@
 <mat-tree [dataSource]="modelTreeService.treeDataSource" [treeControl]="modelTreeService.treeControl" class="interface-tree">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-      {{node.name}}
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>    
+    <div>
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon>chevron_right</mat-icon>
+        {{node.name}}
+      </button>
+    </div>
   </mat-tree-node>
 
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild">
-      <div class="mat-tree-node">
-        <button mat-icon-button matTreeNodeToggle
-                [attr.aria-label]="'Toggle ' + node.name">
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{modelTreeService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button>
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild">  
+    <div>    
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon>{{modelTreeService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
         {{node.name}}
-      </div>
-      <div [class.interface-tree-invisible]="!modelTreeService.treeControl.isExpanded(node)" role="group">
-        <ng-container matTreeNodeOutlet></ng-container>
+      </button>      
+    </div>    
+    <div [class.interface-tree-invisible]="!modelTreeService.treeControl.isExpanded(node)" role="group">
+      <ng-container matTreeNodeOutlet></ng-container>
     </div>
   </mat-nested-tree-node>
 </mat-tree>

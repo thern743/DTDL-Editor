@@ -7,8 +7,8 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
   
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new TelemetryCapabilityModel();
-    this.toFormGroup();
+    this.model = new TelemetryCapabilityModel("New Telemetry");
+    this.form = this.toFormGroup();
   }
 
   public toFormGroup(): FormGroup {
@@ -26,10 +26,6 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
     });
 
     return this.form;
-  }
-
-  public getValue(): ICapabilityModel {
-    return this.model;
   }
 }
 

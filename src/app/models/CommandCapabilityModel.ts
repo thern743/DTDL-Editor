@@ -1,17 +1,17 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject } from "typedjson";
-import { ICapabilityModel } from './ICapabilityModel';
+import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
-export class CommandCapabilityModel implements ICapabilityModel {
-    @jsonMember id: string = "";
+export class CommandCapabilityModel extends AbstractCapabilityModel {
+    @jsonMember id!: string;
     @jsonMember type: string = "Command";
-    @jsonMember name: string = "";
-    @jsonMember displayName: string = "";
-    @jsonMember description: string = "";
-    @jsonMember comment: string = "";
+    @jsonMember name!: string;
+    @jsonMember displayName!: string;
+    @jsonMember description!: string;
+    @jsonMember comment!: string;
     // Command specific
-    @jsonMember commandType: string = "";
+    @jsonMember commandType!: string;
     @jsonMember request: any = {};
     @jsonMember response: any = {};
 }

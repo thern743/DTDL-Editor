@@ -2,6 +2,21 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "name": "Attach to Chrome",
+        "request": "attach",
+        "type": "chrome",
+        "port": 9222,
+        "urlFilter": "http://localhost:4200/*",
+        "webRoot": "${workspaceFolder}",
+        "sourceMapPathOverrides": {
+          "webpack:/*": "${webRoot}/*",
+          "/./*": "${webRoot}/*",
+          "/src/*": "${webRoot}/*",
+          "/*": "*",
+          "/./~/*": "${webRoot}/node_modules/*"
+        }
+      },
+      {
         "name": "ng serve",
         "type": "chrome",
         "request": "launch",

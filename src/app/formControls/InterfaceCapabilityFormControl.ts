@@ -10,8 +10,8 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
     this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
-    this.model = model;    
-    this.toFormGroup();
+    this.model = model;
+    this.form = this.toFormGroup();
   }
   
   get commands(): ICapabilityModel[] {        
@@ -56,8 +56,4 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
 
     return this.form;
   }
-
-  public getValue(): ICapabilityModel {
-    return this.model;
-  }  
 }

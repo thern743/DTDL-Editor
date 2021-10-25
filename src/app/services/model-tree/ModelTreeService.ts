@@ -23,7 +23,7 @@ export class ModelTreeService {
         let data = new Array<CapabilityNode>();
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
-            let node = new CapabilityNode(interfaceInstance.model.name);
+            let node = new CapabilityNode(interfaceInstance.model.name);            
             node = this.mapChildren(interfaceInstance, node);
             data.push(node);            
         });
@@ -33,7 +33,7 @@ export class ModelTreeService {
     
     public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): CapabilityNode {        
         interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {     
-            let child = new CapabilityNode(capability.model.type + " - " + capability.model.name);
+            let child = new CapabilityNode(capability.model.type + ": " + capability.model.name);
             node.children?.push(child);
         });
 

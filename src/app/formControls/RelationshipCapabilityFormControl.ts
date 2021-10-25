@@ -11,10 +11,10 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
     this.properties = new Array<PropertyCapabilityFormControl>();
-    this.model = new RelationshipCapabilityModel();
-    this.toFormGroup();
+    this.model = new RelationshipCapabilityModel("New Relationship");
+    this.form = this.toFormGroup();
   }
-
+  
   public toFormGroup(): FormGroup {
     this.form = this.formBuilder.group({
       index: [this.index],
@@ -33,9 +33,5 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     });
 
     return this.form;
-  }
-
-  public getValue(): ICapabilityModel {
-    return this.model;
   }
 }

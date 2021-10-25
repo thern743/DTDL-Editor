@@ -11,7 +11,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class PropertyComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
-  panelOpenState = false;
+  public panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     

@@ -4,21 +4,22 @@ import { ICapabilityModel } from './ICapabilityModel';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
-export class RelationshipCapabilityModel implements ICapabilityModel {
-  @jsonMember id: string = "";
+export class RelationshipCapabilityModel extends AbstractCapabilityModel {
+  @jsonMember id!: string;
   @jsonMember type: string = "Relationship";
-  @jsonMember name: string = "";
-  @jsonMember displayName: string = "";
-  @jsonMember description: string = "";
-  @jsonMember comment: string = "";
+  @jsonMember name!: string;
+  @jsonMember displayName!: string;
+  @jsonMember description!: string;
+  @jsonMember comment!: string;
   // Relationship specific
-  @jsonMember minMultiplicity: number = 0;  
-  @jsonMember maxMultiplicity: number = 0;  
-  @jsonMember target: string = "";
-  @jsonMember writable: boolean = false;
+  @jsonMember minMultiplicity!: number;  
+  @jsonMember maxMultiplicity!: number;  
+  @jsonMember target!: string;
+  @jsonMember writable!: boolean;
   @jsonSetMember(AbstractCapabilityModel) properties: Set<ICapabilityModel>;
 
-  constructor() {
+  constructor(name: string) {
+    super(name);
     this.properties = new Set<ICapabilityModel>();
   }
 }

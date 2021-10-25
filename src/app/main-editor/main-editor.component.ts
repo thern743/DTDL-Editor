@@ -17,6 +17,10 @@ export class MainEditorComponent implements OnInit {
   constructor(editorService: EditorService, formBuilder: FormBuilder) {
     this.editorService = editorService;
     this._formBuilder = formBuilder;
+
+    let model = new InterfaceCapabilityModel("Default Interface");
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder);
+    this.editorService.addInterface(interfaceInstance);
   }
 
   public ngOnInit(): void {

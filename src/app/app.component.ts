@@ -5,5 +5,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'DTDL Editor';
+  public title: string = 'DTDL Editor';
+  public navOpenState = true;
 }

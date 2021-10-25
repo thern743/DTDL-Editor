@@ -36,11 +36,7 @@ export class EditorService {
     this.complexShcemaTypes = this.getComplexSchemaTypes();    
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
-    this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();
-
-    let model = new InterfaceCapabilityModel("Default Interface");
-    let interfaceInstance = new InterfaceCapabilityFormControl(model, this.formBuilder);
-    this.addInterface(interfaceInstance);
+    this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();    
   }
 
   public getClassTypes() : string[] {

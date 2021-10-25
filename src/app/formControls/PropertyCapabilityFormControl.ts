@@ -1,13 +1,12 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityModel> {
   constructor(formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new PropertyCapabilityModel();
-    this.toFormGroup();
+    this.model = new PropertyCapabilityModel("New Property");
+    this.form = this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {
@@ -26,9 +25,5 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
     });
 
     return this.form;
-  }
-
-  public getValue(): ICapabilityModel {
-    return this.model;
   }
 }

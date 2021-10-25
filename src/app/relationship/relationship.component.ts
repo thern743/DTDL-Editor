@@ -12,7 +12,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class RelationshipComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public relationship!: RelationshipCapabilityFormControl;
-  panelOpenState = false;
+  public panelOpenState = false;
 
   constructor(public editorService: EditorService) { 
     
