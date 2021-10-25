@@ -9,8 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MainEditorComponent } from './main-editor/main-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatListModule }  from '@angular/material/list';
-import { MatInputModule}  from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';

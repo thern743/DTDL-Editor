@@ -32,8 +32,7 @@ export class ModelTreeService {
         this.treeDataSource.data = data;
     }
     
-    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): void {
-        node.children = new Array<CapabilityNode>();
+    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): void {        
         interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {
             let child = new CapabilityNode(capability.model.name);
             node.children?.push(child);

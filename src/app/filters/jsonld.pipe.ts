@@ -7,18 +7,18 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 export class JsonLdPipe implements PipeTransform {
     transform(val: any): string {      
-        console.groupCollapsed("Stringify JSON-LD");
+        //console.groupCollapsed("Stringify JSON-LD");
         let result = JSON.stringify(val, JsonLdPipe.stringify, 2);
-        console.groupEnd();
+        //console.groupEnd();
         return result;
     }
 
     // TODO: Identify and exclude private members.
     static stringify(key: any, value: any) {        
-        console.debug("Type: %s, Key: %s, Value: %o, IsObject: %s, IsArray: %s", 
-            typeof(value), key, value, 
-            value instanceof Object, value instanceof Array
-        );
+        // console.debug("Type: %s, Key: %s, Value: %o, IsObject: %s, IsArray: %s", 
+        //     typeof(value), key, value, 
+        //     value instanceof Object, value instanceof Array
+        // );
 
         if (value && value instanceof Object && !(value instanceof Array)) {
             var replacement: any = {};
