@@ -30,7 +30,6 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
           control.valueChanges.subscribe(
             (value) => {
               (<any>this.model)[key] = value;
-              console.log("Value changed to '%s'", value);                        
           }, (error: Error) => {
               console.error("Error in subscription: %o", error);
           });
