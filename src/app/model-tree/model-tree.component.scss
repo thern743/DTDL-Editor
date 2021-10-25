@@ -1,36 +1,7 @@
-.interface-tree-invisible {
-    display: none;
+.mat-tree-node:hover {
+    background-color: rgba(255,255,255,.04)
 }
 
-.interface-tree ul,
-.interface-tree li {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
-}
-
-/*
-* This padding sets alignment of the nested nodes.
-*/
-.interface-tree .mat-nested-tree-node div[role=group] {
-    padding-left: 0px;
-}
-
-/*
-* Padding for leaf nodes.
-* Leaf nodes need to have padding so as to align with other non-leaf nodes
-* under the same parent.
-*/
-.interface-tree div[role=group] > .mat-tree-node {
-    padding-left: 25px;
-}
-
-.mat-tree-node {
-    min-height: 32px;
-}
-
-.mat-icon-button {
-    width: 20px;
+.mat-tree-node:last-child {
+    border-bottom: solid 1px rgba(255,255,255,.12)
 }

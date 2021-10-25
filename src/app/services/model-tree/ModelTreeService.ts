@@ -1,22 +1,25 @@
 import { Injectable } from "@angular/core";
-import { NestedTreeControl } from "@angular/cdk/tree";
-import { MatTreeNestedDataSource } from "@angular/material/tree";
+import { FlatTreeControl, NestedTreeControl } from "@angular/cdk/tree";
+import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
 import { CapabilityNode } from "src/app/models/CapabilityNode";
 import { ICapabilityModel } from "src/app/models/ICapabilityModel";
 import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
 import { ICapabilityFormControl } from "src/app/formControls/ICapabilityFormControl";
+import { CapabilityFlatNode } from "src/app/models/CapabilityFlatNode";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ModelTreeService {
-    public treeControl!: NestedTreeControl<CapabilityNode>;
-    public treeDataSource: MatTreeNestedDataSource<CapabilityNode>;
+    public treeControl!: FlatTreeControl<CapabilityFlatNode>;
+    public treeDataSource: MatTreeFlatDataSource<CapabilityNode, CapabilityFlatNode>;
     public showFiller: boolean = true;
-
-    constructor() {
-        this.treeDataSource = new MatTreeNestedDataSource<CapabilityNode>();  
-        this.treeControl = new NestedTreeControl<CapabilityNode>(this.getChildren);
+    public treeFlattener: MatTreeFlattener<CapabilityNode, CapabilityFlatNode>;
+    
+    constructor() {        
+        this.treeControl = new FlatTreeControl<CapabilityFlatNode>(node => node.level, node => node.expandable);
+        this.treeFlattener = new MatTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children);
+        this.treeDataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     }
 
     public mapDataSource(interfaces: InterfaceCapabilityFormControl[]): void {
@@ -45,7 +48,13 @@ export class ModelTreeService {
         this.treeDataSource.data.push(node);
     }
 
-    public getChildren = (node: CapabilityNode) => node instanceof CapabilityNode ? node.children : null;
+    hasChild = (_: number, node: CapabilityFlatNode) => node.expandable;
 
-    public hasChild = (_: number, node: CapabilityNode) => node instanceof CapabilityNode ? node.children && node.children.length > 0 : false;
+    private transformer(node: CapabilityNode, level: number): CapabilityFlatNode {
+        let flatNode = new CapabilityFlatNode();
+        flatNode.expandable = !!node.children && node.children.length > 0;
+        flatNode.name = node.name;
+        flatNode.level = level;
+        return flatNode;
+    }
 }

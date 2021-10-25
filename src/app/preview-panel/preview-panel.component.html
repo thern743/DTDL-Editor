@@ -1,4 +1,5 @@
-<mat-expansion-panel    [expanded]="panelOpenState"
+<mat-expansion-panel    class="mat-elevation-z3"
+                        [expanded]="panelOpenState"
                         (opened)="panelOpenState = true"
                         (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
@@ -14,11 +15,11 @@
             readonly
             [value]="interface.form.getRawValue() | jsonld">
         </textarea>
-        <button mat-raised-button color="accent" aria-hidden="false" aria-label="Copy Model" style="float:right; margin-left: 15px"
+        <button mat-raised-button color="accent" class="file-options" aria-hidden="false" aria-label="Copy Model" style="float:right; margin-left: 15px"
             [cdkCopyToClipboard]="previewPanel.value">
             <mat-icon >content_copy</mat-icon>
         </button>        
-        <button mat-raised-button color="accent" aria-hidden="false" aria-label="Save Model" style="float:right"
+        <button mat-raised-button color="accent" class="file-options" aria-hidden="false" aria-label="Save Model" style="float:right"
                 (click)="fileService.saveFile(previewPanel.value)">
             <mat-icon >cloud_download</mat-icon>
         </button>        
