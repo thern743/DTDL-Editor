@@ -5,6 +5,7 @@ import { Pipe, PipeTransform } from "@angular/core";
     pure: false
 })
 
+
 export class JsonLdPipe implements PipeTransform {
     transform(val: any): string {      
         //console.groupCollapsed("Stringify JSON-LD");

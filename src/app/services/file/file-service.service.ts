@@ -3,8 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
+import { JsonLdPipe } from 'src/app/filters/jsonld.pipe';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
+import * as FileSaver from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +15,10 @@ export class FileService {
   public fileAttr = 'Choose Files...';
   public files: File[];
   public interfaces$: Subject<InterfaceCapabilityModel>;
-  public typedJson: TypedJSON<InterfaceCapabilityModel>;  
-  private _formBuilder: FormBuilder;
+  public typedJson: TypedJSON<InterfaceCapabilityModel>;
+  private _snackBar: MatSnackBar;
 
-  private _snackBar: MatSnackBar
-
-  constructor(formBuilder: FormBuilder, snackBar: MatSnackBar) { 
-    this._formBuilder = formBuilder;
+  constructor(formBuilder: FormBuilder, snackBar: MatSnackBar) {
     this._snackBar = snackBar;
     this.files = new Array<File>(); 
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
@@ -67,5 +66,10 @@ export class FileService {
     }
 
     return this.interfaces$;
+  }
+
+  public saveFile(jsonLd: string): void {
+    var blob = new Blob([jsonLd], { type: "application/ld+json;charset=utf-8" });
+    FileSaver.saveAs(blob, "digitalTwin.json");
   }
 }

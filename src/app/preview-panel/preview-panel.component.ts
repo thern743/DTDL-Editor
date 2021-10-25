@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { FileService } from '../services/file/file-service.service';
 
 @Component({
   selector: 'preview-panel',
@@ -11,12 +12,15 @@ export class PreviewPanelComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input('cdkCopyToClipboard') public text!: string
+  public fileService: FileService;
 
-  constructor() { 
-    
+  constructor(fileService: FileService) { 
+    this.fileService = fileService;
   }
 
   public ngOnInit(): void {
     
   }
+
+  
 }
