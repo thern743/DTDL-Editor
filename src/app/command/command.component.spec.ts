@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommandPayloadComponent } from './command.component';
+import { CommandComponent } from './command.component';
 
 describe('CommandPayloadComponent', () => {
-  let component: CommandPayloadComponent;
-  let fixture: ComponentFixture<CommandPayloadComponent>;
+  let component: CommandComponent;
+  let fixture: ComponentFixture<CommandComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommandPayloadComponent ]
+      declarations: [ CommandComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommandPayloadComponent);
+    fixture = TestBed.createComponent(CommandComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

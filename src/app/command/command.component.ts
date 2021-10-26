@@ -9,7 +9,7 @@ import { EditorService } from '../services/editor/editor-service.service'
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.scss']
 })
-export class CommandPayloadComponent implements OnInit {
+export class CommandComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
   public panelOpenState = false;

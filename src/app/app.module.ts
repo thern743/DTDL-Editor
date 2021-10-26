@@ -25,7 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MainEditorComponent } from './main-editor/main-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
-import { CommandPayloadComponent } from './command/command.component';
+import { CommandComponent } from './command/command.component';
 import { JsonLdPipe } from './filters/jsonld.pipe';
 import { TelemetryComponent } from './telemetry/telemetry.component';
 import { PropertyComponent } from './property/property.component';
@@ -43,7 +43,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     AppComponent,
     MainEditorComponent,
     PreviewPanelComponent,
-    CommandPayloadComponent,
+    CommandComponent,
     JsonLdPipe,
     TelemetryComponent,
     PropertyComponent,
