@@ -18,7 +18,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
@@ -37,6 +37,7 @@ import { FolderSelectComponent } from './file-select/file-select.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { IdNameHeaderComponentComponent } from './id-name-header-component/id-name-header-component.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     ComponentComponent,
     ModelTreeComponent,
     FolderSelectComponent,
-    ErrorSnackbarComponent
+    ErrorSnackbarComponent,
+    IdNameHeaderComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     ClipboardModule,
     MatSlideToggleModule
   ],
-  providers: [],
+  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

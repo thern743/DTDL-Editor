@@ -1,0 +1,12 @@
+<ng-container [formGroup]="formGroup">
+<mat-form-field>
+    <mat-label attr.for="property_id_{{formIndex}}">Id</mat-label>
+    <input matInput id="property_id_{{formIndex}}" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+</mat-form-field>
+<span class="formSpacer"></span>  
+
+<mat-form-field>
+    <mat-label attr.for="property_name_{{formIndex}}">Name</mat-label>
+    <input matInput id="property_name_{{formIndex}}" type="text" formControlName="name" readonly />
+</mat-form-field>
+</ng-container>
