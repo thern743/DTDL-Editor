@@ -61,8 +61,9 @@
         <!-- TODO: Drop-down select from Interfaces already defined (or manual input, empty == any interface) -->
         <input matInput id="relationship_target_{{formIndex}}" type="text" formControlName="target" />
     </mat-form-field>
+    <span class="formSpacer"></span>
 
-    <mat-checkbox matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-checkbox>
+    <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
 
     <div formArrayName="properties">
         <ng-container *ngFor="let capability of getProperties(); let i = index;">
