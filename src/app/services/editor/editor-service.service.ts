@@ -140,4 +140,8 @@ export class EditorService {
     console.log("Properties: %i", relationshipInstance.model.properties.size);
     console.groupEnd();
   }
+
+  public filterInterfacesForExtends(id: string): string[] {
+    return this.interfaces.filter(x => x.model.id != id).map(x => x.model.id);
+  }
 }
