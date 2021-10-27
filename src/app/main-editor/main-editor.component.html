@@ -1,7 +1,7 @@
 <mat-card>
     <mat-accordion>
         <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
-            <interface-definition [interface]="interface" [formIndex]="i"></interface-definition>
+            <interface-definition [interface]="interface" [formIndex]="i" [panelOpenState]="true"></interface-definition>
             <br/>
         </ng-container>
         <mat-action-row>
