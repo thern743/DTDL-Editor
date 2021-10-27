@@ -66,9 +66,13 @@
     <br/>
 
     <mat-card formArrayName="properties">
-        <ng-container *ngFor="let capability of getProperties(); let i = index;">
-            <property-definition [formIndex]="i" [property]="capability"></property-definition>        
-       </ng-container>
+        <mat-card-title>Property List</mat-card-title>
+        <mat-card-content>
+            <ng-container *ngFor="let capability of getProperties(); let i = index;">
+                <property-definition [formIndex]="i" [property]="capability"></property-definition>
+                <br/>
+            </ng-container>
+        </mat-card-content>
     </mat-card>
 
     <mat-action-row>

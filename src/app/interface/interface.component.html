@@ -65,26 +65,33 @@
     <br/>
 
     <mat-card formArrayName="contents">
-         <ng-container *ngFor="let capability of getContents(); let i = index;">
-            <ng-container [ngSwitch]="capability.model.type">
-                <ng-container *ngSwitchCase="'Property'">
-                    <property-definition [formIndex]="i" [property]="capability"></property-definition>        
+        <mat-card-title>Capability List</mat-card-title>
+        <mat-card-content>
+            <ng-container *ngFor="let capability of getContents(); let i = index;">
+                <ng-container [ngSwitch]="capability.model.type">
+                    <ng-container *ngSwitchCase="'Property'">
+                        <property-definition [formIndex]="i" [property]="capability"></property-definition>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Command'">
+                        <command-definition [formIndex]="i" [command]="capability"></command-definition>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Telemetry'">
+                        <telemetry-definition [formIndex]="i" [telemetry]="capability"></telemetry-definition>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Component'">
+                        <component-definition [formIndex]="i" [component]="capability"></component-definition>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'Relationship'">
+                        <relationship-definition [formIndex]="i" [relationship]="getRelationship(capability)"></relationship-definition>
+                    </ng-container>
                 </ng-container>
-                <ng-container *ngSwitchCase="'Command'">
-                    <command-definition [formIndex]="i" [command]="capability"></command-definition>        
-                </ng-container>
-                <ng-container *ngSwitchCase="'Telemetry'">
-                    <telemetry-definition [formIndex]="i" [telemetry]="capability"></telemetry-definition>        
-                </ng-container>
-                <ng-container *ngSwitchCase="'Component'">
-                    <component-definition [formIndex]="i" [component]="capability"></component-definition>        
-                </ng-container>
-                <ng-container *ngSwitchCase="'Relationship'">
-                    <relationship-definition [formIndex]="i" [relationship]="getRelationship(capability)"></relationship-definition>        
-                </ng-container>
+                <br/>
             </ng-container>
-        </ng-container>
+        </mat-card-content>
     </mat-card>
+
+    <br/>
+    <preview-panel [interface]="interface"></preview-panel>
 
     <mat-action-row>
         <button mat-raised-button color="primary" (click)="editorService.addPropertyToInterface(interface)">
@@ -106,5 +113,5 @@
         <button mat-raised-button color="primary" (click)="editorService.addRelationshipToInterface(interface)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Relationship
         </button>
-    </mat-action-row>
+    </mat-action-row>    
 </mat-expansion-panel>
