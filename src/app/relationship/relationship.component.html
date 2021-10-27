@@ -68,10 +68,12 @@
     <mat-card formArrayName="properties">
         <mat-card-title>Property List</mat-card-title>
         <mat-card-content>
-            <ng-container *ngFor="let capability of getProperties(); let i = index;">
-                <property-definition [formIndex]="i" [property]="capability"></property-definition>
-                <br/>
-            </ng-container>
+            <mat-accordion>
+                <ng-container *ngFor="let capability of getProperties(); let i = index;">
+                    <property-definition [property]="capability" [formIndex]="i" [panelOpenState]="false"></property-definition>
+                    <br/>
+                </ng-container>
+            </mat-accordion>
         </mat-card-content>
     </mat-card>
 
