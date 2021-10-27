@@ -9,9 +9,9 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: number;
   @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
 
   constructor(public editorService: EditorService) { 
     

@@ -12,7 +12,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class TelemetryComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
   
   constructor(public editorService: EditorService, private fb: FormBuilder) { 
     

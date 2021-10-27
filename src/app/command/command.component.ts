@@ -12,7 +12,7 @@ import { EditorService } from '../services/editor/editor-service.service'
 export class CommandComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
 
   constructor(public editorService: EditorService) { 
     
