@@ -7,6 +7,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./id-name-header-component.component.scss']
 })
 export class IdNameHeaderComponentComponent implements OnInit {
+  @Input() public panelOpenState: boolean = false;
   @Input() public formIndex: number = -1;
   @Input() public formGroup!: FormGroup;
 
@@ -14,5 +15,11 @@ export class IdNameHeaderComponentComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
+  public stopPropagation($event: Event): void {
+    if(!this.panelOpenState) {
+      $event.stopPropagation();
+      $event.stopImmediatePropagation();
+    }    
+  }
 }

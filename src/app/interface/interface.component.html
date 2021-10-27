@@ -59,9 +59,12 @@
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
+
+    <br/>
+    <mat-divider *ngIf="interface.contents.length > 0"></mat-divider>
     <br/>
 
-    <div formArrayName="contents">
+    <mat-card formArrayName="contents">
          <ng-container *ngFor="let capability of getContents(); let i = index;">
             <ng-container [ngSwitch]="capability.model.type">
                 <ng-container *ngSwitchCase="'Property'">
@@ -81,7 +84,7 @@
                 </ng-container>
             </ng-container>
         </ng-container>
-    </div>
+    </mat-card>
 
     <mat-action-row>
         <button mat-raised-button color="primary" (click)="editorService.addPropertyToInterface(interface)">
