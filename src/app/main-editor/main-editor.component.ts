@@ -12,7 +12,6 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class MainEditorComponent implements OnInit {
   public editorService: EditorService;
   private _formBuilder: FormBuilder;
-  public panelOpenState = true;
 
   constructor(editorService: EditorService, formBuilder: FormBuilder) {
     this.editorService = editorService;

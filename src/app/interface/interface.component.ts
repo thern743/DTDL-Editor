@@ -15,6 +15,7 @@ export class InterfaceComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
+  @Input() public selectedIndex!: number;
   
   constructor(public editorService: EditorService) {
    

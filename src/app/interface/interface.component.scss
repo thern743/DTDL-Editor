@@ -26,12 +26,27 @@ $my-theme: mat.define-dark-theme(
   $foreground: map.get($color-config, 'foreground');    
   $is-dark: map.get($color-config, 'is-dark');
 
-  // **************************
+  // ***********************************************
   // Start custom theming here
-  // **************************
+  // ***********************************************
+  //
+  // https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+  //
+  // Theme is set in angular.json (purple-green.css):
+  //
+  //  - Primary Pallete is 'Purple'
+  //  - Accent Pallete is 'Green'
+  //
+  // Primary 500 = #9C27B0 (same default button color)
+  // Accent A200 = #69F0AE (same default icon color)
+  // ***********************************************
 
   mat-card {
       background-color: mat.get-color-from-palette($background, 'background') !important;
+  }
+
+  .selected-panel {
+    border: 1px solid mat.get-color-from-palette($primary, 300);  
   }
 }
 
