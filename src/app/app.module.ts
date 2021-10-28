@@ -40,6 +40,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { ObjectSchemaComponent } from './object-schema/object-schema.component';
+import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     ComponentComponent,
     ModelTreeComponent,
     FolderSelectComponent,
-    ErrorSnackbarComponent
+    ErrorSnackbarComponent,
+    ObjectSchemaComponent,
+    ObjectSchemaEditorComponent
   ],
   imports: [
     BrowserModule,

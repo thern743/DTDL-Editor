@@ -69,7 +69,7 @@ export class FileService {
   }
 
   public saveFile(jsonLd: string): void {
-    var blob = new Blob([jsonLd], { type: "application/ld+json;charset=utf-8" });
-    FileSaver.saveAs(blob, "digitalTwin.json");
+    // var blob = new Blob([jsonLd], { type: "application/ld+json;charset=utf-8" });
+    // FileSaver.saveAs(blob, "digitalTwin.json");
   }
 }

@@ -1,0 +1,19 @@
+<mat-expansion-panel    [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Model Definition</mat-panel-title>
+        <mat-panel-description>Define a DTDL Model</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ng-container *ngFor="let field of objectSchemaEditorService.fields;">
+        <object-schema [field]="field"></object-schema>
+    </ng-container>
+
+    <mat-action-row>
+        <button mat-raised-button color="primary" (click)="addField()">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Field
+        </button>
+    </mat-action-row>    
+</mat-expansion-panel>
+
