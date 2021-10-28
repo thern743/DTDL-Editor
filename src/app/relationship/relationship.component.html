@@ -4,7 +4,9 @@
                         (closed)="panelOpenState = false"
                         [formGroup]="relationship.form">
     <mat-expansion-panel-header>
-        <mat-panel-title class="expansion-panel-field-header" class="id-name-header-component" [style.opacity]="panelOpenState ? '0' : '1'" [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
+        <mat-panel-title class="id-name-header-component"
+                [style.opacity]="panelOpenState ? '0' : '1'"
+                [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
             <id-name-header-component               
                 [formIndex]="formIndex"
                 [formGroup]="relationship.form"        
