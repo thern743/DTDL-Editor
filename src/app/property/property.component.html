@@ -1,14 +1,16 @@
 <mat-expansion-panel    class="mat-elevation-z5"
                         [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
                         [formGroup]="property.form">
     <mat-expansion-panel-header>
         <mat-panel-title class="expansion-panel-field-header" 
-            class="id-name-header-component" 
-            [style.opacity]="panelOpenState ? '0' : '1'" 
-            [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
+                class="id-name-header-component" 
+                [style.opacity]="panelOpenState ? '0' : '1'" 
+                [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
             <id-name-header-component               
                 [formIndex]="formIndex"
-                [formGroup]="property.form"        
+                [formGroup]="property.form"                       
                 [panelOpenState]="panelOpenState">
             </id-name-header-component>
         </mat-panel-title>
@@ -58,5 +60,4 @@
     <span class="formSpacer"></span>
 
     <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
-
 </mat-expansion-panel>
