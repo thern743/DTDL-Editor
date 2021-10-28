@@ -20,6 +20,20 @@ export class RelationshipComponent implements OnInit {
  
   public ngOnInit(): void { 
     this.relationship.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.relationship.form.get("id");
+    const name = this.relationship.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 
   public getProperties(): Array<ICapabilityFormControl<ICapabilityModel>> {

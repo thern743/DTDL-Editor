@@ -19,5 +19,19 @@ export class ComponentComponent implements OnInit {
 
   public ngOnInit(): void { 
     this.component.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.component.form.get("id");
+    const name = this.component.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 }

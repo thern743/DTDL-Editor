@@ -20,5 +20,19 @@ export class TelemetryComponent implements OnInit {
 
   public ngOnInit(): void {  
     this.telemetry.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.telemetry.form.get("id");
+    const name = this.telemetry.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 }

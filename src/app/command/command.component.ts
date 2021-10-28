@@ -20,5 +20,19 @@ export class CommandComponent implements OnInit {
 
   public ngOnInit(): void {  
     this.command.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.command.form.get("id");
+    const name = this.command.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 }
