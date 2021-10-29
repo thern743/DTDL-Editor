@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
 import { ObjectSchemaEditorService } from '../services/object-schema-editor/object-schema-editor.service';
+import { ObjectSchemaModel } from '../models/ObjectSchemaModel';
 
 @Component({
   selector: 'object-schema',
@@ -19,7 +20,7 @@ export class ObjectSchemaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public getFields() { 
+  public getFields() : Array<ObjectSchemaFormControl> { 
     return this.field.fields; 
   }
 }

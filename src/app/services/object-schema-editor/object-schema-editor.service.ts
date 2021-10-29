@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ObjectSchemaEditorService {
-  public fields: ObjectSchemaFormControl[];
+  public fields: Array<ObjectSchemaFormControl>;
   public fields$: Subject<ObjectSchemaFormControl>;
   private _formBuilder: FormBuilder;
 

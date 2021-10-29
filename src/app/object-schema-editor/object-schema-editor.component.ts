@@ -17,13 +17,18 @@ export class ObjectSchemaEditorComponent implements OnInit {
   constructor(objectSchemaEditorService: ObjectSchemaEditorService, formBuilder: FormBuilder) { 
     this.objectSchemaEditorService = objectSchemaEditorService; 
     this._formBuilder = formBuilder; 
+
+    //TODO: If I add an object schema model it makes it so the entire window doesnt show
+    let model = new ObjectSchemaModel("default");
+    let interfaceInstance = new ObjectSchemaFormControl(model, this._formBuilder);
+    this.objectSchemaEditorService.addField(interfaceInstance);
   }
 
   ngOnInit(): void {
   }
 
   public addField() {
-    let objectSchema = new ObjectSchemaModel(); 
+    let objectSchema = new ObjectSchemaModel("new object schema"); 
     let objectSchemaInstance = new ObjectSchemaFormControl(objectSchema, this._formBuilder);
     this.objectSchemaEditorService.addField(objectSchemaInstance);
   }

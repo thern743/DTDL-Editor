@@ -6,7 +6,7 @@ import { ObjectSchemaModel } from '../models/ObjectSchemaModel';
  */
 export class ObjectSchemaFormControl {
     formBuilder: FormBuilder; 
-    fields: ObjectSchemaFormControl[];
+    public fields: ObjectSchemaFormControl[];
     model: ObjectSchemaModel;
     form!: FormGroup;
 
@@ -25,7 +25,7 @@ export class ObjectSchemaFormControl {
             displayName: [this.model.displayName], 
             comment: [this.model.comment], 
             schema: [this.model.schema], 
-            fields: this.formBuilder.array([...this.model.fields])
+            fields: this.formBuilder.array(this.model.fields)
         });
         return this.form
     }
