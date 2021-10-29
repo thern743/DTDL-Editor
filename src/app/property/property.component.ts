@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
-import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'property-definition',
@@ -10,7 +9,7 @@ import { AbstractControl, FormControl } from '@angular/forms';
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-  @Input() public formIndex!: number;
+  @Input() public formIndex!: [number, number];
   @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
   
@@ -34,5 +33,10 @@ export class PropertyComponent implements OnInit {
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
     });    
+  }
+
+  public delete($event: Event): void {
+    $event.stopImmediatePropagation();
+    this.editorService.deleteCapabilityFromInterface(this.formIndex);
   }
 }

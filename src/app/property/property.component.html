@@ -8,17 +8,17 @@
                 [style.opacity]="panelOpenState ? '0' : '1'" 
                 [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
             <id-name-header-component               
-                [formIndex]="formIndex"
+                [formIndex]="formIndex[1]"
                 [formGroup]="property.form"                       
                 [panelOpenState]="panelOpenState">
             </id-name-header-component>
-        </mat-panel-title>
+        </mat-panel-title>        
     </mat-expansion-panel-header>
 
     <id-name-header-component
         [style.opacity]="panelOpenState ? '1' : '0'"
         [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
-        [formIndex]="formIndex"
+        [formIndex]="formIndex[1]"
         [formGroup]="property.form"        
         [panelOpenState]="panelOpenState">
     </id-name-header-component>

@@ -10,7 +10,7 @@ import { EditorService } from '../services/editor/editor-service.service'
   styleUrls: ['./command.component.scss']
 })
 export class CommandComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: [number, number];
   @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
 

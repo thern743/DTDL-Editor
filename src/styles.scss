@@ -79,6 +79,14 @@ $my-theme: mat.define-dark-theme(
     .selected-panel {
       border: 1px solid mat.get-color-from-palette($primary, 300);  
     }
+
+    .action-button {
+        background-color: mat.get-color-from-palette($accent, A700);
+    }
+    
+    .action-button:hover {
+        background-color: mat.get-color-from-palette($accent, A200);
+    }
 }
 
 @include custom($my-theme);

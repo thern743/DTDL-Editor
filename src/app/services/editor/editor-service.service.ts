@@ -144,4 +144,9 @@ export class EditorService {
   public filterInterfacesForExtends(id: string): string[] {
     return this.interfaces.filter(x => x.model.id != id).map(x => x.model.id);
   }
+
+  public deleteCapabilityFromInterface(formIndex: [number, number]): void {
+    if(formIndex[0] < 0 || formIndex[1] < 0) return;
+    this.interfaces[formIndex[0]].contents.splice(formIndex[1], 1);
+  }
 }

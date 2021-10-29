@@ -1,7 +1,60 @@
-.file-options {
-    background-color: rgb(105, 240, 174, .25);
+@use 'sass:map';
+@use '~@angular/material' as mat;
+@include mat.core();
+
+// default, light, dark, text, foreground, background
+$primary: mat.$purple-palette;
+$accent: mat.$green-palette;
+$warn: mat.$red-palette;
+
+$my-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn
+    )
+  )
+);
+
+@mixin custom($theme) {  
+  $color-config: mat.get-color-config($theme);
+  $primary: map.get($color-config, 'primary');
+  $accent: map.get($color-config, 'accent');
+  $warn: map.get($color-config, 'warn');    
+  $background: map.get($color-config, 'background');
+  $foreground: map.get($color-config, 'foreground');    
+  $is-dark: map.get($color-config, 'is-dark');
+
+  // ***********************************************
+  // Start custom theming here
+  // ***********************************************
+  //
+  // https://material.io/design/color/the-color-system.html#tools-for-picking-colors
+  //
+  // Theme is set in angular.json (purple-green.css):
+  //
+  //  - Primary Pallete is 'Purple'
+  //  - Accent Pallete is 'Green'
+  //
+  // Primary 500 = #9C27B0 (same default button color)
+  // Accent A200 = #69F0AE (same default icon color)
+  // ***********************************************
+
+    .action-button {
+        background-color: mat.get-color-from-palette($accent, 200); //rgb(105, 240, 174, .25);
+    }
+    
+    .action-button:hover {
+        background-color: mat.get-color-from-palette($accent, A200);// rgb(105, 240, 174);
+    }
 }
 
-.file-options:hover {
-    background-color: rgb(105, 240, 174);
-}
+@include custom($my-theme);
+
+
+
+
+
+
+

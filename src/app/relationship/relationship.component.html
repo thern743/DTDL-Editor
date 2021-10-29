@@ -8,7 +8,7 @@
                 [style.opacity]="panelOpenState ? '0' : '1'"
                 [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
             <id-name-header-component               
-                [formIndex]="formIndex"
+                [formIndex]="formIndex[1]"
                 [formGroup]="relationship.form"        
                 [panelOpenState]="panelOpenState">
             </id-name-header-component>
@@ -18,7 +18,7 @@
     <id-name-header-component
         [style.opacity]="panelOpenState ? '1' : '0'"
         [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
-        [formIndex]="formIndex"
+        [formIndex]="formIndex[1]"
         [formGroup]="relationship.form"        
         [panelOpenState]="panelOpenState">
     </id-name-header-component>
@@ -72,7 +72,7 @@
         <mat-card-content>
             <mat-accordion>
                 <ng-container *ngFor="let capability of getProperties(); let i = index;">
-                    <property-definition [property]="capability" [formIndex]="i" [panelOpenState]="false"></property-definition>
+                    <property-definition [property]="capability" [formIndex]="[i, i]" [panelOpenState]="false"></property-definition>
                     <br/>
                 </ng-container>
             </mat-accordion>

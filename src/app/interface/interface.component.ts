@@ -12,7 +12,7 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 })
 
 export class InterfaceComponent implements OnInit {
-  @Input() public formIndex!: number;
+  @Input() public formIndex!: [number, number];
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   @Input() public selectedIndex!: number;

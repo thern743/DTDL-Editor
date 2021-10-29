@@ -10,7 +10,7 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./telemetry.component.scss']
 })
 export class TelemetryComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: [number, number];
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
   
