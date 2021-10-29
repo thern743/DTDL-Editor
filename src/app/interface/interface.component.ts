@@ -32,4 +32,9 @@ export class InterfaceComponent implements OnInit {
   public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
     return capability as RelationshipCapabilityFormControl;
   }
+
+  public delete($event: Event): void {
+    $event.stopImmediatePropagation();
+    this.editorService.deleteCapabilityFromInterface(this.formIndex);
+  }
 }

@@ -67,7 +67,7 @@
         <mat-card-title>Capability List</mat-card-title>
         <mat-card-content>
             <mat-accordion>
-                <ng-container *ngFor="let capability of getContents(); let i = index;">
+                <div *ngFor="let capability of getContents(); let i = index;" style="display: flex;">
                     <ng-container [ngSwitch]="capability.model.type">
                         <ng-container *ngSwitchCase="'Property'">
                             <property-definition [property]="capability" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></property-definition>
@@ -84,9 +84,12 @@
                         <ng-container *ngSwitchCase="'Relationship'">
                             <relationship-definition [relationship]="getRelationship(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
                         </ng-container>
+                        <div class="action-row">
+                            <button mat-raised-button color="accent" class="action-button" (click)="delete($event)"><mat-icon>delete_outline</mat-icon></button>
+                        </div>
+                        <mat-divider></mat-divider>
                     </ng-container>
-                    <br/>
-                </ng-container>
+                </div>
             </mat-accordion>
         </mat-card-content>
     </mat-card>

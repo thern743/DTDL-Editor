@@ -34,9 +34,4 @@ export class PropertyComponent implements OnInit {
       name.setValue(value, { emitEvent: false })
     });    
   }
-
-  public delete($event: Event): void {
-    $event.stopImmediatePropagation();
-    this.editorService.deleteCapabilityFromInterface(this.formIndex);
-  }
 }
