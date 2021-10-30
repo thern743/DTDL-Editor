@@ -12,6 +12,9 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 })
 
 export class InterfaceComponent implements OnInit {
+  // Tuple: 
+  //    [0] = interface's index within the model, 
+  //    [1] = index of the capability within the interface
   @Input() public formIndex!: [number, number];
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
@@ -33,8 +36,8 @@ export class InterfaceComponent implements OnInit {
     return capability as RelationshipCapabilityFormControl;
   }
 
-  public delete($event: Event): void {
+  public delete($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
     $event.stopImmediatePropagation();
-    this.editorService.deleteCapabilityFromInterface(this.formIndex);
+    this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);
   }
 }

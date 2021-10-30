@@ -85,7 +85,7 @@
                             <relationship-definition [relationship]="getRelationship(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
                         </ng-container>
                         <div class="action-row">
-                            <button mat-raised-button color="accent" class="action-button" (click)="delete($event)"><mat-icon>delete_outline</mat-icon></button>
+                            <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon></button>
                         </div>
                         <mat-divider></mat-divider>
                     </ng-container>
