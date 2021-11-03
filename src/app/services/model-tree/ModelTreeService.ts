@@ -36,13 +36,15 @@ export class ModelTreeService {
     
     public mapChildren(capabilities: ICapabilityModel[], node: CapabilityNode): CapabilityNode {        
         capabilities.forEach((capability: ICapabilityModel) => {     
-            let child = new CapabilityNode(capability.type + ": " + capability.name);
-            node.children?.push(child);
-
             if(capability.type == "Relationship") {
-                let relationshipCapability = capability as RelationshipCapabilityModel;
-                let node = new CapabilityNode(capability.name);            
-                node = this.mapChildren(relationshipCapability.properties, node);
+                let data = new Array<CapabilityNode>();
+                let innerNode = new CapabilityNode(capability.type + ": " + capability.name);                
+                innerNode = this.mapChildren((<RelationshipCapabilityModel>capability).properties, innerNode);
+                data.push(innerNode);
+                node.children?.push(innerNode);
+            } else {
+                let child = new CapabilityNode(capability.type + ": " + capability.name);
+                node.children?.push(child);
             }
         });
 
