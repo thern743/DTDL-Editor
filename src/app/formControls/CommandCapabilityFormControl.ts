@@ -10,8 +10,7 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
   }
   
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
+    let form = this.formBuilder.group({
       id: [this.model.id],
       type: [this.model.type],
       displayName: [this.model.displayName],
@@ -24,7 +23,7 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
       response: [this.model.response]
     });
 
-    return this.form;
+    return form;
   }
 }
 

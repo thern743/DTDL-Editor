@@ -10,8 +10,7 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
   }
   
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
+    let form = this.formBuilder.group({
       id: [this.model.id],
       type: [this.model.type],
       displayName: [this.model.displayName],
@@ -22,6 +21,6 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
       schema: [this.model.schema]
     });
 
-    return this.form;
+    return form;
   }
 }

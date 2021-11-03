@@ -5,8 +5,7 @@ import { ICapabilityFormControl } from "./ICapabilityFormControl";
 // TypedJSON requires a concrete type to work.
 export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapabilityModel>
     implements ICapabilityFormControl<TCapabilityDto>
-{
-    public index: number = -1;
+{    
     public formBuilder: FormBuilder;
     public model!: TCapabilityDto;  
     public form!: FormGroup;

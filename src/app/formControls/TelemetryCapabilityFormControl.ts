@@ -12,8 +12,7 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
   }
 
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
+    let form = this.formBuilder.group({
       id: [this.model.id],
       type: [this.model.type],
       displayName: [this.model.displayName],
@@ -25,7 +24,7 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
       semanticType: [this.model.semanticType]
     });
 
-    return this.form;
+    return form;
   }
 }
 
