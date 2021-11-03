@@ -4,8 +4,8 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree"
 import { CapabilityNode } from "src/app/models/CapabilityNode";
 import { ICapabilityModel } from "src/app/models/ICapabilityModel";
 import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
-import { ICapabilityFormControl } from "src/app/formControls/ICapabilityFormControl";
 import { CapabilityFlatNode } from "src/app/models/CapabilityFlatNode";
+import { RelationshipCapabilityModel } from "src/app/models/RelationshipCapabilityModel";
 
 @Injectable({
     providedIn: 'root'
@@ -27,17 +27,23 @@ export class ModelTreeService {
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
             let node = new CapabilityNode(interfaceInstance.model.name);            
-            node = this.mapChildren(interfaceInstance, node);
+            node = this.mapChildren(interfaceInstance.model.contents, node);
             data.push(node);            
         });
     
         this.treeDataSource.data = data;
     }
     
-    public mapChildren(interfaceInstance: InterfaceCapabilityFormControl, node: CapabilityNode): CapabilityNode {        
-        interfaceInstance.contents.forEach((capability: ICapabilityFormControl<ICapabilityModel>) => {     
-            let child = new CapabilityNode(capability.model.type + ": " + capability.model.name);
+    public mapChildren(capabilities: ICapabilityModel[], node: CapabilityNode): CapabilityNode {        
+        capabilities.forEach((capability: ICapabilityModel) => {     
+            let child = new CapabilityNode(capability.type + ": " + capability.name);
             node.children?.push(child);
+
+            if(capability.type == "Relationship") {
+                let relationshipCapability = capability as RelationshipCapabilityModel;
+                let node = new CapabilityNode(capability.name);            
+                node = this.mapChildren(relationshipCapability.properties, node);
+            }
         });
 
         return node;
