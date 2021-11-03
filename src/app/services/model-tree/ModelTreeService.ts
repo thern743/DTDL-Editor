@@ -32,6 +32,7 @@ export class ModelTreeService {
         });
     
         this.treeDataSource.data = data;
+        this.treeControl.expandAll();
     }
     
     public mapChildren(capabilities: ICapabilityModel[], node: CapabilityNode): CapabilityNode {        
