@@ -7,6 +7,8 @@ import { JsonLdPipe } from 'src/app/filters/jsonld.pipe';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
 import * as FileSaver from 'file-saver';
+import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,11 @@ export class FileService {
   public typedJson: TypedJSON<InterfaceCapabilityModel>;
   private _snackBar: MatSnackBar;
 
-  constructor(formBuilder: FormBuilder, snackBar: MatSnackBar) {
+  constructor(snackBar: MatSnackBar) {
     this._snackBar = snackBar;
     this.files = new Array<File>(); 
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
-    this.typedJson = new TypedJSON(InterfaceCapabilityModel);
+    this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
   }
 
   public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
@@ -36,6 +38,8 @@ export class FileService {
 
           console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
       
+          // TODO: Add DTDL model validator:
+          //       https://github.com/azure-samples/dtdl-validator/
           try {
             let capability = this.typedJson.parse(file);
             capability instanceof InterfaceCapabilityModel;
@@ -70,6 +74,7 @@ export class FileService {
 
   public saveFile(jsonLd: string): void {
     var blob = new Blob([jsonLd], { type: "application/ld+json;charset=utf-8" });
+    // TODO: Get filename from user input.
     FileSaver.saveAs(blob, "digitalTwin.json");
   }
 }

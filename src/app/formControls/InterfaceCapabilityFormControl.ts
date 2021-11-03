@@ -3,6 +3,17 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
+import { PropertyCapabilityFormControl } from "./PropertyCapabilityFormControl";
+import { CommandCapabilityFormControl } from "./CommandCapabilityFormControl";
+import { ComponentCapabilityFormControl } from "./ComponentCapabilityFormControl";
+import { RelationshipCapabilityFormControl } from "./RelationshipCapabilityFormControl";
+import { TelemetryCapabilityFormControl } from "./TelemetryCapabilityFormControl";
+import { RelationshipCapabilityModel } from "../models/RelationshipCapabilityModel";
+import { CommandCapabilityModel } from "../models/CommandCapabilityModel";
+import { ComponentCapabilityModel } from "../models/ComponentCapabilityModel";
+import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
+import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
+import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   public contents: ICapabilityFormControl<ICapabilityModel>[];
@@ -10,8 +21,37 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
     this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
+    this.mapModelSubProperties(model);
     this.model = model;
     this.form = this.toFormGroup();
+  }
+
+  private mapModelSubProperties(model: InterfaceCapabilityModel): void {
+    model.contents.map((model: ICapabilityModel) => {
+      let formControl!: ICapabilityFormControl<ICapabilityModel>;
+            
+      switch(model.type) {
+        case "Property":          
+          formControl = new PropertyCapabilityFormControl(model as PropertyCapabilityModel, this.formBuilder);
+          break;
+        case "Command":
+          formControl = new CommandCapabilityFormControl(model as CommandCapabilityModel, this.formBuilder);
+          break;
+        case "Telemetry":
+          formControl = new TelemetryCapabilityFormControl(model as TelemetryCapabilityModel, this.formBuilder);
+          break;
+        case "Component":
+          formControl = new ComponentCapabilityFormControl(model as ComponentCapabilityModel, this.formBuilder);
+          break;
+        case "Relationship":
+          formControl = new RelationshipCapabilityFormControl(model as RelationshipCapabilityModel, this.formBuilder);
+          break;
+        default:
+          throw new Error("Invalid capability type '" + model.type + "'");          
+      }
+
+      this.contents.push(formControl);
+    });
   }
   
   get commands(): ICapabilityModel[] {        
@@ -35,7 +75,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = [...this.model.contents].filter(x => x.type === type);
+    let capabilities = this.model.contents.filter(x => x.type === type);
     return capabilities;
   }
 

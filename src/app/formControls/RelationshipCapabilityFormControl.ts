@@ -4,17 +4,45 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
 import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';
 import { ICapabilityFormControl } from './ICapabilityFormControl';
+import { CommandCapabilityFormControl } from "./CommandCapabilityFormControl";
+import { ComponentCapabilityFormControl } from "./ComponentCapabilityFormControl";
+import { TelemetryCapabilityFormControl } from "./TelemetryCapabilityFormControl";
+import { CommandCapabilityModel } from "../models/CommandCapabilityModel";
+import { ComponentCapabilityModel } from "../models/ComponentCapabilityModel";
+import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
+import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: ICapabilityFormControl<ICapabilityModel>[];
   
-  constructor(formBuilder: FormBuilder) {  
+  constructor(model: RelationshipCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
     this.properties = new Array<PropertyCapabilityFormControl>();
-    this.model = new RelationshipCapabilityModel("New Relationship");
+    this.mapModelSubProperties(model);
+    this.model = model;
     this.form = this.toFormGroup();
   }
   
+  private mapModelSubProperties(model: RelationshipCapabilityModel): void {
+    model.properties.map((capability: ICapabilityModel) => {
+      let formControl!: ICapabilityFormControl<ICapabilityModel>;
+            
+      switch(capability.type) {
+        case "Property":          
+          formControl = new PropertyCapabilityFormControl(capability as PropertyCapabilityModel, this.formBuilder);
+          break;
+        case "Command":          
+        case "Telemetry":          
+        case "Component":          
+        case "Relationship":          
+        default:
+          break;
+      }
+
+      this.properties.push(formControl);
+    });
+  }
+
   public toFormGroup(): FormGroup {
     this.form = this.formBuilder.group({
       index: [this.index],

@@ -3,9 +3,9 @@ import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityModel> {
-  constructor(formBuilder: FormBuilder) {  
+  constructor(model: PropertyCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new PropertyCapabilityModel("New Property");
+    this.model = model;
     this.form = this.toFormGroup();
   }
   

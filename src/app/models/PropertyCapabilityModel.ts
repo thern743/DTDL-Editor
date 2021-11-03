@@ -4,14 +4,31 @@ import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
 export class PropertyCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember id!: string;
-  @jsonMember type: string = "Property";
-  @jsonMember name!: string;
-  @jsonMember displayName!: string;
-  @jsonMember description!: string;
-  @jsonMember comment!: string;
+  @jsonMember({ name: '@id' })
+  public id!: string;
+
+  @jsonMember({ name: '@type' })
+  public type: string = "Property";
+
+  @jsonMember 
+  public name!: string;
+
+  @jsonMember 
+  public displayName!: string;
+
+  @jsonMember 
+  public description!: string;
+
+  @jsonMember 
+  public comment!: string;
+  
   // Property specific
-  @jsonMember schema!: string;  
-  @jsonMember semanticType!: string;
-  @jsonMember writable: boolean = false;
+  @jsonMember 
+  public schema!: string;
+
+  @jsonMember 
+  public semanticType!: string;
+
+  @jsonMember 
+  public writable: boolean = false;
 }

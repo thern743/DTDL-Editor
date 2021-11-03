@@ -5,9 +5,9 @@ import { TelemetryCapabilityModel } from '../models/TelemetryCapabilityModel';
 
 export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityModel> {
   
-  constructor(formBuilder: FormBuilder) {  
+  constructor(model: TelemetryCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new TelemetryCapabilityModel("New Telemetry");
+    this.model = model;
     this.form = this.toFormGroup();
   }
 

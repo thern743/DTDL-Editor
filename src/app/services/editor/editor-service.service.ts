@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { InterfaceCapabilityFormControl } from 'src/app/formControls/InterfaceCapabilityFormControl';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from 'src/app/formControls/CommandCapabilityFormControl';
@@ -8,10 +7,13 @@ import { TelemetryCapabilityFormControl } from 'src/app/formControls/TelemetryCa
 import { ICapabilityFormControl } from 'src/app/formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from 'src/app/formControls/RelationshipCapabilityFormControl';
 import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCapabilityFormControl';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
-import { Observable, of, Subject } from 'rxjs';
-import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
+import { Subject } from 'rxjs';
+import { RelationshipCapabilityModel } from 'src/app/models/RelationshipCapabilityModel';
+import { PropertyCapabilityModel } from 'src/app/models/PropertyCapabilityModel';
+import { CommandCapabilityModel } from 'src/app/models/CommandCapabilityModel';
+import { ComponentCapabilityModel } from 'src/app/models/ComponentCapabilityModel';
+import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -69,35 +71,40 @@ export class EditorService {
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let capability = new PropertyCapabilityFormControl(this.formBuilder);
-        this.pushInterfaceContents(interfaceInstance, capability);
+    let model = new PropertyCapabilityModel("New Property");
+    let formControl = new PropertyCapabilityFormControl(model, this.formBuilder);
+    this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
-  public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {   
-    let capability = new CommandCapabilityFormControl(this.formBuilder);
-    this.pushInterfaceContents(interfaceInstance, capability);
+  public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
+    let model = new CommandCapabilityModel("New Command");   
+    let formControl = new CommandCapabilityFormControl(model, this.formBuilder);
+    this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let capability = new TelemetryCapabilityFormControl(this.formBuilder);
-    this.pushInterfaceContents(interfaceInstance, capability);
+    let model = new TelemetryCapabilityModel("New Telemetry");
+    let formControl = new TelemetryCapabilityFormControl(model, this.formBuilder);
+    this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addComponentToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let capability = new ComponentCapabilityFormControl(this.formBuilder);
-    this.pushInterfaceContents(interfaceInstance, capability);
+    let model = new ComponentCapabilityModel("New Component");
+    let formControl = new ComponentCapabilityFormControl(model, this.formBuilder);
+    this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let capability = new RelationshipCapabilityFormControl(this.formBuilder);
-    this.pushInterfaceContents(interfaceInstance, capability);
+    let model = new RelationshipCapabilityModel("New Relationship");
+    let formControl = new RelationshipCapabilityFormControl(model, this.formBuilder);
+    this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
-  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {    
+  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {    
     let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
-    contentsFormArray.push(capability.form);
-    interfaceInstance.contents.push(capability);    
-    interfaceInstance.model.contents.push(capability.model);
+    contentsFormArray.push(formControl.form);
+    interfaceInstance.contents.push(formControl);    
+    interfaceInstance.model.contents.push(formControl.model);
     this.interfaces$.next(interfaceInstance);
 
     console.groupCollapsed("Interface Form Capabilities");
@@ -122,22 +129,23 @@ export class EditorService {
   }
 
   public addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
-    let capability = new PropertyCapabilityFormControl(this.formBuilder);
+    let model = new PropertyCapabilityModel("New Property");
+    let capability = new PropertyCapabilityFormControl(model, this.formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, capability: ICapabilityFormControl<ICapabilityModel>): void {
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {
     let formArray = relationshipInstance.form.get("properties") as FormArray;
-    relationshipInstance.properties.push(capability);
-    formArray.push(capability.form);
-    relationshipInstance.model.properties.add(capability.model);
+    relationshipInstance.properties.push(formControl);
+    formArray.push(formControl.form);
+    relationshipInstance.model.properties.push(formControl.model);
 
     console.groupCollapsed("Relationship Form Capabilities");
     console.log("FormArray: %i, Properties: %i", formArray.length, relationshipInstance.properties.length);
     console.groupEnd();
 
     console.groupCollapsed("Relationship Model Capabilities");
-    console.log("Properties: %i", relationshipInstance.model.properties.size);
+    console.log("Properties: %i", relationshipInstance.model.properties.length);
     console.groupEnd();
   }
 

@@ -4,14 +4,33 @@ import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
 export class CommandCapabilityModel extends AbstractCapabilityModel {
-    @jsonMember id!: string;
-    @jsonMember type: string = "Command";
-    @jsonMember name!: string;
-    @jsonMember displayName!: string;
-    @jsonMember description!: string;
-    @jsonMember comment!: string;
-    // Command specific
-    @jsonMember commandType!: string;
-    @jsonMember request: any = {};
-    @jsonMember response: any = {};
+  @jsonMember({ name: '@id' }) 
+  public id!: string;
+
+  @jsonMember({ name: '@type' })
+  public type: string = "Command";
+
+  @jsonMember 
+  public name!: string;
+
+  @jsonMember 
+  public displayName!: string;
+
+  @jsonMember 
+  public description!: string;
+
+  @jsonMember 
+  public comment!: string;
+
+  // Command specific
+  @jsonMember 
+  public commandType!: string;
+
+  // TODO: Implement Command request object
+  @jsonMember 
+  public request: any = {};
+
+  // TODO: Implement Command response object
+  @jsonMember 
+  public response: any = {};
 }

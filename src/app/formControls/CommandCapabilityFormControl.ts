@@ -3,9 +3,9 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { CommandCapabilityModel } from '../models/CommandCapabilityModel';
 
 export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityModel> {
-  constructor(formBuilder: FormBuilder) {  
+  constructor(model: CommandCapabilityModel, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new CommandCapabilityModel("New Command");
+    this.model = model;
     this.form = this.toFormGroup();
   }
   
