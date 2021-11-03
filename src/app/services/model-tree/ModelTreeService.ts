@@ -6,6 +6,7 @@ import { ICapabilityModel } from "src/app/models/ICapabilityModel";
 import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
 import { CapabilityFlatNode } from "src/app/models/CapabilityFlatNode";
 import { RelationshipCapabilityModel } from "src/app/models/RelationshipCapabilityModel";
+import { InterfaceCapabilityModel } from "src/app/models/InterfaceCapabilityModel";
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,7 @@ export class ModelTreeService {
         let data = new Array<CapabilityNode>();
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
-            let node = new CapabilityNode(interfaceInstance.model.name);            
+            let node = new CapabilityNode(interfaceInstance.model.name, interfaceInstance.model.type);            
             node = this.mapChildren(interfaceInstance.model.contents, node);
             data.push(node);            
         });
@@ -39,12 +40,12 @@ export class ModelTreeService {
         capabilities.forEach((capability: ICapabilityModel) => {     
             if(capability.type == "Relationship") {
                 let data = new Array<CapabilityNode>();
-                let innerNode = new CapabilityNode(capability.type + ": " + capability.name);                
+                let innerNode = new CapabilityNode(capability.name, capability.type);                
                 innerNode = this.mapChildren((<RelationshipCapabilityModel>capability).properties, innerNode);
                 data.push(innerNode);
                 node.children?.push(innerNode);
             } else {
-                let child = new CapabilityNode(capability.type + ": " + capability.name);
+                let child = new CapabilityNode(capability.name, capability.type);
                 node.children?.push(child);
             }
         });
@@ -52,8 +53,8 @@ export class ModelTreeService {
         return node;
     }
 
-    public addNode(interfaceInstance: InterfaceCapabilityFormControl) {
-        let node = new CapabilityNode(interfaceInstance.model.name);
+    public addNode(model: InterfaceCapabilityModel) {
+        let node = new CapabilityNode(model.name, model.type);
         this.treeDataSource.data.push(node);
     }
 
@@ -64,6 +65,7 @@ export class ModelTreeService {
         flatNode.expandable = !!node.children && node.children.length > 0;
         flatNode.name = node.name;
         flatNode.level = level;
+        flatNode.title = node.title;
         return flatNode;
     }
 }

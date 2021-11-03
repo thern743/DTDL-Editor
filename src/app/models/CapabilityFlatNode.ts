@@ -1,5 +1,6 @@
 export class CapabilityFlatNode {
-    public expandable!: boolean;
+    public title!: string;    
     public name!: string;
     public level!: number;
+    public expandable!: boolean;
   }
