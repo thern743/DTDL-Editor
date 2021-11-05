@@ -34,19 +34,19 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
             
       switch(model.type) {
         case "Property":          
-          formControl = new PropertyCapabilityFormControl(model as PropertyCapabilityModel, this.formBuilder);
+          formControl = new PropertyCapabilityFormControl(model as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Command":
-          formControl = new CommandCapabilityFormControl(model as CommandCapabilityModel, this.formBuilder);
+          formControl = new CommandCapabilityFormControl(model as CommandCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Telemetry":
-          formControl = new TelemetryCapabilityFormControl(model as TelemetryCapabilityModel, this.formBuilder);
+          formControl = new TelemetryCapabilityFormControl(model as TelemetryCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Component":
-          formControl = new ComponentCapabilityFormControl(model as ComponentCapabilityModel, this.formBuilder);
+          formControl = new ComponentCapabilityFormControl(model as ComponentCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Relationship":
-          formControl = new RelationshipCapabilityFormControl(model as RelationshipCapabilityModel, this.formBuilder);
+          formControl = new RelationshipCapabilityFormControl(model as RelationshipCapabilityModel, this._validationService, this.formBuilder);
           break;
         default:
           throw new Error("Invalid capability type '" + model.type + "'");          

@@ -14,12 +14,15 @@ import { PropertyCapabilityModel } from 'src/app/models/PropertyCapabilityModel'
 import { CommandCapabilityModel } from 'src/app/models/CommandCapabilityModel';
 import { ComponentCapabilityModel } from 'src/app/models/ComponentCapabilityModel';
 import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityModel';
+import { ValidationService } from '../validation/validation-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class EditorService {
+  private _formBuilder: FormBuilder;
+  private _validationService: ValidationService;
   public classTypes: string[];
   public capabilities: string[];
   public semantics: string[];
@@ -30,7 +33,9 @@ export class EditorService {
   public interfaces$: Subject<InterfaceCapabilityFormControl>;
   
   
-  constructor(public formBuilder: FormBuilder) { 
+  constructor(validationService: ValidationService, formBuilder: FormBuilder) { 
+    this._validationService = validationService;
+    this._formBuilder = formBuilder;
     this.classTypes = this.getClassTypes();
     this.capabilities = this.getCapabilityTypes();
     this.semantics= this.getSemanticTypes();
@@ -72,31 +77,31 @@ export class EditorService {
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new PropertyCapabilityModel("New Property");
-    let formControl = new PropertyCapabilityFormControl(model, this.formBuilder);
+    let formControl = new PropertyCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new CommandCapabilityModel("New Command");   
-    let formControl = new CommandCapabilityFormControl(model, this.formBuilder);
+    let formControl = new CommandCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new TelemetryCapabilityModel("New Telemetry");
-    let formControl = new TelemetryCapabilityFormControl(model, this.formBuilder);
+    let formControl = new TelemetryCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addComponentToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new ComponentCapabilityModel("New Component");
-    let formControl = new ComponentCapabilityFormControl(model, this.formBuilder);
+    let formControl = new ComponentCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new RelationshipCapabilityModel("New Relationship");
-    let formControl = new RelationshipCapabilityFormControl(model, this.formBuilder);
+    let formControl = new RelationshipCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
@@ -130,7 +135,7 @@ export class EditorService {
 
   public addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
     let model = new PropertyCapabilityModel("New Property");
-    let capability = new PropertyCapabilityFormControl(model, this.formBuilder);
+    let capability = new PropertyCapabilityFormControl(model,  this._validationService, this._formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 

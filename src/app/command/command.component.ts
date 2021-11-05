@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service'
+import { ValidationService } from '../services/validation/validation-service.service';
 
 
 @Component({
@@ -14,8 +15,12 @@ export class CommandComponent implements OnInit {
   @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
 
-  constructor(public editorService: EditorService) { 
-    
+  public editorService: EditorService;
+  private _validationService: ValidationService;
+
+  constructor(editorService: EditorService, validationService: ValidationService) { 
+    this.editorService = editorService;
+    this._validationService = validationService;
   }
 
   public ngOnInit(): void {  
