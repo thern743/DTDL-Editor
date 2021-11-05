@@ -13,13 +13,15 @@ import { CommandCapabilityModel } from "../models/CommandCapabilityModel";
 import { ComponentCapabilityModel } from "../models/ComponentCapabilityModel";
 import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
-import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { ValidationService } from "../services/validation/validation-service.service";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   public contents: ICapabilityFormControl<ICapabilityModel>[];
+  private _validationService: ValidationService;
   
-  constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder) {  
+  constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
     super(formBuilder);
+    this._validationService = validationService;
     this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
     this.mapModelSubProperties(model);
     this.model = model;
@@ -81,7 +83,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
 
   public toFormGroup(): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id],
+      id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],
