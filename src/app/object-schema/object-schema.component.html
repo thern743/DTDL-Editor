@@ -4,8 +4,7 @@
                         (closed)="panelOpenState = false"
                         [formGroup]="field.form">
     <mat-expansion-panel-header>
-        <mat-panel-title>ObjectSchema Field Definition</mat-panel-title>
-        <mat-panel-description>Define a DTDL Model for an Object Schema</mat-panel-description>
+        <mat-panel-title>Field</mat-panel-title>
     </mat-expansion-panel-header>
 
     <mat-form-field appearance="fill">
@@ -38,14 +37,20 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <div formArrayName="contents">
-         <ng-container *ngFor="let field of getFields(); let i = index;">
-             <object-schema [field]="field"></object-schema>
-        </ng-container>
-    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>schema</mat-label>
+        <mat-select>
+            <!-- TODO: Store locally selected ... then check locally selected to change hidden on the value -->
+            <mat-option *ngFor="let schema of schemaTypes" [value]="schema" (onSelectionChange)="valSelected()" >{{schema}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngFor="let field of getFields(); let i = index;">
+        <object-schema [field]="field"></object-schema>
+   </ng-container>
 
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="schemaObjectEditorService.addField(field)">
+        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()" [hidden]=>
             <mat-icon>add_circle</mat-icon>&nbsp;New Field
         </button>
     </mat-action-row>

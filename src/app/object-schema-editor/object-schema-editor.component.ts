@@ -18,8 +18,7 @@ export class ObjectSchemaEditorComponent implements OnInit {
     this.objectSchemaEditorService = objectSchemaEditorService; 
     this._formBuilder = formBuilder; 
 
-    //TODO: If I add an object schema model it makes it so the entire window doesnt show
-    let model = new ObjectSchemaModel("default");
+    let model = new ObjectSchemaModel("default", 0);
     let interfaceInstance = new ObjectSchemaFormControl(model, this._formBuilder);
     this.objectSchemaEditorService.addField(interfaceInstance);
   }
@@ -28,9 +27,9 @@ export class ObjectSchemaEditorComponent implements OnInit {
   }
 
   public addField() {
-    let objectSchema = new ObjectSchemaModel("new object schema"); 
+    //TODO: Add levels
+    let objectSchema = new ObjectSchemaModel("new object schema", 0); 
     let objectSchemaInstance = new ObjectSchemaFormControl(objectSchema, this._formBuilder);
     this.objectSchemaEditorService.addField(objectSchemaInstance);
   }
-
 }

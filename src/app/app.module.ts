@@ -42,6 +42,7 @@ import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.componen
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ObjectSchemaComponent } from './object-schema/object-schema.component';
 import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
+import { PrimativeSchemaComponent } from './primative-schema/primative-schema.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schem
     FolderSelectComponent,
     ErrorSnackbarComponent,
     ObjectSchemaComponent,
-    ObjectSchemaEditorComponent
+    ObjectSchemaEditorComponent,
+    PrimativeSchemaComponent
   ],
   imports: [
     BrowserModule,

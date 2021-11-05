@@ -30,8 +30,11 @@ export class ObjectSchemaModel {
     @jsonArrayMember(ObjectSchemaModel) 
     public fields!: ObjectSchemaModel[];
 
-    constructor(name: string) {
+    public level: number; 
+
+    constructor(name: string, level: number) {
         this.name = name; 
+        this.level = level; 
         this.fields = new Array<ObjectSchemaModel>();
     }
 }
