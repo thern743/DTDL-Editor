@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service'
+import { ValidationService } from '../services/validation/validation-service.service';
 
 
 @Component({
@@ -9,16 +10,34 @@ import { EditorService } from '../services/editor/editor-service.service'
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.scss']
 })
-export class CommandPayloadComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+export class CommandComponent implements OnInit {
+  @Input() public formIndex!: [number, number];
   @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
 
-  constructor(public editorService: EditorService) { 
-    
+  public editorService: EditorService;
+  private _validationService: ValidationService;
+
+  constructor(editorService: EditorService, validationService: ValidationService) { 
+    this.editorService = editorService;
+    this._validationService = validationService;
   }
 
   public ngOnInit(): void {  
     this.command.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.command.form.get("id");
+    const name = this.command.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 }

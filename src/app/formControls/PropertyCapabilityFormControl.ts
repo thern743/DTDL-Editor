@@ -1,18 +1,21 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
+import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl<PropertyCapabilityModel> {
-  constructor(formBuilder: FormBuilder) {  
+  private _validationService: ValidationService;
+  
+  constructor(model: PropertyCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new PropertyCapabilityModel("New Property");
+    this._validationService = validationService;
+    this.model = model;
     this.form = this.toFormGroup();
   }
   
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
-      id: [this.model.id],
+    let form = this.formBuilder.group({
+      id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],
@@ -24,6 +27,6 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
       writable: [this.model.writable]
     });
 
-    return this.form;
+    return form;
   }
 }

@@ -12,9 +12,13 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 })
 
 export class InterfaceComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  // Tuple: 
+  //    [0] = interface's index within the model, 
+  //    [1] = index of the capability within the interface
+  @Input() public formIndex!: [number, number];
   @Input() public interface!: InterfaceCapabilityFormControl;
-  public panelOpenState = true;
+  @Input() public panelOpenState!: boolean;
+  @Input() public selectedIndex!: number;
   
   constructor(public editorService: EditorService) {
    
@@ -30,5 +34,10 @@ export class InterfaceComponent implements OnInit {
 
   public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
     return capability as RelationshipCapabilityFormControl;
+  }
+
+  public delete($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
+    $event.stopImmediatePropagation();
+    this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);
   }
 }

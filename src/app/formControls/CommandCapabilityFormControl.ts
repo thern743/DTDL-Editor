@@ -1,18 +1,21 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { CommandCapabilityModel } from '../models/CommandCapabilityModel';
+import { ValidationService } from "../services/validation/validation-service.service";
 
 export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<CommandCapabilityModel> {
-  constructor(formBuilder: FormBuilder) {  
+  private _validationService: ValidationService;
+  
+  constructor(model: CommandCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new CommandCapabilityModel("New Command");
+    this._validationService = validationService;
+    this.model = model;
     this.form = this.toFormGroup();
   }
-  
+    
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
-      id: [this.model.id],
+    let form = this.formBuilder.group({
+      id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],
@@ -24,7 +27,7 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
       response: [this.model.response]
     });
 
-    return this.form;
+    return form;
   }
 }
 

@@ -4,21 +4,46 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
 import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';
 import { ICapabilityFormControl } from './ICapabilityFormControl';
+import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
+import { ValidationService } from "../services/validation/validation-service.service";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: ICapabilityFormControl<ICapabilityModel>[];
   
-  constructor(formBuilder: FormBuilder) {  
+  private _validationService: ValidationService;
+  
+  constructor(model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
+    this._validationService = validationService;
     this.properties = new Array<PropertyCapabilityFormControl>();
-    this.model = new RelationshipCapabilityModel("New Relationship");
+    this.mapModelSubProperties(model);
+    this.model = model;
     this.form = this.toFormGroup();
   }
   
+  private mapModelSubProperties(model: RelationshipCapabilityModel): void {
+    model.properties.map((capability: ICapabilityModel) => {
+      let formControl!: ICapabilityFormControl<ICapabilityModel>;
+            
+      switch(capability.type) {
+        case "Property":          
+          formControl = new PropertyCapabilityFormControl(capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
+          break;
+        case "Command":          
+        case "Telemetry":          
+        case "Component":          
+        case "Relationship":          
+        default:
+          break;
+      }
+
+      this.properties.push(formControl);
+    });
+  }
+
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
-      id: [this.model.id],
+    let form = this.formBuilder.group({
+      id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],
@@ -32,6 +57,6 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
       properties: this.formBuilder.array([...this.model.properties])
     });
 
-    return this.form;
+    return form;
   }
 }

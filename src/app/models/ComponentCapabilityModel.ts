@@ -4,12 +4,25 @@ import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
 export class ComponentCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember id!: string;
-  @jsonMember type: string = "Component";
-  @jsonMember name!: string;
-  @jsonMember displayName!: string;
-  @jsonMember description!: string;
-  @jsonMember comment!: string;
+  @jsonMember({ name: '@id' })
+  public id!: string;
+
+  @jsonMember({ name: '@type' })
+  public type: string = "Component";
+
+  @jsonMember 
+  public name!: string;
+
+  @jsonMember 
+  public displayName!: string;
+
+  @jsonMember 
+  public description!: string;
+
+  @jsonMember 
+  public comment!: string;
+
   // Component specific
-  @jsonMember schema!: string;  
+  @jsonMember 
+  public schema!: string;  
 }

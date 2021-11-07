@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
+import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
   selector: 'main-editor',
@@ -12,14 +13,14 @@ import { EditorService } from '../services/editor/editor-service.service';
 export class MainEditorComponent implements OnInit {
   public editorService: EditorService;
   private _formBuilder: FormBuilder;
-  public panelOpenState = true;
+  private _validationService: ValidationService;
 
-  constructor(editorService: EditorService, formBuilder: FormBuilder) {
+  constructor(editorService: EditorService, formBuilder: FormBuilder, validationService: ValidationService) {
     this.editorService = editorService;
+    this._validationService = validationService;
     this._formBuilder = formBuilder;
-
     let model = new InterfaceCapabilityModel("Default Interface");
-    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder);
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder, this._validationService);
     this.editorService.addInterface(interfaceInstance);
   }
 
@@ -29,7 +30,7 @@ export class MainEditorComponent implements OnInit {
 
   public addInterface(): void {
     let model = new InterfaceCapabilityModel("New Interface");
-    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder);
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder, this._validationService);
     this.editorService.addInterface(interfaceInstance);
   }
 }

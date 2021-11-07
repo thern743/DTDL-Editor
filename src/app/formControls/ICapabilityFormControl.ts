@@ -1,8 +1,7 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from "../models/ICapabilityModel";
 
-export interface ICapabilityFormControl<TCapabilityModel extends ICapabilityModel> { 
-    index: number;
+export interface ICapabilityFormControl<TCapabilityModel extends ICapabilityModel> {
     formBuilder: FormBuilder;
     model: TCapabilityModel;  
     form: FormGroup;   

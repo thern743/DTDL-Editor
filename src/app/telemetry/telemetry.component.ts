@@ -12,9 +12,9 @@ import { ObjectSchemaEditorComponent } from '../object-schema-editor/object-sche
   styleUrls: ['./telemetry.component.scss']
 })
 export class TelemetryComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: [number, number];
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
   
   constructor(public editorService: EditorService, public dialog: MatDialog) { 
     
@@ -22,6 +22,20 @@ export class TelemetryComponent implements OnInit {
 
   public ngOnInit(): void {  
     this.telemetry.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.telemetry.form.get("id");
+    const name = this.telemetry.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 
   public isObjectSchema() : boolean { 

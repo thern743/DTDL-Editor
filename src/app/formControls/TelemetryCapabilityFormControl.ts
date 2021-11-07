@@ -1,20 +1,21 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { TelemetryCapabilityModel } from '../models/TelemetryCapabilityModel';
+import { ValidationService } from "../services/validation/validation-service.service";
 
-export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityModel> {
+export class TelemetryCapabilityFormControl extends AbstractCapabilityFormControl<TelemetryCapabilityModel> {  
+  private _validationService: ValidationService;
   
-  constructor(formBuilder: FormBuilder) {  
+  constructor(model: TelemetryCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
-    this.model = new TelemetryCapabilityModel("New Telemetry");
+    this._validationService = validationService;
+    this.model = model;
     this.form = this.toFormGroup();
   }
 
   public toFormGroup(): FormGroup {
-    this.form = this.formBuilder.group({
-      index: [this.index],
-      id: [this.model.id],
+    let form = this.formBuilder.group({
+      id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],
@@ -25,7 +26,7 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
       semanticType: [this.model.semanticType]
     });
 
-    return this.form;
+    return form;
   }
 }
 

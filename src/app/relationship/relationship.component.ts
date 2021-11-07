@@ -10,9 +10,9 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./relationship.component.scss']
 })
 export class RelationshipComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
 
   constructor(public editorService: EditorService) { 
     
@@ -20,6 +20,20 @@ export class RelationshipComponent implements OnInit {
  
   public ngOnInit(): void { 
     this.relationship.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.relationship.form.get("id");
+    const name = this.relationship.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 
   public getProperties(): Array<ICapabilityFormControl<ICapabilityModel>> {

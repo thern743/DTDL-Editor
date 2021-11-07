@@ -1,20 +1,13 @@
-<mat-expansion-panel    [expanded]="panelOpenState"
-                        (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-        <mat-panel-title>Model Definition</mat-panel-title>
-        <mat-panel-description>Define a DTDL Model</mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
-        <interface-definition [interface]="interface" [formIndex]="i"></interface-definition>
-        <preview-panel [interface]="interface" [formIndex]="i"></preview-panel>
-    </ng-container>
-
-    <mat-action-row>
-        <button mat-raised-button color="primary" (click)="addInterface()">
-            <mat-icon>add_circle</mat-icon>&nbsp;New Interface
-        </button>
-    </mat-action-row>    
-</mat-expansion-panel>
-
+<mat-card>
+    <mat-accordion>
+        <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
+            <interface-definition [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
+            <br/>
+        </ng-container>
+        <mat-action-row>
+            <button mat-raised-button color="primary" (click)="addInterface()">
+                <mat-icon>add_circle</mat-icon>&nbsp;New Interface
+            </button>
+        </mat-action-row>    
+    </mat-accordion>
+</mat-card>

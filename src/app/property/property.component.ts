@@ -11,15 +11,29 @@ import { ObjectSchemaEditorComponent } from '../object-schema-editor/object-sche
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-  @Input() public formIndex: number = 0;
+  @Input() public formIndex!: [number, number];
   @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
-  public panelOpenState = false;
+  @Input() public panelOpenState!: boolean;
 
   constructor(public editorService: EditorService, public dialog: MatDialog) { 
   }
 
   public ngOnInit(): void { 
     this.property.subscribeModelToForm();
+    this.syncHeaderFields();    
+  }
+
+  public syncHeaderFields() {
+    const id = this.property.form.get("id");
+    const name = this.property.form.get("name");
+
+    id?.valueChanges.subscribe(value => {      
+      id.setValue(value, { emitEvent: false })
+    });
+
+    name?.valueChanges.subscribe(value => {
+      name.setValue(value, { emitEvent: false })
+    });    
   }
 
   public isObjectSchema() : boolean { 

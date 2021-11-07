@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field color="accent">
     <input matInput [(ngModel)]="fileService.fileAttr" readonly name="name" />
     <button mat-raised-button color="primary">Browse</button>
     <input type="file" #fileInput id="uploadFiles" (change)="uploadFiles($event)" name="uploadFiles" multiple="multiple" accept="*.json" />

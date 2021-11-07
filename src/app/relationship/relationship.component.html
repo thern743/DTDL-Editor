@@ -4,72 +4,81 @@
                         (closed)="panelOpenState = false"
                         [formGroup]="relationship.form">
     <mat-expansion-panel-header>
-        <mat-panel-title>Relationship</mat-panel-title>
-        <mat-panel-description>Define a Relationship</mat-panel-description>
+        <mat-panel-title class="id-name-header-component"
+                [style.opacity]="panelOpenState ? '0' : '1'"
+                [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
+            <id-name-header-component               
+                [formIndex]="formIndex[1]"
+                [formGroup]="relationship.form"        
+                [panelOpenState]="panelOpenState">
+            </id-name-header-component>
+        </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-form-field appearance="fill">
-        <mat-label attr.for="relationship_id_{{formIndex}}">Id</mat-label>
-        <input matInput id="relationship_id_{{formIndex}}" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
-    </mat-form-field>
-    <span class="formSpacer"></span>  
-
-    <mat-form-field appearance="fill">
-        <mat-label attr.for="relationship_type_{{formIndex}}">Type</mat-label>
-        <input matInput id="relationship_type_{{formIndex}}" type="text" formControlName="type" readonly />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
-        <mat-label attr.for="relationship_name_{{formIndex}}">Name</mat-label>
-        <input matInput id="relationship_name_{{formIndex}}" type="text" formControlName="name" />
-    </mat-form-field>
+    <id-name-header-component
+        [style.opacity]="panelOpenState ? '1' : '0'"
+        [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
+        [formIndex]="formIndex[1]"
+        [formGroup]="relationship.form"        
+        [panelOpenState]="panelOpenState">
+    </id-name-header-component>
     <br/>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_displayName_{{formIndex}}">Display Name</mat-label>
         <input matInput id="relationship_displayName_{{formIndex}}" type="text" formControlName="displayName" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_description_{{formIndex}}">Description</mat-label>
         <input matInput id="relationship_description_{{formIndex}}" type="text" formControlName="description" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_comment_{{formIndex}}">Comment</mat-label>
         <input matInput id="relationship_comment_{{formIndex}}" type="text" formControlName="comment" />
     </mat-form-field>
     <br/>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_minMultiplicity_{{formIndex}}">Min Multiplicity</mat-label>
         <input matInput id="relationship_minMultiplicity_{{formIndex}}" type="text" formControlName="minMultiplicity" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_maxMultiplicity_{{formIndex}}">Max Multiplicity</mat-label>
         <input matInput id="relationship_maxMultiplicity_{{formIndex}}" type="text" formControlName="maxMultiplicity" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field color="accent">
         <mat-label attr.for="relationship_target_{{formIndex}}">Target</mat-label>
         <!-- TODO: Drop-down select from Interfaces already defined (or manual input, empty == any interface) -->
         <input matInput id="relationship_target_{{formIndex}}" type="text" formControlName="target" />
     </mat-form-field>
-
-    <mat-checkbox matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-checkbox>
-
-    <div formArrayName="properties">
-        <ng-container *ngFor="let capability of getProperties(); let i = index;">
-            <property-definition [formIndex]="i" [property]="capability"></property-definition>        
-       </ng-container>
-    </div>
     <span class="formSpacer"></span>
+
+    <br/>
+    <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
+
+    <br/>
+    <mat-divider *ngIf="relationship.properties.length > 0"></mat-divider>
+    <br/>
+
+    <mat-card formArrayName="properties">
+        <mat-card-title>Property List</mat-card-title>
+        <mat-card-content>
+            <mat-accordion>
+                <ng-container *ngFor="let capability of getProperties(); let i = index;">
+                    <property-definition [property]="capability" [formIndex]="[i, i]" [panelOpenState]="false"></property-definition>
+                    <br/>
+                </ng-container>
+            </mat-accordion>
+        </mat-card-content>
+    </mat-card>
 
     <mat-action-row>
         <button mat-raised-button color="primary" (click)="editorService.addPropertyToRelationship(relationship)">

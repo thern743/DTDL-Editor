@@ -4,13 +4,28 @@ import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
 export class TelemetryCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember id!: string;
-  @jsonMember type: string = "Telemetry";
-  @jsonMember name!: string;
-  @jsonMember displayName!: string;
-  @jsonMember description!: string;
-  @jsonMember comment!: string;
+  @jsonMember({ name: '@id' })
+  public id!: string;
+
+  @jsonMember({ name: '@type' })
+  public type: string = "Telemetry";
+
+  @jsonMember 
+  public  name!: string;
+
+  @jsonMember 
+  public displayName!: string;
+
+  @jsonMember 
+  public description!: string;
+
+  @jsonMember 
+  public comment!: string;
+
   // Telemetry specific
-  @jsonMember schema!: string;
-  @jsonMember semanticType!: string;
+  @jsonMember 
+  public schema!: string;
+
+  @jsonMember 
+  public semanticType!: string;
 }
