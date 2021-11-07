@@ -25,7 +25,6 @@ export class MainEditorComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-
   }
 
   public addInterface(): void {

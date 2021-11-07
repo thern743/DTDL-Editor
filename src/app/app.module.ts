@@ -39,7 +39,6 @@ import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.componen
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ObjectSchemaComponent } from './object-schema/object-schema.component';
 import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
-import { PrimativeSchemaComponent } from './primative-schema/primative-schema.component';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { IdNameHeaderComponentComponent } from './id-name-header-component/id-name-header-component.component';
 
@@ -59,7 +58,6 @@ import { IdNameHeaderComponentComponent } from './id-name-header-component/id-na
     FolderSelectComponent,
     ErrorSnackbarComponent,
     ObjectSchemaComponent,
-    PrimativeSchemaComponent,
     ObjectSchemaEditorComponent,
     IdNameHeaderComponentComponent
   ],
