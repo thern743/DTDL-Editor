@@ -3,6 +3,7 @@ import { ObjectSchemaEditorService } from '../services/object-schema-editor/obje
 import { FormBuilder } from '@angular/forms';
 import { ObjectSchemaModel } from '../models/ObjectSchemaModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'object-schema-editor',
@@ -14,7 +15,10 @@ export class ObjectSchemaEditorComponent implements OnInit {
   private _formBuilder: FormBuilder;
   public panelOpenState = true;
 
-  constructor(objectSchemaEditorService: ObjectSchemaEditorService, formBuilder: FormBuilder) { 
+  constructor(
+    public dialogRef: MatDialogRef<ObjectSchemaEditorComponent>, 
+    objectSchemaEditorService: ObjectSchemaEditorService, 
+    formBuilder: FormBuilder) { 
     this.objectSchemaEditorService = objectSchemaEditorService; 
     this._formBuilder = formBuilder; 
 

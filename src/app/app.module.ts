@@ -43,6 +43,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ObjectSchemaComponent } from './object-schema/object-schema.component';
 import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
 import { PrimativeSchemaComponent } from './primative-schema/primative-schema.component';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -60,8 +61,8 @@ import { PrimativeSchemaComponent } from './primative-schema/primative-schema.co
     FolderSelectComponent,
     ErrorSnackbarComponent,
     ObjectSchemaComponent,
+    PrimativeSchemaComponent,
     ObjectSchemaEditorComponent,
-    PrimativeSchemaComponent
   ],
   imports: [
     BrowserModule,
@@ -84,9 +85,16 @@ import { PrimativeSchemaComponent } from './primative-schema/primative-schema.co
     MatFormFieldModule,
     FormsModule,
     MatSnackBarModule,
-    ClipboardModule
+    ClipboardModule, 
+    MatDialogModule
   ],
-  providers: [],
+  entryComponents: [
+    ObjectSchemaEditorComponent
+  ],
+  providers: [
+		MatDialog,
+    { provide: MatDialogRef, useValue: {} }
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

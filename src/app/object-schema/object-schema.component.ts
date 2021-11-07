@@ -33,6 +33,8 @@ export class ObjectSchemaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.field.model.schema = "none"; 
+    this.field.subscribeModelToForm();
   }
 
   public getFields() : Array<ObjectSchemaFormControl> { 
@@ -47,5 +49,13 @@ export class ObjectSchemaComponent implements OnInit {
   //i.e. 4 children on the top level object. 
   public canAddChild(): boolean { 
     return this.field.model.level > this.maxLevel - 1; 
+  }
+
+  public valSelected(val: string) : void { 
+    this.field.model.schema = val; 
+  }
+
+  public isObjectSchema() : boolean { 
+    return this.field.model.schema === "object"; 
   }
 }

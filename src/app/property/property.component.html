@@ -50,6 +50,9 @@
             <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
         </mat-select>
     </mat-form-field>
+    <ng-container *ngIf="isObjectSchema()">
+        <button mat-button (click)="openObjectSchemaEditor()">Edit</button>
+    </ng-container>
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">

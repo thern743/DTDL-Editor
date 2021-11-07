@@ -40,8 +40,7 @@
     <mat-form-field appearance="fill">
         <mat-label>schema</mat-label>
         <mat-select>
-            <!-- TODO: Store locally selected ... then check locally selected to change hidden on the value -->
-            <mat-option *ngFor="let schema of schemaTypes" [value]="schema" (onSelectionChange)="valSelected()" >{{schema}}</mat-option>
+            <mat-option *ngFor="let schema of schemaTypes" [value]="schema" (onSelectionChange)="valSelected(schema)" >{{schema}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -49,9 +48,11 @@
         <object-schema [field]="field"></object-schema>
    </ng-container>
 
+   <ng-container *ngIf="isObjectSchema()">
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()" [hidden]=>
+        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()" [hidden]="isObjectSchema()">
             <mat-icon>add_circle</mat-icon>&nbsp;New Field
         </button>
     </mat-action-row>
+   </ng-container>
 </mat-expansion-panel>

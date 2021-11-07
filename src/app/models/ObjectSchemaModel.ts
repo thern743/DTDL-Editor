@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
 
 /**
@@ -9,22 +10,22 @@ import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
  */
 @jsonObject
 export class ObjectSchemaModel { 
-    @jsonMember 
+    @jsonMember
     public id!: string;
 
-    @jsonMember 
+    @jsonMember
     public name!: string; 
 
-    @jsonMember 
+    @jsonMember
     public description!: string; 
 
-    @jsonMember 
+    @jsonMember
     public displayName!: string; 
 
-    @jsonMember 
-    public comment!: string; 
+    @jsonMember
+    public comment!: string;
 
-    @jsonMember 
+    @jsonMember
     public schema!: string;
 
     @jsonArrayMember(ObjectSchemaModel) 

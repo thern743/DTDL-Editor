@@ -52,7 +52,7 @@ export class EditorService {
   }
 
   public getSchemaTypes() : string[] {
-    return ["boolean", "date", "dateTime", "double", "duration", "float", "integer", "long", "string", "time"];
+    return ["boolean", "date", "dateTime", "double", "duration", "float", "integer", "long", "string", "time", "object", "enum"];
   }
 
   public getComplexSchemaTypes() : string[] {

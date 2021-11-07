@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ObjectSchemaModel } from '../models/ObjectSchemaModel';
 
 /**
@@ -16,6 +16,25 @@ export class ObjectSchemaFormControl {
         this.model = model; 
         this.form = this.toFormGroup();
     }
+
+    public subscribeModelToForm(): void {
+        console.groupCollapsed("Creating Subscriptions");
+  
+        Object.keys(this.form.controls).forEach(key => {        
+          console.debug(key);
+  
+          let control = this.form.controls[key];        
+          
+          if(!(control instanceof FormArray)) {          
+            control.valueChanges.subscribe(
+              (value) => {
+                (<any>this.model)[key] = value;
+            }, (error: Error) => {
+                console.error("Error in subscription: %o", error);
+            });
+          }
+        })
+    };
 
     public toFormGroup() : FormGroup { 
         this.form =  this.formBuilder.group({

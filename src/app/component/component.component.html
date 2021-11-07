@@ -43,10 +43,14 @@
         <input matInput id="component_comment_{{formIndex}}" type="text" formControlName="comment" />
     </mat-form-field>
     <br/>
-
+    
     <mat-form-field appearance="fill">
         <mat-label attr.for="component_schema_{{formIndex}}">Schema</mat-label>
-        <!-- TODO: Drop-down select from Interfaces already defined -->
-        <input matInput id="component_schema_{{formIndex}}" type="text" formControlName="schema" />
-    </mat-form-field>    
+        <mat-select matNativeControl id="component_schema_{{formIndex}}" formControlName="schema">
+            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="isObjectSchema()">
+        <button mat-button (click)="openObjectSchemaEditor()">Edit</button>
+    </ng-container>
 </mat-expansion-panel>
