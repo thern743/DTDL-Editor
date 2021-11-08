@@ -8,7 +8,7 @@ import { FileService } from '../services/file/file-service.service';
   styleUrls: ['./preview-panel.component.scss']
 })
 export class PreviewPanelComponent implements OnInit {
-  public panelOpenState = true;
+  public panelOpenState = false;
   @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input('cdkCopyToClipboard') public text!: string

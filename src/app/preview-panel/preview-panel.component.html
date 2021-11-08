@@ -12,7 +12,7 @@
             cdkAutosizeMinRows="5"
             cdkAutosizeMaxRows="100"
             readonly
-            [value]="interface.form.getRawValue() | jsonld">
+            [value]="(panelOpenState ? interface.form.getRawValue() : '') | jsonld">
         </textarea>
         <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model" style="float:right; margin-left: 15px"
             [cdkCopyToClipboard]="previewPanel.value">
