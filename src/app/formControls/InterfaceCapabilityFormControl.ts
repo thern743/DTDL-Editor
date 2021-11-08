@@ -86,7 +86,6 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
       id: [this.model.id, [this._validationService.ValidDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
-      name: [this.model.name],
       comment: [this.model.comment],
       description: [this.model.description],
       // Interface specific

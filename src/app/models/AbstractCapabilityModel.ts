@@ -10,9 +10,6 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     public type!: string;
 
     @jsonMember
-    public name!: string;
-
-    @jsonMember
     public displayName!: string;
 
     @jsonMember
@@ -21,7 +18,7 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember
     public comment!: string;
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(displayName: string) {
+        this.displayName = displayName;
     }
 }

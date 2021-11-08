@@ -27,7 +27,7 @@ export class ModelTreeService {
         let data = new Array<CapabilityNode>();
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
-            let node = new CapabilityNode(interfaceInstance.model.name, interfaceInstance.model.type);            
+            let node = new CapabilityNode(interfaceInstance.model.displayName, interfaceInstance.model.type);            
             node = this.mapChildren(interfaceInstance.model.contents, node);
             data.push(node);            
         });
@@ -40,12 +40,12 @@ export class ModelTreeService {
         capabilities.forEach((capability: ICapabilityModel) => {     
             if(capability.type == "Relationship") {
                 let data = new Array<CapabilityNode>();
-                let innerNode = new CapabilityNode(capability.name, capability.type);                
+                let innerNode = new CapabilityNode(capability.displayName, capability.type);                
                 innerNode = this.mapChildren((<RelationshipCapabilityModel>capability).properties, innerNode);
                 data.push(innerNode);
                 node.children?.push(innerNode);
             } else {
-                let child = new CapabilityNode(capability.name, capability.type);
+                let child = new CapabilityNode(capability.displayName, capability.type);
                 node.children?.push(child);
             }
         });
@@ -54,7 +54,7 @@ export class ModelTreeService {
     }
 
     public addNode(model: InterfaceCapabilityModel) {
-        let node = new CapabilityNode(model.name, model.type);
+        let node = new CapabilityNode(model.displayName, model.type);
         this.treeDataSource.data.push(node);
     }
 

@@ -28,6 +28,13 @@
     <span class="formSpacer"></span>  
 
     <mat-form-field color="accent">
+        <mat-label for="displayName">Display Name</mat-label>
+        <input matInput id="displayName" type="text" formControlName="displayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <br/>
+
+    <mat-form-field color="accent">
         <mat-label for="comment">Comment</mat-label>
         <input matInput id="comment" type="text" formControlName="comment" />
     </mat-form-field>
@@ -37,20 +44,7 @@
         <mat-label for="description">Description</mat-label>
         <input matInput id="description" type="text" formControlName="description" />
     </mat-form-field>
-    <br/>
-
-    <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent">
-        <mat-label for="name">Name</mat-label>
-        <input matInput id="name" type="text" formControlName="name" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
+    
     <mat-form-field color="accent">
         <mat-label for="extends">Extends</mat-label>
         <mat-select matNativeControl id="extends" formControlName="extends">

@@ -18,9 +18,6 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   public type: string = "Interface";
 
   @jsonMember
-  public name!: string;
-
-  @jsonMember
   public displayName!: string;
 
   @jsonMember
@@ -39,8 +36,8 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: InterfaceCapabilityModel.interfaceCapabilityDeserializer } )
   public contents: ICapabilityModel[];
 
-  constructor(name: string) {
-    super(name);
+  constructor(displayName: string) {
+    super(displayName);
     this.contents = new Array<ICapabilityModel>();
   }
 

@@ -30,7 +30,7 @@ export class FolderSelectComponent implements OnInit {
 
   uploadFiles(file: any) {
     this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
-      console.log("Loaded file '%s'.", capability.name);
+      console.log("Loaded file '%s'.", capability.displayName);
       var formControl = new InterfaceCapabilityFormControl(capability, this._formBuilder, this._validationService);
       this.editorService.addInterface(formControl);
     });
