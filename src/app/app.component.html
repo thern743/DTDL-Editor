@@ -1,3 +1,41 @@
+<mat-drawer-container autosize>
+    <mat-drawer #menu mode="side" disableClose="true" opened="menuOpenState">
+
+        <button mat-mini-fab (click)="menuOpenState = !menuOpenState" color="primary" style="margin: 10px;">
+            <mat-icon aria-label="Menu">menu</mat-icon>
+        </button>
+
+        <mat-nav-list>
+            <mat-list-item (click)="nav.toggle()">
+                <mat-icon mat-list-icon>list_alt</mat-icon>
+                <h4 mat-line *ngIf="menuOpenState">Model Tree</h4>
+            </mat-list-item>
+            <mat-list-item (click)="openFolderSelect()">
+                <mat-icon mat-list-icon>folder_open</mat-icon>
+                <h4 mat-line *ngIf="menuOpenState">Import Model</h4>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon mat-list-icon>settings</mat-icon>
+                <h4 mat-line *ngIf="menuOpenState">Settings</h4>
+            </mat-list-item>            
+        </mat-nav-list>         
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-sidenav-container>    
+            <mat-sidenav #nav mode="side" [opened]="navOpenState"
+                                        (opened)="navOpenState = true"
+                                        (closed)="navOpenState = false">
+                <model-tree></model-tree>
+            </mat-sidenav>      
+            <mat-sidenav-content>        
+                <main-editor></main-editor>
+            </mat-sidenav-content>      
+        </mat-sidenav-container>
+    </mat-drawer-content>
+</mat-drawer-container>
+
+
+<!-- 
 <mat-toolbar>
     <button type="button" mat-button (click)="nav.toggle()"><mat-icon>menu</mat-icon></button> 
     <span class="toolbar-spacer"></span>   
@@ -12,4 +50,4 @@
     <mat-sidenav-content>        
         <main-editor></main-editor>
     </mat-sidenav-content>
-</mat-sidenav-container>
+</mat-sidenav-container> -->

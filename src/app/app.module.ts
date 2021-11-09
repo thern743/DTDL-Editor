@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MainEditorComponent } from './main-editor/main-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -78,9 +79,16 @@ import { IdNameHeaderComponentComponent } from './id-name-header-component/id-na
     FormsModule,
     MatSnackBarModule,
     ClipboardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ],
-  providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
+  entryComponents: [
+    FolderSelectComponent
+  ],
+  providers: [
+    MatDialog,
+    { provide: MatDialogRef, useValue: {} },
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

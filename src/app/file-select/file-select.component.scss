@@ -4,7 +4,6 @@
     width: 100%;    
     z-index: 0;
     opacity: 0;
-    height: 100%;
     cursor: pointer;
     position: absolute;
 }
@@ -13,7 +12,8 @@ mat-form-field {
     width: 500px;
 }
 
-button {
-    width: 200px;
-    left: -200px;
+.browse-button {
+    width: 80%;
+    left: 100px;
+    top: -25px;
 }
