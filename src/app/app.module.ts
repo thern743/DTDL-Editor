@@ -38,7 +38,8 @@ import { FolderSelectComponent } from './file-select/file-select.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { IdNameHeaderComponentComponent } from './id-name-header-component/id-name-header-component.component';
+import { IdNameHeaderComponent } from './id-name-header-component/id-name-header-component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { IdNameHeaderComponentComponent } from './id-name-header-component/id-na
     ModelTreeComponent,
     FolderSelectComponent,
     ErrorSnackbarComponent,
-    IdNameHeaderComponentComponent
+    IdNameHeaderComponent,    
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ import { IdNameHeaderComponentComponent } from './id-name-header-component/id-na
     MatDialogModule
   ],
   entryComponents: [
-    FolderSelectComponent
+    FolderSelectComponent,
+    SettingsComponent
   ],
   providers: [
     MatDialog,

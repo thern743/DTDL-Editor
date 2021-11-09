@@ -77,6 +77,7 @@ export class EditorService {
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let model = new PropertyCapabilityModel("New Property");
+    model.id = interfaceInstance.baseDtmi.value;
     let formControl = new PropertyCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }

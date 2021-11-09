@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FolderSelectComponent } from './file-select/file-select.component';
+import { SettingsComponent } from './settings/settings.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,11 +19,18 @@ export class AppComponent {
     this.dialog = dialog;
   }
 
-  openFolderSelect() {
+  public openFolderSelect(): void {
     const dialogRef = this.dialog.open(FolderSelectComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-     //TODO: Impliment 
+    });
+  }
+
+  public openSettings(): void {
+    console.log("Open settings...");
+    const dialogRef = this.dialog.open(SettingsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 }
