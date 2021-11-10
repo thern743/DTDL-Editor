@@ -87,6 +87,11 @@ $my-theme: mat.define-dark-theme(
     .action-button:hover {
         background-color: mat.get-color-from-palette($accent, A200);
     }
+
+    .content-container{
+        margin-top: 15px;
+        margin-left : 15px;
+    }
 }
 
 @include custom($my-theme);

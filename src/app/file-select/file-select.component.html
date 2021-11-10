@@ -1,8 +1,10 @@
-<h1 mat-dialog-title>Import Models</h1>
-<mat-dialog-content>
+<div class="content-container">
+    <h1>Import Models</h1>
+    <mat-divider></mat-divider>
+    <br/>
     <mat-form-field color="accent">
         <input matInput [(ngModel)]="fileService.fileAttr" readonly name="name" />
         <button class="browse-button" mat-raised-button color="primary">Browse</button>
         <input type="file" #fileInput id="uploadFiles" (change)="uploadFiles($event)" name="uploadFiles" multiple="multiple" accept="*.json" />
     </mat-form-field>    
-</mat-dialog-content>
+</div>

@@ -1,7 +1,10 @@
-<h1 mat-dialog-title>Settings</h1>
-<mat-dialog-content>
+<div class="content-container">
+    <h1>Settings</h1>
+    <mat-divider></mat-divider>
+    <br/>
     <mat-form-field color="accent">
         <mat-label for="baseDtmi">Base DTMI</mat-label>
         <input matInput id="baseDtmi" type="text" [formControl]="baseDtmi" />
-    </mat-form-field>    
-</mat-dialog-content>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="browse-button" >Save</button>
+</div>
