@@ -6,5 +6,6 @@
         <mat-label for="baseDtmi">Base DTMI</mat-label>
         <input matInput id="baseDtmi" type="text" [formControl]="baseDtmi" />
     </mat-form-field>
-    <button mat-raised-button color="primary" class="browse-button" >Save</button>
+    <br/>
+    <button mat-raised-button color="primary" class="browse-button" (click)="save()">Save</button>
 </div>

@@ -40,6 +40,7 @@ import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.componen
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { IdNameHeaderComponent } from './id-name-header-component/id-name-header-component';
 import { SettingsComponent } from './settings/settings.component';
+import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { SettingsComponent } from './settings/settings.component';
     FolderSelectComponent,
     ErrorSnackbarComponent,
     IdNameHeaderComponent,    
-    SettingsComponent
+    SettingsComponent, SuccessSnackbarComponent
   ],
   imports: [
     BrowserModule,

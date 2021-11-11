@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,12 +9,25 @@ import { FormControl } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
   public baseDtmi: FormControl;
+  private _settingsService: SettingsService;
 
-  constructor() { 
-    this.baseDtmi = new FormControl("dtmi:com:example;1");
+  constructor(settingsService: SettingsService) { 
+    this._settingsService = settingsService;
+    this.baseDtmi = new FormControl();
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    let settings = this._settingsService.load();
+
+    if(["", null, undefined].indexOf(settings) > -1) {
+      this.baseDtmi.setValue("dtmi:com:dtdlEditor:default;1");
+    } else {
+      this.baseDtmi.setValue(settings);
+    }
+  }
+
+  public save() {
+    this._settingsService.save(this.baseDtmi.value);
     
   }
 }
