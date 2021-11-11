@@ -31,7 +31,7 @@ export class SettingsService {
       horizontalPosition: "center",
       verticalPosition: "top",
       duration: 5000,
-      panelClass: ["mat-toolbar", "mat-primary"],
+      panelClass: ["mat-toolbar", "mat-accent"],
       data: { msg: "Settings saved." }
     });
   }
