@@ -45,7 +45,9 @@ export class ComponentComponent implements OnInit {
     const dialogRef = this.dialog.open(ObjectSchemaEditorComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-     //TODO: Impliment 
+      if (result) {
+        this.component.form.get("schema")?.setValue(result, { emitEvent: false });
+      }
     });
   }
 }

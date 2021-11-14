@@ -3,7 +3,7 @@ import { ObjectSchemaEditorService } from '../services/object-schema-editor/obje
 import { FormBuilder } from '@angular/forms';
 import { ObjectSchemaModel } from '../models/ObjectSchemaModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
   selector: 'object-schema-editor',
@@ -12,18 +12,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class ObjectSchemaEditorComponent implements OnInit {
   public objectSchemaEditorService: ObjectSchemaEditorService;
-  private _formBuilder: FormBuilder;
   public panelOpenState = true;
+  private _formBuilder: FormBuilder;
+  private _validationService: ValidationService;
 
   constructor(
-    public dialogRef: MatDialogRef<ObjectSchemaEditorComponent>, 
     objectSchemaEditorService: ObjectSchemaEditorService, 
-    formBuilder: FormBuilder) { 
+    formBuilder: FormBuilder, 
+    validationService: ValidationService) { 
     this.objectSchemaEditorService = objectSchemaEditorService; 
     this._formBuilder = formBuilder; 
+    this._validationService = validationService;
 
     let model = new ObjectSchemaModel("default", 0);
-    let interfaceInstance = new ObjectSchemaFormControl(model, this._formBuilder);
+    let interfaceInstance = new ObjectSchemaFormControl(model, this._formBuilder, this._validationService);
     this.objectSchemaEditorService.addField(interfaceInstance);
   }
 
@@ -31,9 +33,8 @@ export class ObjectSchemaEditorComponent implements OnInit {
   }
 
   public addField() {
-    //TODO: Add levels
     let objectSchema = new ObjectSchemaModel("new object schema", 0); 
-    let objectSchemaInstance = new ObjectSchemaFormControl(objectSchema, this._formBuilder);
+    let objectSchemaInstance = new ObjectSchemaFormControl(objectSchema, this._formBuilder, this._validationService);
     this.objectSchemaEditorService.addField(objectSchemaInstance);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
+import { EditorService } from '../services/editor/editor-service.service';
 import { ObjectSchemaEditorService } from '../services/object-schema-editor/object-schema-editor.service';
 
 @Component({
@@ -8,28 +9,15 @@ import { ObjectSchemaEditorService } from '../services/object-schema-editor/obje
   styleUrls: ['./object-schema.component.scss']
 })
 export class ObjectSchemaComponent implements OnInit {
-
-  private maxLevel: number = 5; 
   @Input() public field!: ObjectSchemaFormControl;
   public schemaObjectEditorService: ObjectSchemaEditorService; 
+  public editorService: EditorService;
   public panelOpenState = true;
-  public schemaTypes : string[] = [
-          "boolean",
-          "date",
-          "dateTime",
-          "double",
-          "duration",
-          "float",
-          "integer",
-          "long",
-          "string",
-          "time",
-          "object",
-          "enum",
-          "array"];
+  private maxLevel: number = 5; 
 
-  constructor(schemaObjectEditorService: ObjectSchemaEditorService) { 
+  constructor(schemaObjectEditorService: ObjectSchemaEditorService, editorSerivce: EditorService) { 
     this.schemaObjectEditorService = schemaObjectEditorService; 
+    this.editorService = editorSerivce;
   }
 
   ngOnInit(): void {
@@ -53,9 +41,5 @@ export class ObjectSchemaComponent implements OnInit {
 
   public valSelected(val: string) : void { 
     this.field.model.schema = val; 
-  }
-
-  public isObjectSchema() : boolean { 
-    return this.field.model.schema === "object"; 
   }
 }

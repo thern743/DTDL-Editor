@@ -1,5 +1,7 @@
+import { ImplicitReceiver } from '@angular/compiler';
 import 'reflect-metadata';
 import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
+import { ICapabilityModel } from './ICapabilityModel';
 
 /**
  * Object Schema Model is a self refrential field
@@ -9,7 +11,7 @@ import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
  * This is needed to acommidate json seralization to the jsonLD model. 
  */
 @jsonObject
-export class ObjectSchemaModel { 
+export class ObjectSchemaModel implements ICapabilityModel { 
     @jsonMember
     public id!: string;
 
@@ -32,6 +34,9 @@ export class ObjectSchemaModel {
     public fields!: ObjectSchemaModel[];
 
     public level: number; 
+
+    public type: string = "Schema";
+
 
     constructor(name: string, level: number) {
         this.name = name; 

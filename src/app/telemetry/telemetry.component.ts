@@ -15,9 +15,12 @@ export class TelemetryComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
+  public editorService : EditorService; 
+  public dialog: MatDialog;
   
-  constructor(public editorService: EditorService, public dialog: MatDialog) { 
-    
+  constructor(editorService: EditorService, dialog: MatDialog) { 
+    this.editorService = editorService;
+    this.dialog = dialog; 
   }
 
   public ngOnInit(): void {  
@@ -46,7 +49,9 @@ export class TelemetryComponent implements OnInit {
     const dialogRef = this.dialog.open(ObjectSchemaEditorComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-     //TODO: Impliment 
+      if (result) {
+        this.telemetry.form.get("schema")?.setValue(result, { emitEvent: false });
+      }
     });
   }
 }

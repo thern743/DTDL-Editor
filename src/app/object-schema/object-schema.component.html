@@ -32,15 +32,9 @@
     <span class="formSpacer"></span>
 
     <mat-form-field appearance="fill">
-        <mat-label for="name">Name</mat-label>
-        <input matInput id="name" type="text" formControlName="name" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field appearance="fill">
         <mat-label>schema</mat-label>
         <mat-select>
-            <mat-option *ngFor="let schema of schemaTypes" [value]="schema" (onSelectionChange)="valSelected(schema)" >{{schema}}</mat-option>
+            <mat-option *ngFor="let schema of this.editorService.schemaTypes" [value]="schema" (onSelectionChange)="valSelected(schema)" >{{schema}}</mat-option>
         </mat-select>
     </mat-form-field>
 
@@ -48,9 +42,9 @@
         <object-schema [field]="field"></object-schema>
    </ng-container>
 
-   <ng-container *ngIf="isObjectSchema()">
+   <ng-container *ngIf="this.schemaObjectEditorService.isObjectSchema(this.field.model.schema)">
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()" [hidden]="isObjectSchema()">
+        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()">
             <mat-icon>add_circle</mat-icon>&nbsp;New Field
         </button>
     </mat-action-row>
