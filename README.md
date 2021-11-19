@@ -1,49 +1,76 @@
-# DtdlEditor
+# Digital Twin Definition Language (DTDL) Model Editor
 
-A general-purpose editor inspired by [Azure IoT Central's model editor](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-set-up-template). 
+A general-purpose editor inspired by [Azure IoT Central's model editor](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-set-up-template) currently supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md).
 
-Currently working on supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md).
+**NOTE:** This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6 and uses [Angular Material](https://material.angular.io/).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6.
+## Currently Supported Features
+* Basic support for:
+  * Interfaces,
+  * Properties,
+  * Commands,
+  * Telemetry,
+  * Components,
+  * Relationships (and Propertes)
+* Basic validation
+* Importing existing models
+* Copy/Save models locally
+* Editor settings
+  * Set base DTMI 
 
-This Angular project uses [Angular Material](https://material.angular.io/).
+## Near-Term Features
+* Full DTDL validation
+* Semantic Types
+* Schema Definitions
+* Command Request/Response payloads
 
-## Setup
+## Long-Term Features
+* DTDLv3 (depends on Microsoft's timeline)
+* Advanced Model Organization
+* Model Graph View
+* Basic model simulations
+
+## Known Issues
+* Very little validation is in place
+* Saving DTDL currently preserves NULL values (will fail validation)
+* Base DTMI is inherited for all new capabilities
+* Component and Relationship references are limited
+
+## Model Validation
+
+Model validation will be performed using Microsoft's DTDL model validator:
+
+        https://github.com/azure-samples/dtdl-validator/tree/master/
+
+# Setup
 
 1. Install NodeJS and `npm`.
 
 2. Install Angular globally:
 
-        `npm install -g @angular/cli`
+        npm install -g @angular/cli
 
 3. Install reflect-metadata:
 
-        `npm install reflect-metadata`
+        npm install reflect-metadata
 
 4. Install npm packages:
 
-        `npm update`
+        npm update
 
-## Development server
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
