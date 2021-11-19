@@ -25,4 +25,8 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
   // Component specific
   @jsonMember 
   public schema!: string;  
+
+  constructor(id: string) {
+    super(id, "Component");
+  }
 }

@@ -40,8 +40,8 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: RelationshipCapabilityModel.interfaceCapabilityDeserializer } )
   public properties: ICapabilityModel[];
 
-  constructor(name: string) {
-    super(name);
+  constructor(id: string) {
+    super(id, "Relationship");
     this.properties = new Array<ICapabilityModel>();
   }
 

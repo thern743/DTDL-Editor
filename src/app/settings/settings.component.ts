@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { EditorSettings } from '../models/EditorSettings';
 import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
@@ -10,24 +11,23 @@ import { SettingsService } from '../services/settings/settings.service';
 export class SettingsComponent implements OnInit {
   public baseDtmi: FormControl;
   private _settingsService: SettingsService;
+  private _editorSettings: EditorSettings;
 
-  constructor(settingsService: SettingsService) { 
-    this._settingsService = settingsService;
+  constructor(settingsService: SettingsService) {
+    this._settingsService = settingsService;     
     this.baseDtmi = new FormControl();
+    this._editorSettings = settingsService.load();
   }
 
   public ngOnInit(): void {
-    let settings = this._settingsService.load();
-
-    if(["", null, undefined].indexOf(settings) > -1) {
-      this.baseDtmi.setValue("dtmi:com:dtdlEditor:default;1");
+    if(["", null, undefined].indexOf(this._editorSettings.BaseDtmi) > -1) {
+      this.baseDtmi.setValue(SettingsService.DEFAULT_DTMI);
     } else {
-      this.baseDtmi.setValue(settings);
+      this.baseDtmi.setValue(this._editorSettings.BaseDtmi);
     }
   }
 
   public save() {
-    this._settingsService.save(this.baseDtmi.value);
-    
+    this._settingsService.save(this.baseDtmi.value);    
   }
 }

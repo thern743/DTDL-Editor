@@ -31,4 +31,8 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
 
   @jsonMember 
   public writable: boolean = false;
+
+  constructor(id: string) {
+    super(id, "Property");
+  }
 }

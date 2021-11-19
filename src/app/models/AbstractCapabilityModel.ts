@@ -18,7 +18,8 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember
     public comment!: string;
 
-    constructor(displayName: string) {
-        this.displayName = displayName;
+    constructor(id: string, type: string) {
+        this.id = id;
+        this.type = type;
     }
 }

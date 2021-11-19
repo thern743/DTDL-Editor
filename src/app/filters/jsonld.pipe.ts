@@ -25,9 +25,7 @@ export class JsonLdPipe implements PipeTransform {
             var replacement: any = {};
             for (var k in value) {
                 if (Object.hasOwnProperty.call(value, k) && ["id", "type", "context"].indexOf(k) > -1) {
-                    replacement["@" + k] = value[k];
-                } else if (["", null, undefined].indexOf(k)) {
-                    // NOOP
+                    replacement["@" + k] = value[k];                
                 } else {
                     replacement[k] = value[k];
                 }

@@ -28,4 +28,8 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
 
   @jsonMember 
   public semanticType!: string;
+
+  constructor(id: string) {
+    super(id, "Telemetry");
+  }
 }

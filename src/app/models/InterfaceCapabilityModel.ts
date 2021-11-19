@@ -36,8 +36,9 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: InterfaceCapabilityModel.interfaceCapabilityDeserializer } )
   public contents: ICapabilityModel[];
 
-  constructor(displayName: string) {
-    super(displayName);
+  constructor(id: string, context: string) {
+    super(id, "Interface");
+    this.context = context;
     this.contents = new Array<ICapabilityModel>();
   }
 

@@ -18,7 +18,6 @@ import { ValidationService } from "../services/validation/validation-service.ser
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   public contents: ICapabilityFormControl<ICapabilityModel>[];
   private _validationService: ValidationService;
-  public baseDtmi: FormControl;
   
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
     super(formBuilder);
@@ -27,7 +26,6 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     this.mapModelSubProperties(model);
     this.model = model;
     this.form = this.toFormGroup();
-    this.baseDtmi = new FormControl("dtmi:com:example;1");
   }
 
   private mapModelSubProperties(model: InterfaceCapabilityModel): void {
