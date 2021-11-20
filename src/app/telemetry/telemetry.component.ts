@@ -35,4 +35,10 @@ export class TelemetryComponent implements OnInit {
       name.setValue(value, { emitEvent: false })
     });    
   }
+
+  public getUnits(): string[] | undefined {
+    let unit = this.telemetry.form.get("semanticType")?.value;
+    let units = this.editorService.getUnits().get(unit);
+    return units;
+  }
 }

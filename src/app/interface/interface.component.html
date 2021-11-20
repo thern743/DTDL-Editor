@@ -3,7 +3,7 @@
                         [formGroup]="interface.form"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title>Interface Definition</mat-panel-title>
+        <mat-panel-title>Interface Definition &nbsp;<mat-divider [vertical]="true"></mat-divider>&nbsp; {{interface.model.id}}</mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -16,9 +16,7 @@
 
     <mat-form-field color="accent">
         <mat-label for="type">Type</mat-label>
-        <mat-select matNativeControl id="classType" formControlName="type">
-            <mat-option *ngFor="let type of editorService.classTypes" [value]="type"> {{ type }} </mat-option>
-        </mat-select>
+        <input matInput id="type" type="text" formControlName="type" readonly />        
     </mat-form-field>
     <span class="formSpacer"></span>
 

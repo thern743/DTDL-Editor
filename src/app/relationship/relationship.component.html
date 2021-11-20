@@ -15,6 +15,9 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
 
+    <mat-slide-toggle matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
+    <br/><br/>
+
     <id-name-header-component
         [style.opacity]="panelOpenState ? '1' : '0'"
         [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
@@ -60,10 +63,7 @@
         <input matInput id="relationship_target_{{formIndex}}" type="text" formControlName="target" />
     </mat-form-field>
     <span class="formSpacer"></span>
-
-    <br/>
-    <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
-
+    
     <br/>
     <mat-divider *ngIf="relationship.properties.length > 0"></mat-divider>
     <br/>

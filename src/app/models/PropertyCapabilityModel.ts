@@ -30,6 +30,9 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
   public semanticType!: string;
 
   @jsonMember 
+  public unit!: string;
+
+  @jsonMember 
   public writable: boolean = false;
 
   constructor(id: string) {

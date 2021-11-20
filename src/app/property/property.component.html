@@ -15,6 +15,9 @@
         </mat-panel-title>        
     </mat-expansion-panel-header>
 
+    <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
+    <br/><br/>
+
     <id-name-header-component
         [style.opacity]="panelOpenState ? '1' : '0'"
         [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
@@ -53,10 +56,15 @@
     <mat-form-field color="accent">
         <mat-label attr.for="property_semanticType_{{formIndex}}">Semantic Type</mat-label>
         <mat-select matNativeControl id="property_semanticType_{{formIndex}}" formControlName="semanticType">
-            <mat-option *ngFor="let semantic of editorService.semantics" [value]="semantic"> {{ semantic }} </mat-option>
+            <mat-option *ngFor="let semanticType of editorService.semanticTypes" [value]="semanticType"> {{ semanticType }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
+    <mat-form-field color="accent">
+        <mat-label attr.for="property_unit_{{formIndex}}">Unit</mat-label>
+        <mat-select matNativeControl id="property_unit_{{formIndex}}" formControlName="unit">
+            <mat-option *ngFor="let unit of getUnits()" [value]="unit"> {{ unit }} </mat-option>
+        </mat-select>
+    </mat-form-field>    
 </mat-expansion-panel>

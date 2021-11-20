@@ -27,7 +27,8 @@ export class EditorService {
   private _validationService: ValidationService;
   public classTypes: string[];
   public capabilities: string[];
-  public semantics: string[];
+  public semanticTypes: string[];
+  public units: Map<string, Array<string>>;
   public schemaTypes: string[];
   public complexShcemaTypes: string[];  
   public commandTypes: string[];
@@ -40,7 +41,8 @@ export class EditorService {
     this._formBuilder = formBuilder;
     this.classTypes = this.getClassTypes();
     this.capabilities = this.getCapabilityTypes();
-    this.semantics= this.getSemanticTypes();
+    this.semanticTypes = this.getSemanticTypes();
+    this.units = this.getUnits();
     this.schemaTypes = this.getSchemaTypes();
     this.complexShcemaTypes = this.getComplexSchemaTypes();    
     this.commandTypes = this.getCommandTypes();
@@ -58,7 +60,105 @@ export class EditorService {
   }
 
   public getSemanticTypes() : string[] {
-    return ["Acceleration", "Angle", "AngularAcceleration", "AngularVelocity", "Area", "Capacitance", "Current", "DataRate", "DataSize", "Density", "Distance", "ElectricCharge", "Energy", "Force", "Frequency", "Humidity", "Illuminance", "Inductance", "Latitude", "Longitude", "Length", "Luminance", "Luminosity", "LuminousFlux", "LuminousIntensity", "MagneticFlux", "MagneticInduction", "Mass", "MassFlowRate", "Power", "Pressure", "RelativeHumidity", "Resistance", "SoundPressure", "Temperature", "Thrust", "TimeSpan", "Torque", "Velocity", "Voltage", "Volume", "VolumeFlowRate"];
+    return ["Acceleration", "Angle", "AngularAcceleration", "AngularVelocity", "Area", "Capacitance", "Current", "DataRate", "DataSize", "Density",
+    "Distance", "ElectricCharge", "Energy", "Force", "Frequency", "Humidity", "Illuminance", "Inductance", "Latitude", "Longitude", "Length", 
+    "Luminance", "Luminosity", "LuminousFlux", "LuminousIntensity", "MagneticFlux", "MagneticInduction", "Mass", "MassFlowRate", "Power", "Pressure", 
+    "RelativeHumidity", "Resistance", "SoundPressure", "Temperature", "Thrust", "TimeSpan", "Torque", "Velocity", "Voltage", "Volume", 
+    "VolumeFlowRate"];
+  }
+
+  public getUnitTypes(): Map<string, Array<string>> {
+    let unitTypes = new Map<string, Array<string>>([
+      ["AccelerationUnit", new Array<string>("metrePerSecondSquared", "centimetrePerSecondSquared", "gForce")],
+      ["AngleUnit", new Array<string>("radian", "degreeOfArc", "minuteOfArc", "secondOfArc", "turn")],
+      ["AngularAccelerationUnit", new Array<string>("radianPerSecondSquared")],
+      ["AngularVelocityUnit", new Array<string>("radianPerSecond", "degreePerSecond", "revolutionPerSecond", "revolutionPerMinute")],
+      ["AreaUnit", new Array<string>("squareMetre", "squareCentimetre", "squareMillimetre", "squareKilometre", "hectare", "squareFoot", "squareInch", "acre")],
+      ["CapacitanceUnit", new Array<string>("farad", "millifarad", "microfarad", "nanofarad", "picofarad")],
+      ["CurrentUnit", new Array<string>("ampere", "microampere", "milliampere")],
+      ["DataRateUnit", new Array<string>("bitPerSecond", "kibibitPerSecond", "mebibitPerSecond", "gibibitPerSecond", "tebibitPerSecond", "exbibitPerSecond", "zebibitPerSecond", "yobibitPerSecond", "bytePerSecond", "kibibytePerSecond", "mebibytePerSecond", "gibibytePerSecond", "tebibytePerSecond", "exbibytePerSecond", "zebibytePerSecond", "yobibytePerSecond")],      
+      ["DataSizeUnit", new Array<string>("bit", "kibibit", "mebibit", "gibibit", "tebibit", "exbibit", "zebibit", "yobibit", "byte", "kibibyte", "mebibyte", "gibibyte", "tebibyte", "exbibyte", "zebibyte", "yobibyte")],
+      ["DensityUnit", new Array<string>("kilogramPerCubicMetre", "gramPerCubicMetre")],
+      ["LengthUnit", new Array<string>("metre", "centimetre", "millimetre", "micrometre", "nanometre", "kilometre", "foot", "inch", "mile", "nauticalMile", "astronomicalUnit")],
+      ["ChargeUnit", new Array<string>("coulomb")],
+      ["EnergyUnit", new Array<string>("joule", "kilojoule", "megajoule", "gigajoule", "electronvolt", "megaelectronvolt", "kilowattHour")],
+      ["ForceUnit", new Array<string>("newton", "pound", "ounce", "ton")],
+      ["FrequencyUnit", new Array<string>("hertz", "kilohertz", "megahertz", "gigahertz")],
+      ["DensityUnit", new Array<string>("kilogramPerCubicMetre", "gramPerCubicMetre")],
+      ["IlluminanceUnit", new Array<string>("lux", "footcandle")],
+      ["InductanceUnit", new Array<string>("henry", "millihenry", "microhenry")],
+      ["AngleUnit", new Array<string>("radian", "degreeOfArc", "minuteOfArc", "secondOfArc", "turn")],
+      ["LuminanceUnit", new Array<string>("candelaPerSquareMetre")],
+      ["PowerUnit", new Array<string>("watt", "microwatt", "milliwatt", "kilowatt", "megawatt", "gigawatt", "horsepower", "kilowattHourPerYear")],
+      ["LuminousFluxUnit", new Array<string>("lumen")],
+      ["LuminousIntensityUnit", new Array<string>("candela")],
+      ["MagneticInductionUnit", new Array<string>("weber", "maxwell")],
+      ["MagneticInductionUnit", new Array<string>("tesla")],
+      ["MassUnit", new Array<string>("kilogram", "gram", "milligram", "microgram", "tonne", "slug")],
+      ["MassFlowRateUnit", new Array<string>("gramPerSecond", "kilogramPerSecond", "gramPerHour", "kilogramPerHour")],
+      ["PressureUnit", new Array<string>("pascal", "kilopascal", "bar", "millibar", "millimetresOfMercury", "poundPerSquareInch", "inchesOfMercury", "inchesOfWater")],
+      ["Unitless", new Array<string>("unity", "percent")],
+      ["ResistanceUnit", new Array<string>("ohm", "milliohm", "kiloohm", "megaohm")],
+      ["SoundPressureUnit", new Array<string>("decibel", "bel")],
+      ["TemperatureUnit", new Array<string>("kelvin", "degreeCelsius", "degreeFahrenheit")],
+      ["ForceUnit", new Array<string>("newton", "pound", "ounce", "ton")],
+      ["TimeUnit", new Array<string>("second", "millisecond", "microsecond", "nanosecond", "minute", "hour", "day", "year")],
+      ["TorqueUnit", new Array<string>("newtonMetre")],
+      ["VelocityUnit", new Array<string>("metrePerSecond", "centimetrePerSecond", "kilometrePerSecond", "metrePerHour", "kilometrePerHour", "milePerHour", "milePerSecond", "knot")],
+      ["VoltageUnit", new Array<string>("volt", "millivolt", "microvolt", "kilovolt", "megavolt")],
+      ["VolumeUnit", new Array<string>("cubicMetre", "cubicCentimetre", "litre", "millilitre", "cubicFoot", "cubicInch", "fluidOunce", "gallon")],
+      ["VolumeFlowRateUnit", new Array<string>("litrePerSecond", "millilitrePerSecond", "litrePerHour", "millilitrePerHour")]
+    ]);
+
+    return unitTypes;
+  }
+
+  public getUnits(): Map<string, Array<string>> {
+    let units = new Map<string, Array<string>>([
+      ["Acceleration", this.getUnitTypes().get("AccelerationUnit")!],
+      ["Angle", this.getUnitTypes().get("AngleUnit")!],
+      ["AngularAcceleration", this.getUnitTypes().get("AngularAccelerationUnit")!],
+      ["AngularVelocity", this.getUnitTypes().get("AngularVelocityUnit")!],
+      ["Area", this.getUnitTypes().get("AreaUnit")!],
+      ["Capacitance", this.getUnitTypes().get("CapacitanceUnit")!],
+      ["Current", this.getUnitTypes().get("CurrentUnit")!],
+      ["DataRate", this.getUnitTypes().get("DataRateUnit")!],
+      ["DataSize", this.getUnitTypes().get("DataSizeUnit")!],
+      ["Density", this.getUnitTypes().get("DensityUnit")!],
+      ["Distance", this.getUnitTypes().get("LengthUnit")!],
+      ["ElectricCharge", this.getUnitTypes().get("ChargeUnit")!],
+      ["Energy", this.getUnitTypes().get("EnergyUnit")!],
+      ["Force", this.getUnitTypes().get("ForceUnit")!],
+      ["Frequency", this.getUnitTypes().get("FrequencyUnit")!],
+      ["Humidity", this.getUnitTypes().get("DensityUnit")!],
+      ["Illuminance", this.getUnitTypes().get("IlluminanceUnit")!],
+      ["Inductance", this.getUnitTypes().get("InductanceUnit")!],
+      ["Latitude", this.getUnitTypes().get("AngleUnit")!],
+      ["Longitude", this.getUnitTypes().get("AngleUnit")!],
+      ["Length", this.getUnitTypes().get("LengthUnit")!],
+      ["Luminance", this.getUnitTypes().get("LuminanceUnit")!],
+      ["Luminosity", this.getUnitTypes().get("PowerUnit")!],
+      ["LuminousFlux", this.getUnitTypes().get("LuminousFluxUnit")!],
+      ["LuminousIntensity", this.getUnitTypes().get("LuminousIntensityUnit")!],
+      ["MagneticFlux", this.getUnitTypes().get("MagneticFluxUnit")!],
+      ["MagneticInduction", this.getUnitTypes().get("MagneticInductionUnit")!],
+      ["Mass", this.getUnitTypes().get("MassUnit")!],
+      ["MassFlowRate", this.getUnitTypes().get("MassFlowRateUnit")!],
+      ["Power", this.getUnitTypes().get("PowerUnit")!],
+      ["Pressure", this.getUnitTypes().get("PressureUnit")!],
+      ["RelativeHumidity", this.getUnitTypes().get("unitless")!],
+      ["Resistance", this.getUnitTypes().get("ResistanceUnit")!],
+      ["SoundPressure", this.getUnitTypes().get("SoundPressureUnit")!],
+      ["Temperature", this.getUnitTypes().get("TemperatureUnit")!],
+      ["Thrust", this.getUnitTypes().get("ForceUnit")!],
+      ["TimeSpan", this.getUnitTypes().get("TimeUnit")!],
+      ["Torque", this.getUnitTypes().get("TorqueUnit")!],
+      ["Velocity", this.getUnitTypes().get("VelocityUnit")!],
+      ["Voltage", this.getUnitTypes().get("VoltageUnit")!],
+      ["Volume", this.getUnitTypes().get("VolumeUnit")!],
+      ["VolumeFlowRate", this.getUnitTypes().get("VolumeFlowRateUnit")!]
+    ]);
+    return units;
   }
 
   public getSchemaTypes() : string[] {

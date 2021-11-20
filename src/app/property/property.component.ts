@@ -19,7 +19,7 @@ export class PropertyComponent implements OnInit {
 
   public ngOnInit(): void { 
     this.property.subscribeModelToForm();
-    this.syncHeaderFields();    
+    this.syncHeaderFields();
   }
 
   public syncHeaderFields() {
@@ -33,5 +33,11 @@ export class PropertyComponent implements OnInit {
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
     });    
+  }
+
+  public getUnits(): string[] | undefined {
+    let unit = this.property.form.get("semanticType")?.value;
+    let units = this.editorService.getUnits().get(unit);
+    return units;
   }
 }

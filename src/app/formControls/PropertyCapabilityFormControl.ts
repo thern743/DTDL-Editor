@@ -24,6 +24,7 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
       // Property specific
       schema: [this.model.schema],
       semanticType: [this.model.semanticType],
+      unit: [this.model.unit],
       writable: [this.model.writable]
     });
 
