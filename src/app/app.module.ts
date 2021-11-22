@@ -41,6 +41,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { IdNameHeaderComponent } from './id-name-header-component/id-name-header-component';
 import { SettingsComponent } from './settings/settings.component';
 import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.component';
+import { PropertyFormatterDirective } from './property-formatter/property-formatter.directive';
+import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,10 @@ import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.co
     FolderSelectComponent,
     ErrorSnackbarComponent,
     IdNameHeaderComponent,    
-    SettingsComponent, SuccessSnackbarComponent
+    SettingsComponent,
+    SuccessSnackbarComponent,
+    PropertyFormatterDirective,
+    PropertyFormatterPipe
   ],
   imports: [
     BrowserModule,
@@ -91,8 +96,10 @@ import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.co
   ],
   providers: [
     MatDialog,
+    PropertyFormatterPipe,
     { provide: MatDialogRef, useValue: {} },
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}],
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

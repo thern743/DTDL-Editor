@@ -13,7 +13,7 @@ export class IdNameHeaderComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
   
   public stopPropagation($event: Event): void {

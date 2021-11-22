@@ -45,7 +45,7 @@ export class TelemetryComponent implements OnInit {
 
   public changeSemanticType($event: MatSelectChange): void {
     let type = this.telemetry.form.get("type");
-    let val = new Array<string>(type?.value, $event.value);
+    let val = $event.value == "" ? "Telemetry" : new Array<string>("Telemetry", $event.value);
     type?.setValue(val);
   }
 }

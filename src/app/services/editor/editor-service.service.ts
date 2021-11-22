@@ -60,7 +60,7 @@ export class EditorService {
   }
 
   public getSemanticTypes() : string[] {
-    return ["Acceleration", "Angle", "AngularAcceleration", "AngularVelocity", "Area", "Capacitance", "Current", "DataRate", "DataSize", "Density",
+    return ["", "Acceleration", "Angle", "AngularAcceleration", "AngularVelocity", "Area", "Capacitance", "Current", "DataRate", "DataSize", "Density",
     "Distance", "ElectricCharge", "Energy", "Force", "Frequency", "Humidity", "Illuminance", "Inductance", "Latitude", "Longitude", "Length", 
     "Luminance", "Luminosity", "LuminousFlux", "LuminousIntensity", "MagneticFlux", "MagneticInduction", "Mass", "MassFlowRate", "Power", "Pressure", 
     "RelativeHumidity", "Resistance", "SoundPressure", "Temperature", "Thrust", "TimeSpan", "Torque", "Velocity", "Voltage", "Volume", 
@@ -69,6 +69,7 @@ export class EditorService {
 
   public getUnitTypes(): Map<string, Array<string>> {
     let unitTypes = new Map<string, Array<string>>([
+      ["", new Array<string>("")],
       ["AccelerationUnit", new Array<string>("metrePerSecondSquared", "centimetrePerSecondSquared", "gForce")],
       ["AngleUnit", new Array<string>("radian", "degreeOfArc", "minuteOfArc", "secondOfArc", "turn")],
       ["AngularAccelerationUnit", new Array<string>("radianPerSecondSquared")],
@@ -115,6 +116,7 @@ export class EditorService {
 
   public getUnits(): Map<string, Array<string>> {
     let units = new Map<string, Array<string>>([
+      ["", this.getUnitTypes().get("")!],
       ["Acceleration", this.getUnitTypes().get("AccelerationUnit")!],
       ["Angle", this.getUnitTypes().get("AngleUnit")!],
       ["AngularAcceleration", this.getUnitTypes().get("AngularAccelerationUnit")!],

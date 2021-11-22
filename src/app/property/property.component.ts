@@ -44,7 +44,7 @@ export class PropertyComponent implements OnInit {
 
   public changeSemanticType($event: MatSelectChange): void {
     let type = this.property.form.get("type");
-    let val = new Array<string>(type?.value, $event.value);
+    let val = $event.value == "" ? "Property" : new Array<string>("Property", $event.value);
     type?.setValue(val);
   }
 }
