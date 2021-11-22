@@ -61,7 +61,7 @@
         <mat-card-content>
             <mat-accordion>
                 <div *ngFor="let capability of getContents(); let i = index;" style="display: flex;">
-                    <ng-container [ngSwitch]="capability.model.type">
+                    <ng-container [ngSwitch]="getType(capability)">
                         <ng-container *ngSwitchCase="'Property'">
                             <property-definition [property]="capability" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></property-definition>
                         </ng-container>

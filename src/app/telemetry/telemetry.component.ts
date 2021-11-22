@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'telemetry-definition',
@@ -40,5 +41,11 @@ export class TelemetryComponent implements OnInit {
     let unit = this.telemetry.form.get("semanticType")?.value;
     let units = this.editorService.getUnits().get(unit);
     return units;
+  }
+
+  public changeSemanticType($event: MatSelectChange): void {
+    let type = this.telemetry.form.get("type");
+    let val = new Array<string>(type?.value, $event.value);
+    type?.setValue(val);
   }
 }

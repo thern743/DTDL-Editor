@@ -55,7 +55,8 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="property_semanticType_{{formIndex}}">Semantic Type</mat-label>
-        <mat-select matNativeControl id="property_semanticType_{{formIndex}}" formControlName="semanticType">
+        <mat-select matNativeControl id="property_semanticType_{{formIndex}}" formControlName="semanticType"
+                    (selectionChange)="changeSemanticType($event)">
             <mat-option *ngFor="let semanticType of editorService.semanticTypes" [value]="semanticType"> {{ semanticType }} </mat-option>
         </mat-select>
     </mat-form-field>

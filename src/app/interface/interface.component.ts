@@ -44,4 +44,10 @@ export class InterfaceComponent implements OnInit {
     $event.stopImmediatePropagation();
     this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);
   }
+
+  public getType(capability: ICapabilityFormControl<ICapabilityModel>): string {
+    let type = capability.form.get("type")?.value;
+    let val = type instanceof Array ? type[0] : type;
+    return val;
+  }
 }
