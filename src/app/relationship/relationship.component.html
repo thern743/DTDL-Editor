@@ -4,28 +4,16 @@
                         (closed)="panelOpenState = false"
                         [formGroup]="relationship.form">
     <mat-expansion-panel-header>
-        <mat-panel-title class="id-name-header-component"
-                [style.opacity]="panelOpenState ? '0' : '1'"
-                [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
+        <mat-panel-title>
             <id-name-header-component               
                 [formIndex]="formIndex[1]"
-                [formGroup]="relationship.form"        
+                [formGroup]="relationship.form"                       
                 [panelOpenState]="panelOpenState">
             </id-name-header-component>
-        </mat-panel-title>
+        </mat-panel-title>        
     </mat-expansion-panel-header>
-
-    <mat-slide-toggle matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
-    <br/><br/>
-
-    <id-name-header-component
-        [style.opacity]="panelOpenState ? '1' : '0'"
-        [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
-        [formIndex]="formIndex[1]"
-        [formGroup]="relationship.form"        
-        [panelOpenState]="panelOpenState">
-    </id-name-header-component>
-    <br/>
+    
+    <div class="formSpacer"></div>
 
     <mat-form-field color="accent">
         <mat-label attr.for="relationship_displayName_{{formIndex}}">Display Name</mat-label>
@@ -61,8 +49,10 @@
         <mat-label attr.for="relationship_target_{{formIndex}}">Target</mat-label>
         <!-- TODO: Drop-down select from Interfaces already defined (or manual input, empty == any interface) -->
         <input matInput id="relationship_target_{{formIndex}}" type="text" formControlName="target" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+    </mat-form-field>    
+    <br/>
+
+    <mat-slide-toggle matNativeControl id="relationship_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle>
     
     <br/>
     <mat-divider *ngIf="relationship.properties.length > 0"></mat-divider>

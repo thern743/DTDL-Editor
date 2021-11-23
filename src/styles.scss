@@ -45,17 +45,17 @@ $my-theme: mat.define-dark-theme(
         margin-right: 15px;
     }
 
+    div.formSpacer {
+        height: 1em;
+    }
+
     #previewPanel {
         font-family: 'Courier New', Courier, monospace;
     }
 
-    mat-expansion-panel-header {
-        height: 54px;
-    }
-
-    id-name-header-component, .id-name-header-component {
-        height: 2.7em;
-        transition: all .5s;
+    mat-expansion-panel-header, .mat-expansion-panel-header {
+        top: 10px;
+        height: 64px;
     }
 
     mat-sidenav {
@@ -68,16 +68,12 @@ $my-theme: mat.define-dark-theme(
         flex: 1 1 auto;
     }
 
-    .mat-expansion-panel-header {
-        height: 54px;
-    }
-
     mat-card {
         background-color: mat.get-color-from-palette($background, 'background') !important;
     }
-  
+
     .selected-panel {
-      border: 1px solid mat.get-color-from-palette($primary, 300);  
+        border: 1px solid mat.get-color-from-palette($primary, 300);  
     }
 
     .action-button {

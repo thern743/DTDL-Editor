@@ -1,7 +1,0 @@
-// Adjustments for "compact" field rendering within the expansion panel headers.
-:host ::ng-deep {
-    .header-small {
-      .mat-form-field-flex > .mat-form-field-infix { top: -.3em; padding: 0.0em 0 0.0em 0 !important; margin: 0.0em 0 0.0em 0 !important; }
-      .mat-form-field-label-wrapper { top: -1em; }
-    }
-}

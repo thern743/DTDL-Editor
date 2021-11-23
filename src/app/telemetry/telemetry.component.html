@@ -4,26 +4,16 @@
                         (closed)="panelOpenState = false"
                         [formGroup]="telemetry.form">
     <mat-expansion-panel-header>
-        <mat-panel-title class="id-name-header-component"
-                [style.opacity]="panelOpenState ? '0' : '1'"
-                [style.visibility]="panelOpenState ? 'hidden' : 'visible'">
+        <mat-panel-title>
             <id-name-header-component               
                 [formIndex]="formIndex[1]"
-                [formGroup]="telemetry.form"        
+                [formGroup]="telemetry.form"                       
                 [panelOpenState]="panelOpenState">
             </id-name-header-component>
-        </mat-panel-title>
+        </mat-panel-title>        
     </mat-expansion-panel-header>
 
-    <id-name-header-component
-        [style.opacity]="panelOpenState ? '1' : '0'"
-        [style.visibility]="panelOpenState ? 'visible' : 'hidden'"
-        [formIndex]="formIndex[1]"
-        [formGroup]="telemetry.form"        
-        [panelOpenState]="panelOpenState">
-    </id-name-header-component>
-    <br/>
-
+    <div class="formSpacer"></div>
     <mat-form-field color="accent">
         <mat-label attr.for="telemetry_displayName_{{formIndex}}">Display Name</mat-label>
         <input matInput id="telemetry_displayName_{{formIndex}}" type="text" formControlName="displayName" />
