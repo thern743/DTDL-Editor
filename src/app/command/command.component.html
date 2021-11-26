@@ -21,15 +21,9 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
+    <mat-form-field color="accent" style="width: 420px">
         <mat-label attr.for="command_description_{{formIndex}}">Description</mat-label>
         <input matInput id="command_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent">
-        <mat-label attr.for="command_comment_{{formIndex}}">Comment</mat-label>
-        <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
     </mat-form-field>
     <br/>
     
@@ -43,5 +37,10 @@
         <mat-label attr.for="comman_response_{{formIndex}}">Response</mat-label>
         <input matInput id="comman_response_{{formIndex}}" type="text" formControlName="response" />
     </mat-form-field>
-    <span class="formSpacer"></span>
+    <br/>
+
+    <mat-form-field color="accent" style="width: 630px">
+        <mat-label attr.for="command_comment_{{formIndex}}">Comment</mat-label>
+        <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
+    </mat-form-field>
 </mat-expansion-panel>

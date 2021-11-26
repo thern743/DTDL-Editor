@@ -21,16 +21,11 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
+    <mat-form-field color="accent" style="width: 420px">
         <mat-label attr.for="property_description_{{formIndex}}">Description</mat-label>
         <input matInput id="property_description_{{formIndex}}" type="text" formControlName="description" />
     </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent">
-        <mat-label attr.for="property_comment_{{formIndex}}">Comment</mat-label>
-        <input matInput id="property_comment_{{formIndex}}" type="text" formControlName="comment" />
-    </mat-form-field>
+    <span class="formSpacer"></span>    
     <br/>
 
     <mat-form-field color="accent">
@@ -56,6 +51,12 @@
             <mat-option *ngFor="let unit of getUnits()" [value]="unit"> {{ unit }} </mat-option>
         </mat-select>
     </mat-form-field>   
+    <br/>
+
+    <mat-form-field color="accent" style="width: 630px">
+        <mat-label attr.for="property_comment_{{formIndex}}">Comment</mat-label>
+        <input matInput id="property_comment_{{formIndex}}" type="text" formControlName="comment" />
+    </mat-form-field>
     <br/>
 
     <mat-slide-toggle matNativeControl id="property_writable_{{formIndex}}" formControlName="writable">Writable</mat-slide-toggle> 

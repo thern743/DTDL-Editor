@@ -260,7 +260,9 @@ export class EditorService {
   }
 
   public filterInterfacesForExtends(id: string): string[] {
-    return this.interfaces.filter(x => x.model.id != id).map(x => x.model.id);
+    let result = new Array<string>("");
+    result.push(...this.interfaces.filter(x => x.model.id != id).map(x => x.model.id));
+    return result;
   }
 
   public deleteCapabilityFromInterface(interfaceInstance: InterfaceCapabilityFormControl, formIndex: [number, number]): void {

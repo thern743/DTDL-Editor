@@ -21,21 +21,22 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
+    <mat-form-field color="accent" style="width: 420px">
         <mat-label attr.for="component_description_{{formIndex}}">Description</mat-label>
         <input matInput id="component_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent">
-        <mat-label attr.for="component_comment_{{formIndex}}">Comment</mat-label>
-        <input matInput id="component_comment_{{formIndex}}" type="text" formControlName="comment" />
     </mat-form-field>
     <br/>
 
     <mat-form-field color="accent">
         <mat-label attr.for="component_schema_{{formIndex}}">Schema</mat-label>
-        <!-- TODO: Drop-down select from Interfaces already defined -->
-        <input matInput id="component_schema_{{formIndex}}" type="text" formControlName="schema" />
-    </mat-form-field>    
+        <mat-select matNativeControl id="component_schema_{{formIndex}}" formControlName="schema">
+            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label attr.for="component_comment_{{formIndex}}">Comment</mat-label>
+        <input matInput id="component_comment_{{formIndex}}" type="text" formControlName="comment" />
+    </mat-form-field>
 </mat-expansion-panel>

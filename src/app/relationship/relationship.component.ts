@@ -10,6 +10,7 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./relationship.component.scss']
 })
 export class RelationshipComponent implements OnInit {
+  @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
   @Input() public panelOpenState!: boolean;

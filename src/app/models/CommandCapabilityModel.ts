@@ -28,11 +28,11 @@ export class CommandCapabilityModel extends AbstractCapabilityModel {
 
   // TODO: Implement Command request object
   @jsonMember 
-  public request: any = {};
+  public request: any;
 
   // TODO: Implement Command response object
   @jsonMember 
-  public response: any = {};
+  public response: any;
 
   constructor(id: string) {
     super(id, "Command");

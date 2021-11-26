@@ -9,6 +9,7 @@ import { EditorService } from '../services/editor/editor-service.service';
   styleUrls: ['./component.component.scss']
 })
 export class ComponentComponent implements OnInit {
+  @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public component!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
