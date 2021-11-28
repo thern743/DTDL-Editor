@@ -9,8 +9,8 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
-  @jsonMember({ name: '@type' }) 
-  public type: string = "Relationship";
+  @jsonArrayMember(String, { name: '@type' })
+  public type: Array<string> = ["Relationship"];
 
   @jsonMember 
   public name!: string;

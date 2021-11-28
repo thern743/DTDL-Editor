@@ -14,8 +14,8 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
-  @jsonMember({ name: '@type' })
-  public type: string = "Interface";
+  @jsonArrayMember(String, { name: '@type' })
+  public type: Array<string> = ["Interface"];
 
   @jsonMember
   public displayName!: string;
@@ -63,13 +63,13 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = this.contents.filter(x => x.type === type);
+    let capabilities = this.contents.filter(x => x.type.indexOf(type) > -1);
     return capabilities;
   }
 
   public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {
     let result = json.map((value: any) => {      
-      switch(value["@type"]) {
+      switch(value["@type"][0]) {
         case "Property":          
           return params.fallback(value, PropertyCapabilityModel);
           break;

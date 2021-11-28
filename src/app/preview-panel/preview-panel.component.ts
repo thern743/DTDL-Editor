@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { FileService } from '../services/file/file-service.service';
 
 @Component({
@@ -22,5 +24,10 @@ export class PreviewPanelComponent implements OnInit {
     
   }
 
-  
+  public getJsonLd() : any {
+    let typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
+    let str = typedJson.stringify(this.interface.model);
+    let result = typedJson.parse(str);
+    return result;
+  }  
 }

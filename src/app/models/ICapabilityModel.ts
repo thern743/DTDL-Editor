@@ -1,6 +1,6 @@
 export interface ICapabilityModel {
     id: string;
-    type: string;
+    type: Array<string>;
     displayName: string;
     description: string;
     comment: string;

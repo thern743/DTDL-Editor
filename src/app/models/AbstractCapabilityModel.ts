@@ -1,4 +1,4 @@
-import { jsonMember, jsonObject } from "typedjson";
+import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from "./ICapabilityModel";
 
 @jsonObject
@@ -6,8 +6,8 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonMember({ name: '@type' })
-    public type!: string;
+    @jsonArrayMember(String, { name: '@type' })
+    public type!: Array<string>;
 
     @jsonMember
     public displayName!: string;
@@ -20,6 +20,6 @@ export class AbstractCapabilityModel implements ICapabilityModel {
 
     constructor(id: string, type: string) {
         this.id = id;
-        this.type = type;
+        this.type = new Array<string>(type);
     }
 }

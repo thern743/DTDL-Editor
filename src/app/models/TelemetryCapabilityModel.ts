@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { jsonMember, jsonObject } from "typedjson";
+import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
 @jsonObject
@@ -7,8 +7,8 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
-  @jsonMember({ name: '@type' })
-  public type: string = "Telemetry";
+  @jsonArrayMember(String, { name: '@type' })
+  public type: Array<string> = ["Telemetry"];
 
   @jsonMember 
   public  name!: string;

@@ -25,7 +25,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     model.properties.map((capability: ICapabilityModel) => {
       let formControl!: ICapabilityFormControl<ICapabilityModel>;
             
-      switch(capability.type) {
+      switch(capability.type[0]) {
         case "Property":          
           formControl = new PropertyCapabilityFormControl(capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
