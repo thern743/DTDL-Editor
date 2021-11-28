@@ -8,7 +8,7 @@ import { SuccessSnackbarComponent } from 'src/app/success-snackbar/success-snack
   providedIn: 'root'
 })
 export class SettingsService {
-  private static EDITOR_SETTINGS: string = "dtdl_editor://settings";
+  private static EDITOR_SETTINGS: string = "dtdlEditor://settings";
   private _snackBar: MatSnackBar;
   private _editorSettings!: EditorSettings;
 
