@@ -181,31 +181,31 @@ export class EditorService {
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let model = new PropertyCapabilityModel(this._editorSettings.BaseDtmi);
+    let model = new PropertyCapabilityModel(this._editorSettings.baseDtmi);
     let formControl = new PropertyCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let model = new CommandCapabilityModel(this._editorSettings.BaseDtmi);   
+    let model = new CommandCapabilityModel(this._editorSettings.baseDtmi);   
     let formControl = new CommandCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let model = new TelemetryCapabilityModel(this._editorSettings.BaseDtmi);
+    let model = new TelemetryCapabilityModel(this._editorSettings.baseDtmi);
     let formControl = new TelemetryCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addComponentToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let model = new ComponentCapabilityModel(this._editorSettings.BaseDtmi);
+    let model = new ComponentCapabilityModel(this._editorSettings.baseDtmi);
     let formControl = new ComponentCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
-    let model = new RelationshipCapabilityModel(this._editorSettings.BaseDtmi);
+    let model = new RelationshipCapabilityModel(this._editorSettings.baseDtmi);
     let formControl = new RelationshipCapabilityFormControl(model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }

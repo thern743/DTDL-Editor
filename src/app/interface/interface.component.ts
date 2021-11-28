@@ -28,10 +28,6 @@ export class InterfaceComponent implements OnInit {
     this.interface.subscribeModelToForm();
   }
 
-  // public getId(): string {
-  //   return this.interface.model.
-  // }
-
   public getContents(): Array<ICapabilityFormControl<ICapabilityModel>> {
     return this.interface.contents;
   }

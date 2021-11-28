@@ -8,8 +8,7 @@ import { SuccessSnackbarComponent } from 'src/app/success-snackbar/success-snack
   providedIn: 'root'
 })
 export class SettingsService {
-  private static DTMI_SETTINGS: string = "dtdl_editor:settings:baseDtmi";
-  public static DEFAULT_DTMI = "dtmi:com:dtdlEditor:default;1";
+  private static EDITOR_SETTINGS: string = "dtdl_editor://settings";
   private _snackBar: MatSnackBar;
   private _editorSettings!: EditorSettings;
 
@@ -19,9 +18,10 @@ export class SettingsService {
     this.load();
   }
 
-  public save(settings: any): void {
+  public save(editorSettings: EditorSettings): void {
     try {
-      localStorage.setItem(SettingsService.DTMI_SETTINGS, settings);
+      let settings = JSON.stringify(editorSettings);
+      localStorage.setItem(SettingsService.EDITOR_SETTINGS, settings);
     } catch (err: any) {
       let msg = err;
       this._snackBar.openFromComponent(ErrorSnackbarComponent, {
@@ -42,8 +42,16 @@ export class SettingsService {
     });
   }
 
-  public load(): EditorSettings {    
-    this._editorSettings.BaseDtmi = localStorage.getItem(SettingsService.DTMI_SETTINGS) ?? SettingsService.DEFAULT_DTMI;    
+  public load(): EditorSettings {
+    let settings = localStorage.getItem(SettingsService.EDITOR_SETTINGS) ?? JSON.stringify(new EditorSettings());
+
+    try {
+      let editorSettings: EditorSettings = JSON.parse(settings);
+      this._editorSettings = editorSettings;      
+    } catch (error) {
+      console.error("Could not load editor settings from local storage: %o", error);
+    }
+    
     return this._editorSettings;
   }
 }

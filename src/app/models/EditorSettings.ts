@@ -1,4 +1,9 @@
 export class EditorSettings {
-    public Context!: string;
-    public BaseDtmi!: string;
+    public context!: string;
+    public baseDtmi!: string;
+
+    constructor() {
+        this.context = "dtmi:dtdl:context;2";
+        this.baseDtmi = "dtmi:com:dtdlEditor:default;1";
+    }
 }

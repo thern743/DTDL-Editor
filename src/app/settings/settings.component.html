@@ -1,10 +1,16 @@
-<div class="content-container">
+<div class="content-container" [formGroup]="form">
     <h1>Settings</h1>
     <mat-divider></mat-divider>
     <br/>
-    <mat-form-field color="accent">
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label for="context">Context</mat-label>
+        <input matInput id="context" type="text" formControlName="context" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field color="accent" style="width: 420px">
         <mat-label for="baseDtmi">Base DTMI</mat-label>
-        <input matInput id="baseDtmi" type="text" [formControl]="baseDtmi" />
+        <input matInput id="baseDtmi" type="text" formControlName="baseDtmi" />
     </mat-form-field>
     <br/>
     <button mat-raised-button color="primary" class="browse-button" (click)="save()">Save</button>
