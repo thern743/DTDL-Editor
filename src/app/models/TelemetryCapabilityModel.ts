@@ -26,7 +26,6 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public schema!: string;
 
-  @jsonMember 
   public semanticType!: string;
 
   @jsonMember 
