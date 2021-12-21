@@ -7,6 +7,7 @@ import { ComponentCapabilityModel } from './ComponentCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
 import { PropertyCapabilityModel } from './PropertyCapabilityModel';
 import { RelationshipCapabilityModel } from './RelationshipCapabilityModel';
+import { SemanticTypeArray } from './SemanticTypeArray';
 import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
 
 @jsonObject
@@ -14,8 +15,8 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
-  @jsonArrayMember(String, { name: '@type' })
-  public type: Array<string> = ["Interface"];
+  @jsonMember({ name: '@type' })
+  public type: SemanticTypeArray = new SemanticTypeArray(["Interface"]);
 
   @jsonMember
   public displayName!: string;
@@ -63,7 +64,7 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = this.contents.filter(x => x.type.indexOf(type) > -1);
+    let capabilities = this.contents.filter(x => x.type.typeArray.indexOf(type) > -1);
     return capabilities;
   }
 

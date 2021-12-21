@@ -4,6 +4,7 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
+import { SemanticTypeArray } from '../models/SemanticTypeArray';
 
 @Component({
   selector: 'telemetry-definition',
@@ -47,12 +48,12 @@ export class TelemetryComponent implements OnInit {
     let type = this.telemetry.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new Array<string>("Telemetry");
-      type?.setValue(val);      
+      let val = new SemanticTypeArray(["Telemetry"]);
+      type?.setValue(val.typeArray);      
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new Array<string>("Telemetry", $event.value);
+      let val = new SemanticTypeArray(["Telemetry", $event.value]);
       type?.setValue(val);
     }
   }

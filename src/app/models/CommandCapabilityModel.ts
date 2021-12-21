@@ -1,14 +1,15 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
+import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class CommandCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' }) 
   public id!: string;
 
-  @jsonArrayMember(String, { name: '@type' })
-  public type: Array<string> = ["Command"];
+  @jsonMember({ name: '@type' })
+  public type: SemanticTypeArray = new SemanticTypeArray(["Command"]);
 
   @jsonMember 
   public name!: string;

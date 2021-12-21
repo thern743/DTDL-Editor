@@ -3,14 +3,15 @@ import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { ICapabilityModel } from './ICapabilityModel';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
+import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
-  @jsonArrayMember(String, { name: '@type' })
-  public type: Array<string> = ["Relationship"];
+  @jsonMember({ name: '@type' })
+  public type: SemanticTypeArray = new SemanticTypeArray(["Relationship"]);
 
   @jsonMember 
   public name!: string;

@@ -4,6 +4,7 @@ import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabil
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
+import { SemanticTypeArray } from '../models/SemanticTypeArray';
 
 @Component({
   selector: 'interface-definition',
@@ -43,7 +44,7 @@ export class InterfaceComponent implements OnInit {
 
   public getType(capability: ICapabilityFormControl<ICapabilityModel>): string {
     let type = capability.form.get("type")?.value;
-    let val = type instanceof Array ? type[0] : type;
+    let val = type instanceof SemanticTypeArray ? type.typeArray[0] : type;
     return val;
   }
 }

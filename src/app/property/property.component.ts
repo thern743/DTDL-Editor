@@ -3,6 +3,7 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
+import { SemanticTypeArray } from '../models/SemanticTypeArray';
 
 @Component({
   selector: 'property-definition',
@@ -46,12 +47,12 @@ export class PropertyComponent implements OnInit {
     let type = this.property.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new Array<string>("Property");
-      type?.setValue(val);      
+      let val = new SemanticTypeArray(["Property"]);
+      type?.setValue(val.typeArray);      
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new Array<string>("Property", $event.value);
+      let val = new SemanticTypeArray(["Property", $event.value]);
       type?.setValue(val);
     }
   }

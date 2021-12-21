@@ -1,13 +1,14 @@
-import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
+import { jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from "./ICapabilityModel";
+import { SemanticTypeArray } from "./SemanticTypeArray";
 
 @jsonObject
 export class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonArrayMember(String, { name: '@type' })
-    public type!: Array<string>;
+    @jsonMember(String, { name: '@type' })
+    public type!: SemanticTypeArray;
 
     @jsonMember
     public displayName!: string;
@@ -20,6 +21,6 @@ export class AbstractCapabilityModel implements ICapabilityModel {
 
     constructor(id: string, type: string) {
         this.id = id;
-        this.type = new Array<string>(type);
+        this.type = new SemanticTypeArray([type]);
     }
 }
