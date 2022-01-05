@@ -16,9 +16,7 @@ export class IdNameHeaderComponent implements OnInit {
   public ngOnInit(): void {
   }
   
-  public stopPropagation($event: Event): void {
-    if(!this.panelOpenState) {
-      $event.stopImmediatePropagation();
-    }    
+  public stopPropagation($event: Event): void {    
+    $event.stopImmediatePropagation();    
   }
 }
