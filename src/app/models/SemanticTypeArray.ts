@@ -1,21 +1,14 @@
 import { jsonArrayMember, jsonMember, jsonObject, TypedJSON } from "typedjson";
 
 @jsonObject
-export class SemanticTypeArray {
-    public typeArray: Array<string>;
-    public typeString: string;
+export class SemanticTypeArray extends Array<string> {
 
-    constructor(values: Array<string>) {
-        this.typeArray = values;
-        this.typeString = this.typeArray.toString();
-    }
 }
 
 TypedJSON.mapType(SemanticTypeArray, {
-    deserializer: json => { 
-        return json; 
-    },
+    deserializer: json => json,
     serializer: value => {
-        return value?.toString()
+        let val = value?.length == 1 ? value[0] : value;
+        return val;
     }
 });

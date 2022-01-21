@@ -1,32 +1,17 @@
 import 'reflect-metadata';
-import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
+import { jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class TelemetryCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember({ name: '@id' })
-  public id!: string;
-
-  @jsonMember({ name: '@type' })
-  public type: SemanticTypeArray = new SemanticTypeArray(["Telemetry"]);
-
   @jsonMember 
   public  name!: string;
 
   @jsonMember 
-  public displayName!: string;
-
-  @jsonMember 
-  public description!: string;
-
-  @jsonMember 
-  public comment!: string;
-
-  // Telemetry specific
-  @jsonMember 
   public schema!: string;
 
+  // No SerDes
   public semanticType!: string;
 
   @jsonMember 
@@ -34,5 +19,6 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
 
   constructor(id: string) {
     super(id, "Telemetry");
+    this.type = new SemanticTypeArray("Telemetry");
   }
 }

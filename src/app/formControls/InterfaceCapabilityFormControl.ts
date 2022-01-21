@@ -32,7 +32,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     model.contents.map((model: ICapabilityModel) => {
       let formControl!: ICapabilityFormControl<ICapabilityModel>;
             
-      switch(model.type.typeArray[0]) {
+      switch(model.type[0]) {
         case "Property":          
           formControl = new PropertyCapabilityFormControl(model as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
@@ -77,14 +77,14 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = this.model.contents.filter(x => x.type.typeArray.indexOf(type) > -1);
+    let capabilities = this.model.contents.filter(x => x.type.indexOf(type) > -1);
     return capabilities;
   }
 
   public toFormGroup(): FormGroup {
     let form = this.formBuilder.group({
       id: [this.model.id, [this._validationService.ValidDtmi()]],
-      type: [this.model.type.typeArray],
+      type: [this.model.type],
       displayName: [this.model.displayName],
       comment: [this.model.comment],
       description: [this.model.description],

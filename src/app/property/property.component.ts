@@ -47,12 +47,12 @@ export class PropertyComponent implements OnInit {
     let type = this.property.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new SemanticTypeArray(["Property"]);
-      type?.setValue(val.typeArray);      
+      let val = new SemanticTypeArray("Property");
+      type?.setValue(val);      
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new SemanticTypeArray(["Property", $event.value]);
+      let val = new SemanticTypeArray("Property", $event.value);
       type?.setValue(val);
     }
   }

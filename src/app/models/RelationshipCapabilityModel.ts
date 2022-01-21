@@ -7,25 +7,9 @@ import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class RelationshipCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember({ name: '@id' })
-  public id!: string;
-
-  @jsonMember({ name: '@type' })
-  public type: SemanticTypeArray = new SemanticTypeArray(["Relationship"]);
-
   @jsonMember 
   public name!: string;
 
-  @jsonMember 
-  public displayName!: string;
-
-  @jsonMember 
-  public description!: string;
-
-  @jsonMember 
-  public comment!: string;
-
-  // Relationship specific
   @jsonMember 
   public minMultiplicity!: number;  
 
@@ -44,6 +28,7 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   constructor(id: string) {
     super(id, "Relationship");
     this.properties = new Array<ICapabilityModel>();
+    this.type = new SemanticTypeArray("Relationship");
   }
 
   public static interfaceCapabilityDeserializer(json: Array<{prop: string; shouldDeserialize: boolean}>, params: CustomDeserializerParams) {

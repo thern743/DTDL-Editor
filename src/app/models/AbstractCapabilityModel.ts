@@ -7,7 +7,7 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonMember(String, { name: '@type' })
+    @jsonMember({ name: '@type' })
     public type!: SemanticTypeArray;
 
     @jsonMember
@@ -21,6 +21,6 @@ export class AbstractCapabilityModel implements ICapabilityModel {
 
     constructor(id: string, type: string) {
         this.id = id;
-        this.type = new SemanticTypeArray([type]);
+        this.type = new SemanticTypeArray(type);
     }
 }

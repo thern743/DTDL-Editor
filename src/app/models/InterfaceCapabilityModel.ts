@@ -12,22 +12,6 @@ import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
 
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember({ name: '@id' })
-  public id!: string;
-
-  @jsonMember({ name: '@type' })
-  public type: SemanticTypeArray = new SemanticTypeArray(["Interface"]);
-
-  @jsonMember
-  public displayName!: string;
-
-  @jsonMember
-  public description!: string;
-  
-  @jsonMember
-  public comment!: string;
-
-  // Interface specific
   @jsonMember({ name: '@context' })
   public context: string = "dtmi:dtdl:context;2";  
 
@@ -41,6 +25,7 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
     super(id, "Interface");
     this.context = context;
     this.contents = new Array<ICapabilityModel>();
+    this.type = new SemanticTypeArray("Interface");
   }
 
   get commands(): ICapabilityModel[] {        
@@ -64,28 +49,28 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = this.contents.filter(x => x.type.typeArray.indexOf(type) > -1);
+    let capabilities = this.contents.filter(x => x.type.indexOf(type) > -1);
     return capabilities;
   }
 
-  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {
-    let result = json.map((value: any) => {      
-      switch(value["@type"][0]) {
+  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {    
+    let result = json.map((value: any) => {
+      // TODO: For some reason this isn't using the SemanticTypeArray MapType so we're recreating the logic here.
+      let type = typeof value["@type"] === 'string' ? [value["@type"]] : value["@type"];
+      if(!(type instanceof Array)) return;
+
+      // TODO: Provide factory method?
+      switch(type[0]) {
         case "Property":          
           return params.fallback(value, PropertyCapabilityModel);
-          break;
         case "Command":
           return params.fallback(value, CommandCapabilityModel);
-          break;
         case "Telemetry":
           return params.fallback(value, TelemetryCapabilityModel);
-          break;
         case "Component":
           return params.fallback(value, ComponentCapabilityModel);
-          break;
         case "Relationship":
           return params.fallback(value, RelationshipCapabilityModel);
-          break;
         default:
           break;          
       }      

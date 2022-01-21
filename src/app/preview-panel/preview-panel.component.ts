@@ -15,9 +15,11 @@ export class PreviewPanelComponent implements OnInit {
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input('cdkCopyToClipboard') public text!: string
   public fileService: FileService;
+  private _typedJson: TypedJSON<InterfaceCapabilityModel>;
 
   constructor(fileService: FileService) { 
     this.fileService = fileService;
+    this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
   }
 
   public ngOnInit(): void {
@@ -25,9 +27,8 @@ export class PreviewPanelComponent implements OnInit {
   }
 
   public getJsonLd() : any {
-    let typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
-    let str = typedJson.stringify(this.interface.model);
-    let result = typedJson.parse(str);
+    let str = this._typedJson.stringify(this.interface.model);
+    let result = this._typedJson.parse(str);
     return result;
   }  
 }

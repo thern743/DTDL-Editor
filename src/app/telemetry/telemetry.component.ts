@@ -48,12 +48,12 @@ export class TelemetryComponent implements OnInit {
     let type = this.telemetry.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new SemanticTypeArray(["Telemetry"]);
-      type?.setValue(val.typeArray);      
+      let val = new SemanticTypeArray("Telemetry");
+      type?.setValue(val);      
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new SemanticTypeArray(["Telemetry", $event.value]);
+      let val = new SemanticTypeArray("Telemetry", $event.value);
       type?.setValue(val);
     }
   }
