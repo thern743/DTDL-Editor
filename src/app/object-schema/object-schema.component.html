@@ -1,0 +1,52 @@
+<mat-expansion-panel    class="mat-elevation-z3"
+                        [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="field.form">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Field</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="id">Id</mat-label>
+        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field appearance="fill">
+        <mat-label for="comment">Comment</mat-label>
+        <input matInput id="comment" type="text" formControlName="comment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="description">Description</mat-label>
+        <input matInput id="description" type="text" formControlName="description" />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="fill">
+        <mat-label for="displayName">Display Name</mat-label>
+        <input matInput id="displayName" type="text" formControlName="displayName" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field appearance="fill">
+        <mat-label>schema</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let schema of this.editorService.schemaTypes" [value]="schema" (onSelectionChange)="valSelected(schema)" >{{schema}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngFor="let field of getFields(); let i = index;">
+        <object-schema [field]="field"></object-schema>
+   </ng-container>
+
+   <ng-container *ngIf="this.schemaObjectEditorService.isObjectSchema(this.field.model.schema)">
+    <mat-action-row>
+        <button mat-raised-button color="primary" (click)="this.addChild()" [disabled]="canAddChild()">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Field
+        </button>
+    </mat-action-row>
+   </ng-container>
+</mat-expansion-panel>

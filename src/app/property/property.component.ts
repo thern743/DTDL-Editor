@@ -4,6 +4,9 @@ import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
+import { MatDialog } from '@angular/material/dialog';
+import { ObjectSchemaEditorComponent } from '../object-schema-editor/object-schema-editor.component';
+import { ObjectSchemaEditorService } from '../services/object-schema-editor/object-schema-editor.service';
 
 @Component({
   selector: 'property-definition',
@@ -14,9 +17,14 @@ export class PropertyComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
-  
-  constructor(public editorService: EditorService) { 
-    
+  public editorService: EditorService;
+  public objectSchemaEditorService: ObjectSchemaEditorService;
+  public dialog: MatDialog;
+
+  constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaEditorService, dialog: MatDialog) { 
+    this.editorService = editorService;
+    this.objectSchemaEditorService = objectSchemaEditor;
+    this.dialog = dialog;
   }
 
   public ngOnInit(): void { 
@@ -55,5 +63,15 @@ export class PropertyComponent implements OnInit {
       let val = new SemanticTypeArray("Property", $event.value);
       type?.setValue(val);
     }
+  }
+
+  public openObjectSchemaEditor() {
+    const dialogRef = this.dialog.open(ObjectSchemaEditorComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.property.form.get("schema")?.setValue(result, { emitEvent: false });
+      } 
+    });
   }
 }

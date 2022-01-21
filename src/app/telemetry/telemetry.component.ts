@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
+import { MatDialog } from '@angular/material/dialog';
+import { ObjectSchemaEditorComponent } from '../object-schema-editor/object-schema-editor.component';
+import { ObjectSchemaEditorService } from '../services/object-schema-editor/object-schema-editor.service';
 
 @Component({
   selector: 'telemetry-definition',
@@ -15,9 +17,14 @@ export class TelemetryComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
+  public editorService: EditorService;
+  public objectSchemaEditorService: ObjectSchemaEditorService;
+  public dialog: MatDialog;
   
-  constructor(public editorService: EditorService, private fb: FormBuilder) { 
-    
+  constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaEditorService, dialog: MatDialog) { 
+    this.editorService = editorService;
+    this.objectSchemaEditorService = objectSchemaEditor;
+    this.dialog = dialog;
   }
 
   public ngOnInit(): void {  
@@ -56,5 +63,15 @@ export class TelemetryComponent implements OnInit {
       let val = new SemanticTypeArray("Telemetry", $event.value);
       type?.setValue(val);
     }
+  }
+
+  public openObjectSchemaEditor() {
+    const dialogRef = this.dialog.open(ObjectSchemaEditorComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.telemetry.form.get("schema")?.setValue(result, { emitEvent: false });
+      } 
+    });
   }
 }

@@ -43,6 +43,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.component';
 import { PropertyFormatterDirective } from './property-formatter/property-formatter.directive';
 import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
+import { ObjectSchemaComponent } from './object-schema/object-schema.component';
+import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
     SettingsComponent,
     SuccessSnackbarComponent,
     PropertyFormatterDirective,
-    PropertyFormatterPipe
+    PropertyFormatterPipe,
+    ObjectSchemaComponent,
+    ObjectSchemaEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +96,8 @@ import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
   ],
   entryComponents: [
     FolderSelectComponent,
-    SettingsComponent
+    SettingsComponent,
+    ObjectSchemaEditorComponent
   ],
   providers: [
     MatDialog,
