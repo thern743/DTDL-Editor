@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObjectSchemaEditorComponent } from './object-schema-editor.component';
+import { FieldComponent } from './field.component';
 
-describe('ObjectSchemaEditorComponent', () => {
-  let component: ObjectSchemaEditorComponent;
-  let fixture: ComponentFixture<ObjectSchemaEditorComponent>;
+describe('ObjectSchemaComponent', () => {
+  let component: FieldComponent;
+  let fixture: ComponentFixture<FieldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObjectSchemaEditorComponent ]
+      declarations: [ FieldComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObjectSchemaEditorComponent);
+    fixture = TestBed.createComponent(FieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

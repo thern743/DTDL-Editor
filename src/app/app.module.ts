@@ -43,8 +43,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { SuccessSnackbarComponent } from './success-snackbar/success-snackbar.component';
 import { PropertyFormatterDirective } from './property-formatter/property-formatter.directive';
 import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
+import { FieldComponent } from './field/field.component';
 import { ObjectSchemaComponent } from './object-schema/object-schema.component';
-import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schema-editor.component';
 
 @NgModule({
   declarations: [
@@ -66,8 +66,8 @@ import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schem
     SuccessSnackbarComponent,
     PropertyFormatterDirective,
     PropertyFormatterPipe,
-    ObjectSchemaComponent,
-    ObjectSchemaEditorComponent
+    FieldComponent,
+    ObjectSchemaComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +97,7 @@ import { ObjectSchemaEditorComponent } from './object-schema-editor/object-schem
   entryComponents: [
     FolderSelectComponent,
     SettingsComponent,
-    ObjectSchemaEditorComponent
+    ObjectSchemaComponent
   ],
   providers: [
     MatDialog,

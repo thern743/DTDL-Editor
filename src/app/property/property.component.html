@@ -24,23 +24,23 @@
     <mat-form-field color="accent" style="width: 420px">
         <mat-label attr.for="property_description_{{formIndex}}">Description</mat-label>
         <input matInput id="property_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
-    <span class="formSpacer"></span>    
+    </mat-form-field>    
     <br/>
 
     <mat-form-field color="accent">
         <mat-label attr.for="property_schema_{{formIndex}}">Schema</mat-label>
         <mat-select matNativeControl id="property_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+            <mat-option *ngFor="let schema of editorService.schemaTypes | keyvalue" [value]="schema.value"> {{ schema.key }} </mat-option>
         </mat-select>
     </mat-form-field>
-    <ng-container *ngIf="this.objectSchemaEditorService.isObjectSchema(this.property.form.get('schema')?.value)">
+    <span class="formSpacer"></span>
+    <ng-container *ngIf="isObjectSchema()">
         <button mat-raised-button color="primary" (click)="openObjectSchemaEditor()">
             <mat-icon>edit</mat-icon>
-            Edit
+            Edit Schema
         </button>
     </ng-container>
-    <span class="formSpacer"></span>
+    <br/>
 
     <mat-form-field color="accent">
         <mat-label attr.for="property_semanticType_{{formIndex}}">Semantic Type</mat-label>

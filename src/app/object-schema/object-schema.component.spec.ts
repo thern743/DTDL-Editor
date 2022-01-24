@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ObjectSchemaComponent } from './object-schema.component';
 
-describe('ObjectSchemaComponent', () => {
+describe('ObjectSchemaEditorComponent', () => {
   let component: ObjectSchemaComponent;
   let fixture: ComponentFixture<ObjectSchemaComponent>;
 

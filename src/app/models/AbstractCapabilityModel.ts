@@ -8,7 +8,7 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     public id!: string;
 
     @jsonMember({ name: '@type' })
-    public type!: SemanticTypeArray;
+    public type!: SemanticTypeArray | String;
 
     @jsonMember
     public displayName!: string;

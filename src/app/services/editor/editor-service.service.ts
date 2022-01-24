@@ -17,6 +17,21 @@ import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityMode
 import { ValidationService } from '../validation/validation-service.service';
 import { SettingsService } from '../settings/settings.service';
 import { EditorSettings } from 'src/app/models/EditorSettings';
+import { ObjectSchemaCapbilityModel } from 'src/app/models/ObjectSchemaCapbilityModel';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
+import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
+import { BooleanSchemaCapbilityModel } from 'src/app/models/BooleanSchemaCapbilityModel';
+import { DateSchemaCapbilityModel } from 'src/app/models/DateSchemaCapbilityModel';
+import { DateTimeSchemaCapbilityModel } from 'src/app/models/DateTimeSchemaCapbilityModel';
+import { DoubleSchemaCapbilityModel } from 'src/app/models/DoubleSchemaCapbilityModel';
+import { DurationSchemaCapbilityModel } from 'src/app/models/DurationSchemaCapbilityModel';
+import { EnumSchemaCapbilityModel } from 'src/app/models/EnumSchemaCapbilityModel';
+import { FloatSchemaCapbilityModel } from 'src/app/models/FloatSchemaCapbilityModel';
+import { IntegerSchemaCapbilityModel } from 'src/app/models/IntegerSchemaCapbilityModel';
+import { LongSchemaCapbilityModel } from 'src/app/models/LongSchemaCapbilityModel';
+import { MapSchemaCapbilityModel } from 'src/app/models/MapSchemaCapbilityModel';
+import { StringSchemaCapbilityModel } from 'src/app/models/StringSchemaCapbilityModel';
+import { TimeSchemaCapbilityModel } from 'src/app/models/TimeSchemaCapbilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +44,7 @@ export class EditorService {
   public capabilities: string[];
   public semanticTypes: string[];
   public units: Map<string, Array<string>>;
-  public schemaTypes: string[];
-  public complexShcemaTypes: string[];  
+  public schemaTypes: Map<string, AbstractCapabilityModel>;
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
@@ -43,8 +57,7 @@ export class EditorService {
     this.capabilities = this.getCapabilityTypes();
     this.semanticTypes = this.getSemanticTypes();
     this.units = this.getUnits();
-    this.schemaTypes = this.getSchemaTypes();
-    this.complexShcemaTypes = this.getComplexSchemaTypes();    
+    this.schemaTypes = this.getSchemaTypes();    
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();  
@@ -163,12 +176,23 @@ export class EditorService {
     return units;
   }
 
-  public getSchemaTypes() : string[] {
-    return ["boolean", "date", "dateTime", "double", "duration", "float", "integer", "long", "string", "time", "object", "enum"];
-  }
-
-  public getComplexSchemaTypes() : string[] {
-    return ["Array", "Enum", "Map", "Object"];
+  public getSchemaTypes() : Map<string, AbstractCapabilityModel> {
+    return new Map<string, AbstractCapabilityModel>([
+      ["array", new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1")], 
+      ["boolean", new BooleanSchemaCapbilityModel("dtmi:com:Example:MyBoolean;1")], 
+      ["date", new DateSchemaCapbilityModel("dtmi:com:Example:MyDate;1")], 
+      ["dateTime", new DateTimeSchemaCapbilityModel("dtmi:com:Example:MyDateTime;1")], 
+      ["double", new DoubleSchemaCapbilityModel("dtmi:com:Example:MyDouble;1")], 
+      ["duration", new DurationSchemaCapbilityModel("dtmi:com:Example:MyDuration;1")], 
+      ["enum", new EnumSchemaCapbilityModel("dtmi:com:Example:MyEnum;1")], 
+      ["float", new FloatSchemaCapbilityModel("dtmi:com:Example:MyFloat;1")], 
+      ["integer", new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1")], 
+      ["long", new LongSchemaCapbilityModel("dtmi:com:Example:MyLong;1")], 
+      ["map", new MapSchemaCapbilityModel("dtmi:com:Example:MyMap;1")], 
+      ["object", new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1")], 
+      ["string", new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1")], 
+      ["time", new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1")]  
+    ]);
   }
 
   public getCommandTypes() : string[] {

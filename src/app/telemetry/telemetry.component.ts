@@ -5,8 +5,8 @@ import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
-import { ObjectSchemaEditorComponent } from '../object-schema-editor/object-schema-editor.component';
-import { ObjectSchemaEditorService } from '../services/object-schema-editor/object-schema-editor.service';
+import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
+import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
 
 @Component({
   selector: 'telemetry-definition',
@@ -18,12 +18,12 @@ export class TelemetryComponent implements OnInit {
   @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
   @Input() public panelOpenState!: boolean;
   public editorService: EditorService;
-  public objectSchemaEditorService: ObjectSchemaEditorService;
+  public objectSchemaService: ObjectSchemaService;
   public dialog: MatDialog;
   
-  constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaEditorService, dialog: MatDialog) { 
+  constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
-    this.objectSchemaEditorService = objectSchemaEditor;
+    this.objectSchemaService = objectSchemaEditor;
     this.dialog = dialog;
   }
 
@@ -66,12 +66,17 @@ export class TelemetryComponent implements OnInit {
   }
 
   public openObjectSchemaEditor() {
-    const dialogRef = this.dialog.open(ObjectSchemaEditorComponent);
+    const dialogRef = this.dialog.open(ObjectSchemaComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.telemetry.form.get("schema")?.setValue(result, { emitEvent: false });
       } 
     });
+  }
+
+  public isObjectSchema() {
+    let val = this.objectSchemaService.isObjectSchema(this.telemetry.form.get('schema')?.value);
+    return val;
   }
 }
