@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
+import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 
 @Component({
   selector: 'telemetry-definition',
@@ -15,7 +15,7 @@ import { ObjectSchemaService } from '../services/object-schema/object-schema.ser
 })
 export class TelemetryComponent implements OnInit {
   @Input() public formIndex!: [number, number];
-  @Input() public telemetry!: ICapabilityFormControl<ICapabilityModel>;
+  @Input() public telemetry!: TelemetryCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   public editorService: EditorService;
   public objectSchemaService: ObjectSchemaService;
@@ -63,20 +63,5 @@ export class TelemetryComponent implements OnInit {
       let val = new SemanticTypeArray("Telemetry", $event.value);
       type?.setValue(val);
     }
-  }
-
-  public openObjectSchemaEditor() {
-    const dialogRef = this.dialog.open(ObjectSchemaComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.telemetry.form.get("schema")?.setValue(result, { emitEvent: false });
-      } 
-    });
-  }
-
-  public isObjectSchema() {
-    let val = this.objectSchemaService.isObjectSchema(this.telemetry.form.get('schema')?.value);
-    return val;
   }
 }

@@ -3,6 +3,7 @@ import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
+import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 
 @Component({
   selector: 'relationship-definition',
@@ -37,7 +38,7 @@ export class RelationshipComponent implements OnInit {
     });    
   }
 
-  public getProperties(): Array<ICapabilityFormControl<ICapabilityModel>> {
+  public getProperties(): Array<PropertyCapabilityFormControl> {
     return (<RelationshipCapabilityFormControl>this.relationship).properties;
   }
 }

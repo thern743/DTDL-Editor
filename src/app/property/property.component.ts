@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
@@ -9,6 +7,9 @@ import { ObjectSchemaComponent } from '../object-schema/object-schema.component'
 import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
 import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
+import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 
 @Component({
   selector: 'property-definition',
@@ -17,7 +18,7 @@ import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl
 })
 export class PropertyComponent implements OnInit {
   @Input() public formIndex!: [number, number];
-  @Input() public property!: ICapabilityFormControl<ICapabilityModel>;
+  @Input() public property!: PropertyCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   public editorService: EditorService;
   public objectSchemaService: ObjectSchemaService;
@@ -65,21 +66,5 @@ export class PropertyComponent implements OnInit {
       let val = new SemanticTypeArray("Property", $event.value);
       type?.setValue(val);
     }
-  }
-
-  public openObjectSchemaEditor() {
-    const dialogRef = this.dialog.open(ObjectSchemaComponent);
-
-    dialogRef.afterClosed().subscribe((result: ObjectSchemaFormControl) => {
-      if (result != null) {
-        this.property.form.get("schema")?.setValue(result, { emitEvent: false });
-      } 
-    });
-  }
-
-  public isObjectSchema() {
-    let schema = this.property.form.get('schema')?.value;
-    let val = this.objectSchemaService.isObjectSchema(schema);
-    return val;
   }
 }

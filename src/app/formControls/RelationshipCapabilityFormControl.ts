@@ -8,7 +8,7 @@ import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
-  public properties: ICapabilityFormControl<ICapabilityModel>[];
+  public properties: PropertyCapabilityFormControl[];
   
   private _validationService: ValidationService;
   
@@ -37,7 +37,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
           break;
       }
 
-      this.properties.push(formControl);
+      this.properties.push(<PropertyCapabilityFormControl>formControl);
     });
   }
 

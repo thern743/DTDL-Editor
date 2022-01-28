@@ -28,13 +28,13 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="telemetry_schema_{{formIndex}}">Schema</mat-label>
-        <mat-select matNativeControl id="telemetry_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+        <mat-select [compareWith]="objectSchemaService.compareSchemas" matNativeControl id="telemetry_schema_{{formIndex}}" formControlName="schema">
+            <mat-option *ngFor="let schema of editorService.schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="isObjectSchema()">
-        <button mat-raised-button color="primary" (click)="openObjectSchemaEditor()">
+    <ng-container *ngIf="objectSchemaService.isObjectSchema(telemetry.form)">
+        <button mat-raised-button color="primary" (click)="objectSchemaService.openObjectSchemaEditor(dialog, telemetry.form)">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>

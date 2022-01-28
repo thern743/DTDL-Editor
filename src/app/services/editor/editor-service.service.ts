@@ -268,7 +268,7 @@ export class EditorService {
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
-  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {
+  private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, formControl: PropertyCapabilityFormControl): void {
     let formArray = relationshipInstance.form.get("properties") as FormArray;
     relationshipInstance.properties.push(formControl);
     formArray.push(formControl.form);

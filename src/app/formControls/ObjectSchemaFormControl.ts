@@ -1,21 +1,20 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
-import { ICapabilityFormControl } from './ICapabilityFormControl';
+import { FieldCapabilityFormControl } from './FieldCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
 export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<ObjectSchemaCapbilityModel>{
     private _validationService: ValidationService;
-    public fields!: ICapabilityFormControl<ICapabilityModel>[];
+    public fields!: FieldCapabilityFormControl[];
 
     constructor(model: ObjectSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
-        this.fields = new Array<ICapabilityFormControl<ICapabilityModel>>();
+        this.fields = new Array<FieldCapabilityFormControl>();
         this.model = model; 
         this.form = this.toFormGroup();          
     }

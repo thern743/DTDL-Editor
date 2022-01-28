@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
 import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
+import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
 import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
-import { MatDialogRef } from '@angular/material/dialog';
+import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
 @Component({
   selector: 'object-schema-definition',
@@ -21,19 +24,24 @@ export class ObjectSchemaComponent implements OnInit {
   private _dialogRef: MatDialogRef<ObjectSchemaComponent>;
   private MAX_LEVEL: number = 5;
 
-  constructor(objectSchemaService: ObjectSchemaService, formBuilder: FormBuilder, validationService: ValidationService, dialogRef: MatDialogRef<ObjectSchemaComponent>) { 
+  constructor(objectSchemaService: ObjectSchemaService, 
+    formBuilder: FormBuilder, 
+    validationService: ValidationService, 
+    dialogRef: MatDialogRef<ObjectSchemaComponent>, 
+    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaFormControl
+  ) { 
     this.objectSchemaService = objectSchemaService; 
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
     this._dialogRef = dialogRef;
-    this.objectSchema = this.objectSchemaService.getObjectSchemaFormControl();
+    this.objectSchema = data;
     this.objectSchemaService.addFieldToObjectSchema(this.objectSchema);
   }
 
   public ngOnInit(): void {
   }
 
-  public getFields(): Array<ICapabilityFormControl<ICapabilityModel>> { 
+  public getFields(): Array<FieldCapabilityFormControl> { 
     return this.objectSchema.fields;
   }
 

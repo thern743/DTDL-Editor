@@ -22,13 +22,13 @@
     <mat-form-field color="accent">
         <mat-label for="field_schema">Schema</mat-label>
         <mat-select matNativeControl id="field_schema" formControlName="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes" [value]="schema"> {{ schema }} </mat-option>
+            <mat-option *ngFor="let schema of editorService.schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <ng-container *ngIf="isObjectSchema()">
-        <button mat-raised-button color="primary" (click)="openObjectSchemaEditor()">
+    <ng-container *ngIf="objectSchemaService.isObjectSchema(field.form)">
+        <button mat-raised-button color="primary" (click)="objectSchemaService.openObjectSchemaEditor(dialog, field.form)">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>

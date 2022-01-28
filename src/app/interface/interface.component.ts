@@ -5,6 +5,10 @@ import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
+import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
+import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
+import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
+import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 
 @Component({
   selector: 'interface-definition',
@@ -33,10 +37,26 @@ export class InterfaceComponent implements OnInit {
     return this.interface.contents;
   }
 
+  public getProperty(capability: ICapabilityFormControl<ICapabilityModel>): PropertyCapabilityFormControl {
+    return capability as PropertyCapabilityFormControl;
+  }
+
+  public getCommand(capability: ICapabilityFormControl<ICapabilityModel>): CommandCapabilityFormControl {
+    return capability as CommandCapabilityFormControl;
+  }
+
+  public getTelemetry(capability: ICapabilityFormControl<ICapabilityModel>): TelemetryCapabilityFormControl {
+    return capability as TelemetryCapabilityFormControl;
+  }
+
+  public getComponent(capability: ICapabilityFormControl<ICapabilityModel>): ComponentCapabilityFormControl {
+    return capability as ComponentCapabilityFormControl;
+  }
+
   public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
     return capability as RelationshipCapabilityFormControl;
   }
-
+  
   public delete($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
     $event.stopImmediatePropagation();
     this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);

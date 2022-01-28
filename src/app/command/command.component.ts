@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service'
 import { ValidationService } from '../services/validation/validation-service.service';
+import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
 })
 export class CommandComponent implements OnInit {
   @Input() public formIndex!: [number, number];
-  @Input() public command!: ICapabilityFormControl<ICapabilityModel>;
+  @Input() public command!: CommandCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
 
   public editorService: EditorService;
