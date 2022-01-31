@@ -28,17 +28,17 @@ export class ObjectSchemaComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService, 
     dialogRef: MatDialogRef<ObjectSchemaComponent>, 
-    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaFormControl
+    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapbilityModel
   ) { 
     this.objectSchemaService = objectSchemaService; 
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
     this._dialogRef = dialogRef;
-    this.objectSchema = data;
-    this.objectSchemaService.addFieldToObjectSchema(this.objectSchema);
+    this.objectSchema = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService);
   }
 
-  public ngOnInit(): void {
+  public ngOnInit(): void { 
+    this.objectSchema.subscribeModelToForm();
   }
 
   public getFields(): Array<FieldCapabilityFormControl> { 

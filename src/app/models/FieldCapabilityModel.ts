@@ -5,11 +5,8 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 export class FieldCapabilityModel extends AbstractCapabilityModel {    
     @jsonMember 
     public schema!: string;
-    
-    public level: number;
 
     constructor(id: string) {
         super(id, "Field");
-        this.level = 0;
     }    
 }

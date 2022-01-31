@@ -1,4 +1,5 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -15,9 +16,17 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
         super(formBuilder);
         this._validationService = validationService;
         this.fields = new Array<FieldCapabilityFormControl>();
+        this.mapModelSubProperties(model);
         this.model = model; 
         this.form = this.toFormGroup();          
     }
+
+    private mapModelSubProperties(model: ObjectSchemaCapbilityModel): void {
+        model.fields.map((model: FieldCapabilityModel) => {
+          let formControl: FieldCapabilityFormControl = new FieldCapabilityFormControl(model, this.formBuilder, this._validationService);    
+          this.fields.push(formControl);
+        });
+      }
 
     public toFormGroup() : FormGroup { 
         let form =  this.formBuilder.group({
@@ -26,7 +35,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
             comment: [this.model.comment],
             description: [this.model.description],
             // Object Schema Specific
-            fields: this.formBuilder.array([])
+            fields: this.formBuilder.array([...this.model.fields])
         });
 
         return form;

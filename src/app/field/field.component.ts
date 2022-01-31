@@ -14,10 +14,10 @@ import { ObjectSchemaService } from '../services/object-schema/object-schema.ser
 export class FieldComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public field!: FieldCapabilityFormControl;
-  public objectSchemaService: ObjectSchemaService; 
+  @Input() public panelOpenState = true;
+  public objectSchemaService: ObjectSchemaService;
   public editorService: EditorService;
-  public dialog: MatDialog;
-  public panelOpenState = true;
+  public dialog: MatDialog;  
 
   constructor(objectSchemaEditorService: ObjectSchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
     this.objectSchemaService = objectSchemaEditorService; 
@@ -25,7 +25,7 @@ export class FieldComponent implements OnInit {
     this.dialog = dialog;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.field.subscribeModelToForm();
   }
 }

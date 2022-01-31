@@ -32,6 +32,21 @@ import { LongSchemaCapbilityModel } from 'src/app/models/LongSchemaCapbilityMode
 import { MapSchemaCapbilityModel } from 'src/app/models/MapSchemaCapbilityModel';
 import { StringSchemaCapbilityModel } from 'src/app/models/StringSchemaCapbilityModel';
 import { TimeSchemaCapbilityModel } from 'src/app/models/TimeSchemaCapbilityModel';
+import { ArraySchemaFormControl } from 'src/app/formControls/ArraySchemaFormControl';
+import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
+import { BooleanSchemaFormControl } from 'src/app/formControls/BooleanSchemaFormControl';
+import { DateSchemaFormControl } from 'src/app/formControls/DateSchemaFormControl';
+import { DateTimeSchemaFormControl } from 'src/app/formControls/DateTimeSchemaFormControl';
+import { DoubleSchemaFormControl } from 'src/app/formControls/DoubleSchemaFormControl';
+import { DurationSchemaFormControl } from 'src/app/formControls/DurationSchemaFormControl';
+import { EnumSchemaFormControl } from 'src/app/formControls/EnumSchemaFormControl';
+import { FloatSchemaFormControl } from 'src/app/formControls/FloatSchemaFormControl';
+import { IntegerSchemaFormControl } from 'src/app/formControls/IntegerSchemaFormControl';
+import { LongSchemaFormControl } from 'src/app/formControls/LongSchemaFormControl';
+import { MapSchemaFormControl } from 'src/app/formControls/MapSchemaFormControl';
+import { ObjectSchemaFormControl } from 'src/app/formControls/ObjectSchemaFormControl';
+import { StringSchemaFormControl } from 'src/app/formControls/StringSchemaFormControl';
+import { TimeSchemaFormControl } from 'src/app/formControls/TimeSchemaFormControl';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +59,7 @@ export class EditorService {
   public capabilities: string[];
   public semanticTypes: string[];
   public units: Map<string, Array<string>>;
-  public schemaTypes: Map<string, AbstractCapabilityModel>;
+  public schemaTypes: Map<string, ICapabilityModel>;
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
@@ -176,8 +191,8 @@ export class EditorService {
     return units;
   }
 
-  public getSchemaTypes() : Map<string, AbstractCapabilityModel> {
-    return new Map<string, AbstractCapabilityModel>([
+  public getSchemaTypes() : Map<string, ICapabilityModel> {
+    return new Map<string, ICapabilityModel>([
       ["array", new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1")], 
       ["boolean", new BooleanSchemaCapbilityModel("dtmi:com:Example:MyBoolean;1")], 
       ["date", new DateSchemaCapbilityModel("dtmi:com:Example:MyDate;1")], 
@@ -192,6 +207,25 @@ export class EditorService {
       ["object", new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1")], 
       ["string", new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1")], 
       ["time", new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1")]  
+    ]);
+  }
+
+  public getSchemaTypesFormControl() : Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
+    return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
+      ["array", new ArraySchemaFormControl(new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1"), this._formBuilder, this._validationService)], 
+      ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapbilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService)], 
+      ["date", new DateSchemaFormControl(new DateSchemaCapbilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService)], 
+      ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapbilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService)], 
+      ["double", new DoubleSchemaFormControl(new DoubleSchemaCapbilityModel("dtmi:com:Example:MyDouble;1"), this._formBuilder, this._validationService)], 
+      ["duration", new DurationSchemaFormControl(new DurationSchemaCapbilityModel("dtmi:com:Example:MyDuration;1"), this._formBuilder, this._validationService)], 
+      ["enum", new EnumSchemaFormControl(new EnumSchemaCapbilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService)], 
+      ["float", new FloatSchemaFormControl(new FloatSchemaCapbilityModel("dtmi:com:Example:MyFloat;1"), this._formBuilder, this._validationService)], 
+      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService)], 
+      ["long", new LongSchemaFormControl(new LongSchemaCapbilityModel("dtmi:com:Example:MyLong;1"), this._formBuilder, this._validationService)], 
+      ["map", new MapSchemaFormControl(new MapSchemaCapbilityModel("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService)], 
+      ["object", new ObjectSchemaFormControl(new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService)], 
+      ["string", new StringSchemaFormControl(new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService)], 
+      ["time", new TimeSchemaFormControl(new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1"), this._formBuilder, this._validationService)]  
     ]);
   }
 
@@ -236,7 +270,7 @@ export class EditorService {
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {    
     let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
-    contentsFormArray.push(formControl.form);
+    contentsFormArray.push(formControl.form); // TODO: Not sure if this is needed.
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
     this.interfaces$.next(interfaceInstance);

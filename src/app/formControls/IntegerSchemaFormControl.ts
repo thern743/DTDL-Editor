@@ -1,17 +1,16 @@
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { IntegerSchemaCapbilityModel } from '../models/IntegerSchemaCapbilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class FieldCapabilityFormControl extends AbstractCapabilityFormControl<FieldCapabilityModel>{
+export class IntegerSchemaFormControl extends AbstractCapabilityFormControl<IntegerSchemaCapbilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: FieldCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: IntegerSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
-        this.formBuilder = formBuilder; 
         this._validationService = validationService;
         this.model = model; 
         this.form = this.toFormGroup();          
@@ -22,9 +21,7 @@ export class FieldCapabilityFormControl extends AbstractCapabilityFormControl<Fi
             id: [this.model.id, [this._validationService.ValidDtmi()]],
             displayName: [this.model.displayName], 
             comment: [this.model.comment],
-            description: [this.model.description],
-            // Field specific
-            schema: [this.model.schema]
+            description: [this.model.description]
         });
 
         return form;

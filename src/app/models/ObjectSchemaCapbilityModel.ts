@@ -10,5 +10,6 @@ export class ObjectSchemaCapbilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
         super(id, "Object");
         this.id = id;
+        this.fields = new Array<FieldCapabilityModel>();
     }    
 }

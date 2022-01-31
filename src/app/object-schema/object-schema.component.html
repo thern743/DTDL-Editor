@@ -25,7 +25,7 @@
     <br/>
 
     <ng-container *ngFor="let field of getFields(); let i = index">
-        <field-definition [field]="field" [formIndex]="i"></field-definition>
+        <field-definition [field]="field" [formIndex]="i" [panelOpenState]="true"></field-definition>
     </ng-container>
 
     <mat-action-row>

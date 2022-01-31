@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from 'src/app/models/FieldCapabilityModel';
-import { ICapabilityFormControl } from 'src/app/formControls/ICapabilityFormControl';
-import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { ObjectSchemaFormControl } from 'src/app/formControls/ObjectSchemaFormControl';
 import { ObjectSchemaCapbilityModel } from 'src/app/models/ObjectSchemaCapbilityModel';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,15 +28,15 @@ export class ObjectSchemaService {
     let model = new FieldCapabilityModel("dtmi:com:example:MyField;1"); 
     let form = new FieldCapabilityFormControl(model, this._formBuilder, this._validationService);
     objectSchema.fields.push(form);
+    objectSchema.model.fields.push(model);
     this.fields$.next(model);
   }
 
   public openObjectSchemaEditor(dialog: MatDialog, form: FormGroup) {
     let schema = form.get("schema")?.value as ObjectSchemaCapbilityModel;
-    let schemaForm = new ObjectSchemaFormControl(schema, this._formBuilder, this._validationService);
 
     const dialogRef = dialog.open(ObjectSchemaComponent, { 
-      data: schemaForm
+      data: schema
     });
 
     dialogRef.afterClosed().subscribe((result: ObjectSchemaCapbilityModel) => {
