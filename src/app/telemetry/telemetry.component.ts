@@ -3,10 +3,9 @@ import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
-import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { ICapabilityModel } from '../models/ICapabilityModel';
 
 @Component({
   selector: 'telemetry-definition',
@@ -20,11 +19,13 @@ export class TelemetryComponent implements OnInit {
   public editorService: EditorService;
   public objectSchemaService: ObjectSchemaService;
   public dialog: MatDialog;
+  public schemaTypes: Map<string, ICapabilityModel>;
   
   constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
     this.objectSchemaService = objectSchemaEditor;
     this.dialog = dialog;
+    this.schemaTypes = this.editorService.getSchemaTypes();
   }
 
   public ngOnInit(): void {  

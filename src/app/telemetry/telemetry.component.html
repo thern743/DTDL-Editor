@@ -29,7 +29,7 @@
     <mat-form-field color="accent">
         <mat-label attr.for="telemetry_schema_{{formIndex}}">Schema</mat-label>
         <mat-select [compareWith]="objectSchemaService.compareSchemas" matNativeControl id="telemetry_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let schema of editorService.schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
+            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>

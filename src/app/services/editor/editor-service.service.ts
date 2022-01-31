@@ -59,7 +59,6 @@ export class EditorService {
   public capabilities: string[];
   public semanticTypes: string[];
   public units: Map<string, Array<string>>;
-  public schemaTypes: Map<string, ICapabilityModel>;
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
@@ -72,7 +71,6 @@ export class EditorService {
     this.capabilities = this.getCapabilityTypes();
     this.semanticTypes = this.getSemanticTypes();
     this.units = this.getUnits();
-    this.schemaTypes = this.getSchemaTypes();    
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.interfaces$ = new Subject<InterfaceCapabilityFormControl>();  

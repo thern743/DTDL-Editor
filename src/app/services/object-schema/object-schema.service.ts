@@ -33,15 +33,15 @@ export class ObjectSchemaService {
   }
 
   public openObjectSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    let schema = form.get("schema")?.value as ObjectSchemaCapbilityModel;
+    var schema = form.controls.schema.value as ObjectSchemaCapbilityModel;
 
-    const dialogRef = dialog.open(ObjectSchemaComponent, { 
+    dialog.open(ObjectSchemaComponent, { 
       data: schema
-    });
-
-    dialogRef.afterClosed().subscribe((result: ObjectSchemaCapbilityModel) => {
+    })
+    .afterClosed()
+    .subscribe((result: ObjectSchemaCapbilityModel) => {
       if (result) {
-        form.get("schema")?.setValue(result);
+        form.controls.schema.setValue(result);
       } 
     });
   }
