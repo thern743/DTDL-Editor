@@ -11,18 +11,23 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
   * Commands,
   * Telemetry,
   * Components,
-  * Relationships (and Propertes)
+  * Relationships (and Properties)
+* Semantic Types and Units
+* Primitive Schema Types
+* Some Complex Schema Types 
 * Basic validation
 * Importing existing models
 * Copy/Save models locally
 * Editor settings
   * Set base DTMI 
+  * Set Context
 
 ## Near-Term Features
 * Full DTDL validation
-* Semantic Types
-* Schema Definitions
+* Complex Schema Type Definitions (Object, Map, Enum, Geospatial, etc.)
 * Command Request/Response payloads
+* Interface Schemas
+* Display string localization
 
 ## Long-Term Features
 * DTDLv3 (depends on Microsoft's timeline)
@@ -32,9 +37,10 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
 
 ## Known Issues
 * Very little validation is in place
-* Saving DTDL currently preserves NULL values (will fail validation)
 * Base DTMI is inherited for all new capabilities
 * Component and Relationship references are limited
+* Minimal support for complex schema types
+* No JSON output for Object Schema Fields
 
 ## Model Validation
 
