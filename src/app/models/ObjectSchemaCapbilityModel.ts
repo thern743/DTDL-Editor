@@ -4,7 +4,7 @@ import { FieldCapabilityModel } from "./FieldCapabilityModel";
 
 @jsonObject
 export class ObjectSchemaCapbilityModel extends AbstractCapabilityModel {
-    @jsonArrayMember(AbstractCapabilityModel)
+    @jsonArrayMember(FieldCapabilityModel)
     public fields!: FieldCapabilityModel[];
 
     constructor(id: string) {
