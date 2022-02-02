@@ -4,7 +4,7 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 @jsonObject
 export class FieldCapabilityModel extends AbstractCapabilityModel {    
     @jsonMember 
-    public schema!: string;
+    public schema!: AbstractCapabilityModel;
 
     constructor(id: string) {
         super(id, "Field");

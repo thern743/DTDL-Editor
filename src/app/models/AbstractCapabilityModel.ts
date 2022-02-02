@@ -1,4 +1,4 @@
-import { jsonMember, jsonObject } from "typedjson";
+import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from "./ICapabilityModel";
 import { SemanticTypeArray } from "./SemanticTypeArray";
 
@@ -8,7 +8,7 @@ export class AbstractCapabilityModel implements ICapabilityModel {
     public id!: string;
 
     @jsonMember({ name: '@type' })
-    public type!: SemanticTypeArray | String;
+    public type!: SemanticTypeArray;
 
     @jsonMember
     public displayName!: string;

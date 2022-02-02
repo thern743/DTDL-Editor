@@ -1,4 +1,4 @@
-import { jsonArrayMember, jsonMember, jsonObject, TypedJSON } from "typedjson";
+import { jsonObject, TypedJSON } from "typedjson";
 
 @jsonObject
 export class SemanticTypeArray extends Array<string> {

@@ -10,6 +10,7 @@ import { RelationshipCapabilityModel } from './RelationshipCapabilityModel';
 import { SemanticTypeArray } from './SemanticTypeArray';
 import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
 
+// TODO: Support Interface Schemas: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@context' })
