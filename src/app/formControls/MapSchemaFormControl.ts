@@ -21,7 +21,10 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
             id: [this.model.id, [this._validationService.ValidDtmi()]],
             displayName: [this.model.displayName], 
             comment: [this.model.comment],
-            description: [this.model.description]
+            description: [this.model.description],
+            // Map specific
+            mapKey: [this.model.mapKey],
+            mapValue: [this.model.mapValue]
         });
 
         return form;

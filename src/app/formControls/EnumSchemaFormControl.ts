@@ -21,7 +21,10 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
             id: [this.model.id, [this._validationService.ValidDtmi()]],
             displayName: [this.model.displayName], 
             comment: [this.model.comment],
-            description: [this.model.description]
+            description: [this.model.description],
+            // Enum specific
+            enumValues: this.formBuilder.array([...this.model.enumValues]),
+            valueSchema: [this.model.valueSchema]
         });
 
         return form;

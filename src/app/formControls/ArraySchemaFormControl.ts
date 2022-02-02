@@ -21,7 +21,9 @@ export class ArraySchemaFormControl extends AbstractCapabilityFormControl<ArrayS
             id: [this.model.id, [this._validationService.ValidDtmi()]],
             displayName: [this.model.displayName], 
             comment: [this.model.comment],
-            description: [this.model.description]
+            description: [this.model.description],
+            // Array specific
+            elementSchema: [this.model.elementSchema]
         });
 
         return form;
