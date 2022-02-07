@@ -49,6 +49,20 @@ export class SchemaService {
     });
   }
 
+  public openMapSchemaEditor(dialog: MatDialog, form: FormGroup) {
+    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
+
+    dialog.open(EnumSchemaComponent, { 
+      data: schema
+    })
+    .afterClosed()
+    .subscribe((result: ArraySchemaCapbilityModel) => {
+      if (result) {
+        form.controls.schema.setValue(result);
+      } 
+    });
+  }
+
   public openEnumSchemaEditor(dialog: MatDialog, form: FormGroup) {
     var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
 
