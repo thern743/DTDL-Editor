@@ -46,6 +46,7 @@ import { PropertyFormatterPipe } from './filters/property-formatter.pipe';
 import { FieldComponent } from './field/field.component';
 import { ObjectSchemaComponent } from './object-schema/object-schema.component';
 import { ArraySchemaComponent } from './array-schema/array-schema.component';
+import { EnumSchemaComponent } from './enum-schema/enum-schema.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ArraySchemaComponent } from './array-schema/array-schema.component';
     PropertyFormatterPipe,
     FieldComponent,
     ObjectSchemaComponent,
-    ArraySchemaComponent
+    ArraySchemaComponent,
+    EnumSchemaComponent
   ],
   imports: [
     BrowserModule,

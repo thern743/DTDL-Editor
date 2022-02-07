@@ -22,7 +22,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
     }
 
     private mapModelSubProperties(model: ObjectSchemaCapbilityModel): void {
-        model.fields.map((model: FieldCapabilityModel) => {
+        model.fields?.map((model: FieldCapabilityModel) => {
           let formControl: FieldCapabilityFormControl = new FieldCapabilityFormControl(model, this.formBuilder, this._validationService);    
           this.fields.push(formControl);
         });

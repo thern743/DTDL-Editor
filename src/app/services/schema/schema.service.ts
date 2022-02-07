@@ -11,6 +11,7 @@ import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel'
 import { ObjectSchemaComponent } from 'src/app/object-schema/object-schema.component';
 import { ArraySchemaComponent } from 'src/app/array-schema/array-schema.component';
 import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
+import { EnumSchemaComponent } from 'src/app/enum-schema/enum-schema.component';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,20 @@ export class SchemaService {
     });
   }
 
+  public openEnumSchemaEditor(dialog: MatDialog, form: FormGroup) {
+    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
+
+    dialog.open(EnumSchemaComponent, { 
+      data: schema
+    })
+    .afterClosed()
+    .subscribe((result: ArraySchemaCapbilityModel) => {
+      if (result) {
+        form.controls.schema.setValue(result);
+      } 
+    });
+  }
+
   public openObjectSchemaEditor(dialog: MatDialog, form: FormGroup) {
     var schema = form.controls.schema.value as ObjectSchemaCapbilityModel;
 
@@ -62,7 +77,7 @@ export class SchemaService {
     });
   }
 
-  public isComplexSchema(form: FormGroup) {
+  public isComplexSchema(form: FormGroup): boolean {
     let type = form.get('schema')?.value?.type[0];
     return ["Array", "Enum", "Map", "Object"].indexOf(type) >= 0;
   }
