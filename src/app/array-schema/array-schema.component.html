@@ -13,8 +13,8 @@
     <br/>
 
     <mat-form-field color="accent">
-        <mat-label for="array_schema">Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="array_schema" formControlName="schema">
+        <mat-label for="schema">Schema</mat-label>
+        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema">
             <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>

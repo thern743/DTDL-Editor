@@ -12,6 +12,9 @@ import { ObjectSchemaComponent } from 'src/app/object-schema/object-schema.compo
 import { ArraySchemaComponent } from 'src/app/array-schema/array-schema.component';
 import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
 import { EnumSchemaComponent } from 'src/app/enum-schema/enum-schema.component';
+import { MapSchemaComponent } from 'src/app/map-schema/map-schema.component';
+import { EnumSchemaCapbilityModel } from 'src/app/models/EnumSchemaCapbilityModel';
+import { MapSchemaCapbilityModel } from 'src/app/models/MapSchemaCapbilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -49,28 +52,28 @@ export class SchemaService {
     });
   }
 
-  public openMapSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
+  public openEnumSchemaEditor(dialog: MatDialog, form: FormGroup) {
+    var schema = form.controls.schema.value as EnumSchemaCapbilityModel;
 
     dialog.open(EnumSchemaComponent, { 
       data: schema
     })
     .afterClosed()
-    .subscribe((result: ArraySchemaCapbilityModel) => {
+    .subscribe((result: EnumSchemaCapbilityModel) => {
       if (result) {
         form.controls.schema.setValue(result);
       } 
     });
   }
 
-  public openEnumSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
+  public openMapSchemaEditor(dialog: MatDialog, form: FormGroup) {
+    var schema = form.controls.schema.value as MapSchemaCapbilityModel;
 
-    dialog.open(EnumSchemaComponent, { 
+    dialog.open(MapSchemaComponent, { 
       data: schema
     })
     .afterClosed()
-    .subscribe((result: ArraySchemaCapbilityModel) => {
+    .subscribe((result: MapSchemaCapbilityModel) => {
       if (result) {
         form.controls.schema.setValue(result);
       } 
