@@ -9,11 +9,13 @@ import { ObjectSchemaCapbilityModel } from 'src/app/models/ObjectSchemaCapbility
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ObjectSchemaComponent } from 'src/app/object-schema/object-schema.component';
+import { ArraySchemaComponent } from 'src/app/array-schema/array-schema.component';
+import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ObjectSchemaService {
+export class SchemaService {
   public fields$: Subject<FieldCapabilityModel>;
   private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
@@ -32,6 +34,20 @@ export class ObjectSchemaService {
     this.fields$.next(model);
   }
 
+  public openArraySchemaEditor(dialog: MatDialog, form: FormGroup) {
+    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
+
+    dialog.open(ArraySchemaComponent, { 
+      data: schema
+    })
+    .afterClosed()
+    .subscribe((result: ArraySchemaCapbilityModel) => {
+      if (result) {
+        form.controls.schema.setValue(result);
+      } 
+    });
+  }
+
   public openObjectSchemaEditor(dialog: MatDialog, form: FormGroup) {
     var schema = form.controls.schema.value as ObjectSchemaCapbilityModel;
 
@@ -46,9 +62,9 @@ export class ObjectSchemaService {
     });
   }
 
-  public isObjectSchema(form: FormGroup) {
-    let schema = form.get('schema')?.value;
-    return schema?.type[0] === "Object";
+  public isComplexSchema(form: FormGroup) {
+    let type = form.get('schema')?.value?.type[0];
+    return ["Array", "Enum", "Map", "Object"].indexOf(type) >= 0;
   }
 
   public compareSchemas(model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean {

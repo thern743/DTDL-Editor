@@ -26,7 +26,7 @@
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="objectSchemaService.isObjectSchema(field.form)">
+    <ng-container *ngIf="objectSchemaService.isComplexSchema(field.form)">
         <button mat-raised-button color="primary" (click)="objectSchemaService.openObjectSchemaEditor(dialog, field.form)">
             <mat-icon>edit</mat-icon>
             Edit Schema

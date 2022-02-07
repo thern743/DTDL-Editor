@@ -27,8 +27,10 @@ export class PreviewPanelComponent implements OnInit {
   }
 
   public getJsonLd() : any {
-    let str = this._typedJson.stringify(this.interface.model);
-    let result = this._typedJson.parse(str);
-    return result;
+    //let str = this._typedJson.stringify(this.interface.model);
+    let str = JSON.stringify(this.interface.model);
+    //let result = this._typedJson.parse(str);
+    let r2 = JSON.parse(str);
+    return r2;
   }  
 }

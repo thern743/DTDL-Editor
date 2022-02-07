@@ -29,13 +29,13 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="property_schema_{{formIndex}}">Schema</mat-label>
-        <mat-select [compareWith]="objectSchemaService.compareSchemas" matNativeControl id="property_schema_{{formIndex}}" formControlName="schema">
+        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="property_schema_{{formIndex}}" formControlName="schema">
             <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="objectSchemaService.isObjectSchema(property.form)">
-        <button mat-raised-button color="primary" (click)="objectSchemaService.openObjectSchemaEditor(dialog, property.form)">
+    <ng-container *ngIf="schemaService.isComplexSchema(property.form)">
+        <button mat-raised-button color="primary" (click)="schemaService.openObjectSchemaEditor(dialog, property.form)">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>

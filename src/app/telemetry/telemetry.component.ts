@@ -3,7 +3,7 @@ import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
-import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
+import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 
@@ -17,13 +17,13 @@ export class TelemetryComponent implements OnInit {
   @Input() public telemetry!: TelemetryCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   public editorService: EditorService;
-  public objectSchemaService: ObjectSchemaService;
+  public schemaService: SchemaService;
   public dialog: MatDialog;
   public schemaTypes: Map<string, ICapabilityModel>;
   
-  constructor(editorService: EditorService, objectSchemaEditor: ObjectSchemaService, dialog: MatDialog) { 
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
-    this.objectSchemaService = objectSchemaEditor;
+    this.schemaService = schemaService;
     this.dialog = dialog;
     this.schemaTypes = this.editorService.getSchemaTypes();
   }

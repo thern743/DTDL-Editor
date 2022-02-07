@@ -5,7 +5,7 @@ import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { EditorService } from '../services/editor/editor-service.service';
-import { ObjectSchemaService } from '../services/object-schema/object-schema.service';
+import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
   selector: 'field-definition',
@@ -16,13 +16,13 @@ export class FieldComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public field!: FieldCapabilityFormControl;
   @Input() public panelOpenState = true;
-  public objectSchemaService: ObjectSchemaService;
+  public objectSchemaService: SchemaService;
   public editorService: EditorService;
-  public dialog: MatDialog;  
+  public dialog: MatDialog; 
 
   public schemaTypes: Map<string, ICapabilityModel>;
 
-  constructor(objectSchemaEditorService: ObjectSchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
+  constructor(objectSchemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
     this.objectSchemaService = objectSchemaEditorService; 
     this.editorService = editorSerivce;
     this.dialog = dialog;
