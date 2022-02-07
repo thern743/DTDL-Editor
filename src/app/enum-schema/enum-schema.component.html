@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Enum Schema Definition</h1>
-<mat-dialog-content [formGroup]="enumSchema.form">
+<mat-dialog-content [formGroup]="schema.form">
     <mat-form-field color="accent">
         <mat-label for="id">Id</mat-label>
         <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
@@ -19,8 +19,8 @@
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="enumSchema.form.get('schema')?.value?.type[0] === 'Enum'">
-        <button mat-raised-button color="primary" (click)="schemaService.openEnumSchemaEditor(dialog, enumSchema.form)">
+    <ng-container *ngIf="schema.form.get('schema')?.value?.type[0] === 'Enum'">
+        <button mat-raised-button color="primary" (click)="schemaService.openEnumSchemaEditor(dialog, schema.form)">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>
@@ -40,7 +40,7 @@
     <br/>
 
     <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="enumSchema.model">
+        <button mat-raised-button color="primary" [mat-dialog-close]="schema.model">
             <mat-icon>save</mat-icon> Save
         </button>
     </div>

@@ -4,10 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
-import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
 @Component({
@@ -16,7 +13,7 @@ import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormC
   styleUrls: ['./object-schema.component.scss']
 })
 export class ObjectSchemaComponent implements OnInit {
-  public objectSchema!: ObjectSchemaFormControl;
+  public schema!: ObjectSchemaFormControl;
   public objectSchemaService: SchemaService;
   public panelOpenState = true;
   private _formBuilder: FormBuilder;
@@ -34,20 +31,20 @@ export class ObjectSchemaComponent implements OnInit {
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
     this._dialogRef = dialogRef;
-    this.objectSchema = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService);
+    this.schema = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService);
   }
 
   public ngOnInit(): void { 
-    this.objectSchema.subscribeModelToForm();
+    this.schema.subscribeModelToForm();
   }
 
   public getFields(): Array<FieldCapabilityFormControl> { 
-    return this.objectSchema.fields;
+    return this.schema.fields;
   }
 
   //DTDL Allows a nesting of objects down to five levels... 
   //i.e. 4 children on the top level object. 
   public canAddChild(): boolean { 
-    return this.objectSchema.fields.length <= this.MAX_LEVEL; 
+    return this.schema.fields.length <= this.MAX_LEVEL; 
   }
 }

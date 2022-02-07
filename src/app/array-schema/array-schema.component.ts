@@ -14,7 +14,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
   styleUrls: ['./array-schema.component.scss']
 })
 export class ArraySchemaComponent implements OnInit {
-  public arraySchema!: ArraySchemaFormControl;
+  public schema!: ArraySchemaFormControl;
   public schemaService: SchemaService;
   public editorService: EditorService;
   public panelOpenState = true;
@@ -37,11 +37,11 @@ export class ArraySchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.arraySchema = new ArraySchemaFormControl(data, this._formBuilder, this._validationService);
+    this.schema = new ArraySchemaFormControl(data, this._formBuilder, this._validationService);
     this.schemaTypes = this.editorService.getSchemaTypes();
   }
 
   public ngOnInit(): void { 
-    this.arraySchema.subscribeModelToForm();
+    this.schema.subscribeModelToForm();
   }
 }

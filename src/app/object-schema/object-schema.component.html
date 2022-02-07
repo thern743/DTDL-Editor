@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Object Schema Definition</h1>
-<mat-dialog-content [formGroup]="objectSchema.form">
+<mat-dialog-content [formGroup]="schema.form">
     <mat-form-field color="accent">
         <mat-label for="id">Id</mat-label>
         <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
@@ -24,18 +24,18 @@
     </mat-form-field>
     <br/>
 
-    <ng-container *ngFor="let field of objectSchema.fields; let i = index">
+    <ng-container *ngFor="let field of schema.fields; let i = index">
         <field-definition [field]="field" [formIndex]="i" [panelOpenState]="true"></field-definition>
     </ng-container>
 
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="objectSchemaService.addFieldToObjectSchema(objectSchema)" [disabled]="!canAddChild()">
+        <button mat-raised-button color="primary" (click)="objectSchemaService.addFieldToObjectSchema(schema)" [disabled]="!canAddChild()">
             <mat-icon>add_circle</mat-icon>&nbsp;New Field
         </button>
     </mat-action-row>    
 
     <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="objectSchema.model">
+        <button mat-raised-button color="primary" [mat-dialog-close]="schema.model">
             <mat-icon>save</mat-icon> Save
         </button>
     </div>

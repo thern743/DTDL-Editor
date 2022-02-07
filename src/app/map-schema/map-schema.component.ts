@@ -14,7 +14,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
   styleUrls: ['./map-schema.component.scss']
 })
 export class MapSchemaComponent implements OnInit {
-  public mapSchema!: MapSchemaFormControl;
+  public schema!: MapSchemaFormControl;
   public schemaService: SchemaService;
   public editorService: EditorService;
   public panelOpenState = true;
@@ -37,11 +37,11 @@ export class MapSchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.mapSchema = new MapSchemaFormControl(data, this._formBuilder, this._validationService);
+    this.schema = new MapSchemaFormControl(data, this._formBuilder, this._validationService);
     this.schemaTypes = this.editorService.getSchemaTypes();
   }
 
   public ngOnInit(): void { 
-    this.mapSchema.subscribeModelToForm();
+    this.schema.subscribeModelToForm();
   }
 }
