@@ -11,22 +11,7 @@
         <input matInput id="displayName" type="text" formControlName="displayName" />
     </mat-form-field>
     <br/>
-
-    <mat-form-field color="accent">
-        <mat-label for="schema">Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema">
-            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container *ngIf="schema.form.get('schema')?.value?.type[0] === 'Enum'">
-        <button mat-raised-button color="primary" (click)="schemaService.openEnumSchemaEditor(dialog, schema.form)">
-            <mat-icon>edit</mat-icon>
-            Edit Schema
-        </button>
-    </ng-container>
-    <br/>
-
+    
     <mat-form-field color="accent" style="width: 420px">
         <mat-label for="comment">Comment</mat-label>
         <input matInput id="comment" type="text" formControlName="comment" />

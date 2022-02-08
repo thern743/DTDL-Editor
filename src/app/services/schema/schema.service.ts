@@ -57,25 +57,6 @@ export class SchemaService {
     this._validationService = validationSerivce;
   }
 
-  public getSchemaTypes(): Map<string, ICapabilityModel> {
-    return new Map<string, ICapabilityModel>([
-      ["array", new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1")], 
-      ["boolean", new BooleanSchemaCapbilityModel("dtmi:com:Example:MyBoolean;1")], 
-      ["date", new DateSchemaCapbilityModel("dtmi:com:Example:MyDate;1")], 
-      ["dateTime", new DateTimeSchemaCapbilityModel("dtmi:com:Example:MyDateTime;1")], 
-      ["double", new DoubleSchemaCapbilityModel("dtmi:com:Example:MyDouble;1")], 
-      ["duration", new DurationSchemaCapbilityModel("dtmi:com:Example:MyDuration;1")], 
-      ["enum", new EnumSchemaCapbilityModel("dtmi:com:Example:MyEnum;1")], 
-      ["float", new FloatSchemaCapbilityModel("dtmi:com:Example:MyFloat;1")], 
-      ["integer", new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1")], 
-      ["long", new LongSchemaCapbilityModel("dtmi:com:Example:MyLong;1")], 
-      ["map", new MapSchemaCapbilityModel("dtmi:com:Example:MyMap;1")], 
-      ["object", new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1")], 
-      ["string", new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1")], 
-      ["time", new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1")]  
-    ]);
-  }
-
   public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
     return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
       ["array", new ArraySchemaFormControl(new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1"), this._formBuilder, this._validationService, this.dialog)], 

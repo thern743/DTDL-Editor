@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { MapSchemaFormControl } from '../formControls/MapSchemaFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ISchemaEditor } from '../models/ISchemaEditor';
 import { MapSchemaCapbilityModel } from '../models/MapSchemaCapbilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
@@ -14,7 +16,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
   styleUrls: ['./map-schema.component.scss']
 })
 export class MapSchemaComponent implements OnInit {
-  public schema!: MapSchemaFormControl;
+  public map!: MapSchemaFormControl;
   public schemaService: SchemaService;
   public editorService: EditorService;
   public panelOpenState = true;
@@ -22,7 +24,7 @@ export class MapSchemaComponent implements OnInit {
   private _validationService: ValidationService;
   public dialog: MatDialog;
   private _dialogRef: MatDialogRef<MapSchemaComponent>;
-  public schemaTypes: Map<string, ICapabilityModel>;
+  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
   constructor(editorSerivce: EditorService, schemaService: SchemaService,
     formBuilder: FormBuilder, 
@@ -37,11 +39,18 @@ export class MapSchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.schema = new MapSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
-    this.schemaTypes = this.schemaService.getSchemaTypes();
+    this.map = new MapSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void { 
-    this.schema.subscribeModelToForm();
+    this.map.subscribeModelToForm();
+  }
+
+  public openEditor(type: string): void {
+    let form = this.schemaTypes.get(type.toLowerCase());
+    if(form === undefined) return;
+    // TODO: This is a hack. Figure out a better solution.
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.map.form);
   }
 }

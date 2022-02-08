@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Map Schema Definition</h1>
-<mat-dialog-content [formGroup]="schema.form">
+<mat-dialog-content [formGroup]="map.form">
     <mat-form-field color="accent">
         <mat-label for="id">Id</mat-label>
         <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
@@ -14,13 +14,13 @@
 
     <mat-form-field color="accent">
         <mat-label for="schema">Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema">
-            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value"> {{ schema.value.type[0] }} </mat-option>
+        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema" #schema>
+            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value.model"> {{ schema.value.model.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="schema.form.get('schema')?.value?.type[0] === 'Map'">
-        <button mat-raised-button color="primary" (click)="schemaService.openMapSchemaEditor(dialog, schema.form)">
+    <ng-container *ngIf="schemaService.isComplexSchema(map.form)">
+        <button mat-raised-button color="primary" (click)="openEditor(schema.value.type[0])">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>
@@ -40,7 +40,7 @@
     <br/>
 
     <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="schema.model">
+        <button mat-raised-button color="primary" [mat-dialog-close]="map.model">
             <mat-icon>save</mat-icon> Save
         </button>
     </div>

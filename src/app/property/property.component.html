@@ -27,8 +27,6 @@
     </mat-form-field>    
     <br/>
 
-
-    <!-- TODO: Fix calling openSchemaEditor for different schema types-->
     <mat-form-field color="accent">
         <mat-label attr.for="property_schema_{{formIndex}}">Schema</mat-label>
         <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="property_schema_{{formIndex}}" formControlName="schema" #schema>

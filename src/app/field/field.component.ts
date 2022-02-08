@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
@@ -22,16 +23,23 @@ export class FieldComponent implements OnInit {
   public editorService: EditorService;
   public dialog: MatDialog; 
 
-  public schemaTypes: Map<string, ICapabilityModel>;
+  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
   constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
     this.schemaService = schemaEditorService; 
     this.editorService = editorSerivce;
     this.dialog = dialog;
-    this.schemaTypes = this.schemaService.getSchemaTypes();
+    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void {
     this.field.subscribeModelToForm();
+  }
+
+  public openEditor(type: string): void {
+    let form = this.schemaTypes.get(type.toLowerCase());
+    if(form === undefined) return;
+    // TODO: This is a hack. Figure out a better solution.
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.field.form);
   }
 }
