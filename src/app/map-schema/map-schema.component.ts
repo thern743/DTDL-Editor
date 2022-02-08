@@ -37,8 +37,8 @@ export class MapSchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.schema = new MapSchemaFormControl(data, this._formBuilder, this._validationService);
-    this.schemaTypes = this.editorService.getSchemaTypes();
+    this.schema = new MapSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.schemaTypes = this.schemaService.getSchemaTypes();
   }
 
   public ngOnInit(): void { 

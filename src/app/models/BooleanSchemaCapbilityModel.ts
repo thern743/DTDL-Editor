@@ -5,6 +5,5 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 export class BooleanSchemaCapbilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
         super(id, "Boolean");
-        this.id = id;
     }    
 }

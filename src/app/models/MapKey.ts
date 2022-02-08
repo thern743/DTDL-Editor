@@ -7,4 +7,8 @@ export class MapKey extends AbstractCapabilityModel {
 
     @jsonMember
     public schema: string = "String";
+
+    constructor(id: string) {
+        super(id, "MapKey");
+    }
 }

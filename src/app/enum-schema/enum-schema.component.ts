@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ArraySchemaComponent } from '../array-schema/array-schema.component';
 import { EnumSchemaFormControl } from '../formControls/EnumSchemaFormControl';
 import { EnumSchemaCapbilityModel } from '../models/EnumSchemaCapbilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
@@ -38,8 +37,8 @@ export class EnumSchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.schema = new EnumSchemaFormControl(data, this._formBuilder, this._validationService);
-    this.schemaTypes = this.editorService.getSchemaTypes();
+    this.schema = new EnumSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.schemaTypes = this.schemaService.getSchemaTypes();
   }
 
   public ngOnInit(): void { 

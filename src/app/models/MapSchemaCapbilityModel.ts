@@ -13,6 +13,5 @@ export class MapSchemaCapbilityModel extends AbstractCapabilityModel {
 
     constructor(id: string) {
         super(id, "Map");
-        this.id = id;
     }    
 }

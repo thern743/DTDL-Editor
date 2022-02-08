@@ -5,6 +5,5 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 export class DoubleSchemaCapbilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
         super(id, "Double");
-        this.id = id;
     }    
 }

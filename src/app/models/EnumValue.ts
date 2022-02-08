@@ -7,4 +7,8 @@ export class EnumValue extends AbstractCapabilityModel {
     
     @jsonMember
     public enumValue!: number | string;
+
+    constructor(id: string) {
+        super(id, "EnumValue");
+    }
 }

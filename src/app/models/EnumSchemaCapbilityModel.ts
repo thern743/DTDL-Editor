@@ -12,6 +12,6 @@ export class EnumSchemaCapbilityModel extends AbstractCapabilityModel {
 
     constructor(id: string) {
         super(id, "Enum");
-        this.id = id;
+        this.enumValues = new Array<EnumValue>();
     }    
 }

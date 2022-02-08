@@ -7,4 +7,8 @@ export class MapValue extends AbstractCapabilityModel {
 
     @jsonMember
     public schema!: AbstractCapabilityModel;
+
+    constructor(id: string) {
+        super(id, "MapValue");
+    }
 }

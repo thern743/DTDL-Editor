@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { ISchemaEditor } from '../models/ISchemaEditor';
 
 @Component({
   selector: 'property-definition',
@@ -19,13 +22,13 @@ export class PropertyComponent implements OnInit {
   public editorService: EditorService;
   public schemaService: SchemaService;
   public dialog: MatDialog;
-  public schemaTypes: Map<string, ICapabilityModel>;
-
+  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
+  
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
     this.schemaService = schemaService;
     this.dialog = dialog;
-    this.schemaTypes = this.editorService.getSchemaTypes();
+    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void { 
@@ -56,13 +59,20 @@ export class PropertyComponent implements OnInit {
     let type = this.property.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new SemanticTypeArray("Property");
-      type?.setValue(val);      
+      let semanticType = new SemanticTypeArray("Property");
+      type?.setValue(semanticType);      
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new SemanticTypeArray("Property", $event.value);
-      type?.setValue(val);
+      let semanticType = new SemanticTypeArray("Property", $event.value);
+      type?.setValue(semanticType);
     }
+  }
+
+  public openEditor(type: string): void {
+    let form = this.schemaTypes.get(type.toLowerCase());
+    if(form === undefined) return;
+    // TODO: This is a hack. Figure out a better solution.
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.property.form);
   }
 }

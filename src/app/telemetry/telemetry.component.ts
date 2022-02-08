@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { ISchemaEditor } from '../models/ISchemaEditor';
 
 @Component({
   selector: 'telemetry-definition',
@@ -19,13 +21,13 @@ export class TelemetryComponent implements OnInit {
   public editorService: EditorService;
   public schemaService: SchemaService;
   public dialog: MatDialog;
-  public schemaTypes: Map<string, ICapabilityModel>;
+  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
   
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
     this.schemaService = schemaService;
     this.dialog = dialog;
-    this.schemaTypes = this.editorService.getSchemaTypes();
+    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void {  
@@ -56,13 +58,20 @@ export class TelemetryComponent implements OnInit {
     let type = this.telemetry.form.get("type");
 
     if(["", null, undefined].indexOf($event.value) > -1) {
-      let val = new SemanticTypeArray("Telemetry");
-      type?.setValue(val);      
+      let semanticType = new SemanticTypeArray("Telemetry");
+      type?.setValue(semanticType);      
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let val = new SemanticTypeArray("Telemetry", $event.value);
-      type?.setValue(val);
+      let semanticType = new SemanticTypeArray("Telemetry", $event.value);
+      type?.setValue(semanticType);
     }
+  }
+
+  public openEditor(type: string): void {
+    let form = this.schemaTypes.get(type.toLowerCase());
+    if(form === undefined) return;
+    // TODO: This is a hack. Figure out a better solution.
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.telemetry.form);
   }
 }

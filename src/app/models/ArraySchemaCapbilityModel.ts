@@ -8,6 +8,5 @@ export class ArraySchemaCapbilityModel extends AbstractCapabilityModel {
 
     constructor(id: string) {
         super(id, "Array");
-        this.id = id;
     }    
 }

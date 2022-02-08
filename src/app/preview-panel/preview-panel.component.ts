@@ -26,11 +26,12 @@ export class PreviewPanelComponent implements OnInit {
     
   }
 
+  // TODO: Determine why TypedJSON isn't working properly.
   public getJsonLd() : any {
-    //let str = this._typedJson.stringify(this.interface.model);
-    let str = JSON.stringify(this.interface.model);
+    //let str = this._typedJson.stringify(this.interface.model);    
     //let result = this._typedJson.parse(str);
-    let r2 = JSON.parse(str);
-    return r2;
+    let str = JSON.stringify(this.interface.model);
+    let result = JSON.parse(str);
+    return result;
   }  
 }

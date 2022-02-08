@@ -5,6 +5,5 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 export class DateTimeSchemaCapbilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
         super(id, "DateTime");
-        this.id = id;
     }    
 }

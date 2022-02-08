@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ISchemaEditor } from '../models/ISchemaEditor';
+import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
 import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
@@ -16,17 +18,17 @@ export class FieldComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public field!: FieldCapabilityFormControl;
   @Input() public panelOpenState = true;
-  public objectSchemaService: SchemaService;
+  public schemaService: SchemaService;
   public editorService: EditorService;
   public dialog: MatDialog; 
 
   public schemaTypes: Map<string, ICapabilityModel>;
 
-  constructor(objectSchemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
-    this.objectSchemaService = objectSchemaEditorService; 
+  constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
+    this.schemaService = schemaEditorService; 
     this.editorService = editorSerivce;
     this.dialog = dialog;
-    this.schemaTypes = this.editorService.getSchemaTypes();
+    this.schemaTypes = this.schemaService.getSchemaTypes();
   }
 
   public ngOnInit(): void {
