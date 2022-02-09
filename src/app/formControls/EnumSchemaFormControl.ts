@@ -5,6 +5,7 @@ import { EnumSchemaCapbilityModel } from '../models/EnumSchemaCapbilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
+import { EnumValueCapabilityFormControl } from './EnumValueCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
@@ -12,15 +13,18 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSchemaCapbilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
+    public valueSchema: string = "";
+    public enumValues: Array<EnumValueCapabilityFormControl>;
 
     constructor(model: EnumSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
+        this.enumValues = new Array<EnumValueCapabilityFormControl>();
         this.dialog = dialog;
         this.model = model; 
         this.form = this.toFormGroup();          
     }
-
+    
     public toFormGroup(): FormGroup { 
         let form =  this.formBuilder.group({
             id: [this.model.id, [this._validationService.ValidDtmi()]],
@@ -28,8 +32,8 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
             comment: [this.model.comment],
             description: [this.model.description],
             // Enum specific
-            enumValues: this.formBuilder.array([...this.model.enumValues]),
-            valueSchema: [this.model.valueSchema]
+            valueSchema: [this.model.valueSchema],
+            enumValues: this.formBuilder.array([...this.model.enumValues])            
         });
 
         return form;

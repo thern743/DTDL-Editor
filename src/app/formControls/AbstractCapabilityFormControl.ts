@@ -10,6 +10,7 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public model!: TCapabilityDto;  
     public form!: FormGroup;
     
+    // TODO: Move setting model to this ctor from all subclasses.
     constructor(formBuilder: FormBuilder) {
         this.formBuilder = formBuilder;        
     }

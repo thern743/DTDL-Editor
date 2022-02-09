@@ -40,20 +40,20 @@ import { IntegerSchemaCapbilityModel } from 'src/app/models/IntegerSchemaCapbili
 import { LongSchemaCapbilityModel } from 'src/app/models/LongSchemaCapbilityModel';
 import { StringSchemaCapbilityModel } from 'src/app/models/StringSchemaCapbilityModel';
 import { TimeSchemaCapbilityModel } from 'src/app/models/TimeSchemaCapbilityModel';
+import { EnumValueCapabilityFormControl } from 'src/app/formControls/EnumValueCapabilityFormControl';
+import { EnumValueCapabilityModel } from 'src/app/models/EnumValueCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchemaService {
   public dialog: MatDialog;
-  public fields$: Subject<FieldCapabilityModel>;
   private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
 
   constructor(formBuilder: FormBuilder, validationSerivce: ValidationService, dialog: MatDialog) {
     this.dialog = dialog;
     this._formBuilder = formBuilder;
-    this.fields$ = new Subject<FieldCapabilityModel>();
     this._validationService = validationSerivce;
   }
 
@@ -81,7 +81,13 @@ export class SchemaService {
     let form = new FieldCapabilityFormControl(model, this._formBuilder, this._validationService);
     objectSchema.fields.push(form);
     objectSchema.model.fields.push(model);
-    this.fields$.next(model);
+  }
+
+  public addValueToEnumSchema(enumSchema: EnumSchemaFormControl): void { 
+    let model = new EnumValueCapabilityModel("dtmi:com:example:MyEnumValue;1"); 
+    let form = new EnumValueCapabilityFormControl(model, this._formBuilder, this._validationService);
+    enumSchema.enumValues.push(form);
+    enumSchema.model.enumValues.push(model);
   }
 
   public openArraySchemaEditor(dialog: MatDialog, form: FormGroup) {

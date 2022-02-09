@@ -13,8 +13,8 @@ import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormC
   styleUrls: ['./object-schema.component.scss']
 })
 export class ObjectSchemaComponent implements OnInit {
-  public schema!: ObjectSchemaFormControl;
-  public objectSchemaService: SchemaService;
+  public object!: ObjectSchemaFormControl;
+  public schemaService: SchemaService;
   public panelOpenState = true;
   private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
@@ -29,25 +29,25 @@ export class ObjectSchemaComponent implements OnInit {
     dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapbilityModel
   ) { 
-    this.objectSchemaService = objectSchemaService; 
+    this.schemaService = objectSchemaService; 
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
     //this._dialogRef = dialogRef;
     this.dialog = dialog;
-    this.schema = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.object = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
   }
 
   public ngOnInit(): void { 
-    this.schema.subscribeModelToForm();
+    this.object.subscribeModelToForm();
   }
 
   public getFields(): Array<FieldCapabilityFormControl> { 
-    return this.schema.fields;
+    return this.object.fields;
   }
 
   //DTDL Allows a nesting of objects down to five levels... 
   //i.e. 4 children on the top level object. 
   public canAddChild(): boolean { 
-    return this.schema.fields.length <= this.MAX_LEVEL; 
+    return this.object.fields.length <= this.MAX_LEVEL; 
   }
 }

@@ -15,7 +15,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
   styleUrls: ['./enum-schema.component.scss']
 })
 export class EnumSchemaComponent implements OnInit {
-  public schema!: EnumSchemaFormControl;
+  public enum!: EnumSchemaFormControl;
   public schemaService: SchemaService;
   public editorService: EditorService;
   public panelOpenState = true;
@@ -37,11 +37,15 @@ export class EnumSchemaComponent implements OnInit {
     this._validationService = validationService;
     this.dialog = dialog;
     this._dialogRef = dialogRef;
-    this.schema = new EnumSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.enum = new EnumSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
   }
 
   public ngOnInit(): void { 
-    this.schema.subscribeModelToForm();
+    this.enum.subscribeModelToForm();
+  }
+
+  public addValue(): void {
+    
   }
 }
 

@@ -1,7 +1,8 @@
-import { jsonMember } from "typedjson";
+import { jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
-
-export class EnumValue extends AbstractCapabilityModel {
+// TODO: Remove rendering of Type for EnumValue
+@jsonObject
+export class EnumValueCapabilityModel extends AbstractCapabilityModel {
     @jsonMember
     public name!: string;
     

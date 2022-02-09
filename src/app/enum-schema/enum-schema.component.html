@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Enum Schema Definition</h1>
-<mat-dialog-content [formGroup]="schema.form">
+<mat-dialog-content [formGroup]="enum.form">
     <mat-form-field color="accent">
         <mat-label for="id">Id</mat-label>
         <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
@@ -11,7 +11,7 @@
         <input matInput id="displayName" type="text" formControlName="displayName" />
     </mat-form-field>
     <br/>
-    
+
     <mat-form-field color="accent" style="width: 420px">
         <mat-label for="comment">Comment</mat-label>
         <input matInput id="comment" type="text" formControlName="comment" />
@@ -24,8 +24,27 @@
     </mat-form-field>
     <br/>
 
+    <mat-form-field color="accent">
+        <mat-label for="valueSchema">Value Schema</mat-label>
+        <mat-select matNativeControl id="valueSchema" formControlName="valueSchema" #valueSchema>
+            <mat-option value="integer">Integer</mat-option>
+            <mat-option value="string">String</mat-option>
+        </mat-select>        
+    </mat-form-field>
+    <br/>
+    
+    <ng-container *ngFor="let enumValue of enum.enumValues; let i = index">
+        <enumValue-definition [enumValue]="enumValue" [formIndex]="i" [panelOpenState]="true"></enumValue-definition>
+    </ng-container>
+
+    <mat-action-row>
+        <button mat-raised-button color="primary" (click)="schemaService.addValueToEnumSchema(enum)">
+            <mat-icon>add_circle</mat-icon>&nbsp;New Value
+        </button>
+    </mat-action-row>
+
     <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="schema.model">
+        <button mat-raised-button color="primary" [mat-dialog-close]="enum.model">
             <mat-icon>save</mat-icon> Save
         </button>
     </div>

@@ -1,0 +1,45 @@
+<mat-expansion-panel    class="mat-elevation-z3"
+                        [expanded]="panelOpenState"
+                        (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false"
+                        [formGroup]="enumValue.form">
+    <mat-expansion-panel-header>
+        <mat-panel-title>Enum Value</mat-panel-title>
+    </mat-expansion-panel-header>
+    
+    <mat-form-field color="accent">
+        <mat-label for="name">Name</mat-label>
+        <input matInput id="name" type="text" formControlName="name" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <!-- TODO: Validate against the Value Schema (Int|String) -->
+    <mat-form-field color="accent">
+        <mat-label for="enumValue">Enum Value</mat-label>
+        <input matInput id="enumValue" type="text" formControlName="enumValue" />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field color="accent">
+        <mat-label for="id">Id</mat-label>
+        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field color="accent">
+        <mat-label for="displayName">Display Name</mat-label>
+        <input matInput id="displayName" type="text" formControlName="displayName" />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field color="accent" style="width: 200px">
+        <mat-label for="comment">Comment</mat-label>
+        <input matInput id="comment" type="text" formControlName="comment" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field color="accent" style="width: 200px">
+        <mat-label for="description">Description</mat-label>
+        <input matInput id="description" type="text" formControlName="description" />
+    </mat-form-field>
+</mat-expansion-panel>

@@ -13,8 +13,8 @@ import { FieldCapabilityFormControl } from './FieldCapabilityFormControl';
  */
 export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<ObjectSchemaCapbilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
-    public fields!: FieldCapabilityFormControl[];
     public dialog: MatDialog;
+    public fields!: Array<FieldCapabilityFormControl>;
 
     constructor(model: ObjectSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
