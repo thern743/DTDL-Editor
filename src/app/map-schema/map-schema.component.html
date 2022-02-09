@@ -11,22 +11,7 @@
         <input matInput id="displayName" type="text" formControlName="displayName" />
     </mat-form-field>
     <br/>
-
-    <mat-form-field color="accent">
-        <mat-label for="schema">Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema" #schema>
-            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value.model"> {{ schema.value.model.type[0] }} </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container *ngIf="schemaService.isComplexSchema(map.form)">
-        <button mat-raised-button color="primary" (click)="openEditor(schema.value.type[0])">
-            <mat-icon>edit</mat-icon>
-            Edit Schema
-        </button>
-    </ng-container>
-    <br/>
-
+  
     <mat-form-field color="accent" style="width: 420px">
         <mat-label for="comment">Comment</mat-label>
         <input matInput id="comment" type="text" formControlName="comment" />
@@ -37,6 +22,34 @@
         <mat-label for="description">Description</mat-label>
         <input matInput id="description" type="text" formControlName="description" />
     </mat-form-field>
+    <br/>
+
+    <mat-form-field color="accent">
+        <mat-label for="mapKey">Map Key</mat-label>
+        <mat-select matNativeControl id="mapKey" formControlName="mapKey" #mapKey readonly>
+            <mat-option [value]="keySchemaTypes?.get('string')?.model"> String </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <button mat-raised-button color="primary" (click)="openEditor(mapKey.value.type[0])">
+        <mat-icon>edit</mat-icon>
+        Edit
+    </button>
+    <br/>
+
+    <mat-form-field color="accent">
+        <mat-label for="mapValue">Map Value</mat-label>
+        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="mapValue" formControlName="mapValue" #mapValue>
+            <mat-option *ngFor="let schema of valueSchemaTypes | keyvalue" [value]="schema.value.model"> {{ schema.value.model.type[0] }} </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <ng-container *ngIf="schemaService.isComplexSchema(map.form, 'mapValue')">
+        <button mat-raised-button color="primary" (click)="openEditor(mapValue.value.type[0])">
+            <mat-icon>edit</mat-icon>
+            Edit Schema
+        </button>
+    </ng-container>
     <br/>
 
     <div mat-dialog-actions>

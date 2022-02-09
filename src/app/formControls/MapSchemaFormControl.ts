@@ -17,7 +17,7 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
-        this.model = model; 
+        this.model = model;
         this.form = this.toFormGroup();          
     }
 
@@ -44,7 +44,7 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
         .afterClosed()
         .subscribe((result: MapSchemaCapbilityModel) => {
           if (result) {
-            this.form.controls.schema.setValue(result);
+            parentForm.get("schema")?.setValue(result);
           } 
         });
     }

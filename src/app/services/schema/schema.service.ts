@@ -146,8 +146,8 @@ export class SchemaService {
     });
   }
 
-  public isComplexSchema(form: FormGroup): boolean {
-    let type = form.get('schema')?.value?.type[0];
+  public isComplexSchema(form: FormGroup, schemaString: string = 'schema'): boolean {
+    let type = form.get(schemaString)?.value?.type[0];
     return ["Array", "Enum", "Map", "Object"].indexOf(type) >= 0;
   }
 

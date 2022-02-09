@@ -24,7 +24,8 @@ export class MapSchemaComponent implements OnInit {
   private _validationService: ValidationService;
   public dialog: MatDialog;
   private _dialogRef: MatDialogRef<MapSchemaComponent>;
-  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
+  public keySchemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
+  public valueSchemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
   constructor(editorSerivce: EditorService, schemaService: SchemaService,
     formBuilder: FormBuilder, 
@@ -40,7 +41,8 @@ export class MapSchemaComponent implements OnInit {
     this.dialog = dialog;
     this._dialogRef = dialogRef;
     this.map = new MapSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
-    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
+    this.keySchemaTypes = this.schemaService.getSchemaTypesFormControls();
+    this.valueSchemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void { 
@@ -48,7 +50,8 @@ export class MapSchemaComponent implements OnInit {
   }
 
   public openEditor(type: string): void {
-    let form = this.schemaTypes.get(type.toLowerCase());
+    // TODO: Determine if editing Key or Value.
+    let form = this.keySchemaTypes.get(type.toLowerCase());
     if(form === undefined) return;
     // TODO: This is a hack. Figure out a better solution.
     (<ISchemaEditor><unknown>form).openSchemaEditor(this.map.form);

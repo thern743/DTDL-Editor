@@ -13,5 +13,7 @@ export class MapSchemaCapbilityModel extends AbstractCapabilityModel {
 
     constructor(id: string) {
         super(id, "Map");
+        this.mapKey = new MapKey("dtmi:com:example:MyMapKey;1");
+        this.mapValue = new MapValue("dtmi:com:example:MyMapValue;1"); 
     }    
 }
