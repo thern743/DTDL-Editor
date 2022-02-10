@@ -46,8 +46,8 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
         return form;
     }
 
-    public openSchemaEditor(parentForm: FormGroup): void {
-        var schema = parentForm.get("schema")?.value as ObjectSchemaCapbilityModel;
+    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
+        var schema = parentForm.get(schemaName)?.value as ObjectSchemaCapbilityModel;
 
         this.dialog.open(ObjectSchemaComponent, { 
             data: schema
@@ -55,7 +55,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
         .afterClosed()
         .subscribe((result: ObjectSchemaCapbilityModel) => {
             if (result) {
-                parentForm.get("schema")?.setValue(result);
+                parentForm.get(schemaName)?.setValue(result);
             } 
         });
     }

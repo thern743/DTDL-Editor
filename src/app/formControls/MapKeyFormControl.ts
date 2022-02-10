@@ -32,8 +32,8 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
         return form;
     }
 
-    public openSchemaEditor(parentForm: FormGroup): void {
-        var schema = parentForm.get("mapKey")?.value as MapKeyCapabilityModel;
+    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "mapKey"): void {
+        var schema = parentForm.get(schemaName)?.value as MapKeyCapabilityModel;
     
         this.dialog.open(MapKeyComponent, { 
           data: schema
@@ -41,7 +41,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
         .afterClosed()
         .subscribe((result: MapKeyCapabilityModel) => {
           if (result) {
-            parentForm.get("mapKey")?.setValue(result);
+            parentForm.get(schemaName)?.setValue(result);
           } 
         });
     }

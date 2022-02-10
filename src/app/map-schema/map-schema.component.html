@@ -31,9 +31,9 @@
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <button mat-raised-button color="primary" (click)="openValueEditor(mapKey.value.type[0])">
+    <button mat-raised-button color="primary" (click)="openKeyEditor(mapKey.value.type[0])">
         <mat-icon>edit</mat-icon>
-        Edit
+        Edit Schema
     </button>
     <br/>
 
@@ -45,7 +45,7 @@
     </mat-form-field>
     <span class="formSpacer"></span>
     <ng-container *ngIf="schemaService.isComplexSchema(map.form, 'mapValue')">
-        <button mat-raised-button color="primary" (click)="openKeyEditor(mapValue.value.type[0])">
+        <button mat-raised-button color="primary" (click)="openValueEditor(mapValue.value.type[0])">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>

@@ -40,10 +40,10 @@ export class MapValueComponent implements OnInit {
     this.mapValue.subscribeModelToForm();
   }
 
-  public openEditor(type: string): void {
+  public openEditor(type: string, schemaName: string = "schema"): void {
     let form = this.schemaTypes.get(type.toLowerCase());
     if(form === undefined) return;
     // TODO: This is a hack. Figure out a better solution.
-    (<ISchemaEditor><unknown>form).openSchemaEditor(this.mapValue.form);
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.mapValue.form, schemaName);
   }
 }

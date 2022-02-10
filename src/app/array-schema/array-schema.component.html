@@ -13,14 +13,14 @@
     <br/>
 
     <mat-form-field color="accent">
-        <mat-label for="elementEchema">Element Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="elementEchema" formControlName="elementSchema" #elementSchema>
+        <mat-label for="elementSchema">Element Schema</mat-label>
+        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="elementSchema" formControlName="elementSchema" #elementSchema>
             <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value.model"> {{ schema.value.model.type[0] }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
     <ng-container *ngIf="schemaService.isComplexSchema(array.form, 'elementSchema')">
-        <button mat-raised-button color="primary" (click)="openEditor(elementSchema.value.type[0])">
+        <button mat-raised-button color="primary" (click)="openEditor(elementSchema.value.type[0], 'elementSchema')">
             <mat-icon>edit</mat-icon>
             Edit Schema
         </button>

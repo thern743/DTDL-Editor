@@ -1,12 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/ArraySchemaFormControl';
 import { ArraySchemaCapbilityModel } from '../models/ArraySchemaCapbilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
-import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
@@ -42,10 +41,10 @@ export class ArraySchemaComponent implements OnInit {
     this.array.subscribeModelToForm();
   }
 
-  public openEditor(type: string): void {
+  public openEditor(type: string, schemaName: string = 'schema'): void {
     let form = this.schemaTypes.get(type.toLowerCase());
     if(form === undefined) return;
     // TODO: This is a hack. Figure out a better solution.
-    (<ISchemaEditor><unknown>form).openSchemaEditor(this.array.form);
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.array.form, schemaName);
   }
 }
