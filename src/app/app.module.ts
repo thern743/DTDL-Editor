@@ -49,6 +49,8 @@ import { ArraySchemaComponent } from './array-schema/array-schema.component';
 import { EnumSchemaComponent } from './enum-schema/enum-schema.component';
 import { MapSchemaComponent } from './map-schema/map-schema.component';
 import { EnumValueComponent } from './enum-schema/enum-value/enum-value.component';
+import { MapKeyComponent } from './map-schema/map-key/map-key.component';
+import { MapValueComponent } from './map-schema/map-value/map-value.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { EnumValueComponent } from './enum-schema/enum-value/enum-value.componen
     ArraySchemaComponent,
     EnumSchemaComponent,
     MapSchemaComponent,
-    EnumValueComponent
+    EnumValueComponent,
+    MapKeyComponent,
+    MapValueComponent
   ],
   imports: [
     BrowserModule,

@@ -90,62 +90,6 @@ export class SchemaService {
     enumSchema.model.enumValues.push(model);
   }
 
-  public openArraySchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as ArraySchemaCapbilityModel;
-
-    dialog.open(ArraySchemaComponent, { 
-      data: schema
-    })
-    .afterClosed()
-    .subscribe((result: ArraySchemaCapbilityModel) => {
-      if (result) {
-        form.controls.schema.setValue(result);
-      } 
-    });
-  }
-
-  public openEnumSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as EnumSchemaCapbilityModel;
-
-    dialog.open(EnumSchemaComponent, { 
-      data: schema
-    })
-    .afterClosed()
-    .subscribe((result: EnumSchemaCapbilityModel) => {
-      if (result) {
-        form.controls.schema.setValue(result);
-      } 
-    });
-  }
-
-  public openMapSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as MapSchemaCapbilityModel;
-
-    dialog.open(MapSchemaComponent, { 
-      data: schema
-    })
-    .afterClosed()
-    .subscribe((result: MapSchemaCapbilityModel) => {
-      if (result) {
-        form.controls.schema.setValue(result);
-      } 
-    });
-  }
-
-  public openObjectSchemaEditor(dialog: MatDialog, form: FormGroup) {
-    var schema = form.controls.schema.value as ObjectSchemaCapbilityModel;
-
-    dialog.open(ObjectSchemaComponent, { 
-      data: schema
-    })
-    .afterClosed()
-    .subscribe((result: ObjectSchemaCapbilityModel) => {
-      if (result) {
-        form.controls.schema.setValue(result);
-      } 
-    });
-  }
-
   public isComplexSchema(form: FormGroup, schemaString: string = 'schema'): boolean {
     let type = form.get(schemaString)?.value?.type[0];
     return ["Array", "Enum", "Map", "Object"].indexOf(type) >= 0;

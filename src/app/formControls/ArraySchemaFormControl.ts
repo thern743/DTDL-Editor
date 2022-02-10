@@ -35,7 +35,7 @@ export class ArraySchemaFormControl extends AbstractCapabilityFormControl<ArrayS
     }
 
     public openSchemaEditor(parentForm: FormGroup): void {
-        var schema = parentForm.get("schema")?.value as ArraySchemaCapbilityModel;
+        var schema = parentForm.get("elementSchema")?.value as ArraySchemaCapbilityModel;
     
         this.dialog.open(ArraySchemaComponent, { 
           data: schema
@@ -43,7 +43,7 @@ export class ArraySchemaFormControl extends AbstractCapabilityFormControl<ArrayS
         .afterClosed()
         .subscribe((result: ArraySchemaCapbilityModel) => {
           if (result) {
-            parentForm.get("schema")?.setValue(result);
+            parentForm.get("elementSchema")?.setValue(result);
           } 
         });
     }

@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Map Key Definition</h1>
+<mat-dialog-content [formGroup]="mapKey.form">
+    <mat-form-field color="accent">
+        <mat-label for="name">Name</mat-label>
+        <input matInput id="name" type="text" formControlName="name" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+
+    <mat-form-field color="accent">
+        <mat-label for="schema">Schema</mat-label>
+        <mat-select matNativeControl id="schema" formControlName="schema" #schema>
+            <mat-option [value]="schemaTypes?.get('string')?.model"> String </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <ng-container *ngIf="schemaService.isComplexSchema(mapKey.form)">
+        <button mat-raised-button color="primary" (click)="openEditor(schema.value.type[0])">
+            <mat-icon>edit</mat-icon>
+            Edit Schema
+        </button>
+    </ng-container>
+    <br/>
+
+    <mat-form-field color="accent">
+        <mat-label for="id">Id</mat-label>
+        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+    </mat-form-field>
+    <span class="formSpacer"></span>  
+
+    <mat-form-field color="accent">
+        <mat-label for="displayName">Display Name</mat-label>
+        <input matInput id="displayName" type="text" formControlName="displayName" />
+    </mat-form-field>
+    <br/>
+  
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label for="comment">Comment</mat-label>
+        <input matInput id="comment" type="text" formControlName="comment" />
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label for="description">Description</mat-label>
+        <input matInput id="description" type="text" formControlName="description" />
+    </mat-form-field>
+    <br/>
+
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" [mat-dialog-close]="mapKey.model">
+            <mat-icon>save</mat-icon> Save
+        </button>
+    </div>
+</mat-dialog-content>

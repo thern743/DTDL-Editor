@@ -6,7 +6,6 @@ import { MapSchemaFormControl } from '../formControls/MapSchemaFormControl';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
 import { MapSchemaCapbilityModel } from '../models/MapSchemaCapbilityModel';
-import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
@@ -18,7 +17,6 @@ import { ValidationService } from '../services/validation/validation-service.ser
 export class MapSchemaComponent implements OnInit {
   public map!: MapSchemaFormControl;
   public schemaService: SchemaService;
-  public editorService: EditorService;
   public panelOpenState = true;
   private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
@@ -27,14 +25,13 @@ export class MapSchemaComponent implements OnInit {
   public keySchemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
   public valueSchemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
-  constructor(editorSerivce: EditorService, schemaService: SchemaService,
+  constructor(schemaService: SchemaService,
     formBuilder: FormBuilder, 
     validationService: ValidationService, 
     dialog: MatDialog,
     dialogRef: MatDialogRef<MapSchemaComponent>, 
     @Inject(MAT_DIALOG_DATA) data: MapSchemaCapbilityModel
   ) { 
-    this.editorService = editorSerivce;
     this.schemaService = schemaService;
     this._formBuilder = formBuilder;
     this._validationService = validationService;
@@ -49,9 +46,15 @@ export class MapSchemaComponent implements OnInit {
     this.map.subscribeModelToForm();
   }
 
-  public openEditor(type: string): void {
-    // TODO: Determine if editing Key or Value.
+  public openKeyEditor(type: string): void {
     let form = this.keySchemaTypes.get(type.toLowerCase());
+    if(form === undefined) return;
+    // TODO: This is a hack. Figure out a better solution.
+    (<ISchemaEditor><unknown>form).openSchemaEditor(this.map.form);
+  }
+
+  public openValueEditor(type: string): void {
+    let form = this.valueSchemaTypes.get(type.toLowerCase());
     if(form === undefined) return;
     // TODO: This is a hack. Figure out a better solution.
     (<ISchemaEditor><unknown>form).openSchemaEditor(this.map.form);
