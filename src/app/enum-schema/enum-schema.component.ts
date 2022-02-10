@@ -10,7 +10,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
-  selector: 'app-enum-schema',
+  selector: 'enum-schema',
   templateUrl: './enum-schema.component.html',
   styleUrls: ['./enum-schema.component.scss']
 })

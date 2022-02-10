@@ -10,7 +10,7 @@ import { SchemaService } from 'src/app/services/schema/schema.service';
 import { ValidationService } from 'src/app/services/validation/validation-service.service';
 
 @Component({
-  selector: 'map-value',
+  selector: 'map-value-schema',
   templateUrl: './map-value.component.html',
   styleUrls: ['./map-value.component.scss']
 })

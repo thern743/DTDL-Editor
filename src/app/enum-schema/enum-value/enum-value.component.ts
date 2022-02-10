@@ -8,7 +8,7 @@ import { EditorService } from '../../services/editor/editor-service.service';
 import { SchemaService } from '../../services/schema/schema.service';
 
 @Component({
-  selector: 'enumValue-definition',
+  selector: 'enum-value-schema',
   templateUrl: './enum-value.component.html',
   styleUrls: ['./enum-value.component.scss']
 })

@@ -34,7 +34,7 @@
     <br/>
     
     <ng-container *ngFor="let enumValue of enum.enumValues; let i = index">
-        <enumValue-definition [enumValue]="enumValue" [formIndex]="i" [panelOpenState]="true"></enumValue-definition>
+        <enum-value-schema [enumValue]="enumValue" [formIndex]="i" [panelOpenState]="true"></enum-value-schema>
     </ng-container>
 
     <mat-action-row>

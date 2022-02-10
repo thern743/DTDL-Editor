@@ -11,7 +11,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
-  selector: 'app-array-schema',
+  selector: 'array-schema',
   templateUrl: './array-schema.component.html',
   styleUrls: ['./array-schema.component.scss']
 })

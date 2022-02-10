@@ -2,16 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
-import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
-import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
-import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
-  selector: 'field-definition',
+  selector: 'field-schema',
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })

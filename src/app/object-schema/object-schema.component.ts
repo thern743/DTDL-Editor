@@ -2,13 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { SchemaService } from '../services/schema/schema.service';
 import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
 @Component({
-  selector: 'object-schema-definition',
+  selector: 'object-schema',
   templateUrl: './object-schema.component.html',
   styleUrls: ['./object-schema.component.scss']
 })
@@ -18,21 +18,18 @@ export class ObjectSchemaComponent implements OnInit {
   public panelOpenState = true;
   private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
-  //private _dialogRef: MatDialogRef<ObjectSchemaComponent>;
   public dialog: MatDialog;
   private MAX_LEVEL: number = 5;
 
   constructor(objectSchemaService: SchemaService, 
     formBuilder: FormBuilder, 
-    validationService: ValidationService, 
-    //dialogRef: MatDialogRef<ObjectSchemaComponent>, 
+    validationService: ValidationService,
     dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapbilityModel
   ) { 
     this.schemaService = objectSchemaService; 
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
-    //this._dialogRef = dialogRef;
     this.dialog = dialog;
     this.object = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
   }
