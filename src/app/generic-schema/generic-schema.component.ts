@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GenericSchemaFormControl } from '../formControls/GenericSchemaFormControl';
-import { GenericSchemaCapbilityModel } from '../models/GenericSchemaCapbilityModel';
-import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
+import { GenericSchemaCapabilityModel } from '../models/GenericSchemaCapabilityModel';
+import { ObjectSchemaCapabilityModel } from '../models/ObjectSchemaCapabilityModel';
 import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
@@ -24,7 +24,7 @@ export class GenericSchemaComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService,
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: GenericSchemaCapbilityModel
+    @Inject(MAT_DIALOG_DATA) data: GenericSchemaCapabilityModel
   ) { 
     this.schemaService = schemaService; 
     this._formBuilder = formBuilder; 

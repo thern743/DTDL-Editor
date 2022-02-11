@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { LongSchemaCapbilityModel } from '../models/LongSchemaCapbilityModel';
+import { LongSchemaCapabilityModel } from '../models/LongSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class LongSchemaFormControl extends AbstractCapabilityFormControl<LongSchemaCapbilityModel>{
+export class LongSchemaFormControl extends AbstractCapabilityFormControl<LongSchemaCapabilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: LongSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: LongSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
         this.model = model; 

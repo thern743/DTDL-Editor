@@ -2,18 +2,18 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MapSchemaComponent } from '../map-schema/map-schema.component';
 import { ISchemaEditor } from '../models/ISchemaEditor';
-import { MapSchemaCapbilityModel } from '../models/MapSchemaCapbilityModel';
+import { MapSchemaCapabilityModel } from '../models/MapSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapbilityModel> implements ISchemaEditor {
+export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: MapSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -36,13 +36,13 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
     }
 
     public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as MapSchemaCapbilityModel;
+        var schema = parentForm.get(schemaName)?.value as MapSchemaCapabilityModel;
     
         this.dialog.open(MapSchemaComponent, { 
           data: schema
         })
         .afterClosed()
-        .subscribe((result: MapSchemaCapbilityModel) => {
+        .subscribe((result: MapSchemaCapabilityModel) => {
           if (result) {
             parentForm.get(schemaName)?.setValue(result);
           } 

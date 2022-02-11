@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DateSchemaCapbilityModel } from '../models/DateSchemaCapbilityModel';
+import { DateSchemaCapabilityModel } from '../models/DateSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSchemaCapbilityModel>{
+export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSchemaCapabilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: DateSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: DateSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
         this.model = model; 

@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/EnumSchemaFormControl';
-import { EnumSchemaCapbilityModel } from '../models/EnumSchemaCapbilityModel';
+import { EnumSchemaCapabilityModel } from '../models/EnumSchemaCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
@@ -29,7 +29,7 @@ export class EnumSchemaComponent implements OnInit {
     validationService: ValidationService, 
     dialog: MatDialog,
     dialogRef: MatDialogRef<EnumSchemaComponent>, 
-    @Inject(MAT_DIALOG_DATA) data: EnumSchemaCapbilityModel
+    @Inject(MAT_DIALOG_DATA) data: EnumSchemaCapabilityModel
   ) { 
     this.editorService = editorSerivce;
     this.schemaService = schemaService;

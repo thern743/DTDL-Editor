@@ -4,7 +4,7 @@ import { MapKeyCapabilityModel } from "./MapKeyCapabilityModel";
 import { MapValueCapabilityModel } from "./MapValueCapabilityModel";
 
 @jsonObject
-export class MapSchemaCapbilityModel extends AbstractCapabilityModel {
+export class MapSchemaCapabilityModel extends AbstractCapabilityModel {
     @jsonMember
     public mapKey!: MapKeyCapabilityModel;
 

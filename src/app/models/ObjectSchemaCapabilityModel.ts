@@ -3,7 +3,7 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { FieldCapabilityModel } from "./FieldCapabilityModel";
 
 @jsonObject
-export class ObjectSchemaCapbilityModel extends AbstractCapabilityModel {
+export class ObjectSchemaCapabilityModel extends AbstractCapabilityModel {
     @jsonArrayMember(FieldCapabilityModel)
     public fields!: FieldCapabilityModel[];
 

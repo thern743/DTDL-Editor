@@ -5,16 +5,16 @@ import { Subject } from 'rxjs';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from 'src/app/models/FieldCapabilityModel';
 import { ObjectSchemaFormControl } from 'src/app/formControls/ObjectSchemaFormControl';
-import { ObjectSchemaCapbilityModel } from 'src/app/models/ObjectSchemaCapbilityModel';
+import { ObjectSchemaCapabilityModel } from 'src/app/models/ObjectSchemaCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ObjectSchemaComponent } from 'src/app/object-schema/object-schema.component';
 import { ArraySchemaComponent } from 'src/app/array-schema/array-schema.component';
-import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
+import { ArraySchemaCapabilityModel } from 'src/app/models/ArraySchemaCapabilityModel';
 import { EnumSchemaComponent } from 'src/app/enum-schema/enum-schema.component';
 import { MapSchemaComponent } from 'src/app/map-schema/map-schema.component';
-import { EnumSchemaCapbilityModel } from 'src/app/models/EnumSchemaCapbilityModel';
-import { MapSchemaCapbilityModel } from 'src/app/models/MapSchemaCapbilityModel';
+import { EnumSchemaCapabilityModel } from 'src/app/models/EnumSchemaCapabilityModel';
+import { MapSchemaCapabilityModel } from 'src/app/models/MapSchemaCapabilityModel';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from 'src/app/formControls/ArraySchemaFormControl';
 import { BooleanSchemaFormControl } from 'src/app/formControls/BooleanSchemaFormControl';
@@ -29,17 +29,17 @@ import { LongSchemaFormControl } from 'src/app/formControls/LongSchemaFormContro
 import { MapSchemaFormControl } from 'src/app/formControls/MapSchemaFormControl';
 import { StringSchemaFormControl } from 'src/app/formControls/StringSchemaFormControl';
 import { TimeSchemaFormControl } from 'src/app/formControls/TimeSchemaFormControl';
-import { BooleanSchemaCapbilityModel } from 'src/app/models/BooleanSchemaCapbilityModel';
-import { DateSchemaCapbilityModel } from 'src/app/models/DateSchemaCapbilityModel';
-import { DateTimeSchemaCapbilityModel } from 'src/app/models/DateTimeSchemaCapbilityModel';
-import { DoubleSchemaCapbilityModel } from 'src/app/models/DoubleSchemaCapbilityModel';
-import { DurationSchemaCapbilityModel } from 'src/app/models/DurationSchemaCapbilityModel';
-import { FloatSchemaCapbilityModel } from 'src/app/models/FloatSchemaCapbilityModel';
+import { BooleanSchemaCapabilityModel } from 'src/app/models/BooleanSchemaCapabilityModel';
+import { DateSchemaCapabilityModel } from 'src/app/models/DateSchemaCapabilityModel';
+import { DateTimeSchemaCapabilityModel } from 'src/app/models/DateTimeSchemaCapabilityModel';
+import { DoubleSchemaCapabilityModel } from 'src/app/models/DoubleSchemaCapabilityModel';
+import { DurationSchemaCapabilityModel } from 'src/app/models/DurationSchemaCapabilityModel';
+import { FloatSchemaCapabilityModel } from 'src/app/models/FloatSchemaCapabilityModel';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
-import { IntegerSchemaCapbilityModel } from 'src/app/models/IntegerSchemaCapbilityModel';
-import { LongSchemaCapbilityModel } from 'src/app/models/LongSchemaCapbilityModel';
-import { StringSchemaCapbilityModel } from 'src/app/models/StringSchemaCapbilityModel';
-import { TimeSchemaCapbilityModel } from 'src/app/models/TimeSchemaCapbilityModel';
+import { IntegerSchemaCapabilityModel } from 'src/app/models/IntegerSchemaCapabilityModel';
+import { LongSchemaCapabilityModel } from 'src/app/models/LongSchemaCapabilityModel';
+import { StringSchemaCapabilityModel } from 'src/app/models/StringSchemaCapabilityModel';
+import { TimeSchemaCapabilityModel } from 'src/app/models/TimeSchemaCapabilityModel';
 import { EnumValueCapabilityFormControl } from 'src/app/formControls/EnumValueCapabilityFormControl';
 import { EnumValueCapabilityModel } from 'src/app/models/EnumValueCapabilityModel';
 
@@ -59,20 +59,20 @@ export class SchemaService {
 
   public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
     return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
-      ["array", new ArraySchemaFormControl(new ArraySchemaCapbilityModel("dtmi:com:Example:MyAarray;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapbilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService)], 
-      ["date", new DateSchemaFormControl(new DateSchemaCapbilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService)], 
-      ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapbilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService)], 
-      ["double", new DoubleSchemaFormControl(new DoubleSchemaCapbilityModel("dtmi:com:Example:MyDouble;1"), this._formBuilder, this._validationService)], 
-      ["duration", new DurationSchemaFormControl(new DurationSchemaCapbilityModel("dtmi:com:Example:MyDuration;1"), this._formBuilder, this._validationService)], 
-      ["enum", new EnumSchemaFormControl(new EnumSchemaCapbilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["float", new FloatSchemaFormControl(new FloatSchemaCapbilityModel("dtmi:com:Example:MyFloat;1"), this._formBuilder, this._validationService)], 
-      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["long", new LongSchemaFormControl(new LongSchemaCapbilityModel("dtmi:com:Example:MyLong;1"), this._formBuilder, this._validationService)], 
-      ["map", new MapSchemaFormControl(new MapSchemaCapbilityModel("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["object", new ObjectSchemaFormControl(new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["string", new StringSchemaFormControl(new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["time", new TimeSchemaFormControl(new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1"), this._formBuilder, this._validationService)]  
+      ["array", new ArraySchemaFormControl(new ArraySchemaCapabilityModel("dtmi:com:Example:MyAarray;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService)], 
+      ["date", new DateSchemaFormControl(new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService)], 
+      ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapabilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService)], 
+      ["double", new DoubleSchemaFormControl(new DoubleSchemaCapabilityModel("dtmi:com:Example:MyDouble;1"), this._formBuilder, this._validationService)], 
+      ["duration", new DurationSchemaFormControl(new DurationSchemaCapabilityModel("dtmi:com:Example:MyDuration;1"), this._formBuilder, this._validationService)], 
+      ["enum", new EnumSchemaFormControl(new EnumSchemaCapabilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["float", new FloatSchemaFormControl(new FloatSchemaCapabilityModel("dtmi:com:Example:MyFloat;1"), this._formBuilder, this._validationService)], 
+      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapabilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["long", new LongSchemaFormControl(new LongSchemaCapabilityModel("dtmi:com:Example:MyLong;1"), this._formBuilder, this._validationService)], 
+      ["map", new MapSchemaFormControl(new MapSchemaCapabilityModel("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["object", new ObjectSchemaFormControl(new ObjectSchemaCapabilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["string", new StringSchemaFormControl(new StringSchemaCapabilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["time", new TimeSchemaFormControl(new TimeSchemaCapabilityModel("dtmi:com:Example:MyTtime;1"), this._formBuilder, this._validationService)]  
     ]);
   }
 

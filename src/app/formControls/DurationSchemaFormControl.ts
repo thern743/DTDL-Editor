@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { DurationSchemaCapbilityModel } from '../models/DurationSchemaCapbilityModel';
+import { DurationSchemaCapabilityModel } from '../models/DurationSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class DurationSchemaFormControl extends AbstractCapabilityFormControl<DurationSchemaCapbilityModel>{
+export class DurationSchemaFormControl extends AbstractCapabilityFormControl<DurationSchemaCapabilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: DurationSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: DurationSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
         this.model = model; 

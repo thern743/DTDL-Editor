@@ -17,21 +17,6 @@ import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityMode
 import { ValidationService } from '../validation/validation-service.service';
 import { SettingsService } from '../settings/settings.service';
 import { EditorSettings } from 'src/app/models/EditorSettings';
-import { ObjectSchemaCapbilityModel } from 'src/app/models/ObjectSchemaCapbilityModel';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
-import { ArraySchemaCapbilityModel } from 'src/app/models/ArraySchemaCapbilityModel';
-import { BooleanSchemaCapbilityModel } from 'src/app/models/BooleanSchemaCapbilityModel';
-import { DateSchemaCapbilityModel } from 'src/app/models/DateSchemaCapbilityModel';
-import { DateTimeSchemaCapbilityModel } from 'src/app/models/DateTimeSchemaCapbilityModel';
-import { DoubleSchemaCapbilityModel } from 'src/app/models/DoubleSchemaCapbilityModel';
-import { DurationSchemaCapbilityModel } from 'src/app/models/DurationSchemaCapbilityModel';
-import { EnumSchemaCapbilityModel } from 'src/app/models/EnumSchemaCapbilityModel';
-import { FloatSchemaCapbilityModel } from 'src/app/models/FloatSchemaCapbilityModel';
-import { IntegerSchemaCapbilityModel } from 'src/app/models/IntegerSchemaCapbilityModel';
-import { LongSchemaCapbilityModel } from 'src/app/models/LongSchemaCapbilityModel';
-import { MapSchemaCapbilityModel } from 'src/app/models/MapSchemaCapbilityModel';
-import { StringSchemaCapbilityModel } from 'src/app/models/StringSchemaCapbilityModel';
-import { TimeSchemaCapbilityModel } from 'src/app/models/TimeSchemaCapbilityModel';
 
 @Injectable({
   providedIn: 'root'

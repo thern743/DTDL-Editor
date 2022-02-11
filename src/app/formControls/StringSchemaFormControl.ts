@@ -1,19 +1,19 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { GenericSchemaComponent } from '../generic-schema/generic-schema.component';
-import { GenericSchemaCapbilityModel } from '../models/GenericSchemaCapbilityModel';
+import { GenericSchemaCapabilityModel } from '../models/GenericSchemaCapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
-import { StringSchemaCapbilityModel } from '../models/StringSchemaCapbilityModel';
+import { StringSchemaCapabilityModel } from '../models/StringSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class StringSchemaFormControl extends AbstractCapabilityFormControl<StringSchemaCapbilityModel> implements ISchemaEditor {
+export class StringSchemaFormControl extends AbstractCapabilityFormControl<StringSchemaCapabilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
-    constructor(model: StringSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: StringSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -33,14 +33,14 @@ export class StringSchemaFormControl extends AbstractCapabilityFormControl<Strin
     }
 
     public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as GenericSchemaCapbilityModel;
+        var schema = parentForm.get(schemaName)?.value as GenericSchemaCapabilityModel;
         schema.schema = "String";
     
         this.dialog.open(GenericSchemaComponent, { 
           data: schema
         })
         .afterClosed()
-        .subscribe((result: GenericSchemaCapbilityModel) => {
+        .subscribe((result: GenericSchemaCapabilityModel) => {
           if (result) {
             parentForm.get(schemaName)?.setValue(result);
           } 

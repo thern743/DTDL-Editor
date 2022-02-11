@@ -2,7 +2,7 @@ import { jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
 @jsonObject
-export class ArraySchemaCapbilityModel extends AbstractCapabilityModel {
+export class ArraySchemaCapabilityModel extends AbstractCapabilityModel {
     @jsonMember
     public elementSchema!: AbstractCapabilityModel;
 

@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BooleanSchemaCapbilityModel } from '../models/BooleanSchemaCapbilityModel';
+import { BooleanSchemaCapabilityModel } from '../models/BooleanSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class BooleanSchemaFormControl extends AbstractCapabilityFormControl<BooleanSchemaCapbilityModel>{
+export class BooleanSchemaFormControl extends AbstractCapabilityFormControl<BooleanSchemaCapabilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: BooleanSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: BooleanSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
         this.model = model; 

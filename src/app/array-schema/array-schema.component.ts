@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/ArraySchemaFormControl';
-import { ArraySchemaCapbilityModel } from '../models/ArraySchemaCapbilityModel';
+import { ArraySchemaCapabilityModel } from '../models/ArraySchemaCapabilityModel';
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
 import { SchemaService } from '../services/schema/schema.service';
@@ -27,7 +27,7 @@ export class ArraySchemaComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: ArraySchemaCapbilityModel
+    @Inject(MAT_DIALOG_DATA) data: ArraySchemaCapabilityModel
   ) { 
     this.schemaService = schemaService;
     this._formBuilder = formBuilder;

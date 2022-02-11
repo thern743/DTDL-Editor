@@ -3,7 +3,7 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { EnumValueCapabilityModel } from "./EnumValueCapabilityModel";
 
 @jsonObject
-export class EnumSchemaCapbilityModel extends AbstractCapabilityModel {
+export class EnumSchemaCapabilityModel extends AbstractCapabilityModel {
     @jsonMember
     public valueSchema!: number | string;
 

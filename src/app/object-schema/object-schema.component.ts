@@ -3,7 +3,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ObjectSchemaCapbilityModel } from '../models/ObjectSchemaCapbilityModel';
+import { ObjectSchemaCapabilityModel } from '../models/ObjectSchemaCapabilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
@@ -25,7 +25,7 @@ export class ObjectSchemaComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService,
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapbilityModel
+    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapabilityModel
   ) { 
     this.schemaService = schemaService; 
     this._formBuilder = formBuilder; 

@@ -2,8 +2,8 @@ import { jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
 @jsonObject
-export class DoubleSchemaCapbilityModel extends AbstractCapabilityModel {
+export class DurationSchemaCapabilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
-        super(id, "Double");
+        super(id, "Duration");
     }    
 }

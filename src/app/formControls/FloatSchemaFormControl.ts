@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { FloatSchemaCapbilityModel } from '../models/FloatSchemaCapbilityModel';
+import { FloatSchemaCapabilityModel } from '../models/FloatSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class FloatSchemaFormControl extends AbstractCapabilityFormControl<FloatSchemaCapbilityModel>{
+export class FloatSchemaFormControl extends AbstractCapabilityFormControl<FloatSchemaCapabilityModel>{
     private _validationService: ValidationService;
 
-    constructor(model: FloatSchemaCapbilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: FloatSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
         super(formBuilder);
         this._validationService = validationService;
         this.model = model; 

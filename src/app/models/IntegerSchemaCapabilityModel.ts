@@ -2,8 +2,8 @@ import { jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
 @jsonObject
-export class DateTimeSchemaCapbilityModel extends AbstractCapabilityModel {
+export class IntegerSchemaCapabilityModel extends AbstractCapabilityModel {
     constructor(id: string) {
-        super(id, "DateTime");
+        super(id, "Integer");
     }    
 }
