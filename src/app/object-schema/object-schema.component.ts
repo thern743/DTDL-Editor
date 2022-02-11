@@ -21,13 +21,13 @@ export class ObjectSchemaComponent implements OnInit {
   public dialog: MatDialog;
   private MAX_LEVEL: number = 5;
 
-  constructor(objectSchemaService: SchemaService, 
+  constructor(schemaService: SchemaService, 
     formBuilder: FormBuilder, 
     validationService: ValidationService,
     dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapbilityModel
   ) { 
-    this.schemaService = objectSchemaService; 
+    this.schemaService = schemaService; 
     this._formBuilder = formBuilder; 
     this._validationService = validationService;
     this.dialog = dialog;

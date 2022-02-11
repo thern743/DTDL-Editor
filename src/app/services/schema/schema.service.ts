@@ -67,11 +67,11 @@ export class SchemaService {
       ["duration", new DurationSchemaFormControl(new DurationSchemaCapbilityModel("dtmi:com:Example:MyDuration;1"), this._formBuilder, this._validationService)], 
       ["enum", new EnumSchemaFormControl(new EnumSchemaCapbilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["float", new FloatSchemaFormControl(new FloatSchemaCapbilityModel("dtmi:com:Example:MyFloat;1"), this._formBuilder, this._validationService)], 
-      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService)], 
+      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapbilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["long", new LongSchemaFormControl(new LongSchemaCapbilityModel("dtmi:com:Example:MyLong;1"), this._formBuilder, this._validationService)], 
       ["map", new MapSchemaFormControl(new MapSchemaCapbilityModel("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["object", new ObjectSchemaFormControl(new ObjectSchemaCapbilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["string", new StringSchemaFormControl(new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService)], 
+      ["string", new StringSchemaFormControl(new StringSchemaCapbilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["time", new TimeSchemaFormControl(new TimeSchemaCapbilityModel("dtmi:com:Example:MyTtime;1"), this._formBuilder, this._validationService)]  
     ]);
   }
