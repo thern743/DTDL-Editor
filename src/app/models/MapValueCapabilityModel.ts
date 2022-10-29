@@ -1,14 +1,15 @@
 import { jsonMember } from "typedjson";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
-// TODO: Remove rendering of Type for EnumValue
-export class MapValueCapabilityModel extends AbstractCapabilityModel {
+
+export class MapValueCapabilityModel<TCapabilityModel extends AbstractCapabilityModel> extends AbstractCapabilityModel {
     @jsonMember
     public name!: string;
 
     @jsonMember
-    public schema!: AbstractCapabilityModel;
+    public schema: TCapabilityModel;
 
-    constructor(id: string) {
+    constructor(id: string, schemaModel: TCapabilityModel) {
         super(id, "MapValue");
+        this.schema = schemaModel;
     }
 }

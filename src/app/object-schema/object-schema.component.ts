@@ -41,10 +41,4 @@ export class ObjectSchemaComponent implements OnInit {
   public getFields(): Array<FieldCapabilityFormControl> { 
     return this.object.fields;
   }
-
-  //DTDL Allows a nesting of objects down to five levels... 
-  //i.e. 4 children on the top level object. 
-  public canAddChild(): boolean { 
-    return this.object.fields.length <= this.MAX_LEVEL; 
-  }
 }

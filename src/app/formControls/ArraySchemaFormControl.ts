@@ -2,6 +2,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ArraySchemaComponent } from '../array-schema/array-schema.component';
 import { ArraySchemaCapabilityModel } from '../models/ArraySchemaCapabilityModel';
+import { ICapabilityModel } from '../models/ICapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -12,13 +13,18 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 export class ArraySchemaFormControl extends AbstractCapabilityFormControl<ArraySchemaCapabilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
-
+    
     constructor(model: ArraySchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
+        this.mapModelSubProperties(model);
         this.model = model; 
         this.form = this.toFormGroup();          
+    }
+
+    private mapModelSubProperties(arrayModel: ArraySchemaCapabilityModel): void {  
+      // NOOP
     }
 
     public toFormGroup(): FormGroup { 

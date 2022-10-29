@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapKeyFormControl } from 'src/app/formControls/MapKeyFormControl';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { ISchemaEditor } from 'src/app/models/ISchemaEditor';
 import { MapKeyCapabilityModel } from 'src/app/models/MapKeyCapabilityModel';
@@ -27,7 +28,7 @@ export class MapKeyComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapKeyCapabilityModel) {
+    @Inject(MAT_DIALOG_DATA) data: MapKeyCapabilityModel<AbstractCapabilityModel>) {
       this.schemaService = schemaService;
       this._formBuilder = formBuilder;
       this._validationService = validationService;
@@ -36,7 +37,7 @@ export class MapKeyComponent implements OnInit {
       this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
-  public  ngOnInit(): void {
+  public ngOnInit(): void {
     this.mapKey.subscribeModelToForm();
   }
 

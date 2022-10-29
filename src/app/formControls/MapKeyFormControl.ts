@@ -1,21 +1,27 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapKeyComponent } from "../map-schema/map-key/map-key.component";
+import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 import { ISchemaEditor } from "../models/ISchemaEditor";
 import { MapKeyCapabilityModel } from "../models/MapKeyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 
-export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel> implements ISchemaEditor {
+export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel<AbstractCapabilityModel>> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: MapKeyCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapKeyCapabilityModel<AbstractCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
+        this.mapModelSubProperties(model);
         this.model = model;
         this.form = this.toFormGroup();
+    }
+
+    private mapModelSubProperties(model: MapKeyCapabilityModel<AbstractCapabilityModel>): void {
+      // NOOP
     }
 
     public toFormGroup(): FormGroup {
@@ -33,13 +39,13 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
     }
 
     public openSchemaEditor(parentForm: FormGroup, schemaName: string = "mapKey"): void {
-        var schema = parentForm.get(schemaName)?.value as MapKeyCapabilityModel;
+        var schema = parentForm.get(schemaName)?.value as MapKeyCapabilityModel<AbstractCapabilityModel>;
     
         this.dialog.open(MapKeyComponent, { 
           data: schema
         })
         .afterClosed()
-        .subscribe((result: MapKeyCapabilityModel) => {
+        .subscribe((result: MapKeyCapabilityModel<AbstractCapabilityModel>) => {
           if (result) {
             parentForm.get(schemaName)?.setValue(result);
           } 

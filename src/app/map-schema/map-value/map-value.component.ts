@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { ISchemaEditor } from 'src/app/models/ISchemaEditor';
 import { MapValueCapabilityModel } from 'src/app/models/MapValueCapabilityModel';
@@ -27,7 +28,7 @@ export class MapValueComponent implements OnInit {
     formBuilder: FormBuilder, 
     validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapValueCapabilityModel) {
+    @Inject(MAT_DIALOG_DATA) data: MapValueCapabilityModel<AbstractCapabilityModel>) {
       this.schemaService = schemaService;
       this._formBuilder = formBuilder;
       this._validationService = validationService;

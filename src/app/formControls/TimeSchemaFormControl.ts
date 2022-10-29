@@ -1,4 +1,8 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { GenericSchemaComponent } from '../generic-schema/generic-schema.component';
+import { GenericSchemaCapabilityModel } from '../models/GenericSchemaCapabilityModel';
+import { ISchemaEditor } from '../models/ISchemaEditor';
 import { TimeSchemaCapabilityModel } from '../models/TimeSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -6,12 +10,14 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class TimeSchemaFormControl extends AbstractCapabilityFormControl<TimeSchemaCapabilityModel>{
+export class TimeSchemaFormControl extends AbstractCapabilityFormControl<TimeSchemaCapabilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
+    public dialog: MatDialog;
 
-    constructor(model: TimeSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {
+    constructor(model: TimeSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
+        this.dialog = dialog;
         this.model = model; 
         this.form = this.toFormGroup();          
     }
@@ -25,5 +31,20 @@ export class TimeSchemaFormControl extends AbstractCapabilityFormControl<TimeSch
         });
 
         return form;
+    }
+
+    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
+        var schema = parentForm.get(schemaName)?.value as GenericSchemaCapabilityModel;
+        schema.schema = "Time";
+    
+        this.dialog.open(GenericSchemaComponent, { 
+          data: schema
+        })
+        .afterClosed()
+        .subscribe((result: GenericSchemaCapabilityModel) => {
+          if (result) {
+            parentForm.get(schemaName)?.setValue(result);
+          } 
+        });
     }
 }

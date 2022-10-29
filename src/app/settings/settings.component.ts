@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EditorSettings } from '../models/EditorSettings';
 import { SettingsService } from '../services/settings/settings.service';
 
+// TODO: Add option to disable filling in default DTMIs/IDs
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',

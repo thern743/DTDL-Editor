@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EnumSchemaComponent } from '../enum-schema/enum-schema.component';
 import { EnumSchemaCapabilityModel } from '../models/EnumSchemaCapabilityModel';
+import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
 import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -13,15 +14,23 @@ import { EnumValueCapabilityFormControl } from './EnumValueCapabilityFormControl
 export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSchemaCapabilityModel> implements ISchemaEditor {
     private _validationService: ValidationService;
     public dialog: MatDialog;
-    public enumValues: Array<EnumValueCapabilityFormControl>;
+    public enumValues!: Array<EnumValueCapabilityFormControl>;
 
     constructor(model: EnumSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
-        this.enumValues = new Array<EnumValueCapabilityFormControl>();
         this.dialog = dialog;
+        this.mapModelSubProperties(model);        
         this.model = model; 
         this.form = this.toFormGroup();          
+    }
+
+    private mapModelSubProperties(enumModel: EnumSchemaCapabilityModel): void {  
+      this.enumValues = new Array<EnumValueCapabilityFormControl>();
+
+      enumModel.enumValues?.map((subModel: EnumValueCapabilityModel) => {
+        this.enumValues.push(new EnumValueCapabilityFormControl(subModel, this.formBuilder, this._validationService, this.dialog));
+      });
     }
     
     public toFormGroup(): FormGroup { 
@@ -32,7 +41,7 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
             description: [this.model.description],
             // Enum specific
             valueSchema: [this.model.valueSchema],
-            enumValues: this.formBuilder.array([...this.model.enumValues])            
+            enumValues: this.formBuilder.array(this.enumValues)            
         });
 
         return form;

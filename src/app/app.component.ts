@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SchemaService } from './services/schema/schema.service';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,9 @@ export class AppComponent {
   public navOpenState = false;
   public treeView = false;
 
-  constructor() { }
+  constructor(schemaService: SchemaService) { 
+    schemaService.registerForms();
+    schemaService.registerModels();
+    schemaService.registerMapModels();
+  }
 }

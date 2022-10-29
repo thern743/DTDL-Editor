@@ -16,40 +16,41 @@ import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
-  public contents: ICapabilityFormControl<ICapabilityModel>[];
   private _validationService: ValidationService;
+  public contents!: ICapabilityFormControl<ICapabilityModel>[];
   
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
     super(formBuilder);
     this._validationService = validationService;
-    this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
     this.mapModelSubProperties(model);
     this.model = model;
     this.form = this.toFormGroup();
   }
 
-  private mapModelSubProperties(model: InterfaceCapabilityModel): void {
-    model.contents.map((model: ICapabilityModel) => {
+  private mapModelSubProperties(interfaceModel: InterfaceCapabilityModel): void {
+    this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
+
+    interfaceModel.contents?.map((subModel: ICapabilityModel) => {
       let formControl!: ICapabilityFormControl<ICapabilityModel>;
             
-      switch(model.type[0]) {
+      switch(subModel.type[0]) {
         case "Property":          
-          formControl = new PropertyCapabilityFormControl(model as PropertyCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new PropertyCapabilityFormControl(subModel as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Command":
-          formControl = new CommandCapabilityFormControl(model as CommandCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new CommandCapabilityFormControl(subModel as CommandCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Telemetry":
-          formControl = new TelemetryCapabilityFormControl(model as TelemetryCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new TelemetryCapabilityFormControl(subModel as TelemetryCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Component":
-          formControl = new ComponentCapabilityFormControl(model as ComponentCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new ComponentCapabilityFormControl(subModel as ComponentCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Relationship":
-          formControl = new RelationshipCapabilityFormControl(model as RelationshipCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new RelationshipCapabilityFormControl(subModel as RelationshipCapabilityModel, this._validationService, this.formBuilder);
           break;
         default:
-          throw new Error("Invalid capability type '" + model.type + "'");          
+          throw new Error("Invalid capability type '" + subModel.type + "'");          
       }
 
       this.contents.push(formControl);
