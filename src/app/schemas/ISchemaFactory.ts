@@ -1,11 +1,6 @@
-import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilityFormControl";
-import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { IPrimitiveSchemaFactory } from "./IPrimitiveSchemaFactory";
+import { IMapSchemaFactory } from "./IMapSchemaFactory";
 
-export interface ISchemaFactory {
-    formRegistry: Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>;
-    modelRegistry: Map<string, () => AbstractCapabilityModel>;
-    registerFormControl(name: string, factory: () => AbstractCapabilityFormControl<AbstractCapabilityModel>): void;
-    createFormControl(name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-    registerModel(name: string, factory: () => AbstractCapabilityModel): void;
-    createModel(name: string): AbstractCapabilityModel | undefined;
+export interface ISchemaFactory extends IPrimitiveSchemaFactory, IMapSchemaFactory {
+
 }

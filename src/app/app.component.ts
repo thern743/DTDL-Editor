@@ -15,6 +15,7 @@ export class AppComponent {
   constructor(schemaService: SchemaService) { 
     schemaService.registerForms();
     schemaService.registerModels();
+    schemaService.registerMapForms();
     schemaService.registerMapModels();
   }
 }

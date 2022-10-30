@@ -9,7 +9,8 @@ export class MapValueCapabilityModel<TCapabilityModel extends AbstractCapability
     public schema: TCapabilityModel;
 
     constructor(id: string, schemaModel: TCapabilityModel) {
-        super(id, "MapValue");
+        // TODO: Fix this hard-coded indexing.
+        super(id, schemaModel.type[0]);
         this.schema = schemaModel;
     }
 }

@@ -9,7 +9,8 @@ export class MapKeyCapabilityModel<TCapabilityModel extends AbstractCapabilityMo
     public schema: TCapabilityModel;
 
     constructor(id: string, schemaModel: TCapabilityModel) {
-        super(id, "MapKey");
+        // TODO: Fix this hard-coded indexing.
+        super(id, schemaModel.type[0]);
         this.schema = schemaModel;
     }
 }

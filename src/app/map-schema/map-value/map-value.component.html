@@ -8,17 +8,8 @@
 
     <mat-form-field color="accent">
         <mat-label for="schema">Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema" #schema>
-            <mat-option *ngFor="let schema of schemaTypes | keyvalue" [value]="schema.value.model"> {{ schema.value.model.type[0] }} </mat-option>
-        </mat-select>
+        <input matInput id="name" type="text" formControlName="schema" readonly />
     </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container *ngIf="schemaService.isComplexSchema(mapValue.form)">
-        <button mat-raised-button color="primary" (click)="openEditor(schema.value.type[0])">
-            <mat-icon>edit</mat-icon>
-            Edit Schema
-        </button>
-    </ng-container>
     <br/>
 
     <mat-form-field color="accent">
