@@ -1,13 +1,11 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { MapValueComponent } from "../map-schema/map-value/map-value.component";
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
-import { ISchemaEditor } from "../models/ISchemaEditor";
 import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 
-export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueCapabilityModel<AbstractCapabilityModel>> implements ISchemaEditor {
+export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueCapabilityModel<AbstractCapabilityModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
@@ -36,19 +34,5 @@ export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueC
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "mapValue"): void {
-        var schema = parentForm.get(schemaName)?.value as MapValueCapabilityModel<AbstractCapabilityModel>;
-    
-        this.dialog.open(MapValueComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: MapValueCapabilityModel<AbstractCapabilityModel>) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

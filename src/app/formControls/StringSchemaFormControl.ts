@@ -1,8 +1,5 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { GenericSchemaComponent } from '../generic-schema/generic-schema.component';
-import { GenericSchemaCapabilityModel } from '../models/GenericSchemaCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { StringSchemaCapabilityModel } from '../models/StringSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -10,7 +7,7 @@ import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class StringSchemaFormControl extends AbstractCapabilityFormControl<StringSchemaCapabilityModel> implements ISchemaEditor {
+export class StringSchemaFormControl extends AbstractCapabilityFormControl<StringSchemaCapabilityModel> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
     constructor(model: StringSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
@@ -30,20 +27,5 @@ export class StringSchemaFormControl extends AbstractCapabilityFormControl<Strin
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as GenericSchemaCapabilityModel;
-        schema.schema = "String";
-    
-        this.dialog.open(GenericSchemaComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: GenericSchemaCapabilityModel) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

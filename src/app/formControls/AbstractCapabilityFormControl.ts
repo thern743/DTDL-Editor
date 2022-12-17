@@ -1,4 +1,6 @@
+import { OnDestroy } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
 
@@ -9,12 +11,14 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public formBuilder: FormBuilder;
     public model!: TCapabilityDto;  
     public form!: FormGroup;
+    private _subscriptions: Subscription[];
     
     // TODO: Move setting model and validation service to this ctor from all subclasses.
     constructor(formBuilder: FormBuilder) {
-        this.formBuilder = formBuilder;        
+        this.formBuilder = formBuilder; 
+        this._subscriptions = new Array<Subscription>();       
     }
-
+  
     public abstract toFormGroup(): FormGroup;
 
     public subscribeModelToForm(): void {
@@ -26,15 +30,23 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
         let control = this.form.controls[key];        
         
         if(!(control instanceof FormArray)) {          
-          control.valueChanges.subscribe(
+          let subscription = control.valueChanges.subscribe(
             (value) => {
               (<any>this.model)[key] = value;
           }, (error: Error) => {
               console.error("Error in subscription: %o", error);
           });
+          this._subscriptions.push(subscription);
         }
       });
 
+      console.groupEnd();
+    }
+
+    // TODO: Call this from each component.
+    public onDestroy(): void {
+      console.groupCollapsed("Unsubscribing");
+      this._subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
       console.groupEnd();
     }
 }

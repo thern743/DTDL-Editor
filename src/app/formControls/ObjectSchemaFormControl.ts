@@ -1,9 +1,7 @@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ObjectSchemaCapabilityModel } from '../models/ObjectSchemaCapabilityModel';
-import { ObjectSchemaComponent } from '../object-schema/object-schema.component';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from './FieldCapabilityFormControl';
@@ -11,7 +9,7 @@ import { FieldCapabilityFormControl } from './FieldCapabilityFormControl';
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<ObjectSchemaCapabilityModel> implements ISchemaEditor {
+export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<ObjectSchemaCapabilityModel> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
     public fields!: Array<FieldCapabilityFormControl>;
@@ -44,19 +42,5 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as ObjectSchemaCapabilityModel;
-
-        this.dialog.open(ObjectSchemaComponent, { 
-            data: schema
-        })
-        .afterClosed()
-        .subscribe((result: ObjectSchemaCapabilityModel) => {
-            if (result) {
-                parentForm.get(schemaName)?.setValue(result);
-            } 
-        });
     }
 }

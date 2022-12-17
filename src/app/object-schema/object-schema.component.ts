@@ -3,7 +3,6 @@ import { SchemaService } from '../services/schema/schema.service';
 import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ObjectSchemaCapabilityModel } from '../models/ObjectSchemaCapabilityModel';
 import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
@@ -16,22 +15,16 @@ export class ObjectSchemaComponent implements OnInit {
   public object!: ObjectSchemaFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  private _formBuilder: FormBuilder;
-  private _validationService: ValidationService;
   public dialog: MatDialog;
   private MAX_LEVEL: number = 5;
 
   constructor(schemaService: SchemaService, 
-    formBuilder: FormBuilder, 
-    validationService: ValidationService,
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaCapabilityModel
+    @Inject(MAT_DIALOG_DATA) data: ObjectSchemaFormControl
   ) { 
     this.schemaService = schemaService; 
-    this._formBuilder = formBuilder; 
-    this._validationService = validationService;
     this.dialog = dialog;
-    this.object = new ObjectSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
+    this.object = data;
   }
 
   public ngOnInit(): void { 

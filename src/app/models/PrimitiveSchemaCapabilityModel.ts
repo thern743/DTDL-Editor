@@ -4,9 +4,12 @@ import { PrimitiveSchemaComponent } from "../primitive-schema/primitive-schema.c
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
 @jsonObject
-export class DurationSchemaCapabilityModel extends AbstractCapabilityModel {
-    constructor(id: string) {
-        super(id, "Duration");
+export class PrimitiveSchemaCapabilityModel extends AbstractCapabilityModel {
+    public schema: string;
+
+    constructor(id: string, schema: string = "Generic") {
+        super(id, schema);
+        this.schema = schema;
     }
     
     public resolveSchemaComponentType(): ComponentType<any> {

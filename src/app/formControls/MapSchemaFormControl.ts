@@ -1,8 +1,6 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MapSchemaComponent } from '../map-schema/map-schema.component';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { MapSchemaCapabilityModel } from '../models/MapSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -12,7 +10,7 @@ import { MapValueFormControl } from './MapValueFormControl';
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>> implements ISchemaEditor {
+export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
     public mapKey!: MapKeyFormControl;
@@ -28,9 +26,18 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
     }
 
     private mapModelSubProperties(model: MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>): void { 
-      this.mapKey = new MapKeyFormControl(model.mapKey, this.formBuilder, this._validationService, this.dialog);        
-      this.mapValue = new MapValueFormControl(model.mapValue, this.formBuilder, this._validationService, this.dialog);
-    }    
+      // NO OP     
+    } 
+    
+    public setMapKeyForm(form: MapKeyFormControl): void {      
+      this.mapKey = form;        
+      this.model.setKey(this.mapKey.model);
+    }
+
+    public setMapValueForm(form: MapValueFormControl): void {
+      this.mapValue = form;
+      this.model.setValue(this.mapValue.model);
+    }
 
     public toFormGroup(): FormGroup { 
         let form =  this.formBuilder.group({
@@ -39,24 +46,10 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
             comment: [this.model.comment],
             description: [this.model.description],
             // Map specific
-            mapKey: this.mapKey.form,
-            mapValue: this.mapValue.form
+            mapKey: this.formBuilder.group({ name: [], schema: [] }), //[]
+            mapValue: this.formBuilder.group({ name: [], schema: [] }) //[]
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>;
-    
-        this.dialog.open(MapSchemaComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

@@ -1,16 +1,13 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { GenericSchemaComponent } from '../generic-schema/generic-schema.component';
 import { DateSchemaCapabilityModel } from '../models/DateSchemaCapabilityModel';
-import { GenericSchemaCapabilityModel } from '../models/GenericSchemaCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSchemaCapabilityModel> implements ISchemaEditor {
+export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSchemaCapabilityModel> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
@@ -31,20 +28,5 @@ export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSch
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as GenericSchemaCapabilityModel;
-        schema.schema = "Date";
-    
-        this.dialog.open(GenericSchemaComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: GenericSchemaCapabilityModel) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

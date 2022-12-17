@@ -26,9 +26,10 @@
 
     <ng-container formGroupName="mapKey">
         <mat-form-field color="accent">
-            <mat-label for="schema">Map Key</mat-label>
-            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema" #mapKeySchema>
-                        <mat-option *ngFor="let keySchemaType of keySchemaTypes | keyvalue" [value]="changeMapKey(keySchemaType.key)"> {{ keySchemaType.key }} </mat-option>
+            <mat-label for="keySchema">Map Key</mat-label>
+            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="keySchema" #mapKeySchema 
+                        (selectionChange)="changeMapKey($event)">
+                <mat-option *ngFor="let schemaType of keySchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
             </mat-select>
         </mat-form-field>    
         <span class="formSpacer"></span>
@@ -38,7 +39,7 @@
         </mat-form-field>
         <span class="formSpacer"></span>
         <ng-container>
-            <button mat-raised-button color="primary" (click)="openKeyEditor(mapKeySchema.value)">
+            <button mat-raised-button color="primary" (click)="openKeyEditor()">
                 <mat-icon>edit</mat-icon>
                 Edit Schema
             </button>
@@ -48,9 +49,10 @@
 
     <ng-container formGroupName="mapValue">
         <mat-form-field color="accent">
-            <mat-label for="schema">Map Value</mat-label>
-            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="schema" formControlName="schema" #mapValueSchema>
-                        <mat-option *ngFor="let valueSchemaType of valueSchemaTypes | keyvalue" [value]="changeMapValue(valueSchemaType.key)"> {{ valueSchemaType.key }} </mat-option>
+            <mat-label for="valueSchema">Map Value</mat-label>
+            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="valueSchema" #mapValueSchema 
+                        (selectionChange)="changeMapValue($event)">
+                <mat-option *ngFor="let schemaType of valueSchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
             </mat-select>
         </mat-form-field>
         <span class="formSpacer"></span>
@@ -60,7 +62,7 @@
         </mat-form-field>
         <span class="formSpacer"></span>    
         <ng-container>
-            <button mat-raised-button color="primary" (click)="openValueEditor(mapValueSchema.value)">
+            <button mat-raised-button color="primary" (click)="openValueEditor()">
                 <mat-icon>edit</mat-icon>
                 Edit Schema
             </button>

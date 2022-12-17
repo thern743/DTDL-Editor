@@ -1,7 +1,6 @@
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 
 export interface IModelFactory {
-    registerModels(name: string): void;
-    registerMapModels(): void;
-    createModel(name: string): AbstractCapabilityModel | undefined;
+    registerModels(type: string, name: string): void;
+    createModel(type: string, name: string): AbstractCapabilityModel | undefined;
 }

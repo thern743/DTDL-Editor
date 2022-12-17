@@ -19,7 +19,7 @@ export class PreviewPanelComponent implements OnInit {
 
   constructor(fileService: FileService) { 
     this.fileService = fileService;
-    this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
+    this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
   }
 
   public ngOnInit(): void {

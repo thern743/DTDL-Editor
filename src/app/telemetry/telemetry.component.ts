@@ -5,9 +5,8 @@ import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
-import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
-import { ISchemaEditor } from '../models/ISchemaEditor';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 
 @Component({
   selector: 'telemetry-definition',
@@ -21,13 +20,14 @@ export class TelemetryComponent implements OnInit {
   public editorService: EditorService;
   public schemaService: SchemaService;
   public dialog: MatDialog;
-  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
+  public schemaTypes: Array<string>;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
   
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
     this.editorService = editorService;
     this.schemaService = schemaService;
     this.dialog = dialog;
-    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
+    this.schemaTypes = this.getSchemaTypes();
   }
 
   public ngOnInit(): void {  
@@ -46,6 +46,20 @@ export class TelemetryComponent implements OnInit {
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
     });    
+  }
+
+  private getSchemaTypes(): Array<string> {
+    let schemaTypes = new Array<string>();
+    
+    this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    this.schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    return schemaTypes;
   }
 
   public getUnits(): string[] | undefined {
@@ -68,10 +82,16 @@ export class TelemetryComponent implements OnInit {
     }
   }
 
-  public openEditor(type: string, schemaName: string = "schema"): void {
-    let form = this.schemaTypes.get(type.toLowerCase());
-    if(form === undefined) return;
-    // TODO: This is a hack. Figure out a better solution.
-    (<ISchemaEditor><unknown>form).openSchemaEditor(this.telemetry.form, schemaName);
+  public changeSchema($event: MatSelectChange): void {
+    if($event.value instanceof AbstractCapabilityFormControl) return;
+    let key = $event.value.toLowerCase();
+    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
+    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    if(formControl === undefined) return;
+    this.schemaFormControl = formControl;
+  }
+
+  public openSchemaEditor(): void {
+    this.schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
   }
 }

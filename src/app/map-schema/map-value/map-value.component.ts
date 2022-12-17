@@ -1,14 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
-import { ISchemaEditor } from 'src/app/models/ISchemaEditor';
-import { MapValueCapabilityModel } from 'src/app/models/MapValueCapabilityModel';
 import { SchemaService } from 'src/app/services/schema/schema.service';
-import { ValidationService } from 'src/app/services/validation/validation-service.service';
 
 @Component({
   selector: 'map-value-schema',
@@ -19,21 +14,15 @@ export class MapValueComponent implements OnInit {
   public mapValue!: MapValueFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  private _formBuilder: FormBuilder;
-  private _validationService: ValidationService;
   public dialog: MatDialog;
   public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
   
   constructor(schemaService: SchemaService,
-    formBuilder: FormBuilder, 
-    validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapValueCapabilityModel<AbstractCapabilityModel>) {
+    @Inject(MAT_DIALOG_DATA) data: MapValueFormControl) {
       this.schemaService = schemaService;
-      this._formBuilder = formBuilder;
-      this._validationService = validationService;
       this.dialog = dialog;
-      this.mapValue = new MapValueFormControl(data, this._formBuilder, this._validationService, this.dialog);
+      this.mapValue = data;
       this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 

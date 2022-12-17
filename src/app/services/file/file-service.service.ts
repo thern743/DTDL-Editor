@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { JsonLdPipe } from 'src/app/filters/jsonld.pipe';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
 import * as FileSaver from 'file-saver';
-import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'

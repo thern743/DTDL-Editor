@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
@@ -7,10 +6,7 @@ import { MapKeyFormControl } from '../formControls/MapKeyFormControl';
 import { MapSchemaFormControl } from '../formControls/MapSchemaFormControl';
 import { MapValueFormControl } from '../formControls/MapValueFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
-import { MapSchemaCapabilityModel } from '../models/MapSchemaCapabilityModel';
 import { SchemaService } from '../services/schema/schema.service';
-import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
   selector: 'map-schema',
@@ -21,25 +17,21 @@ export class MapSchemaComponent implements OnInit {
   public map!: MapSchemaFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  private _formBuilder: FormBuilder;
-  private _validationService: ValidationService;
   public dialog: MatDialog;
-  public keySchemaTypes: Map<string, MapKeyFormControl | undefined>;
-  public valueSchemaTypes: Map<string, MapValueFormControl | undefined>;
+  public keySchemaTypes: string[];
+  public valueSchemaTypes: string[]
+  public keySchemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+  public valueSchemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
   constructor(schemaService: SchemaService,
-    formBuilder: FormBuilder, 
-    validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>
+    @Inject(MAT_DIALOG_DATA) data: MapSchemaFormControl
   ) { 
     this.schemaService = schemaService;
-    this._formBuilder = formBuilder;
-    this._validationService = validationService;
     this.dialog = dialog;
-    this.map = new MapSchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
-    this.keySchemaTypes = new Map<string, MapKeyFormControl>();
-    this.valueSchemaTypes = new Map<string, MapValueFormControl>();
+    this.map = data;
+    this.keySchemaTypes = new Array<string>();
+    this.valueSchemaTypes = new Array<string>();
     this.mapKeysAndValues();
   }
 
@@ -49,38 +41,36 @@ export class MapSchemaComponent implements OnInit {
 
   private mapKeysAndValues(): void {
     // TODO: No need for value once we refactor the schemaService for proper double-dispatch injection.
-    this.schemaService.schemaFactory.mapFormRegistry.get("MapKey")?.forEach((value, key) => {
-      this.keySchemaTypes.set(key, undefined);
+    this.schemaService.schemaFactory.formRegistry.get("MapKey")?.forEach((value, key) => {
+      this.keySchemaTypes.push(key);
     });
 
-    this.schemaService.schemaFactory.mapFormRegistry.get("MapValue")?.forEach((value, key) => {
-      this.valueSchemaTypes.set(key, undefined)
+    this.schemaService.schemaFactory.formRegistry.get("MapValue")?.forEach((value, key) => {
+      this.valueSchemaTypes.push(key)
     });
   }
 
-  public changeMapKey(key: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined {
-    let formControl = this.schemaService.createMapForm("MapKey", key.toLowerCase());
+  public changeMapKey($event: MatSelectChange): void {
+    if($event.value instanceof AbstractCapabilityFormControl) return;
+    let key = $event.value.toLowerCase();
+    let formControl = this.schemaService.createForm("MapKey", key) as MapKeyFormControl;
     if(formControl === undefined) return;
-    let schema = this.map.form.get("mapKey.schema");
-    if(schema === undefined || schema === null) return;
-    return formControl;  
+    this.keySchemaFormControl = formControl;
   }
 
-  public changeMapValue(key: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined {
-    let formControl = this.schemaService.createMapForm("MapValue", key.toLowerCase());
+  public changeMapValue($event: MatSelectChange): void {
+    if($event.value instanceof AbstractCapabilityFormControl) return;
+    let key = $event.value.toLowerCase();
+    let formControl = this.schemaService.createForm("MapValue", key) as MapValueFormControl;
     if(formControl === undefined) return;
-    let schema = this.map.form.get("mapValue.schema");
-    if(schema === undefined || schema === null) return;
-    return formControl;
+    this.valueSchemaFormControl = formControl;
   }
 
-  public openKeyEditor(form: ISchemaEditor): void {
-    if(form === undefined) return;
-    form.openSchemaEditor(this.map.mapKey.form, "schema");
+  public openKeyEditor(): void {
+    this.schemaService.openSchemaEditor(this.map.form, this.keySchemaFormControl);
   }
 
-  public openValueEditor(form: ISchemaEditor): void {
-    if(form === undefined) return;
-    form.openSchemaEditor(this.map.mapValue.form, "schema");
+  public openValueEditor(): void {
+    this.schemaService.openSchemaEditor(this.map.form, this.valueSchemaFormControl);
   }
 }

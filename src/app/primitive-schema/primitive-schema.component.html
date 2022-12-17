@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>{{ generic.model.schema }} Schema Definition</h1>
-<mat-dialog-content [formGroup]="generic.form">
+<h1 mat-dialog-title>Primitive Schema Definition</h1>
+<mat-dialog-content [formGroup]="primitive.form">
     <mat-form-field color="accent">
         <mat-label for="id">Id</mat-label>
         <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
@@ -25,7 +25,7 @@
     <br/>
 
     <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="generic.model">
+        <button mat-raised-button color="primary" [mat-dialog-close]="primitive.model">
             <mat-icon>save</mat-icon> Save
         </button>
     </div>

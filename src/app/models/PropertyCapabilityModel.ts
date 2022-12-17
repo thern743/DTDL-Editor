@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+import { ComponentType } from '@angular/cdk/portal';
 import { jsonMember, jsonObject } from "typedjson";
+import { PropertyComponent } from '../property/property.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
-import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class PropertyCapabilityModel extends AbstractCapabilityModel {  
@@ -10,8 +11,6 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
 
   @jsonMember 
   public schema!: AbstractCapabilityModel;
-
-  public schemaType!: string;
 
   public semanticType!: string;
 
@@ -23,6 +22,9 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
 
   constructor(id: string) {
     super(id, "Property");
-    this.type = new SemanticTypeArray("Property");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return PropertyComponent;
   }
 }

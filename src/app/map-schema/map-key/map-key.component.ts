@@ -3,12 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapKeyFormControl } from 'src/app/formControls/MapKeyFormControl';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
-import { ISchemaEditor } from 'src/app/models/ISchemaEditor';
-import { MapKeyCapabilityModel } from 'src/app/models/MapKeyCapabilityModel';
 import { SchemaService } from 'src/app/services/schema/schema.service';
-import { ValidationService } from 'src/app/services/validation/validation-service.service';
 
 @Component({
   selector: 'map-key-schema',
@@ -19,21 +15,15 @@ export class MapKeyComponent implements OnInit {
   public mapKey!: MapKeyFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  private _formBuilder: FormBuilder;
-  private _validationService: ValidationService;
   public dialog: MatDialog;
   public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
   constructor(schemaService: SchemaService,
-    formBuilder: FormBuilder, 
-    validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapKeyCapabilityModel<AbstractCapabilityModel>) {
+    @Inject(MAT_DIALOG_DATA) data: MapKeyFormControl) {
       this.schemaService = schemaService;
-      this._formBuilder = formBuilder;
-      this._validationService = validationService;
       this.dialog = dialog;
-      this.mapKey = new MapKeyFormControl(data, this._formBuilder, this._validationService, this.dialog);
+      this.mapKey = data;
       this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 

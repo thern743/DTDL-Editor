@@ -1,9 +1,7 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { EnumSchemaComponent } from '../enum-schema/enum-schema.component';
 import { EnumSchemaCapabilityModel } from '../models/EnumSchemaCapabilityModel';
 import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { EnumValueCapabilityFormControl } from './EnumValueCapabilityFormControl';
@@ -11,7 +9,7 @@ import { EnumValueCapabilityFormControl } from './EnumValueCapabilityFormControl
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSchemaCapabilityModel> implements ISchemaEditor {
+export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSchemaCapabilityModel> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
     public enumValues!: Array<EnumValueCapabilityFormControl>;
@@ -45,19 +43,5 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "schema"): void {
-        var schema = parentForm.get(schemaName)?.value as EnumSchemaCapabilityModel;
-    
-        this.dialog.open(EnumSchemaComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: EnumSchemaCapabilityModel) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

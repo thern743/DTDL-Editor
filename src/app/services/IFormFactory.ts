@@ -2,6 +2,6 @@ import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilit
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 
 export interface IFormFactory {
-    registerForms(name: string): void;
-    createForm(name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+    registerForms(type: string, name: string): void;
+    createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
 }

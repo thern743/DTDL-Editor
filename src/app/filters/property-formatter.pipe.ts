@@ -16,7 +16,7 @@ export class PropertyFormatterPipe implements PipeTransform {
         val2 += value[i] + ",";
       }
 
-      return val2.length > 1 ? val1 + " (" + val2.substr(0, val2.length - 1) + ")" : val1;
+      return val2.length > 1 ? val1 + " (" + val2.substring(0, val2.length - 1) + ")" : val1;
     }
 
     return value;

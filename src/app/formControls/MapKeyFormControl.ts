@@ -1,13 +1,11 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { MapKeyComponent } from "../map-schema/map-key/map-key.component";
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
-import { ISchemaEditor } from "../models/ISchemaEditor";
 import { MapKeyCapabilityModel } from "../models/MapKeyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 
-export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel<AbstractCapabilityModel>> implements ISchemaEditor {
+export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel<AbstractCapabilityModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
@@ -32,23 +30,9 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
             description: [this.model.description],
             // MapKey specific
             name: [this.model.name],
-            schema: [this.model.schema]
+            schema: [this.model.schema.type[0]]
         });
 
         return form;
-    }
-
-    public openSchemaEditor(parentForm: FormGroup, schemaName: string = "mapKey"): void {
-        var schema = parentForm.get(schemaName)?.value as MapKeyCapabilityModel<AbstractCapabilityModel>;
-    
-        this.dialog.open(MapKeyComponent, { 
-          data: schema
-        })
-        .afterClosed()
-        .subscribe((result: MapKeyCapabilityModel<AbstractCapabilityModel>) => {
-          if (result) {
-            parentForm.get(schemaName)?.setValue(result);
-          } 
-        });
     }
 }

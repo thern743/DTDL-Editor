@@ -3,7 +3,8 @@ import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { ICapabilityModel } from './ICapabilityModel';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
-import { SemanticTypeArray } from './SemanticTypeArray';
+import { RelationshipComponent } from '../relationship/relationship.component';
+import { ComponentType } from '@angular/cdk/portal';
 
 @jsonObject
 export class RelationshipCapabilityModel extends AbstractCapabilityModel {
@@ -28,7 +29,10 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   constructor(id: string) {
     super(id, "Relationship");
     this.properties = new Array<ICapabilityModel>();
-    this.type = new SemanticTypeArray("Relationship");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return RelationshipComponent;
   }
 
   public static interfaceCapabilityDeserializer(json: Array<{prop: string; shouldDeserialize: boolean}>, params: CustomDeserializerParams) {

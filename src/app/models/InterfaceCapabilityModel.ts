@@ -1,13 +1,14 @@
 import 'reflect-metadata';
+import { ComponentType } from '@angular/cdk/portal';
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
+import { InterfaceComponent } from '../interface/interface.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CommandCapabilityModel } from './CommandCapabilityModel';
 import { ComponentCapabilityModel } from './ComponentCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
 import { PropertyCapabilityModel } from './PropertyCapabilityModel';
 import { RelationshipCapabilityModel } from './RelationshipCapabilityModel';
-import { SemanticTypeArray } from './SemanticTypeArray';
 import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
 
 // TODO: Support Interface Schemas: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
@@ -26,7 +27,10 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
     super(id, "Interface");
     this.context = context;
     this.contents = new Array<ICapabilityModel>();
-    this.type = new SemanticTypeArray("Interface");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return InterfaceComponent;
   }
 
   get commands(): ICapabilityModel[] {        

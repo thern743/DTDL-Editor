@@ -51,7 +51,7 @@ import { MapSchemaComponent } from './map-schema/map-schema.component';
 import { EnumValueComponent } from './enum-schema/enum-value/enum-value.component';
 import { MapKeyComponent } from './map-schema/map-key/map-key.component';
 import { MapValueComponent } from './map-schema/map-value/map-value.component';
-import { GenericSchemaComponent } from './generic-schema/generic-schema.component';
+import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +81,7 @@ import { GenericSchemaComponent } from './generic-schema/generic-schema.componen
     EnumValueComponent,
     MapKeyComponent,
     MapValueComponent,
-    GenericSchemaComponent
+    PrimitiveSchemaComponent
   ],
   imports: [
     BrowserModule,

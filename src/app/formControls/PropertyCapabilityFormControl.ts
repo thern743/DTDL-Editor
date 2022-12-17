@@ -12,7 +12,7 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
     this.model = model;
     this.form = this.toFormGroup();
   }
-  
+
   public toFormGroup(): FormGroup {
     let form = this.formBuilder.group({
       id: [this.model.id, [this._validationService.ValidDtmi()]],
@@ -22,8 +22,7 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
       comment: [this.model.comment],
       description: [this.model.description],
       // Property specific
-      schema: [this.model.schema],
-      schemaType: [this.model.schemaType],
+      schema: [],
       semanticType: [this.model.semanticType],
       unit: [this.model.unit],
       writable: [this.model.writable]

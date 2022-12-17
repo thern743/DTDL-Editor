@@ -3,11 +3,10 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/ArraySchemaFormControl';
-import { ArraySchemaCapabilityModel } from '../models/ArraySchemaCapabilityModel';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { ISchemaEditor } from '../models/ISchemaEditor';
 import { SchemaService } from '../services/schema/schema.service';
 import { ValidationService } from '../services/validation/validation-service.service';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'array-schema',
@@ -18,33 +17,48 @@ export class ArraySchemaComponent implements OnInit {
   public array!: ArraySchemaFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  private _formBuilder: FormBuilder;
-  private _validationService: ValidationService;
   public dialog: MatDialog;
-  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
+  public schemaTypes: Array<string>;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
   constructor(schemaService: SchemaService,
-    formBuilder: FormBuilder, 
-    validationService: ValidationService, 
     dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: ArraySchemaCapabilityModel
+    @Inject(MAT_DIALOG_DATA) data: ArraySchemaFormControl
   ) { 
     this.schemaService = schemaService;
-    this._formBuilder = formBuilder;
-    this._validationService = validationService;
     this.dialog = dialog;
-    this.array = new ArraySchemaFormControl(data, this._formBuilder, this._validationService, this.dialog);
-    this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
+    this.array = data;
+    this.schemaTypes = this.getSchemaTypes();
   }
 
   public ngOnInit(): void { 
     this.array.subscribeModelToForm();
   }
 
-  public openEditor(type: string, schemaName: string = 'schema'): void {
-    let form = this.schemaTypes.get(type.toLowerCase());
-    if(form === undefined) return;
-    // TODO: This is a hack. Figure out a better solution.
-    (<ISchemaEditor><unknown>form).openSchemaEditor(this.array.form, schemaName);
+  private getSchemaTypes(): Array<string> {
+    let schemaTypes = new Array<string>();
+    
+    this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    this.schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    return schemaTypes;
+  }
+
+  public changeSchema($event: MatSelectChange): void {
+    if($event.value instanceof AbstractCapabilityFormControl) return;
+    let key = $event.value.toLowerCase();
+    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
+    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    if(formControl === undefined) return;
+    this.schemaFormControl = formControl;
+  }
+
+  public openSchemaEditor(): void {
+    this.schemaService.openSchemaEditor(this.array.form, this.schemaFormControl)
   }
 }

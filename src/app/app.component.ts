@@ -13,9 +13,7 @@ export class AppComponent {
   public treeView = false;
 
   constructor(schemaService: SchemaService) { 
-    schemaService.registerForms();
     schemaService.registerModels();
-    schemaService.registerMapForms();
-    schemaService.registerMapModels();
+    schemaService.registerForms();
   }
 }

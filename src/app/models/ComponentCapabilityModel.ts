@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+import { ComponentType } from '@angular/cdk/portal';
 import { jsonMember, jsonObject } from "typedjson";
+import { ComponentComponent } from '../component/component.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
-import { SemanticTypeArray } from './SemanticTypeArray';
 
 @jsonObject
 export class ComponentCapabilityModel extends AbstractCapabilityModel {
@@ -13,6 +14,9 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
 
   constructor(id: string) {
     super(id, "Component");
-    this.type = new SemanticTypeArray("Component");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return ComponentComponent;
   }
 }
