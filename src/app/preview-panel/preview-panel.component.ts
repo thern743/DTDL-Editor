@@ -3,6 +3,7 @@ import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { FileService } from '../services/file/file-service.service';
+import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({
   selector: 'preview-panel',
@@ -14,11 +15,14 @@ export class PreviewPanelComponent implements OnInit {
   @Input() public formIndex: number = 0;
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input('cdkCopyToClipboard') public text!: string
-  public fileService: FileService;
+  private _fileService: FileService;
+  private _validationService: ValidationService;
   private _typedJson: TypedJSON<InterfaceCapabilityModel>;
+  public validationResult!: any[];
 
-  constructor(fileService: FileService) { 
-    this.fileService = fileService;
+  constructor(fileService: FileService, validationService: ValidationService) { 
+    this._fileService = fileService;
+    this._validationService = validationService;
     this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
   }
 
@@ -34,4 +38,23 @@ export class PreviewPanelComponent implements OnInit {
     let result = JSON.parse(str);
     return result;
   }  
+
+  public saveFile(data: any): void {
+    this._fileService.saveFile(data);
+  }
+
+  public validateModel(data: any): void {
+    let models = new Array<any>(data);
+    this._validationService.validateModel(models).subscribe({
+      next: (results: any[]) => {
+        this.validationResult = results;
+      },
+      complete: () => {
+        
+      },
+      error: (error: Error) => {
+
+      }
+    });
+  }
 }

@@ -15,7 +15,7 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
     
   public toFormGroup(): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.ValidDtmi()]],
+      id: [this.model.id, [this._validationService.validDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
       name: [this.model.name],

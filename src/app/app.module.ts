@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -52,6 +52,7 @@ import { EnumValueComponent } from './enum-schema/enum-value/enum-value.componen
 import { MapKeyComponent } from './map-schema/map-key/map-key.component';
 import { MapValueComponent } from './map-schema/map-value/map-value.component';
 import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.component';
+import { ContentInterceptor } from './services/interceptors/content-interceptor';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,12 @@ import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.co
     MatDialog,
     PropertyFormatterPipe,
     { provide: MatDialogRef, useValue: {} },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }}
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' }},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ContentInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

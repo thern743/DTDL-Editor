@@ -1,26 +1,30 @@
-<mat-expansion-panel    class="mat-elevation-z3"
-                        [expanded]="panelOpenState"
-                        (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-        <mat-panel-title>DTDL Preview</mat-panel-title>
-    </mat-expansion-panel-header>
+<mat-expansion-panel class="mat-elevation-z3" [expanded]="panelOpenState" (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>DTDL Preview</mat-panel-title>
+  </mat-expansion-panel-header>
 
-    <mat-form-field appearance="fill" style="width: 500px;">
-        <textarea matInput #previewPanel id="previewPanel"
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="5"
-            cdkAutosizeMaxRows="100"
-            readonly
-            [value]="(panelOpenState ? getJsonLd() : '') | jsonld">
-        </textarea>
-        <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model" style="float:right; margin-left: 15px"
-            [cdkCopyToClipboard]="previewPanel.value">
-            <mat-icon >content_copy</mat-icon>
-        </button>        
-        <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model" style="float:right"
-                (click)="fileService.saveFile(previewPanel.value)">
-            <mat-icon >cloud_download</mat-icon>
-        </button>        
-    </mat-form-field>      
+  <mat-form-field appearance="fill" style="width: 500px;">
+    <textarea matInput #previewPanel id="previewPanel" cdkTextareaAutosize cdkAutosizeMinRows="5"
+      cdkAutosizeMaxRows="100" readonly [value]="(panelOpenState ? getJsonLd() : '') | jsonld">
+    </textarea>
+    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model"
+      style="float:right; margin-left: 15px" [cdkCopyToClipboard]="previewPanel.value">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model"
+      style="float:right; margin-left: 15px" (click)="saveFile(previewPanel.value)">
+      <mat-icon>cloud_download</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Validate"
+      style="float:right; margin-left: 15px" (click)="validateModel(previewPanel.value)">
+      <mat-icon>check_circle</mat-icon>
+    </button>
+  </mat-form-field>
+  <br />
+  <mat-form-field appearance="fill" style="width: 500px;">
+    <textarea matInput id="validationResults" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="100"
+      readonly [value]="validationResult | json">
+    </textarea>
+  </mat-form-field>
 </mat-expansion-panel>
