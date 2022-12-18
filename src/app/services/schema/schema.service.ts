@@ -45,6 +45,7 @@ import { SchemaFactory } from 'src/app/schemas/SchemaFactory';
 import { MapKeyFormControl } from 'src/app/formControls/MapKeyFormControl';
 import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
 import { ISchemaFactory } from 'src/app/schemas/ISchemaFactory';
+import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
 
 // TODO: Should probably move all the factory methods to their respective forms/models and use double-dispatch to inject themselves into this factory.
 @Injectable({
@@ -201,8 +202,8 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return ["array", "enum", "map", "object"].indexOf(type?.toLowerCase()) >= 0;
   }
 
-  public getSchemaTypeString(schema: string): string {
-    return ["array", "enum", "map", "object"].indexOf(schema?.toLowerCase()) >= 0 ? "Complex" : "Primitive";
+  public getSchemaType(schema: string): SchemaTypeEnum {
+    return ["array", "enum", "map", "object"].indexOf(schema?.toLowerCase()) >= 0 ? SchemaTypeEnum.Complex : SchemaTypeEnum.Primitive;
   }
 
   public compareSchemas(model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean {

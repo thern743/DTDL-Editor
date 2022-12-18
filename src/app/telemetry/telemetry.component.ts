@@ -7,6 +7,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 
 @Component({
   selector: 'telemetry-definition',
@@ -82,11 +83,15 @@ export class TelemetryComponent implements OnInit {
     }
   }
 
+  public isComplex(schema: string): boolean {
+    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+  }
+
   public changeSchema($event: MatSelectChange): void {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
-    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    let schemaTypeString = this.schemaService.getSchemaType(key);
+    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
     if(formControl === undefined) return;
     this.schemaFormControl = formControl;
   }

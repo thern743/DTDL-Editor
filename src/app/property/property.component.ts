@@ -7,6 +7,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 
 @Component({
   selector: 'property-definition',
@@ -82,11 +83,20 @@ export class PropertyComponent implements OnInit {
     }
   }
 
+  public isComplex(schema: string): boolean {
+    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+  }
+
   public changeSchema($event: MatSelectChange): void {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
-    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    let schemaTypeString = this.schemaService.getSchemaType(key);
+
+    if(schemaTypeString == SchemaTypeEnum.Primitive) {
+
+    }
+
+    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
     if(formControl === undefined) return;
     this.schemaFormControl = formControl;
   }

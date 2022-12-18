@@ -20,7 +20,7 @@
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
-    <ng-container *ngIf="schemaService.getSchemaTypeString(elementSchema.value) == 'Complex'">
+    <ng-container *ngIf="isComplex(elementSchema.value)">
         <button mat-raised-button color="primary" (click)="openSchemaEditor()">
             <mat-icon>edit</mat-icon>
             Edit Schema

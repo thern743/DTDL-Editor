@@ -6,6 +6,7 @@ import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabi
 import { EditorService } from '../../services/editor/editor-service.service';
 import { SchemaService } from '../../services/schema/schema.service';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
+import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 
 @Component({
   selector: 'enum-value-schema',
@@ -47,11 +48,15 @@ export class EnumValueComponent implements OnInit {
     return schemaTypes;
   }
 
+  public isComplex(schema: string): boolean {
+    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+  }
+
   public changeSchema($event: MatSelectChange): void {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
-    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    let schemaTypeString = this.schemaService.getSchemaType(key);
+    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
     if(formControl === undefined) return;
     this.schemaFormControl = formControl;
   }

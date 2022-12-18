@@ -1,12 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/ArraySchemaFormControl';
 import { SchemaService } from '../services/schema/schema.service';
-import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { MatSelectChange } from '@angular/material/select';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 
 @Component({
   selector: 'array-schema',
@@ -49,11 +48,15 @@ export class ArraySchemaComponent implements OnInit {
     return schemaTypes;
   }
 
+  public isComplex(schema: string): boolean {
+    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+  }
+
   public changeSchema($event: MatSelectChange): void {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaTypeString(key);
-    let formControl = this.schemaService.createForm(schemaTypeString, key);
+    let schemaTypeString = this.schemaService.getSchemaType(key);
+    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
     if(formControl === undefined) return;
     this.schemaFormControl = formControl;
   }
