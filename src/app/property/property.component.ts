@@ -93,12 +93,12 @@ export class PropertyComponent implements OnInit {
     let schemaTypeString = this.schemaService.getSchemaType(key);
 
     if(schemaTypeString == SchemaTypeEnum.Primitive) {
-
+      this.property.form.get("schema")?.setValue(key);
+    } else {
+      let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
+      if(formControl === undefined) return;
+      this.schemaFormControl = formControl;
     }
-
-    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
-    if(formControl === undefined) return;
-    this.schemaFormControl = formControl;
   }
 
   public openSchemaEditor(): void {
