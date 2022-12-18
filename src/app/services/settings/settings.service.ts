@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { EditorSettings } from 'src/app/models/EditorSettings';
+import { EditorSettings, EditorSettingsDto } from 'src/app/models/EditorSettings';
 import { SuccessSnackbarComponent } from 'src/app/success-snackbar/success-snackbar.component';
 
 @Injectable({
@@ -10,15 +10,14 @@ import { SuccessSnackbarComponent } from 'src/app/success-snackbar/success-snack
 export class SettingsService {
   private static EDITOR_SETTINGS: string = "dtdlEditor://settings";
   private _snackBar: MatSnackBar;
-  private _editorSettings!: EditorSettings;
+  public editorSettings!: EditorSettings;
 
   constructor(snackBar: MatSnackBar) {
     this._snackBar = snackBar;    
-    this._editorSettings = new EditorSettings();
     this.load();
   }
 
-  public save(editorSettings: EditorSettings): void {
+  public save(editorSettings: EditorSettingsDto): void {
     try {
       let settings = JSON.stringify(editorSettings);
       localStorage.setItem(SettingsService.EDITOR_SETTINGS, settings);
@@ -42,16 +41,26 @@ export class SettingsService {
     });
   }
 
-  public load(): EditorSettings {
+  public load(): EditorSettingsDto {
     let settings = localStorage.getItem(SettingsService.EDITOR_SETTINGS) ?? JSON.stringify(new EditorSettings());
 
     try {
-      let editorSettings: EditorSettings = JSON.parse(settings);
-      this._editorSettings = editorSettings;      
+      let dto: EditorSettingsDto = JSON.parse(settings);
+      this.editorSettings = EditorSettings.fromDto(dto);      
     } catch (error) {
       console.error("Could not load editor settings from local storage: %o", error);
     }
-    
-    return this._editorSettings;
+
+    return this.editorSettings;
+  }
+
+  public buildDtmi(name: string): string {
+    let fullPath = "";
+
+    this.editorSettings.path.forEach((text: string) => {
+      fullPath = `${fullPath}:${text}`;
+    });
+
+    return `${this.editorSettings.scheme}${fullPath}:${name};${this.editorSettings.version}`;
   }
 }

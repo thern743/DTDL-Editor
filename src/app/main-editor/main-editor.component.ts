@@ -28,8 +28,8 @@ export class MainEditorComponent implements OnInit {
   }
 
   public addInterface(): void {
-    let settings = this._settingsService.load();
-    let model = new InterfaceCapabilityModel(settings.baseDtmi, settings.context);
+    let dtmi = this._settingsService.buildDtmi("myInterface");
+    let model = new InterfaceCapabilityModel(dtmi, this._settingsService.editorSettings.context);
     let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder, this._validationService);
     this.editorService.addInterface(interfaceInstance);
   }

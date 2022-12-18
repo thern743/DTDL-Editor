@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { EditorSettings } from '../models/EditorSettings';
+import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
 import { SettingsService } from '../services/settings/settings.service';
 
 // TODO: Add option to disable filling in default DTMIs/IDs
@@ -12,24 +12,31 @@ import { SettingsService } from '../services/settings/settings.service';
 export class SettingsComponent implements OnInit {
   private _settingsService: SettingsService;
   private _formBuilder: FormBuilder;
-  public form: FormGroup;
-  public editorSettings: EditorSettings;
+  public form!: FormGroup;
 
   constructor(settingsService: SettingsService, formBuilder: FormBuilder) {
     this._settingsService = settingsService;
     this._formBuilder = formBuilder;
-    this.editorSettings = settingsService.load();
+  }
 
+  public ngOnInit(): void {  
+    this.toFormGroup();
+  }
+
+  private toFormGroup(): void {
     this.form = this._formBuilder.group({
-      context: [this.editorSettings.context],
-      baseDtmi: [this.editorSettings.baseDtmi]
+      context: [this._settingsService.editorSettings.context],
+      scheme: [this._settingsService.editorSettings.scheme],
+      fullPath: [this._settingsService.editorSettings.fullPath],
+      version: [this._settingsService.editorSettings.version],
+      baseDtmi: [this._settingsService.editorSettings.baseDtmi]
     });
   }
 
-  public ngOnInit(): void {  }
-
   public save() {
-    let settings: EditorSettings = this.form.getRawValue()
-    this._settingsService.save(settings);    
+    let settings: EditorSettingsDto = this.form.getRawValue();
+    this._settingsService.save(settings); 
+    this._settingsService.load();
+    this.toFormGroup();   
   }
 }
