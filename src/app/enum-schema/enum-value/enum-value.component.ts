@@ -51,17 +51,4 @@ export class EnumValueComponent implements OnInit {
   public isComplex(schema: string): boolean {
     return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
   }
-
-  public changeSchema($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
-    let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaType(key);
-    let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
-    if(formControl === undefined) return;
-    this.schemaFormControl = formControl;
-  }
-
-  public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.enumValue.form, this.schemaFormControl)
-  }
 }

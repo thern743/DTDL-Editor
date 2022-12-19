@@ -26,7 +26,8 @@
 
     <mat-form-field color="accent">
         <mat-label for="valueSchema">Value Schema</mat-label>
-        <mat-select matNativeControl id="valueSchema" formControlName="valueSchema" #valueSchema>
+        <mat-select matNativeControl id="valueSchema" formControlName="valueSchema"
+          (selectionChange)="changeSchema($event)" #valueSchema>
             <mat-option value="integer">Integer</mat-option>
             <mat-option value="string">String</mat-option>
         </mat-select>        

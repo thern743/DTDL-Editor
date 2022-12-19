@@ -90,12 +90,12 @@ export class PropertyComponent implements OnInit {
   public changeSchema($event: MatSelectChange): void {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaTypeString = this.schemaService.getSchemaType(key);
+    let schemaType = this.schemaService.getSchemaType(key);
 
-    if(schemaTypeString == SchemaTypeEnum.Primitive) {
+    if(schemaType == SchemaTypeEnum.Primitive) {
       this.property.form.get("schema")?.setValue(key);
     } else {
-      let formControl = this.schemaService.createForm(schemaTypeString.toString(), key);
+      let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
       if(formControl === undefined) return;
       this.schemaFormControl = formControl;
     }

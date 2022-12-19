@@ -1,8 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/EnumSchemaFormControl';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 
 @Component({
   selector: 'enum-schema',
@@ -14,15 +18,14 @@ export class EnumSchemaComponent implements OnInit {
   public schemaService: SchemaService;
   public editorService: EditorService;
   public panelOpenState = true;
-  public dialog: MatDialog;
 
-  constructor(editorSerivce: EditorService, schemaService: SchemaService,
-    dialog: MatDialog,
+  constructor(
+    editorSerivce: EditorService, 
+    schemaService: SchemaService,
     @Inject(MAT_DIALOG_DATA) data: EnumSchemaFormControl
   ) { 
     this.editorService = editorSerivce;
     this.schemaService = schemaService;
-    this.dialog = dialog;
     this.enum = data;
   }
 
@@ -32,6 +35,13 @@ export class EnumSchemaComponent implements OnInit {
 
   public addValue(): void {
     
+  }
+
+  public changeSchema($event: MatSelectChange): void {
+    if($event.value instanceof AbstractCapabilityFormControl) return;
+    let key = $event.value.toLowerCase();
+    // Always a Primitive type
+    this.enum.form.get("valueSchema")?.setValue(key);
   }
 }
 
