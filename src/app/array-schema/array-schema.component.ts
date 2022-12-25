@@ -23,20 +23,20 @@ export class ArraySchemaComponent implements OnInit {
   constructor(schemaService: SchemaService,
     dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: ArraySchemaFormControl
-  ) { 
+  ) {
     this.schemaService = schemaService;
     this.dialog = dialog;
     this.array = data;
     this.schemaTypes = this.getSchemaTypes();
   }
 
-  public ngOnInit(): void { 
+  public ngOnInit(): void {
     this.array.subscribeModelToForm();
   }
 
   private getSchemaTypes(): Array<string> {
     let schemaTypes = new Array<string>();
-    
+
     this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
       schemaTypes.push(key);
     });
@@ -53,15 +53,14 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
     let schemaType = this.schemaService.getSchemaType(key);
+    this.array.form.get("elementSchema")?.setValue(key);
 
-    if(schemaType == SchemaTypeEnum.Primitive) {
-      this.array.form.get("elementSchema")?.setValue(key);
-    } else {
+    if (schemaType == SchemaTypeEnum.Complex) {
       let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
-      if(formControl === undefined) return;
+      if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }

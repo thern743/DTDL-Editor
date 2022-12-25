@@ -91,10 +91,9 @@ export class TelemetryComponent implements OnInit {
     if($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
     let schemaType = this.schemaService.getSchemaType(key);
+    this.telemetry.form.get("schema")?.setValue(key);
 
-    if(schemaType == SchemaTypeEnum.Primitive) {
-      this.telemetry.form.get("schema")?.setValue(key);
-    } else {
+    if(schemaType == SchemaTypeEnum.Complex) {
       let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
       if(formControl === undefined) return;
       this.schemaFormControl = formControl;

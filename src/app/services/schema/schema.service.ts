@@ -220,7 +220,6 @@ export class SchemaService implements IFormFactory, IModelFactory {
       .subscribe((result: FormGroup) => {
         if (result) {
           // TODO: Not all schema forms have a schema value of "schema", e.g. EnumValue schemas
-          // TODO: Map is not returning MapKey and MapValue
           parentForm?.get("schema")?.setValue(result);
         }
       });

@@ -19,12 +19,12 @@ export class FieldComponent implements OnInit {
   @Input() public panelOpenState = true;
   public schemaService: SchemaService;
   public editorService: EditorService;
-  public dialog: MatDialog; 
+  public dialog: MatDialog;
   public schemaTypes: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
-  constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
-    this.schemaService = schemaEditorService; 
+  constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) {
+    this.schemaService = schemaEditorService;
     this.editorService = editorSerivce;
     this.dialog = dialog;
     this.schemaTypes = this.getSchemaTypes();
@@ -36,7 +36,7 @@ export class FieldComponent implements OnInit {
 
   private getSchemaTypes(): Array<string> {
     let schemaTypes = new Array<string>();
-    
+
     this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
       schemaTypes.push(key);
     });
@@ -53,15 +53,14 @@ export class FieldComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
     let schemaType = this.schemaService.getSchemaType(key);
+    this.field.form.get("schema")?.setValue(key);
 
-    if(schemaType == SchemaTypeEnum.Primitive) {
-      this.field.form.get("schema")?.setValue(key);
-    } else {
+    if (schemaType == SchemaTypeEnum.Complex) {
       let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
-      if(formControl === undefined) return;
+      if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }

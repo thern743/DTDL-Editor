@@ -23,15 +23,15 @@ export class PropertyComponent implements OnInit {
   public dialog: MatDialog;
   public schemaTypes: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
-  
-  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
+
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this.editorService = editorService;
     this.schemaService = schemaService;
     this.dialog = dialog;
     this.schemaTypes = this.getSchemaTypes();
   }
 
-  public ngOnInit(): void { 
+  public ngOnInit(): void {
     this.property.subscribeModelToForm();
     this.syncHeaderFields();
   }
@@ -40,18 +40,18 @@ export class PropertyComponent implements OnInit {
     const id = this.property.form.get("id");
     const name = this.property.form.get("name");
 
-    id?.valueChanges.subscribe(value => {      
+    id?.valueChanges.subscribe(value => {
       id.setValue(value, { emitEvent: false })
     });
 
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
-    });    
+    });
   }
 
   private getSchemaTypes(): Array<string> {
     let schemaTypes = new Array<string>();
-    
+
     this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
       schemaTypes.push(key);
     });
@@ -72,9 +72,9 @@ export class PropertyComponent implements OnInit {
   public changeSemanticType($event: MatSelectChange): void {
     let type = this.property.form.get("type");
 
-    if(["", null, undefined].indexOf($event.value) > -1) {
+    if (["", null, undefined].indexOf($event.value) > -1) {
       let semanticType = new SemanticTypeArray("Property");
-      type?.setValue(semanticType);      
+      type?.setValue(semanticType);
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
@@ -88,15 +88,14 @@ export class PropertyComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
     let schemaType = this.schemaService.getSchemaType(key);
+    this.property.form.get("schema")?.setValue(key);
 
-    if(schemaType == SchemaTypeEnum.Primitive) {
-      this.property.form.get("schema")?.setValue(key);
-    } else {
+    if (schemaType == SchemaTypeEnum.Complex) {
       let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
-      if(formControl === undefined) return;
+      if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }

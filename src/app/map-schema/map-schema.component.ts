@@ -6,6 +6,7 @@ import { MapKeyFormControl } from '../formControls/MapKeyFormControl';
 import { MapSchemaFormControl } from '../formControls/MapSchemaFormControl';
 import { MapValueFormControl } from '../formControls/MapValueFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class MapSchemaComponent implements OnInit {
   constructor(schemaService: SchemaService,
     dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data: MapSchemaFormControl
-  ) { 
+  ) {
     this.schemaService = schemaService;
     this.dialog = dialog;
     this.map = data;
@@ -35,8 +36,8 @@ export class MapSchemaComponent implements OnInit {
     this.mapKeysAndValues();
   }
 
-  public ngOnInit(): void { 
-    this.map.subscribeModelToForm();    
+  public ngOnInit(): void {
+    this.map.subscribeModelToForm();
   }
 
   private mapKeysAndValues(): void {
@@ -51,19 +52,35 @@ export class MapSchemaComponent implements OnInit {
   }
 
   public changeMapKey($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let formControl = this.schemaService.createForm("MapKey", key) as MapKeyFormControl;
-    if(formControl === undefined) return;
-    this.keySchemaFormControl = formControl;
+    let schemaType = this.schemaService.getSchemaType(key);
+    this.map.form.get("mapKey")?.get("schema")?.setValue(key);
+
+    if (schemaType == SchemaTypeEnum.Complex) {
+      let formControl = this.schemaService.createForm("MapKey", key);
+      if (formControl === undefined) return;
+      this.keySchemaFormControl = formControl;
+    }
   }
 
   public changeMapValue($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let formControl = this.schemaService.createForm("MapValue", key) as MapValueFormControl;
-    if(formControl === undefined) return;
-    this.valueSchemaFormControl = formControl;
+    let schemaType = this.schemaService.getSchemaType(key);
+    this.map.form.get("mapValue")?.get("schema")?.setValue(key);
+
+    if (schemaType == SchemaTypeEnum.Complex) {
+      let formControl = this.schemaService.createForm("MapValue", key);
+      if (formControl === undefined) return;
+      this.valueSchemaFormControl = formControl;
+    }
+
+    // if ($event.value instanceof AbstractCapabilityFormControl) return;
+    // let key = $event.value.toLowerCase();
+    // let formControl = this.schemaService.createForm("MapValue", key) as MapValueFormControl;
+    // if (formControl === undefined) return;
+    // this.valueSchemaFormControl = formControl;
   }
 
   public openKeyEditor(): void {
