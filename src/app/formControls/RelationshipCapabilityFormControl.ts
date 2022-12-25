@@ -46,10 +46,10 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
       id: [this.model.id, [this._validationService.validDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
-      name: [this.model.name],
       comment: [this.model.comment],
       description: [this.model.description],
       // Relationship specific
+      name: [this.model.name],
       minMultiplicity: [this.model.minMultiplicity],
       maxMultiplicity: [this.model.maxMultiplicity],
       target: [this.model.target],

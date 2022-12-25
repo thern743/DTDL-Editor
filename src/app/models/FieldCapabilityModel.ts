@@ -4,15 +4,18 @@ import { FieldComponent } from "../field/field.component";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
 @jsonObject
-export class FieldCapabilityModel extends AbstractCapabilityModel {    
-    @jsonMember 
-    public schema!: AbstractCapabilityModel;
+export class FieldCapabilityModel extends AbstractCapabilityModel {
+  @jsonMember
+  public name!: string;
+  
+  @jsonMember
+  public schema!: AbstractCapabilityModel;
 
-    constructor(id: string) {
-        super(id, "Field");
-    }    
+  constructor(id: string) {
+    super(id, "Field");
+  }
 
-    public resolveSchemaComponentType(): ComponentType<any> {
-      return FieldComponent;
-    }
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return FieldComponent;
+  }
 }

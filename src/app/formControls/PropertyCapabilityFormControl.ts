@@ -18,10 +18,10 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
       id: [this.model.id, [this._validationService.validDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
-      name: [this.model.name],
       comment: [this.model.comment],
       description: [this.model.description],
       // Property specific
+      name: [this.model.name],
       schema: [],
       semanticType: [this.model.semanticType],
       unit: [this.model.unit],

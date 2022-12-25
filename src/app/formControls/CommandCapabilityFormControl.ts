@@ -18,10 +18,10 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
       id: [this.model.id, [this._validationService.validDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
-      name: [this.model.name],
       comment: [this.model.comment],
       description: [this.model.description],
       // Command specific
+      name: [this.model.name],
       commandType: [this.model.commandType],
       request: [this.model.request],
       response: [this.model.response]
