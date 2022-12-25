@@ -13,10 +13,9 @@
     </mat-form-field>
     <span class="formSpacer"></span>
 
-    <!-- TODO: Validate against the Value Schema (Int|String) -->
     <mat-form-field color="accent">
         <mat-label for="enumValue">Enum Value</mat-label>
-        <input matInput id="enumValue" type="text" formControlName="enumValue" />
+        <input matInput id="enumValue" type="text" formControlName="enumValue" (change)="setValueInModel($event)" />
     </mat-form-field>
     <br/>
 

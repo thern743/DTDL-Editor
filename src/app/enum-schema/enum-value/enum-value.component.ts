@@ -1,12 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Type } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
 import { EnumValueCapabilityFormControl } from 'src/app/formControls/EnumValueCapabilityFormControl';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { EditorService } from '../../services/editor/editor-service.service';
 import { SchemaService } from '../../services/schema/schema.service';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
-import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 
 @Component({
   selector: 'enum-value-schema',
@@ -16,6 +14,7 @@ import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 export class EnumValueComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public enumValue!: EnumValueCapabilityFormControl;
+  @Input() public valueSchema!: string;
   @Input() public panelOpenState = true;
   public schemaService: SchemaService;
   public editorService: EditorService;
@@ -48,7 +47,11 @@ export class EnumValueComponent implements OnInit {
     return schemaTypes;
   }
 
-  public isComplex(schema: string): boolean {
-    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+  public setValueInModel($event: any): void {
+    if (this.valueSchema === "integer") {
+      this.enumValue.model.enumValue = parseInt($event?.target?.value);
+    } else {
+      this.enumValue.model.enumValue = $event?.target?.value;
+    }
   }
 }
