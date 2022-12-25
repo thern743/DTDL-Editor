@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
+import { IDtdlValidationResult } from '../models/IDtdlValidationResult';
 import { FileService } from '../services/file/file-service.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
@@ -18,26 +19,26 @@ export class PreviewPanelComponent implements OnInit {
   private _fileService: FileService;
   private _validationService: ValidationService;
   private _typedJson: TypedJSON<InterfaceCapabilityModel>;
-  public validationResult!: any[];
+  public validationResults!: IDtdlValidationResult[];
 
-  constructor(fileService: FileService, validationService: ValidationService) { 
+  constructor(fileService: FileService, validationService: ValidationService) {
     this._fileService = fileService;
     this._validationService = validationService;
     this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
   }
 
   public ngOnInit(): void {
-    
+
   }
 
   // TODO: Determine why TypedJSON isn't working properly.
-  public getJsonLd() : any {
+  public getJsonLd(): any {
     //let str = this._typedJson.stringify(this.interface.model);    
     //let result = this._typedJson.parse(str);
     let str = JSON.stringify(this.interface.model);
     let result = JSON.parse(str);
     return result;
-  }  
+  }
 
   public saveFile(data: any): void {
     this._fileService.saveFile(data);
@@ -46,11 +47,14 @@ export class PreviewPanelComponent implements OnInit {
   public validateModel(data: any): void {
     let models = new Array<any>(data);
     this._validationService.validateModel(models).subscribe({
-      next: (results: any[]) => {
-        this.validationResult = results;
+      next: (results: IDtdlValidationResult[]) => {
+        if (results.length)
+          this.validationResults = results;
+        else
+          this.validationResults = new Array<IDtdlValidationResult>();
       },
       complete: () => {
-        
+
       },
       error: (error: Error) => {
 
