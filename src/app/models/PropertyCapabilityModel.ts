@@ -10,7 +10,7 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
   public name!: string;
 
   @jsonMember 
-  public schema!: AbstractCapabilityModel;
+  public schema!: string | AbstractCapabilityModel;
 
   public semanticType!: string;
 

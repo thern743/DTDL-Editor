@@ -14,7 +14,9 @@ export class JsonLdPipe implements PipeTransform {
         return result;
     }
 
-    // TODO: Identify and exclude private members.
+    // TODO: Identify and exclude private members from JSON-LD output
+    //       Private fields, such as `private _myPrivateField: string;` on a class or interface
+    //       are still rendered in the JSON-LD output.
     static stringify(key: any, value: any) {        
         // console.debug("Type: %s, Key: %s, Value: %o, IsObject: %s, IsArray: %s", 
         //     typeof(value), key, value, 

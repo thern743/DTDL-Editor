@@ -23,6 +23,19 @@ export class FileService {
     this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
   }
 
+  // TODO: The schema attribute is failing deserialization
+  //       Importing a model causes the following error:
+  //
+  //         `Could not deserialize 'PropertyCapabilityModel.schema'; don't know how to deserialize type.`
+  //
+  //       The schema attribute is treated as either a string for primitive types (boolean, integer, etc)
+  //       but is an object for complex types (map, enum, etc). It's not being deserialized correctly...
+
+  // TODO: The name property is not being set correctly and causes validation to fail
+  //       Importing an existing interface with a Property will fail validation for missing a 
+  //       'name' attribute even though it exists:
+  //
+  //         `property 'contents' requires property 'name' to be specified but it is not.`
   public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
@@ -34,8 +47,6 @@ export class FileService {
 
           console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
       
-          // TODO: Add DTDL model validator:
-          //       https://github.com/azure-samples/dtdl-validator/
           try {
             let capability = this.typedJson.parse(file);
             capability instanceof InterfaceCapabilityModel;
@@ -45,7 +56,9 @@ export class FileService {
             const msg = "Invalid DTDL (JSON-LD) File";
             console.error(msg + ": " + error); 
       
-            // TODO: Handle in a new ErrorService
+            // TODO: Use common ErrorService to control error SnackBar (FileService)
+            //       Several services currently call `snackBar.openFromComponent(ErrorSnackbarComponent)`
+            //       but should be calling through to an ErrorService which will do these common operations.
             this._snackBar.openFromComponent(ErrorSnackbarComponent, {
               horizontalPosition: "center",
               verticalPosition: "top",
@@ -70,7 +83,9 @@ export class FileService {
 
   public saveFile(jsonLd: string): void {
     var blob = new Blob([jsonLd], { type: "application/ld+json;charset=utf-8" });
-    // TODO: Get filename from user input.
+    // TODO: Filename when saving JSON is hard-coded
+    //       The current JSON filename is `digitalTwin.json`. We should allow the user
+    //       to choose the name of the file to use.  
     FileSaver.saveAs(blob, "digitalTwin.json");
   }
 }

@@ -57,7 +57,7 @@ export class ModelTreeService {
         this.treeDataSource.data.push(node);
     }
 
-    hasChild = (_: number, node: CapabilityFlatNode) => node.expandable;
+    public hasChild = (_: number, node: CapabilityFlatNode) => node.expandable;
 
     private transformer(node: CapabilityNode, level: number): CapabilityFlatNode {
         let flatNode = new CapabilityFlatNode();

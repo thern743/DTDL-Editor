@@ -12,11 +12,11 @@ export class CommandCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public commandType!: string;
 
-  // TODO: Implement Command request object
+  // TODO: Implement CommandPayload for Command requests and responses
+  //       See https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#commandpayload
   @jsonMember 
   public request: any;
 
-  // TODO: Implement Command response object
   @jsonMember 
   public response: any;
 
