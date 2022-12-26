@@ -46,7 +46,7 @@ Update the `environment.<env>.ts` files and set the `apiUrl` to the correct loca
 
 Model validation library:  https://github.com/azure-samples/dtdl-validator/tree/master/
 
-## Notes About JSON-LD and the DTDL Spec
+# Notes About JSON-LD and the DTDL Spec
 
 This project is particularly complicated by the fact that DTDL is a JSON-LD based specification. Much of the DTDL spec is unintuitive.
 
@@ -55,6 +55,10 @@ This project is particularly complicated by the fact that DTDL is a JSON-LD base
 Rather than implement the models natively to work with JSON-LD, we have chosen to take a declarative approach in implementing a JSON-LD filter. See `jsonld.pipe.ts`.
 
 For more details on some design choices, see [Philosophy and Design Notes](#philosophy-and-design-notes).
+
+## Importing Models and TypedJSON
+
+This project relies on the [TypedJSON library](https://github.com/JohnWeisz/TypedJSON) for serdes when importing or exporting DTDL models. This approach makes the use of decorators for annotating JSON attributes and should be familiar for those who use them in other frameworks (e.g., .NET, Java, etc).
 
 # Setup
 
