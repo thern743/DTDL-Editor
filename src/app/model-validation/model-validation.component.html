@@ -1,8 +1,45 @@
-<div style="margin: 15px">
-  <textarea matInput #modelInput id="modelInput" rows="25" cols="100" cdkTextareaAutosize cdkAutosizeMinRows="25" cdkAutosizeMaxRows="100"></textarea>
+<div class="content-container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Hints
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    
+    <mat-list role="list">
+      <h3 matListItemTitle><mat-icon matListItemIcon color="accent">info</mat-icon> When submitting multiple models you
+        must submit them as an array, e.g.: </h3>
+      <pre>{{ 
+'[ 
+  { "@id": "...model1" }, 
+  { "@id": "...model2" } 
+]' 
+    }}
+    </pre>
+      <h3 matListItemTitle><mat-icon matListItemIcon color="accent">info</mat-icon> Interfaces referenced by a Component
+        must be included in the model list:</h3>
+      <pre>{{ 
+'[ 
+  { "@type": "Component", "schema": "dtmi:example:myInterface;1" }, 
+  { "@id": "dtmi:example:myInterface;1", "@type": "Interface" } 
+]' 
+      }}
+      </pre>
+    </mat-list>
+    
+  </mat-expansion-panel>
   <br />
 
-  <button mat-raised-button color="primary" class="action-button" aria-hidden="false" aria-label="Validate"
+  <h1>Click browse to open a file or paste your model's DTDL JSON-LD below.</h1>
+  <file-select action="Copy" (fileSelect)="copyFile($event)"></file-select>
+
+  <mat-form-field appearance="fill" style="width: 50%; height: 50%">
+    <textarea matInput #modelInput id="modelInput" rows="25" cols="100" cdkTextareaAutosize cdkAutosizeMinRows="25" cdkAutosizeMaxRows="25" 
+    [ngModel]="fileData !== '' ? (fileData | json) : ''"></textarea>
+  </mat-form-field>
+  <br />
+
+  <button mat-raised-button color="primary" aria-hidden="false" aria-label="Validate"
     (click)="validateModel(modelInput.value)">
     <mat-icon>check_circle</mat-icon> Validate Model
   </button>
