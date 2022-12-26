@@ -10,12 +10,18 @@ import { ValidationService } from '../services/validation/validation-service.ser
 export class ModelValidationComponent implements OnInit {
   private _validationService: ValidationService;
   public validationResults!: IDtdlValidationResult[];
+  public fileData!: any;
 
   constructor(validationService: ValidationService) { 
     this._validationService = validationService;
   }
 
   public ngOnInit(): void {
+    this.fileData = "";
+  }
+
+  public copyFile($event: any): void {
+    this.fileData = $event;
   }
 
   public validateModel(data: any): void {

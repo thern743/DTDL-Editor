@@ -34,7 +34,7 @@ import { InterfaceComponent } from './interface/interface.component';
 import { RelationshipComponent } from './relationship/relationship.component';
 import { ComponentComponent } from './component/component.component';
 import { ModelTreeComponent } from './model-tree/model-tree.component';
-import { FolderSelectComponent } from './file-select/file-select.component';
+import { FileSelectComponent } from './file-select/file-select.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
@@ -54,6 +54,7 @@ import { MapValueComponent } from './map-schema/map-value/map-value.component';
 import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.component';
 import { ContentInterceptor } from './services/interceptors/content-interceptor';
 import { ModelValidationComponent } from './model-validation/model-validation.component';
+import { ImportModelComponent } from './import-model/import-model.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,7 @@ import { ModelValidationComponent } from './model-validation/model-validation.co
     RelationshipComponent,
     ComponentComponent,
     ModelTreeComponent,
-    FolderSelectComponent,
+    FileSelectComponent,
     ErrorSnackbarComponent,
     IdNameHeaderComponent,    
     SettingsComponent,
@@ -84,7 +85,8 @@ import { ModelValidationComponent } from './model-validation/model-validation.co
     MapKeyComponent,
     MapValueComponent,
     PrimitiveSchemaComponent,
-    ModelValidationComponent
+    ModelValidationComponent,
+    ImportModelComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,7 @@ import { ModelValidationComponent } from './model-validation/model-validation.co
     MatDialogModule
   ],
   entryComponents: [
-    FolderSelectComponent,
+    FileSelectComponent,
     SettingsComponent,
     ObjectSchemaComponent
   ],

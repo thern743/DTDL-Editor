@@ -1,10 +1,11 @@
 <div class="content-container">
-    <h1>Import Models</h1>
-    <mat-divider></mat-divider>
-    <br/>
-    <mat-form-field color="accent">
-        <input matInput [(ngModel)]="fileService.fileAttr" readonly name="name" />
-        <button class="browse-button" mat-raised-button color="primary">Browse</button>
-        <input type="file" #fileInput id="uploadFiles" (change)="uploadFiles($event)" name="uploadFiles" multiple="multiple" accept="*.json" />
-    </mat-form-field>    
+  <h2>{{ title }}</h2>
+  <mat-divider></mat-divider>
+  <br />
+  <mat-form-field color="accent">
+    <input matInput [(ngModel)]="fileService.fileAttr" readonly name="name" />
+    <button class="browse-button" mat-raised-button color="primary"><mat-icon>folder</mat-icon> Browse</button>
+    <input type="file" #fileInput id="fileAction" name="fileAction" multiple="multiple" accept="*.json"
+      (change)="executeAction($event)" />
+  </mat-form-field>
 </div>

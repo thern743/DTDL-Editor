@@ -13,6 +13,7 @@ export class FileService {
   public fileAttr = 'Choose Files...';
   public files: File[];
   public interfaces$: Subject<InterfaceCapabilityModel>;
+  public fileData$: Subject<any>;
   public typedJson: TypedJSON<InterfaceCapabilityModel>;
   private _snackBar: MatSnackBar;
 
@@ -20,6 +21,7 @@ export class FileService {
     this._snackBar = snackBar;
     this.files = new Array<File>(); 
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
+    this.fileData$ = new Subject<any>();
     this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
   }
 
@@ -79,6 +81,47 @@ export class FileService {
     }
 
     return this.interfaces$;
+  }
+
+  public copyFile(file: any): Subject<any> {
+    if (file.target.files && file.target.files.length > 0) {
+      this.fileAttr = "";
+      
+      [...file.target.files].map((file: File) => {                
+        let reader = new FileReader();
+        reader.onload = (data: any) => {
+          let file = data.target.result;
+
+          console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
+      
+          try {
+            let data = JSON.parse(file);
+            this.files.push(file);      
+            this.fileData$.next(data);
+          } catch(error) {
+            const msg = "Could not parse file contents.";
+            console.error(msg + ": " + error); 
+      
+            this._snackBar.openFromComponent(ErrorSnackbarComponent, {
+              horizontalPosition: "center",
+              verticalPosition: "top",
+              duration: 5000,
+              panelClass: ['mat-toolbar', 'mat-warn'],
+              data: { msg: msg }
+            });
+      
+            this.fileAttr = "Choose Files...";           
+          }
+        };        
+        
+        reader.readAsText(file);
+        this.fileAttr += file.name + ", ";
+      });     
+    } else {
+      this.fileAttr = "Choose Files...";
+    }
+
+    return this.fileData$;
   }
 
   public saveFile(jsonLd: string): void {
