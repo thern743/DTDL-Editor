@@ -7,7 +7,7 @@ import { SettingsService } from '../services/settings/settings.service';
 //       Some users may prefer to manually type in the DTMI for each component and so we should
 //       expose an option to let them do so.
 @Component({
-  selector: 'app-settings',
+  selector: 'settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
