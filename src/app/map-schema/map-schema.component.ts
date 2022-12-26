@@ -74,12 +74,6 @@ export class MapSchemaComponent implements OnInit {
       if (formControl === undefined) return;
       this.valueSchemaFormControl = formControl;
     }
-
-    // if ($event.value instanceof AbstractCapabilityFormControl) return;
-    // let key = $event.value.toLowerCase();
-    // let formControl = this.schemaService.createForm("MapValue", key) as MapValueFormControl;
-    // if (formControl === undefined) return;
-    // this.valueSchemaFormControl = formControl;
   }
 
   public openKeyEditor(): void {

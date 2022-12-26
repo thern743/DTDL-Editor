@@ -18,11 +18,11 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
       id: [this.model.id, [this._validationService.validDtmi()]],
       type: [this.model.type],
       displayName: [this.model.displayName],
-      name: [this.model.name],
       comment: [this.model.comment],
       description: [this.model.description],
       // Telemetry specific
-      schema: [this.model.schema],
+      name: [this.model.name],
+      schema: [],
       semanticType: [this.model.semanticType],
       unit: [this.model.unit]
     });

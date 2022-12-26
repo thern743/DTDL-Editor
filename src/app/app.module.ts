@@ -55,6 +55,7 @@ import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.co
 import { ContentInterceptor } from './services/interceptors/content-interceptor';
 import { ModelValidationComponent } from './model-validation/model-validation.component';
 import { ImportModelComponent } from './import-model/import-model.component';
+import { FilterPipe } from './filters/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { ImportModelComponent } from './import-model/import-model.component';
     MapValueComponent,
     PrimitiveSchemaComponent,
     ModelValidationComponent,
-    ImportModelComponent
+    ImportModelComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
