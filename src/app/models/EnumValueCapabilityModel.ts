@@ -3,7 +3,11 @@ import { jsonMember, jsonObject } from "typedjson";
 import { EnumValueComponent } from "../enum-schema/enum-value/enum-value.component";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 
-// TODO: Remove rendering of Type for EnumValue
+// TODO: Remove @type output in the JSON-LD for EnumValue
+//       See: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#enumvalue
+//       Strictly speaking the DTDL spec does not have a @type value for EnumValue. Currently, this does
+//       not cause any problems with the validator but will cause failures when importing if the value is
+//       saved on the output.
 @jsonObject
 export class EnumValueCapabilityModel extends AbstractCapabilityModel {
     @jsonMember

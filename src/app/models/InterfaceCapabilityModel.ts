@@ -11,7 +11,8 @@ import { PropertyCapabilityModel } from './PropertyCapabilityModel';
 import { RelationshipCapabilityModel } from './RelationshipCapabilityModel';
 import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
 
-// TODO: Support Interface Schemas: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
+// TODO: Add support for Interface Schemas
+//       See: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@context' })
@@ -60,11 +61,18 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
 
   public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {    
     let result = json.map((value: any) => {
-      // TODO: For some reason this isn't using the SemanticTypeArray MapType so we're recreating the logic here.
+      // TODO: SemanticTypeArray TypedJSON.mapType() isn't being used correctly
+      //       See class SemanticTypeArray. The deserialization logic there should be executing when
+      //       deserializing this type but it's not being triggered. It may need an explicit `deserializer` option
+      //       to be set on the `@jsonMember` attribute.
       let type = typeof value["@type"] === 'string' ? [value["@type"]] : value["@type"];
       if(!(type instanceof Array)) return;
 
-      // TODO: Provide factory method?
+      // TODO: Use a proper pattern for checking the content type when deserializing
+      //       Right now each content type (Property, Command, Telemetry, etc) is hard-coded
+      //       in `InterfaceCapabilityModel.interfaceCapabilityDeserializer()` method.
+      //       There should be some form of delegation to these types that can be wired up for
+      //       TypedJSON to handle.
       switch(type[0]) {
         case "Property":          
           return params.fallback(value, PropertyCapabilityModel);

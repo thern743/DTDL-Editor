@@ -204,7 +204,7 @@ export class EditorService {
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {    
     let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
-    contentsFormArray.push(formControl.form); // TODO: Not sure if this is needed.
+    contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
     this.interfaces$.next(interfaceInstance);

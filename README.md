@@ -34,6 +34,7 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
 * Basic model simulation features
 
 ## Known Issues
+* There are several known issues related to importing models
 * Component and Relationship references are limited
 * Some issues when nesting complex schema types
 * No inline validation before submitting to validation API

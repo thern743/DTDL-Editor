@@ -41,7 +41,6 @@ export class MapSchemaComponent implements OnInit {
   }
 
   private mapKeysAndValues(): void {
-    // TODO: No need for value once we refactor the schemaService for proper double-dispatch injection.
     this.schemaService.schemaFactory.formRegistry.get("MapKey")?.forEach((value, key) => {
       this.keySchemaTypes.push(key);
     });

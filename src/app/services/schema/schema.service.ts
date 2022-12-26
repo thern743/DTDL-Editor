@@ -47,7 +47,10 @@ import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
 import { ISchemaFactory } from 'src/app/schemas/ISchemaFactory';
 import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
 
-// TODO: Should probably move all the factory methods to their respective forms/models and use double-dispatch to inject themselves into this factory.
+// TODO: Move schema factory methods to the controls responsible for creating them
+//       Currently, `SchemaService` is responsible for registering each model and form control
+//       which requires knowledge of each model and form class. Instead, each model and form
+//       class should expose a factory method that can be registered during startup using reflection.
 @Injectable({
   providedIn: 'root'
 })
@@ -64,9 +67,9 @@ export class SchemaService implements IFormFactory, IModelFactory {
     this._validationService = validationSerivce;
   }
 
-  // TODO: New these up at selection time using createForm()
-  // TODO: Get root DTMI path from settings.
-  // TODO: Add methodds for returning MapKey and MapValue types.
+  // TODO: Use base DTMI from SettingsService when calling factory methods
+  //       Currently the DTMI ids are hard-coded in the factory methods for creating capability models.
+  //       We should instead construct the URI from the SettingsService.  
   public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
     return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
       ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService, this.dialog)], 
@@ -87,7 +90,6 @@ export class SchemaService implements IFormFactory, IModelFactory {
     ]);
   }
 
-  // TODO: Get root DTMI path from settings.
   public registerModels(): void {
     this.schemaFactory.registerModel("Primitive", "boolean", () => new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1")); 
     this.schemaFactory.registerModel("Primitive", "date", () => new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1")); 
@@ -219,7 +221,11 @@ export class SchemaService implements IFormFactory, IModelFactory {
       .afterClosed()
       .subscribe((result: FormGroup) => {
         if (result) {
-          // TODO: Not all schema forms have a schema value of "schema", e.g. EnumValue schemas
+          // TODO: Parent form's schema attribute name is hard-coded  
+          //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
+          //      so if these parent controls call `openSchemaEditor()` their schema values
+          //      will not be set correctly. Right now this doesn't seem to be an issue since
+          //      none of the affected types are calling `openSchemaEditor()`;
           parentForm?.get("schema")?.setValue(result);
         }
       });

@@ -3,7 +3,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
 import { SettingsService } from '../services/settings/settings.service';
 
-// TODO: Add option to disable filling in default DTMIs/IDs
+// TODO: Add option to disable automatically filling in default DTMI from SettingsService
+//       Some users may prefer to manually type in the DTMI for each component and so we should
+//       expose an option to let them do so.
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',

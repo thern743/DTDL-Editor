@@ -13,7 +13,8 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
     public form!: FormGroup;
     private _subscriptions: Subscription[];
     
-    // TODO: Move setting model and validation service to this ctor from all subclasses.
+    // TODO: Move common services to the AbstractCapabilityFormControl base class
+    //       Currently, all subclasses have their own private instances of common services. E.g., `ValidationService`.
     constructor(formBuilder: FormBuilder) {
         this.formBuilder = formBuilder; 
         this._subscriptions = new Array<Subscription>();       
@@ -43,7 +44,10 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
       console.groupEnd();
     }
 
-    // TODO: Call this from each component.
+    // TODO: Each form component should implement OnDestroy lifecycle hook
+    //       Each form-based component implements `AbstractCapabilityFormControl.subscribeModelToForm()`. 
+    //       These components should call `AbstractCapabilityFormControl.onDestroy()` to unsubscribe cleanly via the OnDestroy()
+    //       component lifecycle hook.
     public onDestroy(): void {
       console.groupCollapsed("Unsubscribing");
       this._subscriptions.forEach((sub: Subscription) => sub.unsubscribe());

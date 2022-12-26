@@ -22,6 +22,9 @@ export class SettingsService {
       let settings = JSON.stringify(editorSettings);
       localStorage.setItem(SettingsService.EDITOR_SETTINGS, settings);
     } catch (err: any) {
+      // TODO: Use common ErrorService to control error SnackBar (SettingsService)
+      //       Several services currently call `snackBar.openFromComponent(ErrorSnackbarComponent)`
+      //       but should be calling through to an ErrorService which will do these common operations.
       let msg = err;
       this._snackBar.openFromComponent(ErrorSnackbarComponent, {
         horizontalPosition: "center",

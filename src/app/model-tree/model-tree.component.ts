@@ -23,10 +23,13 @@ export class ModelTreeComponent implements OnInit {
   }  
 
   private subscribe() {
-    // TODO: Make this more efficient.
+    // TODO: Push new interface instances onto model tree structure without iterating all interfaces
+    //       The underlying call to `ModelTreeService.mapDataSource` iterates through all the interface 
+    //       instances. Instead, we should push the new instance onto the array using `ModelTreeService.addNode()` and 
+    //       re-map the children. Currently, `addNode()` doesn't work properly.
     this.editorService.interfaces$.subscribe((interfaceInstance: InterfaceCapabilityFormControl) => {
       this.modelTreeService.mapDataSource(this.editorService.interfaces);
-      //this.modelTreeService.addNode(interfaceInstance);
+      //this.modelTreeService.addNode(interfaceInstance.model);
     });
   } 
 }
