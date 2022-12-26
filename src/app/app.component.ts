@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SchemaService } from './services/schema/schema.service';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
