@@ -1,0 +1,24 @@
+<textarea matInput #modelInput id="modelInput" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="100">
+</textarea>
+<br />
+
+<button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Validate"
+    (click)="validateModel(modelInput.value)">
+<mat-icon>check_circle</mat-icon>
+<br />
+
+<mat-card *ngIf="validationResults && validationResults.length > 0">
+  <mat-list role="list" *ngFor="let value of validationResults">
+    <div>
+      <h3 matListItemTitle><mat-icon matListItemIcon color="warn"
+          style="margin-right: 10px">error_outline</mat-icon>{{value.cause}}</h3>
+      <h4 matListItemLine style="margin-left: 35px; margin-top: -15px"><b>Action:</b> {{value.action}}</h4>
+    </div>
+  </mat-list>
+</mat-card>
+
+<mat-card *ngIf="validationResults?.length == 0">
+  <div>
+    <h3><mat-icon matListItemIcon color="accent">check_circle</mat-icon> DTDL passed validation.</h3>
+  </div>
+</mat-card>

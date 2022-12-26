@@ -53,6 +53,7 @@ import { MapKeyComponent } from './map-schema/map-key/map-key.component';
 import { MapValueComponent } from './map-schema/map-value/map-value.component';
 import { PrimitiveSchemaComponent } from './primitive-schema/primitive-schema.component';
 import { ContentInterceptor } from './services/interceptors/content-interceptor';
+import { ModelValidationComponent } from './model-validation/model-validation.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { ContentInterceptor } from './services/interceptors/content-interceptor'
     EnumValueComponent,
     MapKeyComponent,
     MapValueComponent,
-    PrimitiveSchemaComponent
+    PrimitiveSchemaComponent,
+    ModelValidationComponent
   ],
   imports: [
     BrowserModule,
