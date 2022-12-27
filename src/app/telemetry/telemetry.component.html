@@ -30,7 +30,7 @@
         <mat-label attr.for="telemetry_schema_{{formIndex}}">Schema</mat-label>
         <mat-select [compareWith]="compareSchemas" matNativeControl id="telemetry_schema_{{formIndex}}" 
                     (selectionChange)="changeSchema($event)" [formControl]="schemaDropDownControl" #schema>
-          <mat-option *ngFor="let schemaType of schemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
+          <mat-option *ngFor="let schemaType of getSchemaTypes().filter(validSchemaTypes)" [value]="schemaType">{{schemaType}}</mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
@@ -44,9 +44,9 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="telemetry_semanticType_{{formIndex}}">Semantic Type</mat-label>
-        <mat-select matNativeControl id="telemetry_semanticType_{{formIndex}}" formControlName="semanticType"
-                    (selectionChange)="changeSemanticType($event)">
-            <mat-option *ngFor="let semanticType of semanticTypes" [value]="semanticType">{{semanticType}}</mat-option>
+        <mat-select matNativeControl id="telemetry_semanticType_{{formIndex}}"
+                    (selectionChange)="changeSemanticType($event)" [formControl]="semanticTypeDropDownControl">
+            <mat-option *ngFor="let semanticType of getSemanticTypes()" [value]="semanticType">{{semanticType}}</mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>

@@ -22,10 +22,9 @@ export class TelemetryComponent implements OnInit {
   private _editorService: EditorService;
   private _schemaService: SchemaService;
   public dialog: MatDialog;
-  public schemaTypes!: Array<string>;
-  public semanticTypes!: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public schemaDropDownControl: FormControl = new FormControl([]);
+  public schemaDropDownControl: FormControl = new FormControl();
+  public semanticTypeDropDownControl: FormControl = new FormControl();
 
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
@@ -34,8 +33,6 @@ export class TelemetryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.schemaTypes = this.getSchemaTypes();
-    this.semanticTypes = this.getSemanticTypes();
     this.telemetry.subscribeModelToForm();
     this.syncHeaderFields();
   }
@@ -53,7 +50,7 @@ export class TelemetryComponent implements OnInit {
     });
   }
 
-  private getSchemaTypes(): Array<string> {
+  public getSchemaTypes(): Array<string> {
     let schemaTypes = new Array<string>();
 
     this._schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
@@ -67,18 +64,22 @@ export class TelemetryComponent implements OnInit {
     return schemaTypes;
   }
 
-  private getSemanticTypes(): Array<string> {
+  public getSemanticTypes(): Array<string> {
     return this._editorService.getSemanticTypes();
   }
 
   public getUnits(): string[] | undefined {
-    let unit = this.telemetry.form.get("semanticType")?.value;
-    let units = this._editorService.getUnits().get(unit);
-    return units;
+    let semanticType = this.semanticTypeDropDownControl?.value;
+    if(semanticType) {
+      let units = this._editorService.getUnits().get(semanticType);
+      return units;
+    }
+
+    return undefined;
   }
 
   public validSchemaTypes = (schemaType: string): boolean => {
-    if (this.telemetry.form.get("semanticType")?.value)
+    if (this.semanticTypeDropDownControl?.value)
       return ["double", "float", "integer", "long"].indexOf(schemaType.toLowerCase()) > -1;
     else
       return true;
@@ -92,19 +93,16 @@ export class TelemetryComponent implements OnInit {
       type?.setValue(semanticType);
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
-      this.schemaTypes = this.getSchemaTypes();
     } else {
       let semanticType = new SemanticTypeArray("Telemetry", $event.value);
       type?.setValue(semanticType);
 
       let schema = this.telemetry.form.get("schema")?.value;
-      if (["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1) {
+      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
         this.telemetry.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
         this.schemaFormControl = undefined;
       }
-
-      this.schemaTypes = this.getSchemaTypes().filter(this.validSchemaTypes);
     }
   }
 

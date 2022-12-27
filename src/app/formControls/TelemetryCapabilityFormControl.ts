@@ -23,7 +23,6 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
       // Telemetry specific
       name: [this.model.name],
       schema: [],
-      semanticType: [this.model.semanticType],
       unit: [this.model.unit]
     });
 
