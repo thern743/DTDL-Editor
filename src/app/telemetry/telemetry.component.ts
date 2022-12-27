@@ -8,6 +8,7 @@ import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabil
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'telemetry-definition',
@@ -18,89 +19,119 @@ export class TelemetryComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public telemetry!: TelemetryCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
-  public editorService: EditorService;
-  public schemaService: SchemaService;
+  private _editorService: EditorService;
+  private _schemaService: SchemaService;
   public dialog: MatDialog;
-  public schemaTypes: Array<string>;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
-  
-  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) { 
-    this.editorService = editorService;
-    this.schemaService = schemaService;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+  public schemaDropDownControl: FormControl = new FormControl();
+  public semanticTypeDropDownControl: FormControl = new FormControl();
+
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
+    this._editorService = editorService;
+    this._schemaService = schemaService;
     this.dialog = dialog;
-    this.schemaTypes = this.getSchemaTypes();
   }
 
-  public ngOnInit(): void {  
+  public ngOnInit(): void {
     this.telemetry.subscribeModelToForm();
-    this.syncHeaderFields();    
+    this.syncHeaderFields();
   }
 
   public syncHeaderFields() {
     const id = this.telemetry.form.get("id");
     const name = this.telemetry.form.get("name");
 
-    id?.valueChanges.subscribe(value => {      
+    id?.valueChanges.subscribe(value => {
       id.setValue(value, { emitEvent: false })
     });
 
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
-    });    
+    });
   }
 
-  private getSchemaTypes(): Array<string> {
+  public getSchemaTypes(): Array<string> {
     let schemaTypes = new Array<string>();
-    
-    this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
+
+    this._schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
       schemaTypes.push(key);
     });
 
-    this.schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
+    this._schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
       schemaTypes.push(key);
     });
 
     return schemaTypes;
   }
 
+  public getSemanticTypes(): Array<string> {
+    return this._editorService.getSemanticTypes();
+  }
+
   public getUnits(): string[] | undefined {
-    let unit = this.telemetry.form.get("semanticType")?.value;
-    let units = this.editorService.getUnits().get(unit);
-    return units;
+    let semanticType = this.semanticTypeDropDownControl?.value;
+    if(semanticType) {
+      let units = this._editorService.getUnits().get(semanticType);
+      return units;
+    }
+
+    return undefined;
+  }
+
+  public validSchemaTypes = (schemaType: string): boolean => {
+    if (this.semanticTypeDropDownControl?.value)
+      return ["double", "float", "integer", "long"].indexOf(schemaType.toLowerCase()) > -1;
+    else
+      return true;
   }
 
   public changeSemanticType($event: MatSelectChange): void {
     let type = this.telemetry.form.get("type");
 
-    if(["", null, undefined].indexOf($event.value) > -1) {
+    if (["", null, undefined].indexOf($event.value) > -1) {
       let semanticType = new SemanticTypeArray("Telemetry");
-      type?.setValue(semanticType);      
+      type?.setValue(semanticType);
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
       let semanticType = new SemanticTypeArray("Telemetry", $event.value);
       type?.setValue(semanticType);
+
+      let schema = this.telemetry.form.get("schema")?.value;
+      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
+        this.telemetry.form.get("schema")?.setValue(undefined);
+        this.schemaDropDownControl.setValue(undefined);
+        this.schemaFormControl = undefined;
+      }
     }
   }
 
   public isComplex(schema: string): boolean {
-    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+    if (typeof schema == 'string')
+      return this._schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+
+    return false;
+  }
+
+  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+    return this._schemaService.compareSchemas(model1, model2)
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if($event.value instanceof AbstractCapabilityFormControl) return;
+    if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaType(key);
+    let schemaType = this._schemaService.getSchemaType(key);
     this.telemetry.form.get("schema")?.setValue(key);
 
-    if(schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
-      if(formControl === undefined) return;
+    if (schemaType == SchemaTypeEnum.Complex) {
+      let formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
+    if (this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
   }
 }

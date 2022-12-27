@@ -10,10 +10,7 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
   public  name!: string;
 
   @jsonMember 
-  public schema!: AbstractCapabilityModel;
-
-  // No SerDes
-  public semanticType!: string;
+  public schema!: string | AbstractCapabilityModel;
 
   @jsonMember 
   public unit!: string;
