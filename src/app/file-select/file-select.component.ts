@@ -31,6 +31,12 @@ export class FileSelectComponent implements OnInit {
   public uploadFiles(file: any): void {
     this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
       console.debug("Loaded file '%s'.", capability.displayName);
+
+      if (!capability) {
+        console.error("Error loading file.");
+        return;
+      }
+      
       this.fileSelect.emit(capability);
     });
     this.fileInput.nativeElement.value = "";
