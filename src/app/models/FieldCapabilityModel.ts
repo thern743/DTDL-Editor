@@ -9,6 +9,8 @@ export class FieldCapabilityModel extends AbstractCapabilityModel {
   @jsonMember
   public name!: string;
 
+  // TODO: Figure out why this is failing.
+  //@jsonMember(AnyT, { deserializer: TypeDeserializers.schemaDeserializer })
   @jsonMember(AnyT)
   public schema!: string | AbstractCapabilityModel;
 
