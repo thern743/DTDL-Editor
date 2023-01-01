@@ -45,6 +45,11 @@ export class TypeDeserializers {
     return result;
   }
 
+  public static relationshipCapabilityDeserializer(json: Array<{prop: string; shouldDeserialize: boolean}>, params: CustomDeserializerParams) {
+    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, AbstractCapabilityModel));
+    return result;
+  }
+
   public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
     if (typeof json === 'string')
       return new Array<string>(json);

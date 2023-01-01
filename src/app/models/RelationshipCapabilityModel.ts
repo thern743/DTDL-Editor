@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
-import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { RelationshipComponent } from '../relationship/relationship.component';
 import { ComponentType } from '@angular/cdk/portal';
+import { TypeDeserializers } from './TypedDeserializers';
 
 @jsonObject
 export class RelationshipCapabilityModel extends AbstractCapabilityModel {
@@ -22,7 +22,7 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public writable!: boolean;
   
-  @jsonArrayMember(AbstractCapabilityModel, { deserializer: RelationshipCapabilityModel.interfaceCapabilityDeserializer } )
+  @jsonArrayMember(AbstractCapabilityModel, { deserializer: TypeDeserializers.relationshipCapabilityDeserializer } )
   public properties: Array<AbstractCapabilityModel>;
 
   constructor(id: string) {
@@ -32,10 +32,5 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
 
   public resolveSchemaComponentType(): ComponentType<any> {
     return RelationshipComponent;
-  }
-
-  public static interfaceCapabilityDeserializer(json: Array<{prop: string; shouldDeserialize: boolean}>, params: CustomDeserializerParams) {
-    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, AbstractCapabilityModel));
-    return result;
   }
 }
