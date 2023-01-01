@@ -7,6 +7,10 @@ export class PropertyFormatterPipe implements PipeTransform {
   }
 
   public transform(value: any): string {
+    if (typeof value === 'string') {
+      value = value.split(",");
+    }
+    
     if(value instanceof Array && value.length > 1) {
       let val1 = value[0];
       let val2 = "";
