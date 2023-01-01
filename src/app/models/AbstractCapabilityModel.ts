@@ -1,5 +1,5 @@
 import { ComponentType } from "@angular/cdk/portal";
-import { jsonMember, jsonObject } from "typedjson";
+import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from "./ICapabilityModel";
 
 @jsonObject
@@ -7,7 +7,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonMember({ name: '@type' })
+    @jsonMember(AnyT, { name: '@type' })
     public type!: string | Array<string>;
 
     @jsonMember

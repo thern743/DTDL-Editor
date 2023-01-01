@@ -1,8 +1,7 @@
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
+import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { ICapabilityFormControl } from "./ICapabilityFormControl";
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 import { PropertyCapabilityFormControl } from "./PropertyCapabilityFormControl";
 import { CommandCapabilityFormControl } from "./CommandCapabilityFormControl";
 import { ComponentCapabilityFormControl } from "./ComponentCapabilityFormControl";
@@ -17,7 +16,7 @@ import { ValidationService } from "../services/validation/validation-service.ser
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   private _validationService: ValidationService;
-  public contents!: ICapabilityFormControl<ICapabilityModel>[];
+  public contents!: Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>;
   
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
     super(formBuilder);
@@ -28,12 +27,14 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   }
 
   private mapModelSubProperties(interfaceModel: InterfaceCapabilityModel): void {
-    this.contents = new Array<ICapabilityFormControl<ICapabilityModel>>();
+    this.contents = new Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>();
 
-    interfaceModel.contents?.map((subModel: ICapabilityModel) => {
-      let formControl!: ICapabilityFormControl<ICapabilityModel>;
-            
-      switch(subModel.type[0]) {
+    interfaceModel.contents?.map((subModel: AbstractCapabilityModel) => {
+      let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+      
+      let type = typeof subModel.type === 'string' ? new Array<string>(subModel.type) : subModel.type;
+
+      switch(type[0]) {
         case "Property":          
           formControl = new PropertyCapabilityFormControl(subModel as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
@@ -57,27 +58,27 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     });
   }
   
-  get commands(): ICapabilityModel[] {        
+  get commands(): AbstractCapabilityModel[] {        
     return this.capabilityByType("Command");
   }
 
-  get properties(): ICapabilityModel[] {
+  get properties(): AbstractCapabilityModel[] {
     return this.capabilityByType("Property");
   }
 
-  get telemetries(): ICapabilityModel[] {
+  get telemetries(): AbstractCapabilityModel[] {
     return this.capabilityByType("Telemetry");
   }
 
-  get components(): ICapabilityModel[] {
+  get components(): AbstractCapabilityModel[] {
     return this.capabilityByType("Component");
   }
 
-  get relationships(): ICapabilityModel[] {
+  get relationships(): AbstractCapabilityModel[] {
     return this.capabilityByType("Relationship");
   }
 
-  private capabilityByType(type: string): ICapabilityModel[] {    
+  private capabilityByType(type: string): AbstractCapabilityModel[] {    
     let capabilities = this.model.contents.filter(x => x.type.indexOf(type) > -1);
     return capabilities;
   }
@@ -92,9 +93,19 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
       // Interface specific
       context: [this.model.context],
       extends: [this.model.extends],
-      contents: this.formBuilder.array([...this.model.contents])
+      contents: this.getCapabilityFormArray()
     });
 
     return form;
+  }
+
+  private getCapabilityFormArray(): FormArray {
+    let formArray = this.formBuilder.array([]);
+    
+    this.contents.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
+      formArray.push(capability.toFormGroup());
+    });
+
+    return formArray;
   }
 }

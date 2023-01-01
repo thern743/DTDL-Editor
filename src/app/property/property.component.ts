@@ -50,7 +50,7 @@ export class PropertyComponent implements OnInit {
       }
     }
 
-    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+    this.schemaDropDownControl?.setValue(schema?.toLocaleLowerCase());
 
     let type = this.property.model.type instanceof Array ? this.property.model.type[1] : this.property.model.type;
     this.semanticTypeDropDownControl?.setValue(type);

@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
@@ -6,6 +6,7 @@ import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';
 import { ICapabilityFormControl } from './ICapabilityFormControl';
 import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: PropertyCapabilityFormControl[];
@@ -54,9 +55,19 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
       maxMultiplicity: [this.model.maxMultiplicity],
       target: [this.model.target],
       writable: [this.model.writable],
-      properties: this.formBuilder.array([...this.model.properties])
+      properties: this.getCapabilityFormArray()
     });
 
     return form;
+  }
+
+  private getCapabilityFormArray(): FormArray {
+    let formArray = this.formBuilder.array([]);
+    
+    this.properties.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
+      formArray.push(capability.toFormGroup());
+    });
+
+    return formArray;
   }
 }

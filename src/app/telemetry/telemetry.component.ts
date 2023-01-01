@@ -50,7 +50,7 @@ export class TelemetryComponent implements OnInit {
       }
     }
 
-    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+    this.schemaDropDownControl?.setValue(schema?.toLocaleLowerCase());
 
     let type = this.telemetry.model.type instanceof Array ? this.telemetry.model.type[1] : this.telemetry.model.type;
     this.semanticTypeDropDownControl?.setValue(type);
