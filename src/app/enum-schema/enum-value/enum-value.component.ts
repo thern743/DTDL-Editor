@@ -7,7 +7,7 @@ import { SchemaService } from '../../services/schema/schema.service';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 
 @Component({
-  selector: 'enum-value-schema',
+  selector: 'enum-value',
   templateUrl: './enum-value.component.html',
   styleUrls: ['./enum-value.component.scss']
 })
