@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { EditorService } from '../services/editor/editor-service.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
@@ -23,8 +24,8 @@ export class ImportModelComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public addInterface($event: any): void {
-    var formControl = new InterfaceCapabilityFormControl($event.target.value, this._formBuilder, this._validationService);
+  public addInterface($event: InterfaceCapabilityModel): void {
+    var formControl = new InterfaceCapabilityFormControl($event, this._formBuilder, this._validationService);
     this._editorService.addInterface(formControl);
   }
 }
