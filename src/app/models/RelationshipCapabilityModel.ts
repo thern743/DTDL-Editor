@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject, jsonArrayMember } from "typedjson";
-import { ICapabilityModel } from './ICapabilityModel';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { RelationshipComponent } from '../relationship/relationship.component';

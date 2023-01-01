@@ -34,6 +34,26 @@ export class TelemetryComponent implements OnInit {
   public ngOnInit(): void {
     this.telemetry.subscribeModelToForm();
     this.syncHeaderFields();
+    this.setSchemaDropDown();
+  }
+
+  private setSchemaDropDown(): void {
+    let schema = "";
+
+    if (typeof this.telemetry.model.schema === 'string') {
+      schema = this.telemetry.model.schema;
+    } else if (this.telemetry.model.schema instanceof Object) {
+      if (this.telemetry.model.schema.type instanceof Array) {
+        schema = this.telemetry.model.schema.type[0];
+      } else {
+        schema = this.telemetry.model.schema.type;
+      }
+    }
+
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+
+    let type = this.telemetry.model.type instanceof Array ? this.telemetry.model.type[1] : this.telemetry.model.type;
+    this.semanticTypeDropDownControl?.setValue(type);
   }
 
   public syncHeaderFields() {

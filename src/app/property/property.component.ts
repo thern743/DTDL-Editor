@@ -34,6 +34,26 @@ export class PropertyComponent implements OnInit {
   public ngOnInit(): void {
     this.property.subscribeModelToForm();
     this.syncHeaderFields();
+    this.setSchemaDropDown();
+  }
+
+  private setSchemaDropDown(): void {
+    let schema = "";
+
+    if (typeof this.property.model.schema === 'string') {
+      schema = this.property.model.schema;
+    } else if (this.property.model.schema instanceof Object) {
+      if (this.property.model.schema.type instanceof Array) {
+        schema = this.property.model.schema.type[0];
+      } else {
+        schema = this.property.model.schema.type;
+      }
+    }
+
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+
+    let type = this.property.model.type instanceof Array ? this.property.model.type[1] : this.property.model.type;
+    this.semanticTypeDropDownControl?.setValue(type);
   }
 
   public syncHeaderFields() {

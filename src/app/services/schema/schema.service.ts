@@ -70,8 +70,8 @@ export class SchemaService implements IFormFactory, IModelFactory {
   // TODO: Use base DTMI from SettingsService when calling factory methods
   //       Currently the DTMI ids are hard-coded in the factory methods for creating capability models.
   //       We should instead construct the URI from the SettingsService.  
-  public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
-    return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
+  public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>> {
+    return new Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>>([
       ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["date", new DateSchemaFormControl(new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapabilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService, this.dialog)], 

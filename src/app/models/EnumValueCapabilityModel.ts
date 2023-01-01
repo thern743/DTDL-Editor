@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonMember, jsonObject } from "typedjson";
 import { EnumValueComponent } from "../enum-schema/enum-value/enum-value.component";
@@ -10,17 +11,17 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 //       saved on the output.
 @jsonObject
 export class EnumValueCapabilityModel extends AbstractCapabilityModel {
-    @jsonMember
-    public name!: string;
-    
-    @jsonMember
-    public enumValue!: number | string;
+  @jsonMember
+  public name!: string;
 
-    constructor(id: string) {
-        super(id, "EnumValue");
-    }
+  @jsonMember
+  public enumValue!: number | string;
 
-    public resolveSchemaComponentType(): ComponentType<any> {
-      return EnumValueComponent;
-    }
+  constructor(id: string) {
+    super(id, "EnumValue");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return EnumValueComponent;
+  }
 }

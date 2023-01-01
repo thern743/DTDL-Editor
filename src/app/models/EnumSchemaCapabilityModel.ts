@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { EnumSchemaComponent } from "../enum-schema/enum-schema.component";

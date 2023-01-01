@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonObject } from "typedjson";
 import { PrimitiveSchemaComponent } from "../primitive-schema/primitive-schema.component";

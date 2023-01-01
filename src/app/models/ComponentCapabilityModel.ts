@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { ComponentType } from '@angular/cdk/portal';
-import { jsonMember, jsonObject } from "typedjson";
+import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { ComponentComponent } from '../component/component.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 
@@ -9,8 +9,8 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public name!: string;
 
-  @jsonMember 
-  public schema!: string;  
+  @jsonMember(AnyT) 
+  public schema!: string | AbstractCapabilityModel;  
 
   constructor(id: string) {
     super(id, "Component");
