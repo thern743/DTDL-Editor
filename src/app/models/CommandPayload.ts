@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
@@ -16,7 +17,7 @@ export class CommandPayload {
   public name!: string;
 
   @jsonMember(AnyT, { deserializer: CommandPayload.schemaDeserializer })
-  public schema!: string | AbstractCapabilityModel;
+  public schema!: string | AbstractSchemaModel;
 
   @jsonMember
   public displayName!: string;
@@ -27,20 +28,11 @@ export class CommandPayload {
   @jsonMember
   public comment!: string;
 
-  public static schemaDeserializer(value: string | AbstractCapabilityModel, params: CustomDeserializerParams) {
-    let schema = "";
+  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+    if (!value) return;
+    let schema = typeof value === 'string' ? value : value.type;
 
-    if (typeof value === 'string') {
-      schema = value;
-    } else if (value instanceof Object) {
-      if (value?.type instanceof Array) {
-        schema = value.type[0];
-      } else {
-        schema = value.type;
-      }
-    }
-
-    switch (schema) {
+    switch (schema?.toLocaleLowerCase()) {
       case "array":
         return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":

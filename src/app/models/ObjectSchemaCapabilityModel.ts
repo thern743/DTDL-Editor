@@ -2,11 +2,11 @@ import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonArrayMember, jsonObject } from "typedjson";
 import { ObjectSchemaComponent } from "../object-schema/object-schema.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { FieldCapabilityModel } from "./FieldCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 @jsonObject
-export class ObjectSchemaCapabilityModel extends AbstractCapabilityModel {
+export class ObjectSchemaCapabilityModel extends AbstractSchemaModel {
     @jsonArrayMember(FieldCapabilityModel)
     public fields!: Array<FieldCapabilityModel>;
 

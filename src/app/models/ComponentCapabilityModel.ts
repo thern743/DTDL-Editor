@@ -8,6 +8,7 @@ import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
 import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 @jsonObject
 export class ComponentCapabilityModel extends AbstractCapabilityModel {
@@ -15,7 +16,7 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
   public name!: string;
 
   @jsonMember(AnyT, { deserializer: ArraySchemaCapabilityModel.schemaDeserializer })
-  public schema!: string | AbstractCapabilityModel;  
+  public schema!: string | AbstractSchemaModel;  
 
   constructor(id: string) {
     super(id, "Component");
@@ -25,20 +26,11 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
     return ComponentComponent;
   }
 
-  public static schemaDeserializer(value: string | AbstractCapabilityModel, params: CustomDeserializerParams) {
-    let schema = "";
+  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+    if (!value) return;
+    let schema = typeof value === 'string' ? value : value.type;
 
-    if (typeof value === 'string') {
-      schema = value;
-    } else if (value instanceof Object) {
-      if (value?.type instanceof Array) {
-        schema = value.type[0];
-      } else {
-        schema = value.type;
-      }
-    }
-
-    switch (schema) {
+    switch (schema?.toLocaleLowerCase()) {
       case "array":
         return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":

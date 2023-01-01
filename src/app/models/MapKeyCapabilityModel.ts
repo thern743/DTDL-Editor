@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember } from "typedjson";
 import { MapKeyComponent } from "../map-schema/map-key/map-key.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
-export class MapKeyCapabilityModel<TCapabilityModel extends AbstractCapabilityModel> extends AbstractCapabilityModel {
+export class MapKeyCapabilityModel<TCapabilityModel extends AbstractSchemaModel> extends AbstractSchemaModel {
   @jsonMember
   public name!: string;
 

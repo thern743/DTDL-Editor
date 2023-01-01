@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
 import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 
-export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueCapabilityModel<AbstractCapabilityModel>> {
+export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueCapabilityModel<AbstractSchemaModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: MapValueCapabilityModel<AbstractCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapValueCapabilityModel<AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -18,7 +18,7 @@ export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueC
         this.form = this.toFormGroup();
     }
 
-    private mapModelSubProperties(model: MapValueCapabilityModel<AbstractCapabilityModel>): void {
+    private mapModelSubProperties(model: MapValueCapabilityModel<AbstractSchemaModel>): void {
       // NOOP
     } 
 

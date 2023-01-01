@@ -3,8 +3,9 @@ import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember } from "typedjson";
 import { MapValueComponent } from "../map-schema/map-value/map-value.component";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
-export class MapValueCapabilityModel<TCapabilityModel extends AbstractCapabilityModel> extends AbstractCapabilityModel {
+export class MapValueCapabilityModel<TCapabilityModel extends AbstractSchemaModel> extends AbstractSchemaModel {
   @jsonMember
   public name!: string;
 

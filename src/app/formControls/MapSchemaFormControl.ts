@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { MapSchemaCapabilityModel } from '../models/MapSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -10,13 +10,13 @@ import { MapValueFormControl } from './MapValueFormControl';
 /**
  * Form control contains the mapping between the form and the backing model 
  */
-export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>> {
+export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
     public mapKey!: MapKeyFormControl;
     public mapValue!: MapValueFormControl;
 
-    constructor(model: MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -25,7 +25,7 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
         this.form = this.toFormGroup();          
     }
 
-    private mapModelSubProperties(model: MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>): void { 
+    private mapModelSubProperties(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>): void { 
       // NO OP     
     } 
     
