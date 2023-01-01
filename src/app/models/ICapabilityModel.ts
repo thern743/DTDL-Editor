@@ -1,8 +1,6 @@
-import { SemanticTypeArray } from "./SemanticTypeArray";
-
 export interface ICapabilityModel {
     id: string;
-    type: SemanticTypeArray;
+    type: string | Array<string>;
     displayName: string;
     description: string;
     comment: string;

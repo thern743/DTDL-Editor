@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
-import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
@@ -92,12 +91,12 @@ export class PropertyComponent implements OnInit {
     let type = this.property.form.get("type");
 
     if (["", null, undefined].indexOf($event.value) > -1) {
-      let semanticType = new SemanticTypeArray("Property");
+      let semanticType = new Array<string>("Property");
       type?.setValue(semanticType);
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new SemanticTypeArray("Property", $event.value);
+      let semanticType = new Array<string>("Property", $event.value);
       type?.setValue(semanticType);
 
       let schema = this.property.form.get("schema")?.value;

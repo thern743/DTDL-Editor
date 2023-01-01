@@ -1,7 +1,6 @@
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonMember, jsonObject } from "typedjson";
 import { ICapabilityModel } from "./ICapabilityModel";
-import { SemanticTypeArray } from "./SemanticTypeArray";
 
 @jsonObject
 export abstract class AbstractCapabilityModel implements ICapabilityModel {
@@ -9,7 +8,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
     public id!: string;
 
     @jsonMember({ name: '@type' })
-    public type!: SemanticTypeArray;
+    public type!: string | Array<string>;
 
     @jsonMember
     public displayName!: string;
@@ -22,7 +21,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
 
     constructor(id: string, type: string) {
         this.id = id;
-        this.type = new SemanticTypeArray(type);
+        this.type = new Array<string>(type);
     }
 
     public abstract resolveSchemaComponentType(): ComponentType<any>;

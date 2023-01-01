@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
-import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
@@ -89,12 +88,12 @@ export class TelemetryComponent implements OnInit {
     let type = this.telemetry.form.get("type");
 
     if (["", null, undefined].indexOf($event.value) > -1) {
-      let semanticType = new SemanticTypeArray("Telemetry");
+      let semanticType = new Array<string>("Telemetry");
       type?.setValue(semanticType);
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new SemanticTypeArray("Telemetry", $event.value);
+      let semanticType = new Array<string>("Telemetry", $event.value);
       type?.setValue(semanticType);
 
       let schema = this.telemetry.form.get("schema")?.value;
