@@ -38,11 +38,15 @@ export class TelemetryComponent implements OnInit {
   }
 
   private setSchemaDropDown(): void {
-    if (!this.telemetry.model.schema) return;
-    let schema = typeof this.telemetry.model.schema === 'string' ? this.telemetry.model.schema : this.telemetry.model.schema.type;
-    this.schemaDropDownControl?.setValue(schema?.toLocaleLowerCase());
-    let type = this.telemetry.model.type instanceof Array ? this.telemetry.model.type[1] : this.telemetry.model.type;
-    this.semanticTypeDropDownControl?.setValue(type);
+    if (this.telemetry.model?.type instanceof Array && this.telemetry.model.type?.length > 1) {
+      // Only set Semantic Type is it's an additional @type value
+      let type = this.telemetry.model.type[1];
+      this.semanticTypeDropDownControl?.setValue(type);
+    }
+
+    let schema = typeof this.telemetry.model?.schema === 'string' ? this.telemetry.model.schema : this.telemetry.model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
 
   public syncHeaderFields() {
@@ -94,19 +98,24 @@ export class TelemetryComponent implements OnInit {
   }
 
   public changeSemanticType($event: MatSelectChange): void {
+    let value = $event.value;
+    this.changeSemanticTypeInternal(value);
+  }
+
+  private changeSemanticTypeInternal(value: string): void {
     let type = this.telemetry.form.get("type");
 
-    if (["", null, undefined].indexOf($event.value) > -1) {
+    if (["", null, undefined].indexOf(value) > -1) {
       let semanticType = new Array<string>("Telemetry");
       type?.setValue(semanticType);
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new Array<string>("Telemetry", $event.value);
+      let semanticType = new Array<string>("Telemetry", value);
       type?.setValue(semanticType);
 
       let schema = this.telemetry.form.get("schema")?.value;
-      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
+      if (["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1) {
         this.telemetry.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
         this.schemaFormControl = undefined;
@@ -126,8 +135,13 @@ export class TelemetryComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if ($event.value instanceof AbstractCapabilityFormControl) return;
-    let key = $event.value.toLowerCase();
+    let value = $event.value;
+    this.changeSchemaInternal(value);
+  }
+
+  public changeSchemaInternal(value: any): void {
+    if (value instanceof AbstractCapabilityFormControl) return;
+    let key = value.toLowerCase();
     let schemaType = this._schemaService.getSchemaType(key);
     this.telemetry.form.get("schema")?.setValue(key);
 

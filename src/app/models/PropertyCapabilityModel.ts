@@ -34,7 +34,7 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
 
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
+    let schema = typeof value === 'string' ? value : params.fallback(value, AbstractSchemaModel).type;
 
     switch (schema?.toLocaleLowerCase()) {
       case "array":

@@ -38,11 +38,15 @@ export class PropertyComponent implements OnInit {
   }
 
   private setSchemaDropDown(): void {
-    if (!this.property.model.schema) return;
-    let schema = typeof this.property.model.schema === 'string' ? this.property.model.schema : this.property.model.schema.type;
-    this.schemaDropDownControl?.setValue(schema?.toLocaleLowerCase());
-    let type = this.property.model.type instanceof Array ? this.property.model.type[1] : this.property.model.type;
-    this.semanticTypeDropDownControl?.setValue(type);
+    if (this.property.model?.type instanceof Array && this.property.model.type?.length > 1) {
+      // Only set Semantic Type is it's an additional @type value
+      let type = this.property.model.type[1];
+      this.semanticTypeDropDownControl?.setValue(type);
+    }
+
+    let schema = typeof this.property.model?.schema === 'string' ? this.property.model.schema : this.property.model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
 
   public syncHeaderFields() {
@@ -97,15 +101,20 @@ export class PropertyComponent implements OnInit {
   }
 
   public changeSemanticType($event: MatSelectChange): void {
+    let value = $event.value;
+    this.changeSemanticTypeInternal(value);
+  }
+
+  private changeSemanticTypeInternal(value: string): void {
     let type = this.property.form.get("type");
 
-    if (["", null, undefined].indexOf($event.value) > -1) {
+    if (["", null, undefined].indexOf(value) > -1) {
       let semanticType = new Array<string>("Property");
       type?.setValue(semanticType);
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new Array<string>("Property", $event.value);
+      let semanticType = new Array<string>("Property", value);
       type?.setValue(semanticType);
 
       let schema = this.property.form.get("schema")?.value;
@@ -129,8 +138,13 @@ export class PropertyComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if ($event.value instanceof AbstractCapabilityFormControl) return;
-    let key = $event.value.toLowerCase();
+    let value = $event.value;
+    this.changeSchemaInternal(value);
+  }
+
+  public changeSchemaInternal(value: any): void {
+    if (value instanceof AbstractCapabilityFormControl) return;
+    let key = value.toLowerCase();
     let schemaType = this._schemaService.getSchemaType(key);
     this.property.form.get("schema")?.setValue(key);
 
