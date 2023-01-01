@@ -34,10 +34,13 @@ export class PropertyComponent implements OnInit {
   public ngOnInit(): void {
     this.property.subscribeModelToForm();
     this.syncHeaderFields();
-    this.setSchemaDropDown();
+    this.setSchemaAndSemanticTypeDropDowns();
   }
 
-  private setSchemaDropDown(): void {
+  // TODO: Importing a Property model does not allow editing the schema
+  //       Because the models are deserialized directly, the factory methods are not called when importing
+  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
+  private setSchemaAndSemanticTypeDropDowns(): void {
     if (this.property.model?.type instanceof Array && this.property.model.type?.length > 1) {
       // Only set Semantic Type is it's an additional @type value
       let type = this.property.model.type[1];
