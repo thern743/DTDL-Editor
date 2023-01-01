@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { SemanticTypeArray } from "../models/SemanticTypeArray";
 
 @Pipe({ name: "propertyFormatter" })
 export class PropertyFormatterPipe implements PipeTransform {
@@ -8,7 +7,11 @@ export class PropertyFormatterPipe implements PipeTransform {
   }
 
   public transform(value: any): string {
-    if(value instanceof SemanticTypeArray && value.length > 1) {
+    if (typeof value === 'string') {
+      value = value.split(",");
+    }
+    
+    if(value instanceof Array && value.length > 1) {
       let val1 = value[0];
       let val2 = "";
 

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
-import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
@@ -35,6 +34,22 @@ export class TelemetryComponent implements OnInit {
   public ngOnInit(): void {
     this.telemetry.subscribeModelToForm();
     this.syncHeaderFields();
+    this.setSchemaAndSemanticTypeDropDowns();
+  }
+
+  // TODO: Importing a Telemetry model does not allow editing the schema
+  //       Because the models are deserialized directly, the factory methods are not called when importing
+  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
+  private setSchemaAndSemanticTypeDropDowns(): void {
+    if (this.telemetry.model?.type instanceof Array && this.telemetry.model.type?.length > 1) {
+      // Only set Semantic Type is it's an additional @type value
+      let type = this.telemetry.model.type[1];
+      this.semanticTypeDropDownControl?.setValue(type);
+    }
+
+    let schema = typeof this.telemetry.model?.schema === 'string' ? this.telemetry.model.schema : this.telemetry.model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
 
   public syncHeaderFields() {
@@ -86,19 +101,24 @@ export class TelemetryComponent implements OnInit {
   }
 
   public changeSemanticType($event: MatSelectChange): void {
+    let value = $event.value;
+    this.changeSemanticTypeInternal(value);
+  }
+
+  private changeSemanticTypeInternal(value: string): void {
     let type = this.telemetry.form.get("type");
 
-    if (["", null, undefined].indexOf($event.value) > -1) {
-      let semanticType = new SemanticTypeArray("Telemetry");
+    if (["", null, undefined].indexOf(value) > -1) {
+      let semanticType = new Array<string>("Telemetry");
       type?.setValue(semanticType);
       let unit = this.telemetry.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new SemanticTypeArray("Telemetry", $event.value);
+      let semanticType = new Array<string>("Telemetry", value);
       type?.setValue(semanticType);
 
       let schema = this.telemetry.form.get("schema")?.value;
-      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
+      if (["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1) {
         this.telemetry.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
         this.schemaFormControl = undefined;
@@ -118,8 +138,13 @@ export class TelemetryComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if ($event.value instanceof AbstractCapabilityFormControl) return;
-    let key = $event.value.toLowerCase();
+    let value = $event.value;
+    this.changeSchemaInternal(value);
+  }
+
+  public changeSchemaInternal(value: any): void {
+    if (value instanceof AbstractCapabilityFormControl) return;
+    let key = value.toLowerCase();
     let schemaType = this._schemaService.getSchemaType(key);
     this.telemetry.form.get("schema")?.setValue(key);
 

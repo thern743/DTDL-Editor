@@ -1,15 +1,15 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
-import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
 import { MapKeyCapabilityModel } from "../models/MapKeyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
 
-export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel<AbstractCapabilityModel>> {
+export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapabilityModel<AbstractSchemaModel>> {
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: MapKeyCapabilityModel<AbstractCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapKeyCapabilityModel<AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -18,7 +18,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
         this.form = this.toFormGroup();
     }
 
-    private mapModelSubProperties(model: MapKeyCapabilityModel<AbstractCapabilityModel>): void {
+    private mapModelSubProperties(model: MapKeyCapabilityModel<AbstractSchemaModel>): void {
       // NOOP
     }
 
@@ -30,7 +30,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
             description: [this.model.description],
             // MapKey specific
             name: [this.model.name],
-            schema: [this.model.schema.type[0]]
+            schema: [this.model.schema]
         });
 
         return form;

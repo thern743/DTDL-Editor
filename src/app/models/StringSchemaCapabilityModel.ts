@@ -1,10 +1,10 @@
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonObject } from "typedjson";
 import { PrimitiveSchemaComponent } from "../primitive-schema/primitive-schema.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from "./AbstractSchemaModel";
 
 @jsonObject
-export class StringSchemaCapabilityModel extends AbstractCapabilityModel{
+export class StringSchemaCapabilityModel extends AbstractSchemaModel {
     constructor(id: string) {
         super(id, "String");
         this.id = id;

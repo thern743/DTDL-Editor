@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
-import { ICapabilityModel } from '../models/ICapabilityModel';
-import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 
 @Component({
   selector: 'interface-definition',
@@ -33,27 +32,27 @@ export class InterfaceComponent implements OnInit {
     this.interface.subscribeModelToForm();
   }
 
-  public getContents(): Array<ICapabilityFormControl<ICapabilityModel>> {
+  public getContents(): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {
     return this.interface.contents;
   }
 
-  public getProperty(capability: ICapabilityFormControl<ICapabilityModel>): PropertyCapabilityFormControl {
+  public getProperty(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): PropertyCapabilityFormControl {
     return capability as PropertyCapabilityFormControl;
   }
 
-  public getCommand(capability: ICapabilityFormControl<ICapabilityModel>): CommandCapabilityFormControl {
+  public getCommand(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): CommandCapabilityFormControl {
     return capability as CommandCapabilityFormControl;
   }
 
-  public getTelemetry(capability: ICapabilityFormControl<ICapabilityModel>): TelemetryCapabilityFormControl {
+  public getTelemetry(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): TelemetryCapabilityFormControl {
     return capability as TelemetryCapabilityFormControl;
   }
 
-  public getComponent(capability: ICapabilityFormControl<ICapabilityModel>): ComponentCapabilityFormControl {
+  public getComponent(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): ComponentCapabilityFormControl {
     return capability as ComponentCapabilityFormControl;
   }
 
-  public getRelationship(capability: ICapabilityFormControl<ICapabilityModel>): RelationshipCapabilityFormControl {
+  public getRelationship(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): RelationshipCapabilityFormControl {
     return capability as RelationshipCapabilityFormControl;
   }
   
@@ -62,9 +61,9 @@ export class InterfaceComponent implements OnInit {
     this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);
   }
 
-  public getType(capability: ICapabilityFormControl<ICapabilityModel>): string {
-    let type = capability.form.get("type")?.value;
-    let val = type instanceof SemanticTypeArray ? type[0] : type;
+  public getType(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): string {
+    let type = capability.model.type; //capability.form.get("type")?.value;
+    let val = type instanceof Array ? type[0] : type;
     return val;
   }
 }

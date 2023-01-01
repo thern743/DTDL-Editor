@@ -1,13 +1,11 @@
 import { Component, OnInit, Input, Type } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EnumValueCapabilityFormControl } from 'src/app/formControls/EnumValueCapabilityFormControl';
-import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { EditorService } from '../../services/editor/editor-service.service';
 import { SchemaService } from '../../services/schema/schema.service';
-import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 
 @Component({
-  selector: 'enum-value-schema',
+  selector: 'enum-value',
   templateUrl: './enum-value.component.html',
   styleUrls: ['./enum-value.component.scss']
 })
@@ -20,7 +18,6 @@ export class EnumValueComponent implements OnInit {
   public editorService: EditorService;
   public dialog: MatDialog;
   public schemaTypes: Array<string>;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
   constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) { 
     this.schemaService = schemaEditorService; 

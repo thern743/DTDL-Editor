@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -22,7 +22,7 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
       description: [this.model.description],
       // Property specific
       name: [this.model.name],
-      schema: [],
+      schema: [this.model.schema],
       unit: [this.model.unit],
       writable: [this.model.writable]
     });

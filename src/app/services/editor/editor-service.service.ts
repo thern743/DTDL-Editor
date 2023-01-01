@@ -4,10 +4,8 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from 'src/app/formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from 'src/app/formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from 'src/app/formControls/TelemetryCapabilityFormControl';
-import { ICapabilityFormControl } from 'src/app/formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from 'src/app/formControls/RelationshipCapabilityFormControl';
 import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCapabilityFormControl';
-import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { Subject } from 'rxjs';
 import { RelationshipCapabilityModel } from 'src/app/models/RelationshipCapabilityModel';
 import { PropertyCapabilityModel } from 'src/app/models/PropertyCapabilityModel';
@@ -16,6 +14,8 @@ import { ComponentCapabilityModel } from 'src/app/models/ComponentCapabilityMode
 import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityModel';
 import { ValidationService } from '../validation/validation-service.service';
 import { SettingsService } from '../settings/settings.service';
+import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -202,7 +202,7 @@ export class EditorService {
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
-  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: ICapabilityFormControl<ICapabilityModel>): void {    
+  private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractCapabilityModel>): void {    
     let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
     contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    

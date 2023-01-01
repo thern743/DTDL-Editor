@@ -30,7 +30,6 @@ import { DateTimeSchemaCapabilityModel } from 'src/app/models/DateTimeSchemaCapa
 import { DoubleSchemaCapabilityModel } from 'src/app/models/DoubleSchemaCapabilityModel';
 import { DurationSchemaCapabilityModel } from 'src/app/models/DurationSchemaCapabilityModel';
 import { FloatSchemaCapabilityModel } from 'src/app/models/FloatSchemaCapabilityModel';
-import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
 import { IntegerSchemaCapabilityModel } from 'src/app/models/IntegerSchemaCapabilityModel';
 import { LongSchemaCapabilityModel } from 'src/app/models/LongSchemaCapabilityModel';
 import { StringSchemaCapabilityModel } from 'src/app/models/StringSchemaCapabilityModel';
@@ -46,6 +45,7 @@ import { MapKeyFormControl } from 'src/app/formControls/MapKeyFormControl';
 import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
 import { ISchemaFactory } from 'src/app/schemas/ISchemaFactory';
 import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
+import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
 
 // TODO: Move schema factory methods to the controls responsible for creating them
 //       Currently, `SchemaService` is responsible for registering each model and form control
@@ -70,8 +70,8 @@ export class SchemaService implements IFormFactory, IModelFactory {
   // TODO: Use base DTMI from SettingsService when calling factory methods
   //       Currently the DTMI ids are hard-coded in the factory methods for creating capability models.
   //       We should instead construct the URI from the SettingsService.  
-  public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<ICapabilityModel>> {
-    return new Map<string, AbstractCapabilityFormControl<ICapabilityModel>>([
+  public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>> {
+    return new Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>>([
       ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["date", new DateSchemaFormControl(new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapabilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService, this.dialog)], 
@@ -85,7 +85,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
       
       ["array", new ArraySchemaFormControl(new ArraySchemaCapabilityModel("dtmi:com:Example:MyArray;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["enum", new EnumSchemaFormControl(new EnumSchemaCapabilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService, this.dialog)], 
-      ["map", new MapSchemaFormControl(new MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)], 
+      ["map", new MapSchemaFormControl(new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)], 
       ["object", new ObjectSchemaFormControl(new ObjectSchemaCapabilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService, this.dialog)]
     ]);
   }
@@ -104,7 +104,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
     this.schemaFactory.registerModel("Complex", "array", () => new ArraySchemaCapabilityModel("dtmi:com:Example:MyArray;1")); 
     this.schemaFactory.registerModel("Complex", "enum", () => new EnumSchemaCapabilityModel("dtmi:com:Example:MyEnum;1")); 
-    this.schemaFactory.registerModel("Complex", "map", () => new MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>("dtmi:com:Example:MyMap;1")); 
+    this.schemaFactory.registerModel("Complex", "map", () => new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>("dtmi:com:Example:MyMap;1")); 
     this.schemaFactory.registerModel("Complex", "object", () => new ObjectSchemaCapabilityModel("dtmi:com:Example:MyObject;1")); 
 
     this.registerMapModels();
@@ -124,7 +124,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
     this.schemaFactory.registerFormControl("Complex", "array", () => new ArraySchemaFormControl(this.createModel("Complex", "array") as ArraySchemaCapabilityModel, this._formBuilder, this._validationService, this.dialog)); 
     this.schemaFactory.registerFormControl("Complex", "enum", () => new EnumSchemaFormControl(this.createModel("Complex", "enum") as EnumSchemaCapabilityModel, this._formBuilder, this._validationService, this.dialog)); 
-    this.schemaFactory.registerFormControl("Complex", "map", () => new MapSchemaFormControl(this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>, this._formBuilder, this._validationService, this.dialog)); 
+    this.schemaFactory.registerFormControl("Complex", "map", () => new MapSchemaFormControl(this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, this._formBuilder, this._validationService, this.dialog)); 
     this.schemaFactory.registerFormControl("Complex", "object", () => new ObjectSchemaFormControl(this.createModel("Complex", "object") as ObjectSchemaCapabilityModel, this._formBuilder, this._validationService, this.dialog)); 
 
     this.registerMapForms();
@@ -148,7 +148,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
     this.schemaFactory.registerModel("MapValue", "array", () => new MapValueCapabilityModel<ArraySchemaCapabilityModel>("dtmi:com:Example:MyArrayMapValue;1", this.createModel("Complex", "array") as ArraySchemaCapabilityModel));
     this.schemaFactory.registerModel("MapValue", "enum", () => new MapValueCapabilityModel<EnumSchemaCapabilityModel>("dtmi:com:Example:MyEnumMapValue;1", this.createModel("Complex", "enum") as EnumSchemaCapabilityModel)); 
-    this.schemaFactory.registerModel("MapValue", "map", () => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>>("dtmi:com:Example:MyMapMapValue;1", this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>)); 
+    this.schemaFactory.registerModel("MapValue", "map", () => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>("dtmi:com:Example:MyMapMapValue;1", this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>)); 
     this.schemaFactory.registerModel("MapValue", "object", () => new MapValueCapabilityModel<ObjectSchemaCapabilityModel>("dtmi:com:Example:MyObjectMapValue;1", this.createModel("Complex", "object") as ObjectSchemaCapabilityModel)); 
   }
 
@@ -170,7 +170,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
     this.schemaFactory.registerFormControl("MapValue", "array", () => new MapValueFormControl(this.createModel("MapValue", "array") as MapValueCapabilityModel<ArraySchemaCapabilityModel>, this._formBuilder, this._validationService, this.dialog)); 
     this.schemaFactory.registerFormControl("MapValue", "enum", () => new MapValueFormControl(this.createModel("MapValue", "enum") as MapValueCapabilityModel<EnumSchemaCapabilityModel>, this._formBuilder, this._validationService, this.dialog)); 
-    this.schemaFactory.registerFormControl("MapValue", "map", () => new MapValueFormControl(this.createModel("MapValue", "map") as MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractCapabilityModel, AbstractCapabilityModel>>, this._formBuilder, this._validationService, this.dialog)); 
+    this.schemaFactory.registerFormControl("MapValue", "map", () => new MapValueFormControl(this.createModel("MapValue", "map") as MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, this._formBuilder, this._validationService, this.dialog)); 
     this.schemaFactory.registerFormControl("MapValue", "string", () => new MapValueFormControl(this.createModel("MapValue", "string") as MapValueCapabilityModel<StringSchemaCapabilityModel>, this._formBuilder, this._validationService, this.dialog)); 
   }
 

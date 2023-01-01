@@ -1,16 +1,15 @@
-import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
-import { AnyT, jsonMember, jsonObject } from "typedjson";
+import { jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
-import { ICapabilityModel } from "./ICapabilityModel";
+import { ISchemaModel } from "./ISchemaModel";
 
 @jsonObject
-export abstract class AbstractCapabilityModel implements ICapabilityModel {
+export abstract class AbstractSchemaModel implements ISchemaModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonMember(AnyT, { name: '@type', deserializer: AbstractCapabilityModel.typeDeserializer })
-    public type!: string | Array<string>;
+    @jsonMember({ name: '@type'})
+    public type!: string;
 
     @jsonMember
     public displayName!: string;
@@ -23,7 +22,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
 
     constructor(id: string, type: string) {
         this.id = id;
-        this.type = new Array<string>(type);
+        this.type = type;
     }
 
     public abstract resolveSchemaComponentType(): ComponentType<any>;

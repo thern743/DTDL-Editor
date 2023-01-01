@@ -14,7 +14,10 @@ export class PropertyFormatterDirective implements OnInit {
   }
 
   public ngOnInit() {
-    this._element.value = this._propertyFormatter.transform(this._element.value);
+    let value = typeof this._element.value === 'string' 
+      ? this._element.value.split(',') 
+      : this._element.value;
+    this._element.value = this._propertyFormatter.transform(value);
   }
 
   @HostListener("ngModelChange", ["$event"])

@@ -1,15 +1,10 @@
 import 'reflect-metadata';
 import { ComponentType } from '@angular/cdk/portal';
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
-import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { InterfaceComponent } from '../interface/interface.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
-import { CommandCapabilityModel } from './CommandCapabilityModel';
-import { ComponentCapabilityModel } from './ComponentCapabilityModel';
 import { ICapabilityModel } from "./ICapabilityModel";
-import { PropertyCapabilityModel } from './PropertyCapabilityModel';
-import { RelationshipCapabilityModel } from './RelationshipCapabilityModel';
-import { TelemetryCapabilityModel } from './TelemetryCapabilityModel';
+import { TypeDeserializers } from './TypedDeserializers';
 
 // TODO: Add support for Interface Schemas
 //       See: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
@@ -21,13 +16,13 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember
   public extends!: string;
 
-  @jsonArrayMember(AbstractCapabilityModel, { deserializer: InterfaceCapabilityModel.interfaceCapabilityDeserializer } )
-  public contents: ICapabilityModel[];
+  @jsonArrayMember(AbstractCapabilityModel, { deserializer: TypeDeserializers.interfaceCapabilityDeserializer } )
+  public contents: Array<AbstractCapabilityModel>;
 
   constructor(id: string, context: string) {
     super(id, "Interface");
     this.context = context;
-    this.contents = new Array<ICapabilityModel>();
+    this.contents = new Array<AbstractCapabilityModel>();
   }
 
   public resolveSchemaComponentType(): ComponentType<any> {
@@ -57,38 +52,5 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   private capabilityByType(type: string): ICapabilityModel[] {    
     let capabilities = this.contents.filter(x => x.type.indexOf(type) > -1);
     return capabilities;
-  }
-
-  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {    
-    let result = json.map((value: any) => {
-      // TODO: SemanticTypeArray TypedJSON.mapType() isn't being used correctly
-      //       See class SemanticTypeArray. The deserialization logic there should be executing when
-      //       deserializing this type but it's not being triggered. It may need an explicit `deserializer` option
-      //       to be set on the `@jsonMember` attribute.
-      let type = typeof value["@type"] === 'string' ? [value["@type"]] : value["@type"];
-      if(!(type instanceof Array)) return;
-
-      // TODO: Use a proper pattern for checking the content type when deserializing
-      //       Right now each content type (Property, Command, Telemetry, etc) is hard-coded
-      //       in `InterfaceCapabilityModel.interfaceCapabilityDeserializer()` method.
-      //       There should be some form of delegation to these types that can be wired up for
-      //       TypedJSON to handle.
-      switch(type[0]) {
-        case "Property":          
-          return params.fallback(value, PropertyCapabilityModel);
-        case "Command":
-          return params.fallback(value, CommandCapabilityModel);
-        case "Telemetry":
-          return params.fallback(value, TelemetryCapabilityModel);
-        case "Component":
-          return params.fallback(value, ComponentCapabilityModel);
-        case "Relationship":
-          return params.fallback(value, RelationshipCapabilityModel);
-        default:
-          break;          
-      }      
-    });
-
-    return result;
   }
 }

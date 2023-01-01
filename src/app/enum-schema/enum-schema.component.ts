@@ -1,12 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/EnumSchemaFormControl';
-import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
 
 @Component({

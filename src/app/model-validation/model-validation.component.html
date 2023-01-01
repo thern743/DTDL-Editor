@@ -5,7 +5,7 @@
         Hints
       </mat-panel-title>
     </mat-expansion-panel-header>
-    
+
     <mat-list role="list">
       <h3 matListItemTitle><mat-icon matListItemIcon color="accent">info</mat-icon> When submitting multiple models you
         must submit them as an array, e.g.: </h3>
@@ -26,7 +26,7 @@
       }}
       </pre>
     </mat-list>
-    
+
   </mat-expansion-panel>
   <br />
 
@@ -34,8 +34,8 @@
   <file-select action="Copy" (fileSelect)="copyFile($event)"></file-select>
 
   <mat-form-field appearance="fill" style="width: 50%; height: 50%">
-    <textarea matInput #modelInput id="modelInput" rows="25" cols="100" cdkTextareaAutosize cdkAutosizeMinRows="25" cdkAutosizeMaxRows="25" 
-    [ngModel]="fileData !== '' ? (fileData | json) : ''"></textarea>
+    <textarea matInput #modelInput id="modelInput" rows="25" cols="100" cdkTextareaAutosize cdkAutosizeMinRows="25"
+      cdkAutosizeMaxRows="25" [ngModel]="fileData !== '' ? (fileData | json) : ''"></textarea>
   </mat-form-field>
   <br />
 
@@ -45,7 +45,7 @@
   </button>
   <br />
 
-  <mat-card *ngIf="validationResults && validationResults.length > 0">
+  <mat-card *ngIf="hasResults()">
     <mat-list role="list" *ngFor="let value of validationResults">
       <div>
         <h3 matListItemTitle><mat-icon matListItemIcon color="warn"
@@ -55,7 +55,7 @@
     </mat-list>
   </mat-card>
 
-  <mat-card *ngIf="validationResults?.length == 0">
+  <mat-card *ngIf="!hasResults()">
     <div>
       <h3><mat-icon matListItemIcon color="accent">check_circle</mat-icon> DTDL passed validation.</h3>
     </div>

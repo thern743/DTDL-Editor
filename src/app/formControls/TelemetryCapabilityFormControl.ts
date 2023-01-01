@@ -22,7 +22,7 @@ export class TelemetryCapabilityFormControl extends AbstractCapabilityFormContro
       description: [this.model.description],
       // Telemetry specific
       name: [this.model.name],
-      schema: [],
+      schema: [this.model.schema],
       unit: [this.model.unit]
     });
 

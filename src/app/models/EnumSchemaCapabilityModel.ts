@@ -1,11 +1,12 @@
+import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { EnumSchemaComponent } from "../enum-schema/enum-schema.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from "./AbstractSchemaModel";
 import { EnumValueCapabilityModel } from "./EnumValueCapabilityModel";
 
 @jsonObject
-export class EnumSchemaCapabilityModel extends AbstractCapabilityModel {
+export class EnumSchemaCapabilityModel extends AbstractSchemaModel {
     @jsonMember
     public valueSchema!: number | string;
 

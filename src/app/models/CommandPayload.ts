@@ -1,30 +1,32 @@
 import 'reflect-metadata';
-import { ComponentType } from '@angular/cdk/portal';
 import { AnyT, jsonMember, jsonObject } from "typedjson";
-import { ComponentComponent } from '../component/component.component';
-import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
+import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
 import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
-import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 @jsonObject
-export class ComponentCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember 
+export class CommandPayload {
+  @jsonMember({ name: '@id' })
+  public id!: string;
+
+  @jsonMember
   public name!: string;
 
-  @jsonMember(AnyT, { deserializer: ArraySchemaCapabilityModel.schemaDeserializer })
-  public schema!: string | AbstractSchemaModel;  
+  @jsonMember(AnyT, { deserializer: CommandPayload.schemaDeserializer })
+  public schema!: string | AbstractSchemaModel;
 
-  constructor(id: string) {
-    super(id, "Component");
-  }
+  @jsonMember
+  public displayName!: string;
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return ComponentComponent;
-  }
+  @jsonMember
+  public description!: string;
+
+  @jsonMember
+  public comment!: string;
 
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;

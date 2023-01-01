@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { MatSelectChange } from '@angular/material/select';
-import { SemanticTypeArray } from '../models/SemanticTypeArray';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
@@ -35,6 +34,22 @@ export class PropertyComponent implements OnInit {
   public ngOnInit(): void {
     this.property.subscribeModelToForm();
     this.syncHeaderFields();
+    this.setSchemaAndSemanticTypeDropDowns();
+  }
+
+  // TODO: Importing a Property model does not allow editing the schema
+  //       Because the models are deserialized directly, the factory methods are not called when importing
+  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
+  private setSchemaAndSemanticTypeDropDowns(): void {
+    if (this.property.model?.type instanceof Array && this.property.model.type?.length > 1) {
+      // Only set Semantic Type is it's an additional @type value
+      let type = this.property.model.type[1];
+      this.semanticTypeDropDownControl?.setValue(type);
+    }
+
+    let schema = typeof this.property.model?.schema === 'string' ? this.property.model.schema : this.property.model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
 
   public syncHeaderFields() {
@@ -89,15 +104,20 @@ export class PropertyComponent implements OnInit {
   }
 
   public changeSemanticType($event: MatSelectChange): void {
+    let value = $event.value;
+    this.changeSemanticTypeInternal(value);
+  }
+
+  private changeSemanticTypeInternal(value: string): void {
     let type = this.property.form.get("type");
 
-    if (["", null, undefined].indexOf($event.value) > -1) {
-      let semanticType = new SemanticTypeArray("Property");
+    if (["", null, undefined].indexOf(value) > -1) {
+      let semanticType = new Array<string>("Property");
       type?.setValue(semanticType);
       let unit = this.property.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new SemanticTypeArray("Property", $event.value);
+      let semanticType = new Array<string>("Property", value);
       type?.setValue(semanticType);
 
       let schema = this.property.form.get("schema")?.value;
@@ -121,8 +141,13 @@ export class PropertyComponent implements OnInit {
   }
 
   public changeSchema($event: MatSelectChange): void {
-    if ($event.value instanceof AbstractCapabilityFormControl) return;
-    let key = $event.value.toLowerCase();
+    let value = $event.value;
+    this.changeSchemaInternal(value);
+  }
+
+  public changeSchemaInternal(value: any): void {
+    if (value instanceof AbstractCapabilityFormControl) return;
+    let key = value.toLowerCase();
     let schemaType = this._schemaService.getSchemaType(key);
     this.property.form.get("schema")?.setValue(key);
 

@@ -1,24 +1,25 @@
+import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
-import { jsonMember } from "typedjson";
+import { AnyT, jsonMember } from "typedjson";
 import { MapKeyComponent } from "../map-schema/map-key/map-key.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
-export class MapKeyCapabilityModel<TCapabilityModel extends AbstractCapabilityModel> extends AbstractCapabilityModel {
-    @jsonMember
-    public name!: string;
+export class MapKeyCapabilityModel<TCapabilityModel extends AbstractSchemaModel> extends AbstractSchemaModel {
+  @jsonMember
+  public name!: string;
 
-    @jsonMember
-    public schema: TCapabilityModel;
+  @jsonMember(AnyT)
+  public schema: string | TCapabilityModel;
 
-    constructor(id: string, schemaModel: TCapabilityModel) {
-        // TODO: Remove use of hard-coded index for determining model type (MapKeyCapabilityModel)
-        //       Currently the super() call on MapKeyCapabilityModel is passing `ICapabilityModel.type[0]`.
-        //       This is not stable pattern and should be revamped to something more proper.
-        super(id, schemaModel.type[0]);
-        this.schema = schemaModel;
-    }
+  constructor(id: string, schemaModel: TCapabilityModel) {
+    // TODO: Remove use of hard-coded index for determining model type (MapKeyCapabilityModel)
+    //       Currently the super() call on MapKeyCapabilityModel is passing `ICapabilityModel.type[0]`.
+    //       This is not stable pattern and should be revamped to something more proper.
+    super(id, schemaModel.type[0]);
+    this.schema = schemaModel;
+  }
 
-    public resolveSchemaComponentType(): ComponentType<any> {
-      return MapKeyComponent;
-    }
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return MapKeyComponent;
+  }
 }

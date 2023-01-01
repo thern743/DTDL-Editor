@@ -1,6 +1,6 @@
-export interface ICapabilityModel {
+export interface ISchemaModel {
     id: string;
-    type: string | Array<string>;
+    type: string;
     displayName: string;
     description: string;
     comment: string;

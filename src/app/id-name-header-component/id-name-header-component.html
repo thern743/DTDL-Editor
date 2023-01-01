@@ -1,4 +1,4 @@
-<ng-container [formGroup]="formGroup">
+<ng-container [formGroup]="formGroupControl.form">
     <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)">
         <mat-label attr.for="capability_type_{{formIndex}}">Type</mat-label>
         <input matInput id="capability_type_{{formIndex}}" type="text" formControlName="type" readonly propertyFormatter />
