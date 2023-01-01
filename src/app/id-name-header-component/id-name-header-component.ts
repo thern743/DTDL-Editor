@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 
 @Component({
   selector: 'id-name-header-component',
@@ -9,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class IdNameHeaderComponent implements OnInit {
   @Input() public panelOpenState: boolean = false;
   @Input() public formIndex: number = -1;
-  @Input() public formGroup!: FormGroup;
+  @Input() public formGroupControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
   constructor() { }
 

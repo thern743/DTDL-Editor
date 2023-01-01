@@ -115,11 +115,6 @@ import { FilterPipe } from './filters/filter.pipe';
     MatSlideToggleModule,
     MatDialogModule
   ],
-  entryComponents: [
-    FileSelectComponent,
-    SettingsComponent,
-    ObjectSchemaComponent
-  ],
   providers: [
     MatDialog,
     PropertyFormatterPipe,
