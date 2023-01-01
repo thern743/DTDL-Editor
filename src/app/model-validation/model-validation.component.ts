@@ -9,7 +9,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
 })
 export class ModelValidationComponent implements OnInit {
   private _validationService: ValidationService;
-  public validationResults!: IDtdlValidationResult[];
+  public validationResults!: Array<IDtdlValidationResult>;
   public fileData!: any;
 
   constructor(validationService: ValidationService) { 
@@ -20,6 +20,10 @@ export class ModelValidationComponent implements OnInit {
     this.fileData = "";
   }
 
+  public hasResults(): boolean {
+    return this.validationResults?.length > 0;
+  }
+
   public copyFile($event: any): void {
     this.fileData = $event;
   }
@@ -27,7 +31,7 @@ export class ModelValidationComponent implements OnInit {
   public validateModel(data: any): void {
     let models = new Array<any>(data);
     this._validationService.validateModel(models).subscribe({
-      next: (results: IDtdlValidationResult[]) => {
+      next: (results: Array<IDtdlValidationResult>) => {
         if (results.length)
           this.validationResults = results;
         else
