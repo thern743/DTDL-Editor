@@ -24,11 +24,11 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
   public writable!: boolean;
   
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: RelationshipCapabilityModel.interfaceCapabilityDeserializer } )
-  public properties: ICapabilityModel[];
+  public properties: Array<AbstractCapabilityModel>;
 
   constructor(id: string) {
     super(id, "Relationship");
-    this.properties = new Array<ICapabilityModel>();
+    this.properties = new Array<AbstractCapabilityModel>();
   }
 
   public resolveSchemaComponentType(): ComponentType<any> {

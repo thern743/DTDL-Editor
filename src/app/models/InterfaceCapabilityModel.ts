@@ -22,12 +22,12 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   public extends!: string;
 
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: InterfaceCapabilityModel.interfaceCapabilityDeserializer } )
-  public contents: ICapabilityModel[];
+  public contents: Array<AbstractCapabilityModel>;
 
   constructor(id: string, context: string) {
     super(id, "Interface");
     this.context = context;
-    this.contents = new Array<ICapabilityModel>();
+    this.contents = new Array<AbstractCapabilityModel>();
   }
 
   public resolveSchemaComponentType(): ComponentType<any> {

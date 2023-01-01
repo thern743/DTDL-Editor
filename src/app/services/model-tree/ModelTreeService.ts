@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { FlatTreeControl, NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
 import { CapabilityNode } from "src/app/models/CapabilityNode";
-import { ICapabilityModel } from "src/app/models/ICapabilityModel";
+import { AbstractCapabilityModel } from "src/app/models/AbstractCapabilityModel";
 import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
 import { CapabilityFlatNode } from "src/app/models/CapabilityFlatNode";
 import { RelationshipCapabilityModel } from "src/app/models/RelationshipCapabilityModel";
@@ -35,8 +35,8 @@ export class ModelTreeService {
         this.treeControl.expandAll();
     }
     
-    public mapChildren(capabilities: ICapabilityModel[], node: CapabilityNode): CapabilityNode {        
-        capabilities.forEach((capability: ICapabilityModel) => {     
+    public mapChildren(capabilities: AbstractCapabilityModel[], node: CapabilityNode): CapabilityNode {        
+        capabilities.forEach((capability: AbstractCapabilityModel) => {     
             if(capability.type[0] == "Relationship") {
                 let data = new Array<CapabilityNode>();
                 let innerNode = new CapabilityNode(capability.id, capability.type[0]);                
@@ -52,7 +52,7 @@ export class ModelTreeService {
         return node;
     }
 
-    public addNode(model: ICapabilityModel) {
+    public addNode(model: AbstractCapabilityModel) {
         let node = new CapabilityNode(model.id, model.type[0]);
         this.treeDataSource.data.push(node);
     }
