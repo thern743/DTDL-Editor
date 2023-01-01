@@ -30,7 +30,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
             description: [this.model.description],
             // MapKey specific
             name: [this.model.name],
-            schema: [this.model.schema.type[0]]
+            schema: [this.model.schema]
         });
 
         return form;
