@@ -16,7 +16,6 @@ export class MapKeyComponent implements OnInit {
   public schemaService: SchemaService;
   public panelOpenState = true;
   public dialog: MatDialog;
-  public schemaTypes: Map<string, AbstractCapabilityFormControl<ICapabilityModel>>;
 
   constructor(schemaService: SchemaService,
     dialog: MatDialog,
@@ -24,7 +23,6 @@ export class MapKeyComponent implements OnInit {
       this.schemaService = schemaService;
       this.dialog = dialog;
       this.mapKey = data;
-      this.schemaTypes = this.schemaService.getSchemaTypesFormControls();
   }
 
   public ngOnInit(): void {

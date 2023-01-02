@@ -73,33 +73,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
   // TODO: Use base DTMI from SettingsService when calling factory methods
   //       Currently the DTMI ids are hard-coded in the factory methods for creating capability models.
-  //       We should instead construct the URI from the SettingsService.  
-
-  // TODO: Call factory methods instead of hard-coded new() when retrieving schema types
-  //       `SchemaService.getSchemaTypesFormControls()` currently creates a Map<Key, Value> 
-  //       where `Value` is constructed from explicitly calling new() ctors. This should be switch
-  //       to either calling the `SchemaFactory` methods or have the calling controls use `SchemaFactory`
-  //       directly.    
-  public getSchemaTypesFormControls(): Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>> {
-    return new Map<string, AbstractCapabilityFormControl<AbstractCapabilityModel>>([
-      ["boolean", new BooleanSchemaFormControl(new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["date", new DateSchemaFormControl(new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["dateTime", new DateTimeSchemaFormControl(new DateTimeSchemaCapabilityModel("dtmi:com:Example:MyDateTime;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["double", new DoubleSchemaFormControl(new DoubleSchemaCapabilityModel("dtmi:com:Example:MyDouble;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["duration", new DurationSchemaFormControl(new DurationSchemaCapabilityModel("dtmi:com:Example:MyDuration;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["float", new FloatSchemaFormControl(new FloatSchemaCapabilityModel("dtmi:com:Example:MyFloat;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["integer", new IntegerSchemaFormControl(new IntegerSchemaCapabilityModel("dtmi:com:Example:MyInteger;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["long", new LongSchemaFormControl(new LongSchemaCapabilityModel("dtmi:com:Example:MyLong;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["string", new StringSchemaFormControl(new StringSchemaCapabilityModel("dtmi:com:Example:MyString;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["time", new TimeSchemaFormControl(new TimeSchemaCapabilityModel("dtmi:com:Example:MyTime;1"), this._formBuilder, this._validationService, this.dialog)],
-
-      ["array", new ArraySchemaFormControl(new ArraySchemaCapabilityModel("dtmi:com:Example:MyArray;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["enum", new EnumSchemaFormControl(new EnumSchemaCapabilityModel("dtmi:com:Example:MyEnum;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["map", new MapSchemaFormControl(new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>("dtmi:com:Example:MyMap;1"), this._formBuilder, this._validationService, this.dialog)],
-      ["object", new ObjectSchemaFormControl(new ObjectSchemaCapabilityModel("dtmi:com:Example:MyObject;1"), this._formBuilder, this._validationService, this.dialog)]
-    ]);
-  }
-
+  //       We should instead construct the URI from the SettingsService.
   public registerModels(): void {
     this._schemaFactory.registerModel("Primitive", "boolean", () => new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"));
     this._schemaFactory.registerModel("Primitive", "date", () => new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"));
