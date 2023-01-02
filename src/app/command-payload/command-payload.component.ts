@@ -1,0 +1,96 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
+import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
+import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
+import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
+import { EditorService } from '../services/editor/editor-service.service';
+import { SchemaService } from '../services/schema/schema.service';
+
+@Component({
+  selector: 'command-payload',
+  templateUrl: './command-payload.component.html',
+  styleUrls: ['./command-payload.component.scss']
+})
+export class CommandPayloadComponent implements OnInit {
+  public commandPayload!: CommandPayloadFormControl;
+  private _schemaService: SchemaService;
+  private _editorService: EditorService;
+  public panelOpenState = true;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+  public schemaDropDownControl: FormControl = new FormControl();
+
+  constructor(
+    editorService: EditorService, 
+    schemaService: SchemaService,
+    @Inject(MAT_DIALOG_DATA) data: CommandPayloadFormControl
+  ) { 
+    this._editorService = editorService;
+    this._schemaService = schemaService;
+    this.commandPayload = data;
+  }
+
+  public ngOnInit(): void { 
+    this.commandPayload.subscribeModelToForm();
+    this.setSchemaDropDown();
+  }
+
+  // TODO: Importing a CommandPayload model does not allow editing the schema
+  //       Because the models are deserialized directly, the factory methods are not called when importing
+  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
+  private setSchemaDropDown(): void {
+    let schema = typeof this.commandPayload.model?.schema === 'string' ? this.commandPayload.model.schema : this.commandPayload.model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+  }
+
+  public getSchemaTypes(): Array<string> {
+    let schemaTypes = new Array<string>();
+
+    this._schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    this._schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
+      schemaTypes.push(key);
+    });
+
+    return schemaTypes;
+  }
+
+  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+    return this._schemaService.compareSchemas(model1, model2)
+  }
+
+  public isComplex(schema: string): boolean {
+    if (typeof schema == 'string')
+      return this._schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+
+    return false;
+  }
+
+  public changeSchema($event: MatSelectChange): void {
+    let value = $event.value;
+    this.changeSchemaInternal(value);
+  }
+
+  public changeSchemaInternal(value: any): void {
+    if (value instanceof AbstractCapabilityFormControl) return;
+    let key = value.toLowerCase();
+    let schemaType = this._schemaService.getSchemaType(key);
+    this.commandPayload.form.get("schema")?.setValue(key);
+
+    if (schemaType == SchemaTypeEnum.Complex) {
+      let formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      if (formControl === undefined) return;
+      this.schemaFormControl = formControl;
+    }
+  }
+
+  public openSchemaEditor(): void {
+    if(this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.commandPayload.form, this.schemaFormControl)
+  }
+}

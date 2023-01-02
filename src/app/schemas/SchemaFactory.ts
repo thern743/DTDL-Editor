@@ -19,16 +19,17 @@ export class SchemaFactory implements ISchemaFactory {
         //       `SchemaFactory` should no longer need to have hard-coded keys.
         this.modelRegistry.set("Primitive", new Map<string, () => AbstractCapabilityModel>());
         this.modelRegistry.set("Complex", new Map<string, () => AbstractCapabilityModel>());
+        this.modelRegistry.set("Utility", new Map<string, () => AbstractCapabilityModel>());
         this.modelRegistry.set("MapKey", new Map<string, () => AbstractCapabilityModel>());
         this.modelRegistry.set("MapValue", new Map<string, () => AbstractCapabilityModel>());
 
         this.formRegistry.set("Primitive", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
         this.formRegistry.set("Complex", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+        this.formRegistry.set("Utility", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
         this.formRegistry.set("MapKey", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
         this.formRegistry.set("MapValue", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
     }
 
-    // ***** IMapSchemaFactory *****
     public registerFormControl(type: string, name: string, factory: () => AbstractCapabilityFormControl<AbstractCapabilityModel>): void {        
         let map = this.formRegistry.get(type);                
         map?.set(name, factory);

@@ -1,7 +1,7 @@
 import { OnDestroy } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { ICapabilityModel } from "../models/ICapabilityModel";
+import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
 
 // TypedJSON requires a concrete type to work.

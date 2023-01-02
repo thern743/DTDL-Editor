@@ -1,5 +1,5 @@
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { ICapabilityModel } from '../models/ICapabilityModel';
+import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
 import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';

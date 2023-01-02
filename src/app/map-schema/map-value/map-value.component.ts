@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
-import { ICapabilityModel } from 'src/app/models/ICapabilityModel';
+import { ICapabilityModel } from 'src/app/models/interfaces/ICapabilityModel';
 import { SchemaService } from 'src/app/services/schema/schema.service';
 
 @Component({

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
-import { ICapabilityModel } from "./ICapabilityModel";
+import { ICapabilityModel } from "./interfaces/ICapabilityModel";
 
 @jsonObject
 export abstract class AbstractCapabilityModel implements ICapabilityModel {

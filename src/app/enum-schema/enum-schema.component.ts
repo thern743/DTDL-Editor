@@ -19,11 +19,11 @@ export class EnumSchemaComponent implements OnInit {
   public panelOpenState = true;
 
   constructor(
-    editorSerivce: EditorService, 
+    editorService: EditorService, 
     schemaService: SchemaService,
     @Inject(MAT_DIALOG_DATA) data: EnumSchemaFormControl
   ) { 
-    this._editorService = editorSerivce;
+    this._editorService = editorService;
     this._schemaService = schemaService;
     this.enum = data;
   }

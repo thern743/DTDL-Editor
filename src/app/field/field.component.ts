@@ -23,9 +23,9 @@ export class FieldComponent implements OnInit {
   public schemaTypes: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
-  constructor(schemaEditorService: SchemaService, editorSerivce: EditorService, dialog: MatDialog) {
+  constructor(schemaEditorService: SchemaService, editorService: EditorService, dialog: MatDialog) {
     this.schemaService = schemaEditorService;
-    this.editorService = editorSerivce;
+    this.editorService = editorService;
     this.dialog = dialog;
     this.schemaTypes = this.getSchemaTypes();
   }

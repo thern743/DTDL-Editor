@@ -1,7 +1,7 @@
 import { ComponentType } from "@angular/cdk/portal";
 import { jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
-import { ISchemaModel } from "./ISchemaModel";
+import { ISchemaModel } from "./interfaces/ISchemaModel";
 
 @jsonObject
 export abstract class AbstractSchemaModel implements ISchemaModel {
