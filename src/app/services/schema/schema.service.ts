@@ -48,6 +48,7 @@ import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
 import { CommandPayload } from 'src/app/models/CommandPayload';
 import { CommandPayloadFormControl } from 'src/app/formControls/CommandPayloadFormControl';
+import { SettingsService } from '../settings/settings.service';
 
 // TODO: Move schema factory methods to the controls responsible for creating them
 //       Currently, `SchemaService` is responsible for registering each model and form control
@@ -58,40 +59,37 @@ import { CommandPayloadFormControl } from 'src/app/formControls/CommandPayloadFo
 })
 export class SchemaService implements IFormFactory, IModelFactory {
   private _schemaFactory: ISchemaFactory;
-  private _formBuilder: FormBuilder;
   private _validationService: ValidationService;
+  private _settingsService: SettingsService;
+  private _formBuilder: FormBuilder;
   public dialog: MatDialog;
 
-
-  constructor(schemaFactory: SchemaFactory, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(schemaFactory: SchemaFactory, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
     this._schemaFactory = schemaFactory;
-    this._formBuilder = formBuilder;
     this._validationService = validationService;
+    this._settingsService = settingsService;
+    this._formBuilder = formBuilder;
     this.dialog = dialog;
-
   }
-
-  // TODO: Use base DTMI from SettingsService when calling factory methods
-  //       Currently the DTMI ids are hard-coded in the factory methods for creating capability models.
-  //       We should instead construct the URI from the SettingsService.
+  
   public registerModels(): void {
-    this._schemaFactory.registerModel("Primitive", "boolean", () => new BooleanSchemaCapabilityModel("dtmi:com:Example:MyBoolean;1"));
-    this._schemaFactory.registerModel("Primitive", "date", () => new DateSchemaCapabilityModel("dtmi:com:Example:MyDate;1"));
-    this._schemaFactory.registerModel("Primitive", "dateTime", () => new DateTimeSchemaCapabilityModel("dtmi:com:Example:MyDateTime;1"));
-    this._schemaFactory.registerModel("Primitive", "double", () => new DoubleSchemaCapabilityModel("dtmi:com:Example:MyDouble;1"));
-    this._schemaFactory.registerModel("Primitive", "duration", () => new DurationSchemaCapabilityModel("dtmi:com:Example:MyDuration;1"));
-    this._schemaFactory.registerModel("Primitive", "float", () => new FloatSchemaCapabilityModel("dtmi:com:Example:MyFloat;1"));
-    this._schemaFactory.registerModel("Primitive", "integer", () => new IntegerSchemaCapabilityModel("dtmi:com:Example:MyInteger;1"));
-    this._schemaFactory.registerModel("Primitive", "long", () => new LongSchemaCapabilityModel("dtmi:com:Example:MyLong;1"));
-    this._schemaFactory.registerModel("Primitive", "string", () => new StringSchemaCapabilityModel("dtmi:com:Example:MyString;1"));
-    this._schemaFactory.registerModel("Primitive", "time", () => new TimeSchemaCapabilityModel("dtmi:com:Example:MyTime;1"));
+    this._schemaFactory.registerModel("Primitive", "boolean", () => new BooleanSchemaCapabilityModel(this._settingsService.buildDtmi("MyBoolean")));
+    this._schemaFactory.registerModel("Primitive", "date", () => new DateSchemaCapabilityModel(this._settingsService.buildDtmi("MyDate")));
+    this._schemaFactory.registerModel("Primitive", "dateTime", () => new DateTimeSchemaCapabilityModel(this._settingsService.buildDtmi("MyDateTime")));
+    this._schemaFactory.registerModel("Primitive", "double", () => new DoubleSchemaCapabilityModel(this._settingsService.buildDtmi("MyDouble")));
+    this._schemaFactory.registerModel("Primitive", "duration", () => new DurationSchemaCapabilityModel(this._settingsService.buildDtmi("MyDuration")));
+    this._schemaFactory.registerModel("Primitive", "float", () => new FloatSchemaCapabilityModel(this._settingsService.buildDtmi("MyFloat")));
+    this._schemaFactory.registerModel("Primitive", "integer", () => new IntegerSchemaCapabilityModel(this._settingsService.buildDtmi("MyInteger")));
+    this._schemaFactory.registerModel("Primitive", "long", () => new LongSchemaCapabilityModel(this._settingsService.buildDtmi("MyLong")));
+    this._schemaFactory.registerModel("Primitive", "string", () => new StringSchemaCapabilityModel(this._settingsService.buildDtmi("MyString")));
+    this._schemaFactory.registerModel("Primitive", "time", () => new TimeSchemaCapabilityModel(this._settingsService.buildDtmi("MyTime")));
 
-    this._schemaFactory.registerModel("Complex", "array", () => new ArraySchemaCapabilityModel("dtmi:com:Example:MyArray;1"));
-    this._schemaFactory.registerModel("Complex", "enum", () => new EnumSchemaCapabilityModel("dtmi:com:Example:MyEnum;1"));
-    this._schemaFactory.registerModel("Complex", "map", () => new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>("dtmi:com:Example:MyMap;1"));
-    this._schemaFactory.registerModel("Complex", "object", () => new ObjectSchemaCapabilityModel("dtmi:com:Example:MyObject;1"));
+    this._schemaFactory.registerModel("Complex", "array", () => new ArraySchemaCapabilityModel(this._settingsService.buildDtmi("MyArray")));
+    this._schemaFactory.registerModel("Complex", "enum", () => new EnumSchemaCapabilityModel(this._settingsService.buildDtmi("MyEnum")));
+    this._schemaFactory.registerModel("Complex", "map", () => new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>(this._settingsService.buildDtmi("MyMap")));
+    this._schemaFactory.registerModel("Complex", "object", () => new ObjectSchemaCapabilityModel(this._settingsService.buildDtmi("MyObject")));
 
-    this._schemaFactory.registerModel("Utility", "commandPayload", () => new CommandPayload("dtmi:com:Example:MyCommandPayload;1"));
+    this._schemaFactory.registerModel("Utility", "commandPayload", () => new CommandPayload(this._settingsService.buildDtmi("MyCommandPayload")));
 
     this.registerMapModels();
   }
@@ -120,24 +118,24 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
   private registerMapModels(): void {
     // MapKey can only be string.
-    this._schemaFactory.registerModel("MapKey", "string", () => new MapKeyCapabilityModel<StringSchemaCapabilityModel>("dtmi:com:Example:MyStringMapKey;1", this.createModel("Primitive", "string") as StringSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapKey", "string", () => new MapKeyCapabilityModel<StringSchemaCapabilityModel>(this._settingsService.buildDtmi("MyStringMapKey"), this.createModel("Primitive", "string") as StringSchemaCapabilityModel));
 
     // MapValues
-    this._schemaFactory.registerModel("MapValue", "boolean", () => new MapValueCapabilityModel<BooleanSchemaCapabilityModel>("dtmi:com:Example:MyBooleanMapValue;1", this.createModel("Primitive", "boolean") as BooleanSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "date", () => new MapValueCapabilityModel<DateSchemaCapabilityModel>("dtmi:com:Example:MyDateMapValue;1", this.createModel("Primitive", "date") as DateSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "dateTime", () => new MapValueCapabilityModel<DateTimeSchemaCapabilityModel>("dtmi:com:Example:MyDateTimeMapValue;1", this.createModel("Primitive", "dateTime") as DateTimeSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "double", () => new MapValueCapabilityModel<DoubleSchemaCapabilityModel>("dtmi:com:Example:MyDoubleMapValue;1", this.createModel("Primitive", "double") as DoubleSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "duration", () => new MapValueCapabilityModel<DurationSchemaCapabilityModel>("dtmi:com:Example:MyDurationMapValue;1", this.createModel("Primitive", "duration") as DurationSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "float", () => new MapValueCapabilityModel<FloatSchemaCapabilityModel>("dtmi:com:Example:MyFloatMapValue;1", this.createModel("Primitive", "float") as FloatSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "integer", () => new MapValueCapabilityModel<IntegerSchemaCapabilityModel>("dtmi:com:Example:MyIntegerMapValue;1", this.createModel("Primitive", "integer") as IntegerSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "long", () => new MapValueCapabilityModel<LongSchemaCapabilityModel>("dtmi:com:Example:MyLongMapValue;1", this.createModel("Primitive", "long") as LongSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "string", () => new MapValueCapabilityModel<StringSchemaCapabilityModel>("dtmi:com:Example:MyStringMapValue;1", this.createModel("Primitive", "string") as StringSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "time", () => new MapValueCapabilityModel<TimeSchemaCapabilityModel>("dtmi:com:Example:MyTimeMapValue;1", this.createModel("Primitive", "time") as TimeSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "boolean", () => new MapValueCapabilityModel<BooleanSchemaCapabilityModel>(this._settingsService.buildDtmi("MyBooleanMapValue"), this.createModel("Primitive", "boolean") as BooleanSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "date", () => new MapValueCapabilityModel<DateSchemaCapabilityModel>(this._settingsService.buildDtmi("MyDateMapValue"), this.createModel("Primitive", "date") as DateSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "dateTime", () => new MapValueCapabilityModel<DateTimeSchemaCapabilityModel>(this._settingsService.buildDtmi("MyDateTimeMapValue"), this.createModel("Primitive", "dateTime") as DateTimeSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "double", () => new MapValueCapabilityModel<DoubleSchemaCapabilityModel>(this._settingsService.buildDtmi("MyDoubleMapValue"), this.createModel("Primitive", "double") as DoubleSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "duration", () => new MapValueCapabilityModel<DurationSchemaCapabilityModel>(this._settingsService.buildDtmi("MyDurationMapValue"), this.createModel("Primitive", "duration") as DurationSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "float", () => new MapValueCapabilityModel<FloatSchemaCapabilityModel>(this._settingsService.buildDtmi("MyFloatMapValue"), this.createModel("Primitive", "float") as FloatSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "integer", () => new MapValueCapabilityModel<IntegerSchemaCapabilityModel>(this._settingsService.buildDtmi("MyIntegerMapValue"), this.createModel("Primitive", "integer") as IntegerSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "long", () => new MapValueCapabilityModel<LongSchemaCapabilityModel>(this._settingsService.buildDtmi("MyLongMapValue"), this.createModel("Primitive", "long") as LongSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "string", () => new MapValueCapabilityModel<StringSchemaCapabilityModel>(this._settingsService.buildDtmi("MyStringMapValue"), this.createModel("Primitive", "string") as StringSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "time", () => new MapValueCapabilityModel<TimeSchemaCapabilityModel>(this._settingsService.buildDtmi("MyTimeMapValue"), this.createModel("Primitive", "time") as TimeSchemaCapabilityModel));
 
-    this._schemaFactory.registerModel("MapValue", "array", () => new MapValueCapabilityModel<ArraySchemaCapabilityModel>("dtmi:com:Example:MyArrayMapValue;1", this.createModel("Complex", "array") as ArraySchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "enum", () => new MapValueCapabilityModel<EnumSchemaCapabilityModel>("dtmi:com:Example:MyEnumMapValue;1", this.createModel("Complex", "enum") as EnumSchemaCapabilityModel));
-    this._schemaFactory.registerModel("MapValue", "map", () => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>("dtmi:com:Example:MyMapMapValue;1", this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>));
-    this._schemaFactory.registerModel("MapValue", "object", () => new MapValueCapabilityModel<ObjectSchemaCapabilityModel>("dtmi:com:Example:MyObjectMapValue;1", this.createModel("Complex", "object") as ObjectSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "array", () => new MapValueCapabilityModel<ArraySchemaCapabilityModel>(this._settingsService.buildDtmi("MyArrayMapValue"), this.createModel("Complex", "array") as ArraySchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "enum", () => new MapValueCapabilityModel<EnumSchemaCapabilityModel>(this._settingsService.buildDtmi("MyEnumMapValue"), this.createModel("Complex", "enum") as EnumSchemaCapabilityModel));
+    this._schemaFactory.registerModel("MapValue", "map", () => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>(this._settingsService.buildDtmi("MyMapMapValue"), this.createModel("Complex", "map") as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>));
+    this._schemaFactory.registerModel("MapValue", "object", () => new MapValueCapabilityModel<ObjectSchemaCapabilityModel>(this._settingsService.buildDtmi("MyObjectMapValue"), this.createModel("Complex", "object") as ObjectSchemaCapabilityModel));
   }
 
   private registerMapForms(): void {
@@ -173,14 +171,14 @@ export class SchemaService implements IFormFactory, IModelFactory {
   }
 
   public addFieldToObjectSchema(objectSchema: ObjectSchemaFormControl): void {
-    let model = new FieldCapabilityModel("dtmi:com:example:MyField;1");
+    let model = new FieldCapabilityModel(this._settingsService.buildDtmi("MyField"));
     let form = new FieldCapabilityFormControl(model, this._formBuilder, this._validationService);
     objectSchema.fields.push(form);
     objectSchema.model.fields.push(model);
   }
 
   public addValueToEnumSchema(enumSchema: EnumSchemaFormControl): void {
-    let model = new EnumValueCapabilityModel("dtmi:com:example:MyEnumValue;1");
+    let model = new EnumValueCapabilityModel(this._settingsService.buildDtmi("MyEnumValue"));
     let form = new EnumValueCapabilityFormControl(model, this._formBuilder, this._validationService, this.dialog);
     enumSchema.enumValues.push(form);
     enumSchema.model.enumValues.push(model);
