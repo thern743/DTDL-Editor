@@ -31,17 +31,7 @@ export class EnumValueComponent implements OnInit {
   }
 
   private getSchemaTypes(): Array<string> {
-    let schemaTypes = new Array<string>();
-    
-    this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    this.schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    return schemaTypes;
+    return this.schemaService.getSchemaTypes();
   }
 
   public setValueInModel($event: any): void {

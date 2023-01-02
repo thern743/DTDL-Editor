@@ -35,27 +35,17 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   private getSchemaTypes(): Array<string> {
-    let schemaTypes = new Array<string>();
-
-    this.schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    this.schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    return schemaTypes;
+    return this.schemaService.getSchemaTypes();
   }
 
   public isComplex(schema: string): boolean {
-    return this.schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+    return this.schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
   }
 
   public changeSchema($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaType(key);
+    let schemaType = this.schemaService.getSchemaTypeEnum(key);
     this.array.form.get("elementSchema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {

@@ -41,11 +41,11 @@ export class MapSchemaComponent implements OnInit {
   }
 
   private mapKeysAndValues(): void {
-    this.schemaService.schemaFactory.formRegistry.get("MapKey")?.forEach((value, key) => {
+    this.schemaService.getFormsRegistry().get("MapKey")?.forEach((value, key) => {
       this.keySchemaTypes.push(key);
     });
 
-    this.schemaService.schemaFactory.formRegistry.get("MapValue")?.forEach((value, key) => {
+    this.schemaService.getModelsRegistry().get("MapValue")?.forEach((value, key) => {
       this.valueSchemaTypes.push(key)
     });
   }
@@ -53,7 +53,7 @@ export class MapSchemaComponent implements OnInit {
   public changeMapKey($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaType(key);
+    let schemaType = this.schemaService.getSchemaTypeEnum(key);
     this.map.form.get("mapKey")?.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
@@ -66,7 +66,7 @@ export class MapSchemaComponent implements OnInit {
   public changeMapValue($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaType(key);
+    let schemaType = this.schemaService.getSchemaTypeEnum(key);
     this.map.form.get("mapValue")?.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
