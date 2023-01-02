@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IDtdlValidationResult } from '../models/IDtdlValidationResult';
+import { IDtdlValidationResult } from '../models/interfaces/IDtdlValidationResult';
 import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({

@@ -12,6 +12,7 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
   * Telemetry,
   * Components,
   * Relationships (and Properties)
+* Command Request/Response payloads
 * Semantic Types and Units
 * Primitive Schema Types
 * Complex Schema Types (Array, Map, Enum, Object)
@@ -23,7 +24,6 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
   * Set Context
 
 ## Near-Term Features
-* Command Request/Response payloads
 * Interface Schemas
 * Display string localization
 
@@ -34,9 +34,9 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
 * Basic model simulation features
 
 ## Known Issues
-* There are several known issues related to importing models
+* There are a few known issues related to importing models
 * Component and Relationship references are limited
-* Some issues when nesting complex schema types
+* Some issues when nesting Complex schema types (e.g., Map => Map, Object => Map, etc )
 * No inline validation before submitting to validation API
 
 ## Model Validation

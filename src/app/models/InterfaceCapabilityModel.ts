@@ -3,7 +3,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { InterfaceComponent } from '../interface/interface.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
-import { ICapabilityModel } from "./ICapabilityModel";
+import { ICapabilityModel } from "./interfaces/ICapabilityModel";
 import { TypeDeserializers } from './TypedDeserializers';
 
 // TODO: Add support for Interface Schemas

@@ -1,46 +1,51 @@
-<mat-expansion-panel    class="mat-elevation-z5"
-                        [expanded]="panelOpenState"
-                        (opened)="panelOpenState = true"
-                        (closed)="panelOpenState = false"
-                        [formGroup]="command.form">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            <id-name-header-component               
-                [formIndex]="formIndex[1]"
-                [formGroupControl]="command"                       
-                [panelOpenState]="panelOpenState">
-            </id-name-header-component>
-        </mat-panel-title>        
-    </mat-expansion-panel-header>
-    
-    <div class="formSpacer"></div>
+<mat-expansion-panel class="mat-elevation-z5" [expanded]="panelOpenState" (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false" [formGroup]="command.form">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <id-name-header-component [formIndex]="formIndex[1]" [formGroupControl]="command"
+        [panelOpenState]="panelOpenState">
+      </id-name-header-component>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
 
-    <mat-form-field color="accent">
-        <mat-label attr.for="command_displayName_{{formIndex}}">Display Name</mat-label>
-        <input matInput id="command_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+  <div class="formSpacer"></div>
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="command_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="command_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
-    <br/>
-    
-    <mat-form-field color="accent">
-        <mat-label attr.for="command_request_{{formIndex}}">Request</mat-label>
-        <input matInput id="command_request__{{formIndex}}" type="text" formControlName="request" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+  <mat-form-field color="accent">
+    <mat-label attr.for="command_displayName_{{formIndex}}">Display Name</mat-label>
+    <input matInput id="command_displayName_{{formIndex}}" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
-        <mat-label attr.for="comman_response_{{formIndex}}">Response</mat-label>
-        <input matInput id="comman_response_{{formIndex}}" type="text" formControlName="response" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label attr.for="command_description_{{formIndex}}">Description</mat-label>
+    <input matInput id="command_description_{{formIndex}}" type="text" formControlName="description" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 630px">
-        <mat-label attr.for="command_comment_{{formIndex}}">Comment</mat-label>
-        <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
-    </mat-form-field>
+  <mat-form-field color="accent">
+    <mat-label attr.for="command_request_{{formIndex}}">Request</mat-label>
+    <input matInput id="command_request__{{formIndex}}" type="text" [formControl]="requestTextControl" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+  <button mat-raised-button color="primary" (click)="openRequestSchemaEditor()">
+    <mat-icon>edit</mat-icon>
+    Edit Schema
+  </button>
+  <span class="formSpacer"></span>
+
+  <mat-form-field color="accent">
+    <mat-label attr.for="comman_response_{{formIndex}}">Response</mat-label>
+    <input matInput id="comman_response_{{formIndex}}" type="text" [formControl]="responseTextControl" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+  <button mat-raised-button color="primary" (click)="openResponseSchemaEditor()">
+    <mat-icon>edit</mat-icon>
+    Edit Schema
+  </button>
+  <br />
+
+  <mat-form-field color="accent" style="width: 630px">
+    <mat-label attr.for="command_comment_{{formIndex}}">Comment</mat-label>
+    <input matInput id="command_comment_{{formIndex}}" type="text" formControlName="comment" />
+  </mat-form-field>
 </mat-expansion-panel>

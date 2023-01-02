@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
-import { IDtdlValidationResult } from '../models/IDtdlValidationResult';
+import { IDtdlValidationResult } from '../models/interfaces/IDtdlValidationResult';
 import { FileService } from '../services/file/file-service.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 

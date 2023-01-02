@@ -1,15 +1,17 @@
 import 'reflect-metadata';
+import { ComponentType } from '@angular/cdk/portal';
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
 import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
+import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 
 @jsonObject
-export class CommandPayload {
+export class CommandPayload extends AbstractCapabilityModel {
   @jsonMember({ name: '@id' })
   public id!: string;
 
@@ -27,6 +29,14 @@ export class CommandPayload {
 
   @jsonMember
   public comment!: string;
+
+  constructor(id: string) {
+    super(id, "CommandPayload");
+  }
+
+  public resolveSchemaComponentType(): ComponentType<any> {
+    return CommandPayloadComponent;
+  }
 
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;
