@@ -47,17 +47,7 @@ export class CommandPayloadComponent implements OnInit {
   }
 
   public getSchemaTypes(): Array<string> {
-    let schemaTypes = new Array<string>();
-
-    this._schemaService.schemaFactory.formRegistry.get("Primitive")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    this._schemaService.schemaFactory.formRegistry.get("Complex")?.forEach((value, key) => {
-      schemaTypes.push(key);
-    });
-
-    return schemaTypes;
+    return this._schemaService.getSchemaTypes();
   }
 
   public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
@@ -66,7 +56,7 @@ export class CommandPayloadComponent implements OnInit {
 
   public isComplex(schema: string): boolean {
     if (typeof schema == 'string')
-      return this._schemaService.getSchemaType(schema) == SchemaTypeEnum.Complex;
+      return this._schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
 
     return false;
   }
@@ -79,7 +69,7 @@ export class CommandPayloadComponent implements OnInit {
   public changeSchemaInternal(value: any): void {
     if (value instanceof AbstractCapabilityFormControl) return;
     let key = value.toLowerCase();
-    let schemaType = this._schemaService.getSchemaType(key);
+    let schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.commandPayload.form.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
