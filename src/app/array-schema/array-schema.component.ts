@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
-import { ArraySchemaFormControl } from '../formControls/ArraySchemaFormControl';
+import { ArraySchemaFormControl } from '../formControls/schemas/ArraySchemaFormControl';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { MatSelectChange } from '@angular/material/select';

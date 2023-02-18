@@ -4,18 +4,18 @@ import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { ComponentComponent } from '../component/component.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
-import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
-import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
-import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
-import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
 import { AbstractSchemaModel } from './AbstractSchemaModel';
+import { ArraySchemaCapabilityModel } from './schemas/ArraySchemaCapabilityModel';
+import { EnumSchemaCapabilityModel } from './schemas/EnumSchemaCapabilityModel';
+import { MapSchemaCapabilityModel } from './schemas/MapSchemaCapabilityModel';
+import { ObjectSchemaCapabilityModel } from './schemas/ObjectSchemaCapabilityModel';
 
 @jsonObject
 export class ComponentCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public name!: string;
 
-  @jsonMember(AnyT, { deserializer: ArraySchemaCapabilityModel.schemaDeserializer })
+  @jsonMember(AnyT, { deserializer: AbstractCapabilityModel.schemaDeserializer })
   public schema!: string | AbstractSchemaModel;  
 
   constructor(id: string) {

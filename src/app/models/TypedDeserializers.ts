@@ -1,12 +1,7 @@
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
-import { AbstractSchemaModel } from "./AbstractSchemaModel";
-import { ArraySchemaCapabilityModel } from "./ArraySchemaCapabilityModel";
 import { CommandCapabilityModel } from "./CommandCapabilityModel";
 import { ComponentCapabilityModel } from "./ComponentCapabilityModel";
-import { EnumSchemaCapabilityModel } from "./EnumSchemaCapabilityModel";
-import { MapSchemaCapabilityModel } from "./MapSchemaCapabilityModel";
-import { ObjectSchemaCapabilityModel } from "./ObjectSchemaCapabilityModel";
 import { PropertyCapabilityModel } from "./PropertyCapabilityModel";
 import { RelationshipCapabilityModel } from "./RelationshipCapabilityModel";
 import { TelemetryCapabilityModel } from "./TelemetryCapabilityModel";
@@ -46,35 +41,8 @@ export class TypeDeserializers {
     return result;
   }
 
-  public static relationshipCapabilityDeserializer(json: Array<{prop: string; shouldDeserialize: boolean}>, params: CustomDeserializerParams) {
+  public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams) {
     let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, AbstractCapabilityModel));
     return result;
   }
-
-  public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
-    if (typeof json === 'string')
-      return new Array<string>(json);
-    else if (json instanceof Array)
-      return new Array<string>(...json)
-    else
-      return params.fallback(json, Object)
-  }
-
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
-    if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
-
-    switch (schema?.toLocaleLowerCase()) {
-      case "array":
-        return params.fallback(value, ArraySchemaCapabilityModel);
-      case "map":
-        return params.fallback(value, MapSchemaCapabilityModel);
-      case "enum":
-        return params.fallback(value, EnumSchemaCapabilityModel);
-      case "object":
-        return params.fallback(value, ObjectSchemaCapabilityModel);
-      default:
-        return value;
-    }
-  }  
 }

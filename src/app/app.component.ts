@@ -12,8 +12,6 @@ export class AppComponent {
   public navOpenState = false;
   public treeView = false;
 
-  constructor(schemaService: SchemaService) { 
-    schemaService.registerModels();
-    schemaService.registerForms();
+  constructor() { 
   }
 }

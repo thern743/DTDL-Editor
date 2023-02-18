@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { InterfaceCapabilityFormControl } from 'src/app/formControls/InterfaceCapabilityFormControl';
+import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
 import { FormArray, FormBuilder } from '@angular/forms';
-import { CommandCapabilityFormControl } from 'src/app/formControls/CommandCapabilityFormControl';
-import { PropertyCapabilityFormControl } from 'src/app/formControls/PropertyCapabilityFormControl';
-import { TelemetryCapabilityFormControl } from 'src/app/formControls/TelemetryCapabilityFormControl';
-import { RelationshipCapabilityFormControl } from 'src/app/formControls/RelationshipCapabilityFormControl';
-import { ComponentCapabilityFormControl } from 'src/app/formControls/ComponentCapabilityFormControl';
+import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
+import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
+import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
+import { RelationshipCapabilityFormControl } from '../../formControls/RelationshipCapabilityFormControl';
+import { ComponentCapabilityFormControl } from '../../formControls/ComponentCapabilityFormControl';
 import { Subject } from 'rxjs';
-import { RelationshipCapabilityModel } from 'src/app/models/RelationshipCapabilityModel';
-import { PropertyCapabilityModel } from 'src/app/models/PropertyCapabilityModel';
-import { CommandCapabilityModel } from 'src/app/models/CommandCapabilityModel';
-import { ComponentCapabilityModel } from 'src/app/models/ComponentCapabilityModel';
-import { TelemetryCapabilityModel } from 'src/app/models/TelemetryCapabilityModel';
+import { RelationshipCapabilityModel } from '../../models/RelationshipCapabilityModel';
+import { PropertyCapabilityModel } from '../../models/PropertyCapabilityModel';
+import { CommandCapabilityModel } from '../../models/CommandCapabilityModel';
+import { ComponentCapabilityModel } from '../../models/ComponentCapabilityModel';
+import { TelemetryCapabilityModel } from '../../models/TelemetryCapabilityModel';
 import { ValidationService } from '../validation/validation-service.service';
 import { SettingsService } from '../settings/settings.service';
-import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
+import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
+import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'

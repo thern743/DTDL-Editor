@@ -1,5 +1,3 @@
-import { IPrimitiveSchemaFactory } from "./IPrimitiveSchemaFactory";
-
-export interface ISchemaFactory extends IPrimitiveSchemaFactory {
+export interface ISchemaFactory {
 
 }

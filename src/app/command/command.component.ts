@@ -46,7 +46,7 @@ export class CommandComponent implements OnInit {
   private setPayloadControls(): void {
     if (this.command.model.request) {
       // Create and call a factory method that takes in a model instead
-      this.requestFormControl = new CommandPayloadFormControl(this.command.model.request, this.command.formBuilder, this._validationService);
+      this.requestFormControl = new CommandPayloadFormControl(this.command.model.request, this.command.formBuilder, this._validationService, this.dialog);
       this.requestTextControl.setValue(this.command.model.request.name);
     } else {
       this.requestFormControl = this._schemaService.createForm("Utility", "commandPayload")
@@ -54,7 +54,7 @@ export class CommandComponent implements OnInit {
 
     if (this.command.model.response) {
       // Create and call a factory method that takes in a model instead
-      this.responseFormControl = new CommandPayloadFormControl(this.command.model.response, this.command.formBuilder, this._validationService);
+      this.responseFormControl = new CommandPayloadFormControl(this.command.model.response, this.command.formBuilder, this._validationService, this.dialog);
       this.responseTextControl.setValue(this.command.model.response.name);
     } else {
       this.responseFormControl = this._schemaService.createForm("Utility", "commandPayload")

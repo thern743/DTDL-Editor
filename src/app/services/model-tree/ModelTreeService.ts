@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { FlatTreeControl, NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
-import { CapabilityNode } from "src/app/models/CapabilityNode";
-import { AbstractCapabilityModel } from "src/app/models/AbstractCapabilityModel";
-import { InterfaceCapabilityFormControl } from "src/app/formControls/InterfaceCapabilityFormControl";
-import { CapabilityFlatNode } from "src/app/models/CapabilityFlatNode";
-import { RelationshipCapabilityModel } from "src/app/models/RelationshipCapabilityModel";
+import { CapabilityNode } from "../../models/CapabilityNode";
+import { AbstractCapabilityModel } from "../../models/AbstractCapabilityModel";
+import { InterfaceCapabilityFormControl } from "../../formControls/InterfaceCapabilityFormControl";
+import { CapabilityFlatNode } from "../../models/CapabilityFlatNode";
+import { RelationshipCapabilityModel } from "../../models/RelationshipCapabilityModel";
 
 @Injectable({
     providedIn: 'root'
