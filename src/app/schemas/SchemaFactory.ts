@@ -1,60 +1,57 @@
 import { Injectable } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilityFormControl";
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
-import { ISchemaFactory } from "./ISchemaFactory";
+import { ValidationService } from "../services/validation/validation-service.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SchemaFactory implements ISchemaFactory {
-  private _formRegistry: Map<string, Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>>;
-  private _modelRegistry: Map<string, Map<string, () => AbstractCapabilityModel>>;
+export class SchemaFactory {
+  private static formRegistry: Map<string, Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>>
+                        = new Map<string, Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>>();
+  private static modelRegistry: Map<string, Map<string, () => AbstractCapabilityModel>> 
+                        = new Map<string, Map<string, () => AbstractCapabilityModel>>();
+  public static initialize() {
+    SchemaFactory.modelRegistry.set("Primitive", new Map<string, () => AbstractCapabilityModel>());
+    SchemaFactory.modelRegistry.set("Complex", new Map<string, () => AbstractCapabilityModel>());
+    SchemaFactory.modelRegistry.set("Utility", new Map<string, () => AbstractCapabilityModel>());
+    SchemaFactory.modelRegistry.set("MapKey", new Map<string, () => AbstractCapabilityModel>());
+    SchemaFactory.modelRegistry.set("MapValue", new Map<string, () => AbstractCapabilityModel>());
 
-  constructor() {
-    this._formRegistry = new Map<string, Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>>();
-    this._modelRegistry = new Map<string, Map<string, () => AbstractCapabilityModel>>();
-
-    // TODO: Dynamically set keys for formRegistry and modelRegistry maps
-    //       Once a proper factory pattern has been setup for registering models and forms,
-    //       `SchemaFactory` should no longer need to have hard-coded keys.
-    this._modelRegistry.set("Primitive", new Map<string, () => AbstractCapabilityModel>());
-    this._modelRegistry.set("Complex", new Map<string, () => AbstractCapabilityModel>());
-    this._modelRegistry.set("Utility", new Map<string, () => AbstractCapabilityModel>());
-    this._modelRegistry.set("MapKey", new Map<string, () => AbstractCapabilityModel>());
-    this._modelRegistry.set("MapValue", new Map<string, () => AbstractCapabilityModel>());
-
-    this._formRegistry.set("Primitive", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
-    this._formRegistry.set("Complex", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
-    this._formRegistry.set("Utility", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
-    this._formRegistry.set("MapKey", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
-    this._formRegistry.set("MapValue", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+    SchemaFactory.formRegistry.set("Primitive", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+    SchemaFactory.formRegistry.set("Complex", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+    SchemaFactory.formRegistry.set("Utility", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+    SchemaFactory.formRegistry.set("MapKey", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
+    SchemaFactory.formRegistry.set("MapValue", new Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>());
   }
 
-  public registerFormControl(type: string, name: string, factory: () => AbstractCapabilityFormControl<AbstractCapabilityModel>): void {
-    let map = this._formRegistry.get(type);
+  public static registerFormControl(type: string, name: string, factory: () => AbstractCapabilityFormControl<AbstractCapabilityModel>): void {
+    let map = SchemaFactory.formRegistry.get(type);
     map?.set(name, factory);
   }
 
-  public createFormControl(type: string, name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined {
-    let func = this._formRegistry.get(type)?.get(name);
-    return func === undefined ? undefined : func();
+  public static createFormControl(type: string, name: string): ((model: AbstractCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractCapabilityModel>) | undefined {
+    let func = SchemaFactory.formRegistry.get(type)?.get(name);
+    return func === undefined ? undefined : func;
   }
 
-  public registerModel(type: string, name: string, factory: () => AbstractCapabilityModel): void {
-    let map = this._modelRegistry.get(type);
+  public static registerModel(type: string, name: string, factory: () => AbstractCapabilityModel): void {
+    let map = SchemaFactory.modelRegistry.get(type);
     map?.set(name, factory);
   }
 
-  public createModel(type: string, name: string): AbstractCapabilityModel | undefined {
-    let func = this._modelRegistry.get(type)?.get(name);
-    return func === undefined ? undefined : func();
+  public static createModel(type: string, name: string): ((id: string) => AbstractCapabilityModel) | undefined {
+    let func = SchemaFactory.modelRegistry.get(type)?.get(name);
+    return func === undefined ? undefined : func;
   }
 
-  public getFormsRegistry(): Map<string, Map<string, () => AbstractCapabilityFormControl<AbstractCapabilityModel>>> {
-    return this._formRegistry;
+  public static getFormsRegistry(): Map<string, Map<string, (model: AbstractCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractCapabilityModel>>> {
+    return SchemaFactory.formRegistry;
   }
 
-  public getModelsRegistry(): Map<string, Map<string, () => AbstractCapabilityModel>> {
-    return this._modelRegistry;
+  public static getModelsRegistry(): Map<string, Map<string, (id: string) => AbstractCapabilityModel>> {
+    return SchemaFactory.modelRegistry;
   }
 }

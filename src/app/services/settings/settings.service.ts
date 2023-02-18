@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { EditorSettings, EditorSettingsDto } from 'src/app/models/EditorSettings';
-import { SuccessSnackbarComponent } from 'src/app/success-snackbar/success-snackbar.component';
+import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
+import { EditorSettings, EditorSettingsDto } from '../../models/EditorSettings';
+import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';
 
 @Injectable({
   providedIn: 'root'

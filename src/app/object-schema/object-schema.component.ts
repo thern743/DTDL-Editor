@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SchemaService } from '../services/schema/schema.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ObjectSchemaFormControl } from '../formControls/ObjectSchemaFormControl';
+import { ObjectSchemaFormControl } from '../formControls/schemas/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
-import { ErrorSnackbarComponent } from 'src/app/error-snackbar/error-snackbar.component';
-import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
+import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
+import { InterfaceCapabilityModel } from '../../models/InterfaceCapabilityModel';
 import { TypedJSON } from 'typedjson';
 import * as FileSaver from 'file-saver';
 

@@ -5,10 +5,9 @@ import { FieldComponent } from "../field/field.component";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
-import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
-import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
-import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
-import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
+import { ArraySchemaCapabilityModel } from './schemas/ArraySchemaCapabilityModel';
+import { EnumSchemaCapabilityModel } from './schemas/EnumSchemaCapabilityModel';
+import { MapSchemaCapabilityModel } from './schemas/MapSchemaCapabilityModel';
 
 @jsonObject
 export class FieldCapabilityModel extends AbstractCapabilityModel {
@@ -31,18 +30,18 @@ export class FieldCapabilityModel extends AbstractCapabilityModel {
     let schema = typeof value === 'string' ? value : value.type;
 
     switch (schema?.toLocaleLowerCase()) {
-      case "array":
-        return params.fallback(value, ArraySchemaCapabilityModel);
-      case "map":
-        return params.fallback(value, MapSchemaCapabilityModel);
-      case "enum":
-        return params.fallback(value, EnumSchemaCapabilityModel);
-      // TODO: Circular dependency between ObjectSchemaCapabilityModel and FieldCapabilityModel causes webpack error
-      //       Error: Cannot access 'FieldCapabilityModel' before initialization
-      // case "object":
-      //   return params.fallback(value, ObjectSchemaCapabilityModel);
-      default:
-        return value;
+      // case "array":
+      //   return params.fallback(value, ArraySchemaCapabilityModel);
+      // case "map":
+      //   return params.fallback(value, MapSchemaCapabilityModel);
+      // case "enum":
+      //   return params.fallback(value, EnumSchemaCapabilityModel);
+      // // TODO: Circular dependency between ObjectSchemaCapabilityModel and FieldCapabilityModel causes webpack error
+      // //       Error: Cannot access 'FieldCapabilityModel' before initialization
+      // // case "object":
+      // //   return params.fallback(value, ObjectSchemaCapabilityModel);
+      // default:
+      //   return value;
     }
   }  
 }

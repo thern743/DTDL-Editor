@@ -57,6 +57,7 @@ import { ModelValidationComponent } from './model-validation/model-validation.co
 import { ImportModelComponent } from './import-model/import-model.component';
 import { FilterPipe } from './filters/filter.pipe';
 import { CommandPayloadComponent } from './command-payload/command-payload.component';
+import { SchemaFactories } from './factories/SchemaFactories';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { CommandPayloadComponent } from './command-payload/command-payload.compo
     MatDialogModule
   ],
   providers: [
+    SchemaFactories,
     MatDialog,
     PropertyFormatterPipe,
     { provide: MatDialogRef, useValue: {} },

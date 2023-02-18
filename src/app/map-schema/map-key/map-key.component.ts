@@ -1,10 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
-import { MapKeyFormControl } from 'src/app/formControls/MapKeyFormControl';
-import { ICapabilityModel } from 'src/app/models/interfaces/ICapabilityModel';
-import { SchemaService } from 'src/app/services/schema/schema.service';
+import { MapKeyFormControl } from '../../formControls/MapKeyFormControl';
+import { SchemaService } from '../../services/schema/schema.service';
 
 @Component({
   selector: 'map-key-schema',
