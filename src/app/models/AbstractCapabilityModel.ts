@@ -37,22 +37,4 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
       else
         return params.fallback(json, Object)
     }
-
-    public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
-      if (!value) return;
-      let schema = typeof value === 'string' ? value : value.type;
-  
-      switch (schema?.toLocaleLowerCase()) {
-        // case "array":
-        //   return params.fallback(value, ArraySchemaCapabilityModel);
-        // case "map":
-        //   return params.fallback(value, MapSchemaCapabilityModel);
-        // case "enum":
-        //   return params.fallback(value, EnumSchemaCapabilityModel);
-        // case "object":
-        //   return params.fallback(value, ObjectSchemaCapabilityModel);
-        // default:
-        //   return value;
-      }
-    }
 }
