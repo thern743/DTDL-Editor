@@ -8,6 +8,7 @@ import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
+import { LanguageMap } from './LanguageMap';
 
 @jsonObject
 export class CommandPayload extends AbstractSchemaModel {
@@ -20,11 +21,11 @@ export class CommandPayload extends AbstractSchemaModel {
   @jsonMember(AnyT, { deserializer: CommandPayload.schemaDeserializer })
   public schema!: string | AbstractSchemaModel;
 
-  @jsonMember
-  public displayName!: string;
+  @jsonMember(AnyT)
+  public displayName!: string | Array<LanguageMap>;
 
-  @jsonMember
-  public description!: string;
+  @jsonMember(AnyT)
+  public description!: string | Array<LanguageMap>;
 
   @jsonMember
   public comment!: string;

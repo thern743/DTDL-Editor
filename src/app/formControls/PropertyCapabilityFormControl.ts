@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';

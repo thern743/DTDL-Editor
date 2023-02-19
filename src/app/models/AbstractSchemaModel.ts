@@ -1,7 +1,8 @@
 import { ComponentType } from "@angular/cdk/portal";
-import { jsonMember, jsonObject } from "typedjson";
+import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { ISchemaModel } from "./interfaces/ISchemaModel";
+import { LanguageMap } from "./LanguageMap";
 
 @jsonObject
 export abstract class AbstractSchemaModel implements ISchemaModel {
@@ -11,11 +12,11 @@ export abstract class AbstractSchemaModel implements ISchemaModel {
     @jsonMember({ name: '@type'})
     public type!: string;
 
-    @jsonMember
-    public displayName!: string;
+    @jsonMember(AnyT)
+    public displayName!: string | Array<LanguageMap>;
 
-    @jsonMember
-    public description!: string;
+    @jsonMember(AnyT)
+    public description!: string | Array<LanguageMap>;
 
     @jsonMember
     public comment!: string;

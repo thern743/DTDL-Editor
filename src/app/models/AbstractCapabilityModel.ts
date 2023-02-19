@@ -3,7 +3,7 @@ import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
-import { AbstractSchemaModel } from './AbstractSchemaModel';
+import { LanguageMap } from './LanguageMap';
 
 @jsonObject
 export abstract class AbstractCapabilityModel implements ICapabilityModel {
@@ -13,11 +13,11 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember(AnyT, { name: '@type', deserializer: AbstractCapabilityModel.typeDeserializer })
     public type!: string | Array<string>;
 
-    @jsonMember
-    public displayName!: string;
+    @jsonMember(AnyT)
+    public displayName!: string | Array<LanguageMap>;
 
-    @jsonMember
-    public description!: string;
+    @jsonMember(AnyT)
+    public description!: string | Array<LanguageMap>;
 
     @jsonMember
     public comment!: string;
