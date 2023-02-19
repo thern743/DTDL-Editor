@@ -74,6 +74,10 @@ export class CommandComponent implements OnInit {
     });
   }
 
+  public getFormControl(name: string): FormControl {
+    return this.command.form.get(name) as FormControl;
+  }
+
   public openRequestSchemaEditor(): void {
     this.dialog
       .open(CommandPayloadComponent, {
