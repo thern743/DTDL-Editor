@@ -37,10 +37,6 @@ export class PropertyComponent implements OnInit {
     this.setSchemaAndSemanticTypeDropDowns();
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.property.form.get(name) as FormControl;
-  }
-
   // TODO: Importing a Property model does not allow editing the schema
   //       Because the models are deserialized directly, the factory methods are not called when importing
   //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
@@ -85,6 +81,10 @@ export class PropertyComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  public getFormControl(name: string): FormControl {
+    return this.property.form.get(name) as FormControl;
   }
 
   // TODO: Passing validSchemaTypes to the FilterPipe doesn't get re-evaluated on changes

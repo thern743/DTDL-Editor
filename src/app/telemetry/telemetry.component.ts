@@ -83,6 +83,10 @@ export class TelemetryComponent implements OnInit {
     return undefined;
   }
 
+  public getFormControl(name: string): FormControl {
+    return this.telemetry.form.get(name) as FormControl;
+  }
+
   public validSchemaTypes = (schemaType: string): boolean => {
     if (this.semanticTypeDropDownControl?.value)
       return ["double", "float", "integer", "long"].indexOf(schemaType.toLowerCase()) > -1;
