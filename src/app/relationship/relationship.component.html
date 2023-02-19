@@ -15,16 +15,10 @@
     
     <div class="formSpacer"></div>
 
-    <mat-form-field color="accent">
-        <mat-label attr.for="relationship_displayName_{{formIndex}}">Display Name</mat-label>
-        <input matInput id="relationship_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-    </mat-form-field>
+    <language-map id="relationship_displayName_{{formIndex}}" labelText="Display Name" [control]="getFormControl('displayName')"></language-map>
     <span class="formSpacer"></span>
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="relationship_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="relationship_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
+    <language-map id="relationship_description_{{formIndex}}" labelText="Description" [control]="getFormControl('description')" style="width: 420px"></language-map>        
     <br/>
 
     <mat-form-field color="accent">

@@ -4,6 +4,7 @@ import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'relationship-definition',
@@ -36,6 +37,10 @@ export class RelationshipComponent implements OnInit {
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
     });    
+  }
+
+  public getFormControl(name: string): FormControl {
+    return this.relationship.form.get(name) as FormControl;
   }
 
   public getProperties(): Array<PropertyCapabilityFormControl> {
