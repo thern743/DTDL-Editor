@@ -11,6 +11,7 @@ export class LanguageMapComponent implements OnInit {
   @Input() public labelText!: string;
   @Input() public control!: FormControl;
   @Input() public formControlName!: string;
+  @Input() public style: string = "width: 200px";
 
   constructor() { 
   }
