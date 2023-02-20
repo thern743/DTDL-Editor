@@ -160,7 +160,7 @@ export class PropertyComponent implements OnInit {
       this._schemaService.openSchemaEditor(this.property.form, this.schemaFormControl)
   }
 
-  public openLanguageMap(controlName: string): void {
-    this._localizationService.openLanguageMap(this.property.form, controlName)
+  public openLanguageMap(): void {
+    this._localizationService.openDisplayNameDescriptionLanguageMap(this.property.form)
   }
 }

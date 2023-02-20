@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-title>Display Name</mat-card-title>
+  <language-map labelText="Display Name"></language-map>
+</mat-card>
+<br />
+
+<mat-card>
+  <mat-card-title>Description</mat-card-title>
+  <language-map labelText="Description" style="width: 420px"></language-map>
+</mat-card>
+
+<mat-action-row>
+  <button mat-raised-button color="primary" [mat-dialog-close]="buildFormResult()">
+    <mat-icon>save</mat-icon> Save
+  </button>
+</mat-action-row>

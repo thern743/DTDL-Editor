@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { LanguageMapComponent } from 'src/app/language-map/language-map.component';
+import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localized-display-name-description/localized-display-name-description.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +22,19 @@ export class LocalizationService {
     return this._locales;
   }
 
-  public openLanguageMap(parentForm: FormGroup, controlName: string): void {
+  public openDisplayNameDescriptionLanguageMap(parentForm: FormGroup): void {
     this._dialog
-    .open(LanguageMapComponent,
+    .open(LocalizedDisplayNameDescriptionComponent,
       {
         data: true,
         height: "60%",
-        width: "50%"
+        width: "75%"
       })
     .afterClosed()
     .subscribe((result: FormGroup) => {
       if (result) {
-        parentForm?.get(controlName)?.setValue(result);
+        parentForm?.get("displayName")?.setValue(result.get("displayName")?.value);
+        parentForm?.get("description")?.setValue(result.get("description")?.value);
       }
     });
   }
