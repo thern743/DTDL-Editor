@@ -8,6 +8,7 @@ import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilit
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { FormControl } from '@angular/forms';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'property-definition',
@@ -20,14 +21,16 @@ export class PropertyComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
+  private _localizationService: LocalizationService;
   public dialog: MatDialog;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
+  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
+    this._localizationService = localizationService;
     this.dialog = dialog;
   }
 
@@ -155,5 +158,9 @@ export class PropertyComponent implements OnInit {
   public openSchemaEditor(): void {
     if(this.schemaFormControl)
       this._schemaService.openSchemaEditor(this.property.form, this.schemaFormControl)
+  }
+
+  public openLanguageMap(controlName: string): void {
+    this._localizationService.openLanguageMap(this.property.form, controlName)
   }
 }

@@ -12,13 +12,22 @@
             </id-name-header-component>
         </mat-panel-title>        
     </mat-expansion-panel-header>
-    
-    <div class="formSpacer"></div>
 
     <language-map id="property_displayName_{{formIndex}}" labelText="Display Name" [control]="getFormControl('displayName')"></language-map>
-    <span class="formSpacer"></span>
+    <br /><br />
 
     <language-map id="property_description_{{formIndex}}" labelText="Description" [control]="getFormControl('description')" style="width: 420px"></language-map>        
+    <br /><br />
+
+    <button mat-raised-button color="primary" (click)="openLanguageMap('displayName')">
+      <mat-icon>edit</mat-icon>Localize Display Name
+    </button>    
+    <span class="formSpacer"></span>
+
+    <button mat-raised-button color="primary" (click)="openLanguageMap('description')">
+      <mat-icon>edit</mat-icon>Localize Description
+    </button>
+
     <br/>
 
     <mat-form-field color="accent">
