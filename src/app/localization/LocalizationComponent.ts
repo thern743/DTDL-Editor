@@ -10,30 +10,28 @@ export class LocalizationComponent {
 
   protected updateLocalizationCallback(parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, result: FormGroup): void {
     if(!result) return;
-    const displayNameArray = result.get("displayName") as FormArray;
-    const descriptionArray = result.get("description") as FormArray;
+    this.updateLocalization(parentForm, result, "displayName", this.displayNameLocaleControl, this.displayNameControl);
+    this.updateLocalization(parentForm, result, "description", this.descriptionLocaleControl, this.descriptionControl);
+  }
+  
+  private updateLocalization(parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, 
+    result: FormGroup, 
+    controlName: string,
+    localeControl: FormControl,
+    displayControl: FormControl
+  ): void {
+    const controlArray = result.get(controlName) as FormArray;
 
-    let newDisplayNameArray: any = {};
+    let newValues: any = {};
 
-    displayNameArray.controls.forEach((control: AbstractControl) => {
-      newDisplayNameArray[control.get("key")?.value] = control.get("value")?.value;
+    controlArray.controls.forEach((control: AbstractControl) => {
+      newValues[control.get("key")?.value] = control.get("value")?.value;
     });
 
-    let newDescriptionArray: any = {};
-
-    descriptionArray.controls.forEach((control: AbstractControl) => {
-      newDescriptionArray[control.get("key")?.value] = control.get("value")?.value;
-    });
-
-    const firstDisplayName = displayNameArray?.at(0)?.value;
-    const firstDescription = descriptionArray?.at(0)?.value;
-
-    this.displayNameLocaleControl.setValue(firstDisplayName.key);
-    this.displayNameControl.setValue(firstDisplayName.value);
-    parentForm.form?.get("displayName")?.setValue(newDisplayNameArray);
-
-    this.descriptionLocaleControl.setValue(firstDescription.key);
-    this.descriptionControl.setValue(firstDescription.value);
-    parentForm.form?.get("description")?.setValue(newDescriptionArray);
+    const firstValue = controlArray?.at(0)?.value;
+    
+    localeControl.setValue(firstValue.key);
+    displayControl.setValue(firstValue.value);
+    parentForm.form?.get(controlName)?.setValue(newValues);
   }
 }
