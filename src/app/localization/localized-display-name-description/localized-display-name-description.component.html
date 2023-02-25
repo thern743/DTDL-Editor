@@ -1,12 +1,12 @@
 <mat-card>
   <mat-card-title>Display Name</mat-card-title>
-  <language-map labelText="Display Name"></language-map>
+  <language-map #displayNameComponent labelText="Display Name" [languageMapFormArray]="displayNameFormArray"></language-map>
 </mat-card>
 <br />
 
 <mat-card>
   <mat-card-title>Description</mat-card-title>
-  <language-map labelText="Description" style="width: 420px"></language-map>
+  <language-map #descriptionComponent labelText="Description" [languageMapFormArray]="descriptionFormArray" style="width: 420px"></language-map>
 </mat-card>
 
 <mat-action-row>

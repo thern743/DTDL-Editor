@@ -15,10 +15,21 @@
 
     <div class="formSpacer"></div>
 
-    <language-map id="telemetry_displayName_{{formIndex}}" labelText="Display Name" [control]="getFormControl('displayName')"></language-map>
+    <mat-form-field color="accent">
+      <mat-label attr.for="telemetry_displayName_{{formIndex}}">Display Name <span *ngIf="displayNameLocaleControl.value">({{displayNameLocaleControl.value}})</span></mat-label>
+      <input matInput id="telemetry_displayName_{{formIndex}}" type="text" [formControl]="displayNameControl" />
+    </mat-form-field>
     <span class="formSpacer"></span>
-
-    <language-map id="telemetry_description_{{formIndex}}" labelText="Description" [control]="getFormControl('description')" style="width: 420px"></language-map>        
+  
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label attr.for="telemetry_description_{{formIndex}}">Description <span *ngIf="descriptionLocaleControl.value">({{descriptionLocaleControl.value}})</span></mat-label>
+        <input matInput id="telemetry_description_{{formIndex}}" type="text" [formControl]="descriptionControl" />
+    </mat-form-field>    
+    <span class="formSpacer"></span>
+  
+    <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+      <mat-icon>language</mat-icon> Localize
+    </button>
     <br/>
 
     <mat-form-field color="accent">

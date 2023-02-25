@@ -1,6 +1,6 @@
 <ng-container *ngFor="let languageMap of languageMapFormArray.controls; let i = index">
   <ng-container [formGroup]="getFormGroup(languageMap)">
-    <mat-form-field color="accent" [hidden]="!localize">
+    <mat-form-field color="accent">
       <mat-label [attr.for]="id">Locale</mat-label>
       <mat-select matNativeControl id="locale" formControlName="key">
         <mat-option [value]="locale" *ngFor="let locale of getLocales()">{{locale}}</mat-option>

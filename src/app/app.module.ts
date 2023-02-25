@@ -59,7 +59,7 @@ import { FilterPipe } from './filters/filter.pipe';
 import { CommandPayloadComponent } from './command-payload/command-payload.component';
 import { SchemaFactories } from './factories/SchemaFactories';
 import { LanguageMapComponent } from './language-map/language-map.component';
-import { LocalizedDisplayNameDescriptionComponent } from './localized-display-name-description/localized-display-name-description.component';
+import { LocalizedDisplayNameDescriptionComponent } from './localization/localized-display-name-description/localized-display-name-description.component';
 
 @NgModule({
   declarations: [

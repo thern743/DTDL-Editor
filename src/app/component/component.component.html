@@ -15,16 +15,27 @@
     
     <div class="formSpacer"></div>
 
-    <language-map id="component_displayName_{{formIndex}}" labelText="Display Name" [control]="getFormControl('displayName')"></language-map>
+    <mat-form-field color="accent">
+      <mat-label attr.for="component_displayName_{{formIndex}}">Display Name <span *ngIf="displayNameLocaleControl.value">({{displayNameLocaleControl.value}})</span></mat-label>
+      <input matInput id="component_displayName_{{formIndex}}" type="text" [formControl]="displayNameControl" />
+    </mat-form-field>
     <span class="formSpacer"></span>
-
-    <language-map id="component_description_{{formIndex}}" labelText="Description" [control]="getFormControl('description')" style="width: 420px"></language-map>        
+  
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label attr.for="component_description_{{formIndex}}">Description <span *ngIf="descriptionLocaleControl.value">({{descriptionLocaleControl.value}})</span></mat-label>
+        <input matInput id="component_description_{{formIndex}}" type="text" [formControl]="descriptionControl" />
+    </mat-form-field>    
+    <span class="formSpacer"></span>
+  
+    <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+      <mat-icon>language</mat-icon> Localize
+    </button>
     <br/>
 
     <mat-form-field color="accent">
         <mat-label attr.for="component_schema_{{formIndex}}">Schema</mat-label>
         <mat-select matNativeControl id="component_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+            <mat-option *ngFor="let interfaceId of filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>

@@ -16,19 +16,19 @@
     <div class="formSpacer"></div>
 
     <mat-form-field color="accent">
-      <mat-label attr.for="property_displayName_{{formIndex}}">Display Name</mat-label>
-      <input matInput id="property_displayName_{{formIndex}}" type="text" formControlName="displayName" />
+      <mat-label attr.for="property_displayName_{{formIndex}}">Display Name <span *ngIf="displayNameLocaleControl.value">({{displayNameLocaleControl.value}})</span></mat-label>
+      <input matInput id="property_displayName_{{formIndex}}" type="text" [formControl]="displayNameControl" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="property_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="property_description_{{formIndex}}" type="text" formControlName="description" />
+        <mat-label attr.for="property_description_{{formIndex}}">Description <span *ngIf="descriptionLocaleControl.value">({{descriptionLocaleControl.value}})</span></mat-label>
+        <input matInput id="property_description_{{formIndex}}" type="text" [formControl]="descriptionControl" />
     </mat-form-field>    
     <span class="formSpacer"></span>
 
-    <button mat-raised-button color="primary" (click)="openLanguageMap()">
-      <mat-icon>edit</mat-icon> Localize
+    <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+      <mat-icon>language</mat-icon> Localize
     </button>
     <br/>
 

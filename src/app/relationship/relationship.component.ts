@@ -1,24 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { FormControl } from '@angular/forms';
+import { LocalizationComponent } from '../localization/LocalizationComponent';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'relationship-definition',
   templateUrl: './relationship.component.html',
   styleUrls: ['./relationship.component.scss']
 })
-export class RelationshipComponent implements OnInit {
+export class RelationshipComponent extends LocalizationComponent implements OnInit {
   @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
+  private _editorService: EditorService
+  private _localizationService: LocalizationService
 
-  constructor(public editorService: EditorService) { 
-    
+  constructor(editorService: EditorService, localizationService: LocalizationService) { 
+    super();
+    this._editorService = editorService;
+    this._localizationService = localizationService;
   }
  
   public ngOnInit(): void { 
@@ -45,5 +49,17 @@ export class RelationshipComponent implements OnInit {
 
   public getProperties(): Array<PropertyCapabilityFormControl> {
     return (<RelationshipCapabilityFormControl>this.relationship).properties;
+  }
+
+  public filterInterfacesForExtends(interfaceId: string): Array<string> {
+    return this._editorService.filterInterfacesForExtends(interfaceId)
+  }
+
+  public addPropertyToRelationship(relationship: RelationshipCapabilityFormControl) {
+    this._editorService.addPropertyToRelationship(relationship);
+  }
+
+  public openDisplayNameDescriptionLanguageMap(): void {
+    this._localizationService.openDisplayNameDescriptionLanguageMap(this.relationship, this.updateLocalizationCallback.bind(this));
   }
 }

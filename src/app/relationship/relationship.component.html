@@ -15,10 +15,21 @@
     
     <div class="formSpacer"></div>
 
-    <language-map id="relationship_displayName_{{formIndex}}" labelText="Display Name" [control]="getFormControl('displayName')"></language-map>
+    <mat-form-field color="accent">
+      <mat-label attr.for="relationship_displayName_{{formIndex}}">Display Name <span *ngIf="displayNameLocaleControl.value">({{displayNameLocaleControl.value}})</span></mat-label>
+      <input matInput id="relationship_displayName_{{formIndex}}" type="text" [formControl]="displayNameControl" />
+    </mat-form-field>
     <span class="formSpacer"></span>
-
-    <language-map id="relationship_description_{{formIndex}}" labelText="Description" [control]="getFormControl('description')" style="width: 420px"></language-map>        
+  
+    <mat-form-field color="accent" style="width: 420px">
+        <mat-label attr.for="relationship_description_{{formIndex}}">Description <span *ngIf="descriptionLocaleControl.value">({{descriptionLocaleControl.value}})</span></mat-label>
+        <input matInput id="relationship_description_{{formIndex}}" type="text" [formControl]="descriptionControl" />
+    </mat-form-field>    
+    <span class="formSpacer"></span>
+  
+    <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+      <mat-icon>language</mat-icon> Localize
+    </button>
     <br/>
 
     <mat-form-field color="accent">
@@ -36,7 +47,7 @@
     <mat-form-field color="accent">
         <mat-label attr.for="relationship_target_{{formIndex}}">Target</mat-label>
         <mat-select matNativeControl id="relationship_target_{{formIndex}}" formControlName="target">
-            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+            <mat-option *ngFor="let interfaceId of filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
         </mat-select>
     </mat-form-field>    
     <br/>
@@ -66,7 +77,7 @@
     </mat-card>
 
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="editorService.addPropertyToRelationship(relationship)">
+        <button mat-raised-button color="primary" (click)="addPropertyToRelationship(relationship)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Property
         </button>        
     </mat-action-row>

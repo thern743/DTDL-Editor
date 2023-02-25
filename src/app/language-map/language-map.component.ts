@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageMap } from '../models/LanguageMap';
@@ -13,17 +13,15 @@ export class LanguageMapComponent implements OnInit {
   @Input() public id!: string;
   @Input() public labelText!: string;
   @Input() public control!: FormControl;
+  @Input() public languageMapFormArray!: FormArray;
   @Input() public style: string = "width: 200px";
-  @Input() public localize: boolean = false;
   @Inject(MAT_DIALOG_DATA) public data?: boolean = false;
-  public languageMapFormArray!: FormArray;
   private _localizationService: LocalizationService;
   private _formBuilder: FormBuilder
 
   constructor(localizationService: LocalizationService, formBuilder: FormBuilder) { 
     this._localizationService = localizationService;
     this._formBuilder = formBuilder;
-    this.localize = this.data ?? false;
   }
 
   public ngOnInit(): void {
@@ -73,5 +71,9 @@ export class LanguageMapComponent implements OnInit {
 
   public removeLocale(index: number): void {
     this.languageMapFormArray.removeAt(index);    
+  }
+
+  public getData(): FormArray {
+    return this.languageMapFormArray;
   }
 }
