@@ -17,13 +17,13 @@
 
     <ng-container [formGroup]="localizationFormGroup">
       <mat-form-field color="accent">
-        <mat-label attr.for="component_displayName_{{formIndex}}">Display Name ({{getDisplayNameLocale()}})</mat-label>
+        <mat-label attr.for="component_displayName_{{formIndex}}">Display Name ({{getLocaleFor("displayNameLocale")}})</mat-label>
         <input matInput id="component_displayName_{{formIndex}}" type="text" formControlName="displayName" />
       </mat-form-field>
       <span class="formSpacer"></span>
 
       <mat-form-field color="accent" style="width: 420px">
-          <mat-label attr.for="component_description_{{formIndex}}">Description ({{getDescriptionLocale()}})</mat-label>
+          <mat-label attr.for="component_description_{{formIndex}}">Description ({{getLocaleFor("descriptionLocale")}})</mat-label>
           <input matInput id="component_description_{{formIndex}}" type="text" formControlName="description" />
       </mat-form-field>    
       <span class="formSpacer"></span>

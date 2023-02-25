@@ -52,11 +52,7 @@ export class LocalizationComponent {
     parentForm.form?.get(formControlName)?.setValue(newValues);
   }
 
-  public getDisplayNameLocale(): string {
-    return this.localizationFormGroup.get("displayNameLocale")?.value;
-  }
-
-  public getDescriptionLocale(): string {
-    return this.localizationFormGroup.get("descriptionLocale")?.value;
+  public getLocaleFor(controlName: string): string {
+    return this.localizationFormGroup.get(controlName)?.value;
   }
 }
