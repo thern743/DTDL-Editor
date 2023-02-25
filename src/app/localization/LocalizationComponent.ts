@@ -1,26 +1,42 @@
-import { AbstractControl, FormArray, FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilityFormControl";
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { SettingsService } from "../services/settings/settings.service";
 
 export class LocalizationComponent {
-  public displayNameControl: FormControl = new FormControl();
-  public displayNameLocaleControl: FormControl = new FormControl();
-  public descriptionLocaleControl: FormControl = new FormControl();
-  public descriptionControl: FormControl = new FormControl();
+  private _formBuilder: FormBuilder;
+  public localizationFormGroup: FormGroup;
+  private _defaultLocale: string;
+
+  constructor(settingsService: SettingsService, formBuilder: FormBuilder) {
+    this._formBuilder = formBuilder;
+    this._defaultLocale = settingsService.editorSettings.locale;
+    this.localizationFormGroup = this.toFormGroup();
+  }
+
+  private toFormGroup(): FormGroup {
+    const formGroup = this._formBuilder.group({
+      displayName: [""],      
+      displayNameLocale: [this._defaultLocale],
+      description: [""],
+      descriptionLocale: [this._defaultLocale]
+    });
+    return formGroup;
+  }
 
   protected updateLocalizationCallback(parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, result: FormGroup): void {
     if(!result) return;
-    this.updateLocalization(parentForm, result, "displayName", this.displayNameLocaleControl, this.displayNameControl);
-    this.updateLocalization(parentForm, result, "description", this.descriptionLocaleControl, this.descriptionControl);
+    this.updateLocalization(parentForm, result, "displayName", "displayNameLocale");
+    this.updateLocalization(parentForm, result, "description", "descriptionLocale");
   }
   
-  private updateLocalization(parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, 
+  private updateLocalization(
+    parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, 
     result: FormGroup, 
-    controlName: string,
-    localeControl: FormControl,
-    displayControl: FormControl
+    formControlName: string,
+    localeControlName: string
   ): void {
-    const controlArray = result.get(controlName) as FormArray;
+    const controlArray = result.get(formControlName) as FormArray;
 
     let newValues: any = {};
 
@@ -30,8 +46,17 @@ export class LocalizationComponent {
 
     const firstValue = controlArray?.at(0)?.value;
     
-    localeControl.setValue(firstValue.key);
-    displayControl.setValue(firstValue.value);
-    parentForm.form?.get(controlName)?.setValue(newValues);
+    this.localizationFormGroup.get(localeControlName)?.setValue(firstValue.key);
+    this.localizationFormGroup.get(formControlName)?.setValue(firstValue.value);
+
+    parentForm.form?.get(formControlName)?.setValue(newValues);
+  }
+
+  public getDisplayNameLocale(): string {
+    return this.localizationFormGroup.get("displayNameLocale")?.value;
+  }
+
+  public getDescriptionLocale(): string {
+    return this.localizationFormGroup.get("descriptionLocale")?.value;
   }
 }

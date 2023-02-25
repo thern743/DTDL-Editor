@@ -7,9 +7,10 @@ import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilit
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizationService } from '../services/localization/localization.service';
 import { LocalizationComponent } from '../localization/LocalizationComponent';
+import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'property-definition',
@@ -28,8 +29,8 @@ export class PropertyComponent extends LocalizationComponent implements OnInit {
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, dialog: MatDialog) {
-    super();
+  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+    super(settingsService, formBuilder);
     this._editorService = editorService;
     this._schemaService = schemaService;
     this._localizationService = localizationService;
@@ -164,13 +165,5 @@ export class PropertyComponent extends LocalizationComponent implements OnInit {
 
   public openDisplayNameDescriptionLanguageMap(): void {
     this._localizationService.openDisplayNameDescriptionLanguageMap(this.property, this.updateLocalizationCallback.bind(this));
-  }
-
-  public getLocalizedDisplayName(): string {
-    return "Display Name (en-US)";
-  }
-
-  public getLocalizedDescription(): string {
-    return "Description (en-US)";
   }
 }

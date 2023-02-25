@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizationComponent } from '../localization/LocalizationComponent';
 import { LocalizationService } from '../services/localization/localization.service';
+import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'component-definition',
@@ -18,8 +19,8 @@ export class ComponentComponent extends LocalizationComponent implements OnInit 
   private _editorService: EditorService;
   private _localizationService: LocalizationService;
 
-  constructor(editorService: EditorService, localizationService: LocalizationService) { 
-    super();
+  constructor(editorService: EditorService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder) { 
+    super(settingsService, formBuilder);
     this._editorService = editorService;
     this._localizationService = localizationService;
   }

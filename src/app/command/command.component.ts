@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 import { SchemaService } from '../services/schema/schema.service';
@@ -11,6 +11,7 @@ import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormCon
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { LocalizationService } from '../services/localization/localization.service';
 import { LocalizationComponent } from '../localization/LocalizationComponent';
+import { SettingsService } from '../services/settings/settings.service';
 
 
 @Component({
@@ -32,8 +33,8 @@ export class CommandComponent extends LocalizationComponent implements OnInit {
   public requestTextControl: FormControl = new FormControl();
   public responseTextControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, dialog: MatDialog) {
-    super();
+  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+    super(settingsService, formBuilder);
     this._editorService = editorService;
     this._schemaService = schemaService;
     this._validationService = validationService;

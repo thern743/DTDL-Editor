@@ -7,9 +7,10 @@ import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabil
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizationComponent } from '../localization/LocalizationComponent';
 import { LocalizationService } from '../services/localization/localization.service';
+import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'telemetry-definition',
@@ -28,8 +29,8 @@ export class TelemetryComponent extends LocalizationComponent implements OnInit 
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, dialog: MatDialog) {
-    super();
+  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+    super(settingsService, formBuilder);
     this._editorService = editorService;
     this._schemaService = schemaService;
     this._localizationService = localizationService;

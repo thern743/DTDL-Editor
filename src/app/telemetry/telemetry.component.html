@@ -8,24 +8,26 @@
             <id-name-header-component               
                 [formIndex]="formIndex[1]"
                 [formGroupControl]="telemetry"                       
-                [panelOpenState]="panelOpenState">
+                [panelOpenState]="panelOpenState">getLo
             </id-name-header-component>
         </mat-panel-title>        
     </mat-expansion-panel-header>
 
     <div class="formSpacer"></div>
 
-    <mat-form-field color="accent">
-      <mat-label attr.for="telemetry_displayName_{{formIndex}}">Display Name <span *ngIf="displayNameLocaleControl.value">({{displayNameLocaleControl.value}})</span></mat-label>
-      <input matInput id="telemetry_displayName_{{formIndex}}" type="text" [formControl]="displayNameControl" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-  
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="telemetry_description_{{formIndex}}">Description <span *ngIf="descriptionLocaleControl.value">({{descriptionLocaleControl.value}})</span></mat-label>
-        <input matInput id="telemetry_description_{{formIndex}}" type="text" [formControl]="descriptionControl" />
-    </mat-form-field>    
-    <span class="formSpacer"></span>
+    <ng-container [formGroup]="localizationFormGroup">
+      <mat-form-field color="accent">
+        <mat-label attr.for="telemetry_displayName_{{formIndex}}">Display Name ({{getDisplayNameLocale()}})</mat-label>
+        <input matInput id="telemetry_displayName_{{formIndex}}" type="text" formControlName="displayName" />
+      </mat-form-field>
+      <span class="formSpacer"></span>
+
+      <mat-form-field color="accent" style="width: 420px">
+          <mat-label attr.for="telemetry_description_{{formIndex}}">Description ({{getDescriptionLocale()}})</mat-label>
+          <input matInput id="telemetry_description_{{formIndex}}" type="text" formControlName="description" />
+      </mat-form-field>    
+      <span class="formSpacer"></span>
+    </ng-container>
   
     <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
       <mat-icon>language</mat-icon> Localize

@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizationComponent } from '../localization/LocalizationComponent';
 import { LocalizationService } from '../services/localization/localization.service';
+import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'relationship-definition',
@@ -19,8 +20,8 @@ export class RelationshipComponent extends LocalizationComponent implements OnIn
   private _editorService: EditorService
   private _localizationService: LocalizationService
 
-  constructor(editorService: EditorService, localizationService: LocalizationService) { 
-    super();
+  constructor(editorService: EditorService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder) { 
+    super(settingsService, formBuilder);
     this._editorService = editorService;
     this._localizationService = localizationService;
   }
