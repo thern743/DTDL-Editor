@@ -1,0 +1,17 @@
+<ng-container [formGroup]="localizationFormGroup">
+  <mat-form-field color="accent">
+    <mat-label attr.for="capability_displayName_{{formIndex}}">Display Name ({{getLocaleFor("displayNameLocale")}})</mat-label>
+    <input matInput id="capability_displayName_{{formIndex}}" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+
+  <mat-form-field color="accent" style="width: 420px">
+      <mat-label attr.for="capability_description_{{formIndex}}">Description ({{getLocaleFor("descriptionLocale")}})</mat-label>
+      <input matInput id="capability_description_{{formIndex}}" type="text" formControlName="description" />
+  </mat-form-field>    
+  <span class="formSpacer"></span>
+</ng-container>
+
+<button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+  <mat-icon>language</mat-icon> Localize
+</button>

@@ -15,23 +15,7 @@
 
     <div class="formSpacer"></div>
 
-    <ng-container [formGroup]="localizationFormGroup">
-      <mat-form-field color="accent">
-        <mat-label attr.for="property_displayName_{{formIndex}}">Display Name ({{getLocaleFor("displayNameLocale")}})</mat-label>
-        <input matInput id="property_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-      </mat-form-field>
-      <span class="formSpacer"></span>
-
-      <mat-form-field color="accent" style="width: 420px">
-          <mat-label attr.for="property_description_{{formIndex}}">Description ({{getLocaleFor("descriptionLocale")}})</mat-label>
-          <input matInput id="property_description_{{formIndex}}" type="text" formControlName="description" />
-      </mat-form-field>    
-      <span class="formSpacer"></span>
-    </ng-container>
-
-    <button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
-      <mat-icon>language</mat-icon> Localize
-    </button>
+    <display-name-description [formIndex]="formIndex[1]" [formGroupControl]="property"></display-name-description>
     <br/>
 
     <mat-form-field color="accent">

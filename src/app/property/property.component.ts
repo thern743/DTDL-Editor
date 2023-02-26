@@ -162,8 +162,4 @@ export class PropertyComponent extends LocalizationComponent implements OnInit {
     if(this.schemaFormControl)
       this._schemaService.openSchemaEditor(this.property.form, this.schemaFormControl)
   }
-
-  public openDisplayNameDescriptionLanguageMap(): void {
-    this._localizationService.openDisplayNameDescriptionLanguageMap(this.property, this.updateLocalizationCallback.bind(this));
-  }
 }

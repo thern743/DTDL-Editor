@@ -24,10 +24,12 @@ export class LocalizedDisplayNameDescriptionComponent implements OnInit {
 
   }
 
-  public buildFormResult(): FormGroup {
-    return this._formBuilder.group({
+  public toFormGroup(): FormGroup {
+    const formGroup = this._formBuilder.group({
       displayName: this.displayNameComponent?.getData(),
       description: this.descriptionComponent?.getData()
     });
+
+    return formGroup;
   }
 }
