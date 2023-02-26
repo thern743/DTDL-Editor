@@ -28,4 +28,9 @@ export class LocalizedDisplayNameDescriptionComponent implements OnInit {
 
     return formGroup;
   }
+
+  public addLocale(): void {
+    this.displayNameComponent.addLocale();
+    this.descriptionComponent.addLocale();
+  }
 }
