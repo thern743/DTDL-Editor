@@ -11,13 +11,9 @@ export class LocalizedDisplayNameDescriptionComponent implements OnInit {
   @ViewChild("displayNameComponent") displayNameComponent!: LanguageMapComponent;
   @ViewChild("descriptionComponent") descriptionComponent!: LanguageMapComponent;
   private _formBuilder: FormBuilder;
-  public displayNameFormArray: FormArray;
-  public descriptionFormArray: FormArray;
 
   constructor(formBuilder: FormBuilder) { 
     this._formBuilder = formBuilder;
-    this.displayNameFormArray = this._formBuilder.array([]);
-    this.descriptionFormArray = this._formBuilder.array([]);
   }
 
   public ngOnInit(): void {

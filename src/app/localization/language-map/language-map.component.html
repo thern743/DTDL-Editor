@@ -1,28 +1,39 @@
-<ng-container *ngFor="let languageMap of languageMapFormArray.controls; let i = index">
-  <ng-container [formGroup]="getFormGroup(languageMap)">
-    <mat-form-field color="accent">
-      <mat-label attr.for="locale">Locale</mat-label>
-      <mat-select matNativeControl id="locale" formControlName="key">
-        <mat-option [value]="locale" *ngFor="let locale of getLocales()">{{locale}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
+ <ng-container *ngIf="localize">
+  <ng-container *ngFor="let languageMap of languageMapFormArray.controls; let i = index">
+    <ng-container [formGroup]="getFormGroup(languageMap)">
+      <mat-form-field color="accent">
+        <mat-label attr.for="locale">Locale</mat-label>
+        <mat-select matNativeControl id="locale" formControlName="key">
+          <mat-option [value]="locale" *ngFor="let locale of getLocales()">{{locale}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span class="formSpacer"></span>
 
-    <mat-form-field color="accent" [style]="style">
-      <mat-label [attr.for]="id">{{labelText}}</mat-label>
-      <input matInput [id]="id" type="text" formControlName="value" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+      <mat-form-field color="accent" [style]="style">
+        <mat-label [attr.for]="id">{{labelText}}</mat-label>
+        <input matInput [id]="id" type="text" formControlName="value" />
+      </mat-form-field>
+      <span class="formSpacer"></span>
 
-    <button mat-raised-button color="primary" (click)="removeLocale(i)">
-      <mat-icon>delete</mat-icon>Remove
-    </button>
-    <br />
+      <button mat-raised-button color="primary" (click)="removeLocale(i)">
+        <mat-icon>delete</mat-icon>Remove
+      </button>
+      <br />
+    </ng-container>
   </ng-container>
+
+  <div>
+    <button mat-raised-button color="primary" (click)="addLocale()">
+      <mat-icon>add_circle</mat-icon> Add Locale
+    </button>
+  </div>
 </ng-container>
 
-<div>
-  <button mat-raised-button color="primary" (click)="addLocale()">
-    <mat-icon>add_circle</mat-icon> Add Locale
-  </button>
-</div>
+<ng-container *ngIf="!localize">
+  <ng-container [formGroup]="getFormGroup(languageMapFormArray.controls[0])">
+    <mat-form-field color="accent" [style]="style">
+      <mat-label [attr.for]="id">{{labelText}} ({{getLocaleFor(0)}})</mat-label>
+      <input matInput [id]="id" type="text" formControlName="value" />
+    </mat-form-field>
+  </ng-container>
+</ng-container>

@@ -10,6 +10,7 @@ import { LocalizationService } from 'src/app/services/localization/localization.
   styleUrls: ['./language-map.component.scss']
 })
 export class LanguageMapComponent implements OnInit {
+  @Input() public localize: boolean = true;
   @Input() public id!: string;
   @Input() public labelText!: string;
   @Input() public control!: FormControl;
@@ -75,5 +76,9 @@ export class LanguageMapComponent implements OnInit {
 
   public getData(): FormArray {
     return this.languageMapFormArray;
+  }
+
+  public getLocaleFor(index: number): string {
+    return this.languageMapFormArray.at(index).get("key")?.value;
   }
 }

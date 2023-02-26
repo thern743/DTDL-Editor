@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
+import { AbstractFormControl } from 'src/app/formControls/AbstractFormControl';
 import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localization/localized-display-name-description/localized-display-name-description.component';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class LocalizationService {
     return this._locales;
   }
 
-  public openDisplayNameDescriptionLanguageMap(parentForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, callback: Function): void {
+  public openDisplayNameDescriptionLanguageMap(parentFormGroup: FormGroup, callback: Function): void {
     this._dialog
     .open(LocalizedDisplayNameDescriptionComponent,
       {
@@ -34,7 +33,7 @@ export class LocalizationService {
     .afterClosed()
     .subscribe((result: FormGroup) => {
       if (result) {
-        callback(parentForm, result);
+        callback(parentFormGroup, result);
       }
     });
   }
