@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { FormArray, FormGroup } from "@angular/forms";
-import { LocalizationFormControl } from "src/app/formControls/LocalizationFormControl";
+import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { LocalizationService } from "src/app/services/localization/localization.service";
 import { LanguageMapComponent } from "../language-map/language-map.component";
 
@@ -15,50 +14,71 @@ export class DisplayNameDescriptionComponent implements OnInit {
   public displayNameFormArray!: FormArray;
   public descriptionFormArray!: FormArray;
   @Input() parentFormGroup!: FormGroup;
-  @Input() public formGroupControl!: LocalizationFormControl;
   @Input() public formIndex: number = -1;
   private _localizationService: LocalizationService;
+  private _formBuilder: FormBuilder;
 
-  constructor(localizationService: LocalizationService) {
-    // TODO: Add FormBuilder
+  constructor(localizationService: LocalizationService, formBuilder: FormBuilder) {
     this._localizationService = localizationService;
+    this._formBuilder = formBuilder;
   }
 
   public ngOnInit(): void {
-    this.formGroupControl.subscribeModelToForm(this.formGroupControl.form);
   }
 
-  public textChange($event: any): void {
-    console.log("Changing...");
-    const formGroup = this.toFormGroup();
-    this.updateLocalizationCallback(this.parentFormGroup, formGroup);
+  public displayNameTextChange($event: any): void {
+    let result = this.displayNameToFormGroup();
+    this.updateLocalizationInternal(this.parentFormGroup, result, "displayName");
   }
 
-  public toFormGroup(): FormGroup {
-    const formGroup = this.formGroupControl.formBuilder.group({
+  public descriptionTextChange($event: any): void {
+    let result = this.descriptionToFormGroup();
+    this.updateLocalizationInternal(this.parentFormGroup, result, "description");
+  }
+
+  public displayNameToFormGroup(): FormGroup {
+    const formGroup = this._formBuilder.group({
       displayName: this.displayNameComponent?.getData(),
+    });
+
+    return formGroup;
+  }
+
+  public descriptionToFormGroup(): FormGroup {
+    const formGroup = this._formBuilder.group({
       description: this.descriptionComponent?.getData()
     });
 
     return formGroup;
   }
 
-  protected updateLocalizationCallback(parentFormGroup: FormGroup, result: FormGroup): void {
-    if(!result) return;
-    
+  protected updateLocalizationCallback(parentFormGroup: FormGroup, formGroup: FormGroup): void {
+    if(!parentFormGroup || !formGroup) return;
+
     let controlName = "displayName";
-    this.displayNameFormArray = result.get(controlName) as FormArray;
-    const displayNameValues = this.displayNameComponent.updateLocalization(result, controlName);
-    parentFormGroup.get(controlName)?.setValue(displayNameValues);
+    this.displayNameFormArray = formGroup.get(controlName) as FormArray;
+    this.updateLocalizationInternal(parentFormGroup, formGroup, controlName);
 
     controlName = "description";
-    this.descriptionFormArray = result.get(controlName) as FormArray;
-    const descriptionValues = this.descriptionComponent.updateLocalization(result, controlName);
-    parentFormGroup.get(controlName)?.setValue(descriptionValues);
+    this.descriptionFormArray = formGroup.get(controlName) as FormArray;
+    this.updateLocalizationInternal(parentFormGroup, formGroup, controlName);
   }
 
-  public getLocaleFor(controlName: string): string {
-    return this.formGroupControl.form.get(controlName)?.value;
+  private updateLocalizationInternal(parentFormGroup: FormGroup, formGroup: FormGroup, controlName: string): void {
+    const newValues = this.updateLocalizationValues(formGroup, controlName);
+    parentFormGroup.get(controlName)?.setValue(newValues);
+  }
+
+  public updateLocalizationValues(formGroup: FormGroup, controlName: string): any {
+    const controlArray = formGroup.get(controlName) as FormArray;
+
+    let newValues: any = {};
+
+    controlArray.controls.forEach((control: AbstractControl) => {
+      newValues[control.get("key")?.value] = control.get("value")?.value;
+    });
+
+    return newValues;
   }
 
   public openDisplayNameDescriptionLanguageMap(): void {

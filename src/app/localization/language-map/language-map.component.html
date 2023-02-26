@@ -26,7 +26,7 @@
 
 <!-- Displayed when on a main component. Only show the first/default localized strings. -->
 <ng-container *ngIf="!localize">
-  <ng-container [formGroup]="getFormGroup(languageMapFormArray.controls[0])">
+  <ng-container [formGroup]="getFormGroup(languageMapFormArray.at(0))">
     <mat-form-field color="accent" [style]="style">
       <mat-label [attr.for]="id">{{labelText}} ({{getLocaleFor(0)}})</mat-label>
       <input matInput [id]="id" type="text" formControlName="value" (change)="textChange($event)" />

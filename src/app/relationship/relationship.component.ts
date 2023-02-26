@@ -2,12 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
-import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { ValidationService } from '../services/validation/validation-service.service';
-import { LocalizationService } from '../services/localization/localization.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'relationship-definition',
@@ -19,13 +14,10 @@ export class RelationshipComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
-  public displayNameDescription!: LocalizationFormControl;
   private _editorService: EditorService
 
-  constructor(editorService: EditorService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService) {
     this._editorService = editorService;
-    const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
  
   public ngOnInit(): void { 

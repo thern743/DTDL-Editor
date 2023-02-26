@@ -12,7 +12,6 @@ export class LanguageMapComponent implements OnInit {
   @Input() public localize: boolean = true;
   @Input() public id!: string;
   @Input() public labelText!: string;
-  @Input() public control!: FormControl;
   @Input() public languageMapFormArray!: FormArray;
   @Input() public style: string = "width: 200px";
   @Output() public change = new EventEmitter<any>();
@@ -83,17 +82,5 @@ export class LanguageMapComponent implements OnInit {
 
   public getLocaleFor(index: number): string {
     return this.languageMapFormArray.at(index).get("key")?.value;
-  }
-
-  public updateLocalization(result: FormGroup, formControlName: string): any {
-    const controlArray = result.get(formControlName) as FormArray;
-
-    let newValues: any = {};
-
-    controlArray.controls.forEach((control: AbstractControl) => {
-      newValues[control.get("key")?.value] = control.get("value")?.value;
-    });
-
-    return newValues;
   }
 }

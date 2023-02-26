@@ -7,11 +7,7 @@ import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilit
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
-import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { ValidationService } from '../services/validation/validation-service.service';
-import { LocalizationService } from '../services/localization/localization.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'property-definition',
@@ -24,18 +20,15 @@ export class PropertyComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  public displayNameDescription!: LocalizationFormControl;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
   public dialog: MatDialog;
 
-  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
     this.dialog = dialog;
-    const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
 
   public ngOnInit(): void {

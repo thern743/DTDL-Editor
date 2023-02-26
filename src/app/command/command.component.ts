@@ -1,16 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
-import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
-import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'command-definition',
@@ -21,7 +18,6 @@ export class CommandComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public command!: CommandCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
-  public displayNameDescription!: LocalizationFormControl;
   private _schemaService: SchemaService
   private _validationService: ValidationService;
   public requestFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
@@ -30,12 +26,10 @@ export class CommandComponent implements OnInit {
   public responseTextControl: FormControl = new FormControl();
   public dialog: MatDialog;
 
-  constructor(schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(schemaService: SchemaService, validationService: ValidationService, dialog: MatDialog) {
     this._schemaService = schemaService;
     this._validationService = validationService;
     this.dialog = dialog;
-    const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
 
   public ngOnInit(): void {
