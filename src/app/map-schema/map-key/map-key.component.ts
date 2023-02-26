@@ -23,6 +23,6 @@ export class MapKeyComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.mapKey.subscribeModelToForm();
+    this.mapKey.subscribeModelToForm(this.mapKey.form);
   }
 }

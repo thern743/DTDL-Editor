@@ -2,25 +2,18 @@
   (closed)="panelOpenState = false" [formGroup]="command.form">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <id-name-header-component [formIndex]="formIndex[1]" [formGroupControl]="command"
-        [panelOpenState]="panelOpenState">
+      <id-name-header-component 
+          [formIndex]="formIndex[1]" 
+          [formGroupControl]="command"
+          [panelOpenState]="panelOpenState">
       </id-name-header-component>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
   <div class="formSpacer"></div>
 
-  <mat-form-field color="accent">
-    <mat-label attr.for="command_displayName_{{formIndex}}">Display Name</mat-label>
-    <input matInput id="command_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-  </mat-form-field>
-  <span class="formSpacer"></span>
-
-  <mat-form-field color="accent" style="width: 420px">
-    <mat-label attr.for="command_description_{{formIndex}}">Description</mat-label>
-    <input matInput id="command_description_{{formIndex}}" type="text" formControlName="description" />
-  </mat-form-field>
-  <br />
+  <display-name-description [formIndex]="formIndex[1]" [parentFormGroup]="command.form"></display-name-description>
+  <br/>
 
   <mat-form-field color="accent">
     <mat-label attr.for="command_request_{{formIndex}}">Request</mat-label>

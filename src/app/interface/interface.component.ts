@@ -29,7 +29,7 @@ export class InterfaceComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.interface.subscribeModelToForm();
+    this.interface.subscribeModelToForm(this.interface.form);
   }
 
   public getContents(): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {

@@ -1,15 +1,15 @@
 import { OnDestroy } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
 
 // TypedJSON requires a concrete type to work.
-export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapabilityModel>
-    implements ICapabilityFormControl<TCapabilityDto>
+export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel>
+    implements ICapabilityFormControl<TCapabilityModel>
 {    
     public formBuilder: FormBuilder;
-    public model!: TCapabilityDto;  
+    public model!: TCapabilityModel;  
     public form!: FormGroup;
     private _subscriptions: Subscription[];
     
@@ -20,28 +20,34 @@ export abstract class AbstractCapabilityFormControl<TCapabilityDto extends ICapa
         this._subscriptions = new Array<Subscription>();       
     }
   
-    public abstract toFormGroup(): FormGroup;
+    public abstract toFormGroup(model: TCapabilityModel): FormGroup;
 
-    public subscribeModelToForm(): void {
+    public subscribeModelToForm(formGroup: FormGroup): void {
       console.groupCollapsed("Creating Subscriptions");
 
-      Object.keys(this.form.controls).forEach(key => {        
+      Object.keys(formGroup.controls).forEach(key => {        
         console.debug(key);
 
-        let control = this.form.controls[key];        
+        let control = formGroup.controls[key];        
         
-        if(!(control instanceof FormArray)) {          
-          let subscription = control.valueChanges.subscribe(
-            (value) => {
-              (<any>this.model)[key] = value;
-          }, (error: Error) => {
-              console.error("Error in subscription: %o", error);
-          });
-          this._subscriptions.push(subscription);
+        if(control instanceof FormGroup) {
+          this.subscribeModelToForm(control);
+        } else if(!(control instanceof FormArray)) {          
+          this.createSubscription(control, key);
         }
       });
 
       console.groupEnd();
+    }
+
+    private createSubscription(control: AbstractControl, key: string): void {
+      let subscription = control.valueChanges.subscribe(
+        (value) => {
+          (<any>this.model)[key] = value;
+      }, (error: Error) => {
+          console.error("Error in subscription: %o", error);
+      });
+      this._subscriptions.push(subscription);
     }
 
     // TODO: Each form component should implement OnDestroy lifecycle hook

@@ -16,13 +16,14 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
   constructor(model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
     this._validationService = validationService;
-    this.properties = new Array<PropertyCapabilityFormControl>();
-    this.mapModelSubProperties(model);
     this.model = model;
-    this.form = this.toFormGroup();
+    this.properties = this.mapModelSubProperties(model);
+    this.form = this.toFormGroup(model);
   }
   
-  private mapModelSubProperties(model: RelationshipCapabilityModel): void {
+  private mapModelSubProperties(model: RelationshipCapabilityModel): Array<PropertyCapabilityFormControl> {
+    let properties = new Array<PropertyCapabilityFormControl>();
+
     model.properties.map((capability: ICapabilityModel) => {
       let formControl!: ICapabilityFormControl<ICapabilityModel>;
             
@@ -38,23 +39,25 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
           break;
       }
 
-      this.properties.push(<PropertyCapabilityFormControl>formControl);
+      properties.push(<PropertyCapabilityFormControl>formControl);
     });
+
+    return properties;
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: RelationshipCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      type: [model.type],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // Relationship specific
-      name: [this.model.name],
-      minMultiplicity: [this.model.minMultiplicity],
-      maxMultiplicity: [this.model.maxMultiplicity],
-      target: [this.model.target],
-      writable: [this.model.writable],
+      name: [model.name],
+      minMultiplicity: [model.minMultiplicity],
+      maxMultiplicity: [model.maxMultiplicity],
+      target: [model.target],
+      writable: [model.writable],
       properties: this.getCapabilityFormArray()
     });
 
@@ -65,7 +68,8 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     let formArray = this.formBuilder.array([]);
     
     this.properties.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
-      formArray.push(capability.toFormGroup());
+      const formGroup = capability.toFormGroup(capability.model);
+      formArray.push(formGroup);
     });
 
     return formArray;

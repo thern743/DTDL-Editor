@@ -27,7 +27,7 @@ export class EnumValueComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.enumValue.subscribeModelToForm();
+    this.enumValue.subscribeModelToForm(this.enumValue.form);
   }
 
   private getSchemaTypes(): Array<string> {

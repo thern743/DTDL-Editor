@@ -15,7 +15,7 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
   public name!: string;
 
-  @jsonMember(AnyT, { deserializer: AbstractCapabilityModel.schemaDeserializer })
+  @jsonMember(AnyT, { deserializer: ComponentCapabilityModel.schemaDeserializer })
   public schema!: string | AbstractSchemaModel;  
 
   constructor(id: string) {
@@ -26,6 +26,7 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
     return ComponentComponent;
   }
 
+  // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;
     let schema = typeof value === 'string' ? value : value.type;

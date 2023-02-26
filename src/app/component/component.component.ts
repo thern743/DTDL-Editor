@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'component-definition',
@@ -12,14 +13,19 @@ export class ComponentComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public component!: ComponentCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
+  private _editorService: EditorService;
 
-  constructor(public editorService: EditorService) { 
-    
+  constructor(editorService: EditorService) {
+    this._editorService = editorService;
+  }
+  
+  public ngOnInit(): void { 
+    this.component.subscribeModelToForm(this.component.form);
+    this.syncHeaderFields();    
   }
 
-  public ngOnInit(): void { 
-    this.component.subscribeModelToForm();
-    this.syncHeaderFields();    
+  public getFormControl(name: string): FormControl {
+    return this.component.form.get(name) as FormControl;
   }
 
   public syncHeaderFields() {
@@ -33,5 +39,9 @@ export class ComponentComponent implements OnInit {
     name?.valueChanges.subscribe(value => {
       name.setValue(value, { emitEvent: false })
     });    
+  }
+
+  public filterInterfacesForExtends(interfaceId: string): Array<string> {
+    return this._editorService.filterInterfacesForExtends(interfaceId);
   }
 }

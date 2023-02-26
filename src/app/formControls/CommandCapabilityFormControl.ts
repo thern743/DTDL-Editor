@@ -10,21 +10,21 @@ export class CommandCapabilityFormControl extends AbstractCapabilityFormControl<
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
-    this.form = this.toFormGroup();
+    this.form = this.toFormGroup(model);
   }
     
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: CommandCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      type: [model.type],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // Command specific
-      name: [this.model.name],
-      commandType: [this.model.commandType],
-      request: [this.model.request],
-      response: [this.model.response]
+      name: [model.name],
+      commandType: [model.commandType],
+      request: [model.request],
+      response: [model.response]
     });
 
     return form;

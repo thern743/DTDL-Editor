@@ -1,6 +1,5 @@
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { ObjectSchemaCapabilityModel } from '../../models/schemas/ObjectSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
@@ -16,27 +15,30 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
-    this.fields = new Array<FieldCapabilityFormControl>();
-    this.mapModelSubProperties(model);
     this.model = model;
-    this.form = this.toFormGroup();
+    this.fields = this.mapModelSubProperties(model);
+    this.form = this.toFormGroup(model);
   }
 
-  private mapModelSubProperties(model: ObjectSchemaCapabilityModel): void {
+  private mapModelSubProperties(model: ObjectSchemaCapabilityModel): Array<FieldCapabilityFormControl> {
+    let fields = new Array<FieldCapabilityFormControl>()
+
     model.fields?.map((model: FieldCapabilityModel) => {
       let formControl: FieldCapabilityFormControl = new FieldCapabilityFormControl(model, this.formBuilder, this._validationService);
-      this.fields.push(formControl);
+      fields.push(formControl);
     });
+
+    return fields;
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: ObjectSchemaCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // Object Schema Specific
-      fields: this.formBuilder.array([...this.model.fields])
+      fields: this.formBuilder.array([...model.fields])
     });
 
     return form;

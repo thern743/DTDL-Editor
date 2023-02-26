@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
+import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
 
 // TODO: Add option to disable automatically filling in default DTMI from SettingsService
@@ -13,11 +14,13 @@ import { SettingsService } from '../services/settings/settings.service';
 })
 export class SettingsComponent implements OnInit {
   private _settingsService: SettingsService;
+  private _localizationService: LocalizationService;
   private _formBuilder: FormBuilder;
   public form!: FormGroup;
 
-  constructor(settingsService: SettingsService, formBuilder: FormBuilder) {
+  constructor(settingsService: SettingsService, localizationService: LocalizationService, formBuilder: FormBuilder) {
     this._settingsService = settingsService;
+    this._localizationService = localizationService;
     this._formBuilder = formBuilder;
   }
 
@@ -31,8 +34,14 @@ export class SettingsComponent implements OnInit {
       scheme: [this._settingsService.editorSettings.scheme],
       fullPath: [this._settingsService.editorSettings.fullPath],
       version: [this._settingsService.editorSettings.version],
-      baseDtmi: [this._settingsService.editorSettings.baseDtmi]
+      baseDtmi: [this._settingsService.editorSettings.baseDtmi],
+      locale: [this._settingsService.editorSettings.locale],
+      dtdlVersion: [this._settingsService.editorSettings.dtdlVersion]
     });
+  }
+
+  public getLocales(): Array<string> {
+    return this._localizationService.getLocales();
   }
 
   public save() {

@@ -20,10 +20,10 @@ export class PropertyComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  public dialog: MatDialog;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
+  public dialog: MatDialog;
 
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
@@ -32,7 +32,7 @@ export class PropertyComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.property.subscribeModelToForm();
+    this.property.subscribeModelToForm(this.property.form);
     this.syncHeaderFields();
     this.setSchemaAndSemanticTypeDropDowns();
   }
@@ -81,6 +81,10 @@ export class PropertyComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  public getFormControl(name: string): FormControl {
+    return this.property.form.get(name) as FormControl;
   }
 
   // TODO: Passing validSchemaTypes to the FilterPipe doesn't get re-evaluated on changes

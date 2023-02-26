@@ -29,21 +29,22 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
     return TelemetryComponent;
   }
 
+  // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : params.fallback(value, AbstractSchemaModel).type;
+    let schema = typeof value === 'string' ? value : value.type;
 
     switch (schema?.toLocaleLowerCase()) {
-      // case "array":
-      //   return params.fallback(value, ArraySchemaCapabilityModel);
-      // case "map":
-      //   return params.fallback(value, MapSchemaCapabilityModel);
-      // case "enum":
-      //   return params.fallback(value, EnumSchemaCapabilityModel);
-      // case "object":
-      //   return params.fallback(value, ObjectSchemaCapabilityModel);
-      // default:
-      //   return value;
+      case "array":
+        return params.fallback(value, ArraySchemaCapabilityModel);
+      case "map":
+        return params.fallback(value, MapSchemaCapabilityModel);
+      case "enum":
+        return params.fallback(value, EnumSchemaCapabilityModel);
+      case "object":
+        return params.fallback(value, ObjectSchemaCapabilityModel);
+      default:
+        return value;
     }
   }
 }

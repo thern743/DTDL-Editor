@@ -35,7 +35,7 @@ export class MapSchemaComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.map.subscribeModelToForm();
+    this.map.subscribeModelToForm(this.map.form);
   }
 
   private mapKeysAndValues(): void {

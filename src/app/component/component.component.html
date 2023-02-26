@@ -15,22 +15,13 @@
     
     <div class="formSpacer"></div>
 
-    <mat-form-field color="accent">
-        <mat-label attr.for="component_displayName_{{formIndex}}">Display Name</mat-label>
-        <input matInput id="component_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="component_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="component_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
+    <display-name-description [formIndex]="formIndex[1]" [parentFormGroup]="component.form"></display-name-description>
     <br/>
 
     <mat-form-field color="accent">
         <mat-label attr.for="component_schema_{{formIndex}}">Schema</mat-label>
         <mat-select matNativeControl id="component_schema_{{formIndex}}" formControlName="schema">
-            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+            <mat-option *ngFor="let interfaceId of filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
         </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>

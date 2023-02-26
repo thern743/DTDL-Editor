@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -10,21 +10,21 @@ export class PropertyCapabilityFormControl extends AbstractCapabilityFormControl
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
-    this.form = this.toFormGroup();
+    this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: PropertyCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      type: [model.type],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // Property specific
-      name: [this.model.name],
-      schema: [this.model.schema],
-      unit: [this.model.unit],
-      writable: [this.model.writable]
+      name: [model.name],
+      schema: [model.schema],
+      unit: [model.unit],
+      writable: [model.writable]
     });
 
     return form;

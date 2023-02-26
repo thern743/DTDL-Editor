@@ -1,35 +1,57 @@
 <div class="content-container" [formGroup]="form">
-    <h1>Settings</h1>
-    <mat-divider></mat-divider>
-    <br/>
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="context">Context</mat-label>
-        <input matInput id="context" type="text" formControlName="context" />
-    </mat-form-field>
-    <br/>
+  <h1>Settings</h1>
 
-    <mat-form-field color="accent" style="width: 75px">
-      <mat-label for="scheme">Scheme</mat-label>
-      <input matInput id="scheme" type="text" formControlName="scheme" readonly />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+  <mat-divider></mat-divider>
+  <br />
 
-    <mat-form-field color="accent" style="width: 320px">
-      <mat-label for="fullPath">Path</mat-label>
-      <input matInput id="fullPath" type="text" formControlName="fullPath" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
+  <h2>Default Values</h2>
 
-    <mat-form-field color="accent" style="width: 75px">
-      <mat-label for="version">Version</mat-label>
-      <input matInput id="version" type="text" formControlName="version" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="context">Context</mat-label>
+    <input matInput id="context" type="text" formControlName="context" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="baseDtmi">Base DTMI</mat-label>
-        <input matInput id="baseDtmi" type="text" formControlName="baseDtmi" readonly />
-    </mat-form-field>
-    <br/>
-    <button mat-raised-button color="primary" class="browse-button" (click)="save()">Save</button>
+  <mat-form-field color="accent" style="width: 75px">
+    <mat-label for="scheme">Scheme</mat-label>
+    <input matInput id="scheme" type="text" formControlName="scheme" readonly />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+
+  <mat-form-field color="accent" style="width: 320px">
+    <mat-label for="fullPath">Path</mat-label>
+    <input matInput id="fullPath" type="text" formControlName="fullPath" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+
+  <mat-form-field color="accent" style="width: 75px">
+    <mat-label for="version">Version</mat-label>
+    <input matInput id="version" type="text" formControlName="version" />
+  </mat-form-field>
+  <br />
+
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="baseDtmi">Base DTMI</mat-label>
+    <input matInput id="baseDtmi" type="text" formControlName="baseDtmi" readonly />
+  </mat-form-field>
+  <br />
+
+  <mat-form-field color="accent">
+    <mat-label attr.for="locale">Locale</mat-label>
+    <mat-select matNativeControl id="locale" formControlName="locale">
+      <mat-option [value]="locale" *ngFor="let locale of getLocales()">{{locale}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+
+  <mat-form-field color="accent">
+    <mat-label attr.for="dtdlVersion">DTDL Version</mat-label>
+    <mat-select matNativeControl id="dtdlVersion" formControlName="dtdlVersion">
+      <mat-option value="2">DTDLv2</mat-option>
+      <mat-option value="3">DTDLv3</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+
+  <button mat-raised-button color="primary" class="browse-button" (click)="save()">Save</button>
 </div>

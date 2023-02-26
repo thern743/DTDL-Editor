@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
-import { ICapabilityFormControl } from '../formControls/ICapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'relationship-definition',
@@ -15,13 +14,14 @@ export class RelationshipComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
+  private _editorService: EditorService
 
-  constructor(public editorService: EditorService) { 
-    
+  constructor(editorService: EditorService) {
+    this._editorService = editorService;
   }
  
   public ngOnInit(): void { 
-    this.relationship.subscribeModelToForm();
+    this.relationship.subscribeModelToForm(this.relationship.form);
     this.syncHeaderFields();    
   }
 
@@ -38,7 +38,19 @@ export class RelationshipComponent implements OnInit {
     });    
   }
 
+  public getFormControl(name: string): FormControl {
+    return this.relationship.form.get(name) as FormControl;
+  }
+
   public getProperties(): Array<PropertyCapabilityFormControl> {
     return (<RelationshipCapabilityFormControl>this.relationship).properties;
+  }
+
+  public filterInterfacesForExtends(interfaceId: string): Array<string> {
+    return this._editorService.filterInterfacesForExtends(interfaceId)
+  }
+
+  public addPropertyToRelationship(relationship: RelationshipCapabilityFormControl) {
+    this._editorService.addPropertyToRelationship(relationship);
   }
 }

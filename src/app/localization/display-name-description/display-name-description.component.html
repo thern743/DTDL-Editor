@@ -1,0 +1,7 @@
+<language-map #displayNameComponent [localize]="false" labelText="Display Name" [languageMapFormArray]="displayNameFormArray" (change)="displayNameTextChange($event)"></language-map>
+<span class="formSpacer"></span>
+<language-map #descriptionComponent [localize]="false" labelText="Description" [languageMapFormArray]="descriptionFormArray" (change)="descriptionTextChange($event)" style="width: 420px"></language-map>
+<span class="formSpacer"></span>
+<button mat-raised-button color="primary" (click)="openDisplayNameDescriptionLanguageMap()">
+  <mat-icon>language</mat-icon> Localize
+</button>

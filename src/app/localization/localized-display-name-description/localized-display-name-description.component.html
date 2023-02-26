@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-title>Display Name</mat-card-title>
+  <language-map #displayNameComponent [localize]="true" labelText="Display Name"></language-map>
+</mat-card>
+<br />
+
+<mat-card>
+  <mat-card-title>Description</mat-card-title>
+  <language-map #descriptionComponent [localize]="true" labelText="Description" style="width: 420px"></language-map>
+</mat-card>
+
+<mat-action-row>
+  <button mat-raised-button color="primary" [mat-dialog-close]="toFormGroup()">
+    <mat-icon>save</mat-icon> Save
+  </button>
+  <span class="spacer"></span>
+  <button mat-raised-button color="primary" (click)="addLocale()">
+    <mat-icon>add_circle</mat-icon> Add Locale
+  </button>
+</mat-action-row>

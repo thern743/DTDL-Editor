@@ -25,6 +25,6 @@ export class PrimitiveSchemaComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.primitive.subscribeModelToForm();
+    this.primitive.subscribeModelToForm(this.primitive.form);
   }
 }

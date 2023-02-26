@@ -20,10 +20,10 @@ export class TelemetryComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  public dialog: MatDialog;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
+  public dialog: MatDialog;
 
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
@@ -32,7 +32,7 @@ export class TelemetryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.telemetry.subscribeModelToForm();
+    this.telemetry.subscribeModelToForm(this.telemetry.form);
     this.syncHeaderFields();
     this.setSchemaAndSemanticTypeDropDowns();
   }
@@ -81,6 +81,10 @@ export class TelemetryComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  public getFormControl(name: string): FormControl {
+    return this.telemetry.form.get(name) as FormControl;
   }
 
   public validSchemaTypes = (schemaType: string): boolean => {

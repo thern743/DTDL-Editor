@@ -26,7 +26,7 @@ export class ObjectSchemaComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.object.subscribeModelToForm();
+    this.object.subscribeModelToForm(this.object.form);
   }
 
   public getFields(): Array<FieldCapabilityFormControl> { 

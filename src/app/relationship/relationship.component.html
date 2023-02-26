@@ -15,16 +15,7 @@
     
     <div class="formSpacer"></div>
 
-    <mat-form-field color="accent">
-        <mat-label attr.for="relationship_displayName_{{formIndex}}">Display Name</mat-label>
-        <input matInput id="relationship_displayName_{{formIndex}}" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label attr.for="relationship_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="relationship_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
+    <display-name-description [formIndex]="formIndex[1]" [parentFormGroup]="relationship.form"></display-name-description>
     <br/>
 
     <mat-form-field color="accent">
@@ -42,7 +33,7 @@
     <mat-form-field color="accent">
         <mat-label attr.for="relationship_target_{{formIndex}}">Target</mat-label>
         <mat-select matNativeControl id="relationship_target_{{formIndex}}" formControlName="target">
-            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+            <mat-option *ngFor="let interfaceId of filterInterfacesForExtends(interfaceId)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
         </mat-select>
     </mat-form-field>    
     <br/>
@@ -72,7 +63,7 @@
     </mat-card>
 
     <mat-action-row>
-        <button mat-raised-button color="primary" (click)="editorService.addPropertyToRelationship(relationship)">
+        <button mat-raised-button color="primary" (click)="addPropertyToRelationship(relationship)">
             <mat-icon>add_circle</mat-icon>&nbsp;New Property
         </button>        
     </mat-action-row>

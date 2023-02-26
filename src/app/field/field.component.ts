@@ -31,7 +31,7 @@ export class FieldComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.field.subscribeModelToForm();
+    this.field.subscribeModelToForm(this.field.form);
   }
 
   private getSchemaTypes(): Array<string> {

@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
@@ -21,13 +21,13 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
     super(formBuilder);
     this._validationService = validationService;
-    this.mapModelSubProperties(model);
     this.model = model;
-    this.form = this.toFormGroup();
+    this.contents = this.mapModelSubProperties(model);
+    this.form = this.toFormGroup(model);
   }
 
-  private mapModelSubProperties(interfaceModel: InterfaceCapabilityModel): void {
-    this.contents = new Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>();
+  private mapModelSubProperties(interfaceModel: InterfaceCapabilityModel): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {
+    let contents = new Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>();
 
     interfaceModel.contents?.map((subModel: AbstractCapabilityModel) => {
       let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
@@ -54,8 +54,10 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
           throw new Error("Invalid capability type '" + subModel.type + "'");          
       }
 
-      this.contents.push(formControl);
+      contents.push(formControl);
     });
+
+    return contents;
   }
   
   get commands(): AbstractCapabilityModel[] {        
@@ -83,16 +85,16 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     return capabilities;
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: InterfaceCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      type: [model.type],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // Interface specific
-      context: [this.model.context],
-      extends: [this.model.extends],
+      context: [model.context],
+      extends: [model.extends],
       contents: this.getCapabilityFormArray()
     });
 
@@ -103,7 +105,8 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     let formArray = this.formBuilder.array([]);
     
     this.contents.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
-      formArray.push(capability.toFormGroup());
+      const formGroup = capability.toFormGroup(capability.model);
+      formArray.push(formGroup);
     });
 
     return formArray;

@@ -5,6 +5,6 @@ export interface ICapabilityFormControl<TCapabilityModel extends ICapabilityMode
     formBuilder: FormBuilder;
     model: TCapabilityModel;  
     form: FormGroup;   
-    toFormGroup(): FormGroup;
-    subscribeModelToForm(): void;
+    toFormGroup(model: TCapabilityModel): FormGroup;
+    subscribeModelToForm(formGroup: FormGroup): void;
 }

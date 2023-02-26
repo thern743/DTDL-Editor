@@ -20,15 +20,10 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
-        this.mapModelSubProperties(model);
         this.model = model;        
-        this.form = this.toFormGroup();          
+        this.form = this.toFormGroup(model);          
     }
-
-    private mapModelSubProperties(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>): void { 
-      // NO OP     
-    } 
-    
+   
     public setMapKeyForm(form: MapKeyFormControl): void {      
       this.mapKey = form;        
       this.model.setKey(this.mapKey.model);
@@ -39,15 +34,15 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
       this.model.setValue(this.mapValue.model);
     }
 
-    public toFormGroup(): FormGroup { 
+    public toFormGroup(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>): FormGroup { 
         let form =  this.formBuilder.group({
-            id: [this.model.id, [this._validationService.validDtmi()]],
-            displayName: [this.model.displayName], 
-            comment: [this.model.comment],
-            description: [this.model.description],
+            id: [model.id, [this._validationService.validDtmi()]],
+            displayName: [model.displayName], 
+            comment: [model.comment],
+            description: [model.description],
             // Map specific
-            mapKey: this.formBuilder.group({ name: [], schema: [] }), //[]
-            mapValue: this.formBuilder.group({ name: [], schema: [] }) //[]
+            mapKey: this.formBuilder.group({ name: [], schema: [] }),
+            mapValue: this.formBuilder.group({ name: [], schema: [] })
         });
 
         return form;

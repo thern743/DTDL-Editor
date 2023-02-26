@@ -29,7 +29,7 @@ export class EnumSchemaComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.enum.subscribeModelToForm();
+    this.enum.subscribeModelToForm(this.enum.form);
   }
 
   public addValue(): void {

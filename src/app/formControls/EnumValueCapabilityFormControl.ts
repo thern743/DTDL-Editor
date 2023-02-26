@@ -13,18 +13,18 @@ export class EnumValueCapabilityFormControl extends AbstractCapabilityFormContro
         this._validationService = validationService;
         this.dialog = dialog;
         this.model = model;
-        this.form = this.toFormGroup();
+        this.form = this.toFormGroup(model);
     }
 
-    public toFormGroup(): FormGroup {
+    public toFormGroup(model: EnumValueCapabilityModel): FormGroup {
         let form =  this.formBuilder.group({
-            id: [this.model.id, [this._validationService.validDtmi()]],
-            displayName: [this.model.displayName], 
-            comment: [this.model.comment],
-            description: [this.model.description],
+            id: [model.id, [this._validationService.validDtmi()]],
+            displayName: [model.displayName], 
+            comment: [model.comment],
+            description: [model.description],
             // Enum specific
-            name: [this.model.name],
-            enumValue: [this.model.enumValue]
+            name: [model.name],
+            enumValue: [model.enumValue]
         });
 
         return form;
