@@ -2,16 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor-service.service'
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
-import { LocalizationService } from '../services/localization/localization.service';
-import { LocalizationComponent } from '../localization/LocalizationComponent';
-import { SettingsService } from '../services/settings/settings.service';
 
 
 @Component({
@@ -19,26 +16,21 @@ import { SettingsService } from '../services/settings/settings.service';
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.scss']
 })
-export class CommandComponent extends LocalizationComponent implements OnInit {
+export class CommandComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public command!: CommandCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   public dialog: MatDialog;
-  private _editorService: EditorService;
   private _schemaService: SchemaService
   private _validationService: ValidationService;
-  private _localizationService: LocalizationService;
   public requestFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public responseFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public requestTextControl: FormControl = new FormControl();
   public responseTextControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
-    super(settingsService, formBuilder);
-    this._editorService = editorService;
+  constructor(schemaService: SchemaService, validationService: ValidationService, dialog: MatDialog) {
     this._schemaService = schemaService;
     this._validationService = validationService;
-    this._localizationService = localizationService;
     this.dialog = dialog;
   }
 
@@ -115,9 +107,5 @@ export class CommandComponent extends LocalizationComponent implements OnInit {
           this.responseTextControl.setValue(result.model.name);
         }
       });
-  }
-
-  public openDisplayNameDescriptionLanguageMap(): void {
-    this._localizationService.openDisplayNameDescriptionLanguageMap(this.command, this.updateLocalizationCallback.bind(this));
   }
 }

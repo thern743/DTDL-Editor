@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, Input, Output, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LanguageMap } from '../models/LanguageMap';
-import { LocalizationService } from '../services/localization/localization.service';
+import { LanguageMap } from 'src/app/models/LanguageMap';
+import { LocalizationService } from 'src/app/services/localization/localization.service';
 
 @Component({
   selector: 'language-map',

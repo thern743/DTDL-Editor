@@ -3,7 +3,6 @@ import { RelationshipCapabilityFormControl } from '../formControls/RelationshipC
 import { EditorService } from '../services/editor/editor-service.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { LocalizationComponent } from '../localization/LocalizationComponent';
 import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
 
@@ -12,18 +11,15 @@ import { SettingsService } from '../services/settings/settings.service';
   templateUrl: './relationship.component.html',
   styleUrls: ['./relationship.component.scss']
 })
-export class RelationshipComponent extends LocalizationComponent implements OnInit {
+export class RelationshipComponent implements OnInit {
   @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService
-  private _localizationService: LocalizationService
 
-  constructor(editorService: EditorService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder) { 
-    super(settingsService, formBuilder);
+  constructor(editorService: EditorService, localizationService: LocalizationService) { 
     this._editorService = editorService;
-    this._localizationService = localizationService;
   }
  
   public ngOnInit(): void { 
@@ -58,9 +54,5 @@ export class RelationshipComponent extends LocalizationComponent implements OnIn
 
   public addPropertyToRelationship(relationship: RelationshipCapabilityFormControl) {
     this._editorService.addPropertyToRelationship(relationship);
-  }
-
-  public openDisplayNameDescriptionLanguageMap(): void {
-    this._localizationService.openDisplayNameDescriptionLanguageMap(this.relationship, this.updateLocalizationCallback.bind(this));
   }
 }

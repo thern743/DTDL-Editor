@@ -7,33 +7,28 @@ import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilit
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { LocalizationService } from '../services/localization/localization.service';
-import { LocalizationComponent } from '../localization/LocalizationComponent';
-import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'property-definition',
   templateUrl: './property.component.html',
   styleUrls: ['./property.component.scss']
 })
-export class PropertyComponent extends LocalizationComponent implements OnInit {
+export class PropertyComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public property!: PropertyCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  private _localizationService: LocalizationService;
   public dialog: MatDialog;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
-    super(settingsService, formBuilder);
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
-    this._localizationService = localizationService;
     this.dialog = dialog;
   }
 

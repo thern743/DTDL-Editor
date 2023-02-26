@@ -7,33 +7,28 @@ import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabil
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { LocalizationComponent } from '../localization/LocalizationComponent';
+import { FormControl } from '@angular/forms';
 import { LocalizationService } from '../services/localization/localization.service';
-import { SettingsService } from '../services/settings/settings.service';
 
 @Component({
   selector: 'telemetry-definition',
   templateUrl: './telemetry.component.html',
   styleUrls: ['./telemetry.component.scss']
 })
-export class TelemetryComponent extends LocalizationComponent implements OnInit {
+export class TelemetryComponent implements OnInit {
   @Input() public formIndex!: [number, number];
   @Input() public telemetry!: TelemetryCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  private _localizationService: LocalizationService;
   public dialog: MatDialog;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
 
-  constructor(editorService: EditorService, schemaService: SchemaService, localizationService: LocalizationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
-    super(settingsService, formBuilder);
+  constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
-    this._localizationService = localizationService;
     this.dialog = dialog;
   }
 
@@ -158,9 +153,5 @@ export class TelemetryComponent extends LocalizationComponent implements OnInit 
   public openSchemaEditor(): void {
     if (this.schemaFormControl)
       this._schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
-  }
-
-  public openDisplayNameDescriptionLanguageMap(): void {
-    this._localizationService.openDisplayNameDescriptionLanguageMap(this.telemetry, this.updateLocalizationCallback.bind(this));
   }
 }

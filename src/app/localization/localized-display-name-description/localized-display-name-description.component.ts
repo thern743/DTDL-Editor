@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { LanguageMapComponent } from '../../language-map/language-map.component';
+import { LanguageMapComponent } from '../language-map/language-map.component';
 
 @Component({
   selector: 'localized-display-name-description',

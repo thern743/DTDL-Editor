@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
-import { LanguageMapComponent } from 'src/app/language-map/language-map.component';
 import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localization/localized-display-name-description/localized-display-name-description.component';
 import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
