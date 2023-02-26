@@ -28,7 +28,6 @@ export class LocalizationService {
     this._dialog
     .open(LocalizedDisplayNameDescriptionComponent,
       {
-        data: true,
         height: "80%",
         width: "60%"
       })

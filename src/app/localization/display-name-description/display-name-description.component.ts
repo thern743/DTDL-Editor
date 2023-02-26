@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { LocalizationFormControl } from "src/app/formControls/LocalizationFormControl";
-import { LanguageMap } from "src/app/models/LanguageMap";
 import { LocalizationService } from "src/app/services/localization/localization.service";
 import { LanguageMapComponent } from "../language-map/language-map.component";
 
@@ -30,27 +29,16 @@ export class DisplayNameDescriptionComponent implements OnInit {
 
   protected updateLocalizationCallback(parentFormGroup: FormGroup, result: FormGroup): void {
     if(!result) return;
-    this.displayNameFormArray = result.get("displayName") as FormArray;
-    this.updateLocalization(parentFormGroup, result, "displayName");
+    
+    let controlName = "displayName";
+    this.displayNameFormArray = result.get(controlName) as FormArray;
+    const displayNameValues = this.displayNameComponent.updateLocalization(result, controlName);
+    parentFormGroup.get(controlName)?.setValue(displayNameValues);
 
-    this.descriptionFormArray = result.get("description") as FormArray;
-    this.updateLocalization(parentFormGroup, result, "description");
-  }
-  
-  private updateLocalization(
-    parentFormGroup: FormGroup, 
-    result: FormGroup, 
-    formControlName: string
-  ): void {
-    const controlArray = result.get(formControlName) as FormArray;
-
-    let newValues: any = {};
-
-    controlArray.controls.forEach((control: AbstractControl) => {
-      newValues[control.get("key")?.value] = control.get("value")?.value;
-    });
-
-    parentFormGroup.get(formControlName)?.setValue(newValues);
+    controlName = "description";
+    this.descriptionFormArray = result.get(controlName) as FormArray;
+    const descriptionValues = this.descriptionComponent.updateLocalization(result, controlName);
+    parentFormGroup.get(controlName)?.setValue(descriptionValues);
   }
 
   public getLocaleFor(controlName: string): string {

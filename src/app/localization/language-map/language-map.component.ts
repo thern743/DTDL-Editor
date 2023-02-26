@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LanguageMap } from 'src/app/models/LanguageMap';
 import { LocalizationService } from 'src/app/services/localization/localization.service';
 
@@ -16,7 +15,6 @@ export class LanguageMapComponent implements OnInit {
   @Input() public control!: FormControl;
   @Input() public languageMapFormArray!: FormArray;
   @Input() public style: string = "width: 200px";
-  @Inject(MAT_DIALOG_DATA) public data?: boolean = false;
   private _localizationService: LocalizationService;
   private _formBuilder: FormBuilder
 
@@ -80,5 +78,17 @@ export class LanguageMapComponent implements OnInit {
 
   public getLocaleFor(index: number): string {
     return this.languageMapFormArray.at(index).get("key")?.value;
+  }
+
+  public updateLocalization(result: FormGroup, formControlName: string): any {
+    const controlArray = result.get(formControlName) as FormArray;
+
+    let newValues: any = {};
+
+    controlArray.controls.forEach((control: AbstractControl) => {
+      newValues[control.get("key")?.value] = control.get("value")?.value;
+    });
+
+    return newValues;
   }
 }
