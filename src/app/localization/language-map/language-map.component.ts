@@ -27,7 +27,7 @@ export class LanguageMapComponent implements OnInit {
 
   public ngOnInit(): void {
     const languageMap = new LanguageMap();
-    languageMap.key = "en-US";
+    languageMap.key = this._localizationService.defaultLocale;
     languageMap.value = "";
 
     const languageMapArray = new Array<LanguageMap>(languageMap);
@@ -63,7 +63,7 @@ export class LanguageMapComponent implements OnInit {
 
   public addLocale(): void {
     const languageMap = new LanguageMap();
-    languageMap.key = "en-US";
+    languageMap.key = this._localizationService.defaultLocale;
     languageMap.value = "";
 
     const formGroup = this.toFormGroup(languageMap);

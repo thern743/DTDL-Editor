@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractFormControl } from 'src/app/formControls/AbstractFormControl';
 import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localization/localized-display-name-description/localized-display-name-description.component';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalizationService {
+  public defaultLocale: string;
   private _locales!: Array<string>;
   private _dialog: MatDialog
 
-  constructor(dialog: MatDialog) { 
+  constructor(settingsService: SettingsService, dialog: MatDialog) { 
+    this.defaultLocale = settingsService.editorSettings.locale;
     this._dialog = dialog;
   }
 
@@ -27,8 +29,8 @@ export class LocalizationService {
     .open(LocalizedDisplayNameDescriptionComponent,
       {
         data: true,
-        height: "60%",
-        width: "75%"
+        height: "80%",
+        width: "60%"
       })
     .afterClosed()
     .subscribe((result: FormGroup) => {

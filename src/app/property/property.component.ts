@@ -10,9 +10,8 @@ import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
 import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { LanguageMap } from '../models/LanguageMap';
 import { ValidationService } from '../services/validation/validation-service.service';
-import { SettingsService } from '../services/settings/settings.service';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'property-definition',
@@ -31,12 +30,12 @@ export class PropertyComponent implements OnInit {
   public semanticTypeDropDownControl: FormControl = new FormControl();
   public dialog: MatDialog;
 
-  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
     this.dialog = dialog;
     const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, settingsService, validationService, formBuilder);
+    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
 
   public ngOnInit(): void {

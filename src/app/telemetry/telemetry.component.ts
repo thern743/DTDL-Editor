@@ -11,7 +11,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
 import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { SettingsService } from '../services/settings/settings.service';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'telemetry-definition',
@@ -30,12 +30,12 @@ export class TelemetryComponent implements OnInit {
   public semanticTypeDropDownControl: FormControl = new FormControl();
   public dialog: MatDialog;
 
-  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
     this._editorService = editorService;
     this._schemaService = schemaService;
     this.dialog = dialog;
     const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, settingsService, validationService, formBuilder);
+    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
 
   public ngOnInit(): void {

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service'
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -11,7 +10,7 @@ import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormCon
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { LocalizationFormControl } from '../formControls/LocalizationFormControl';
 import { DisplayNameDescriptionLanguageMap } from '../models/DisplayNameDescriptionLanguageMap';
-import { SettingsService } from '../services/settings/settings.service';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'command-definition',
@@ -31,12 +30,12 @@ export class CommandComponent implements OnInit {
   public responseTextControl: FormControl = new FormControl();
   public dialog: MatDialog;
 
-  constructor(schemaService: SchemaService, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(schemaService: SchemaService, validationService: ValidationService, localizationService: LocalizationService, formBuilder: FormBuilder, dialog: MatDialog) {
     this._schemaService = schemaService;
     this._validationService = validationService;
     this.dialog = dialog;
     const model = new DisplayNameDescriptionLanguageMap();
-    this.displayNameDescription = new LocalizationFormControl(model, settingsService, validationService, formBuilder);
+    this.displayNameDescription = new LocalizationFormControl(model, localizationService, validationService, formBuilder);
   }
 
   public ngOnInit(): void {

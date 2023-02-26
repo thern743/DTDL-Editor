@@ -1,3 +1,4 @@
+ <!-- Displayed when opened in the modal window used for localization. -->
  <ng-container *ngIf="localize">
   <ng-container *ngFor="let languageMap of languageMapFormArray.controls; let i = index">
     <ng-container [formGroup]="getFormGroup(languageMap)">
@@ -23,6 +24,7 @@
   </ng-container>
 </ng-container>
 
+<!-- Displayed when on a main component. Only show the first/default localized strings. -->
 <ng-container *ngIf="!localize">
   <ng-container [formGroup]="getFormGroup(languageMapFormArray.controls[0])">
     <mat-form-field color="accent" [style]="style">
