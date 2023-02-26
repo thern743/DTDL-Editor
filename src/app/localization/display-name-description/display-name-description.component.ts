@@ -20,11 +20,27 @@ export class DisplayNameDescriptionComponent implements OnInit {
   private _localizationService: LocalizationService;
 
   constructor(localizationService: LocalizationService) {
+    // TODO: Add FormBuilder
     this._localizationService = localizationService;
   }
 
   public ngOnInit(): void {
     this.formGroupControl.subscribeModelToForm(this.formGroupControl.form);
+  }
+
+  public textChange($event: any): void {
+    console.log("Changing...");
+    const formGroup = this.toFormGroup();
+    this.updateLocalizationCallback(this.parentFormGroup, formGroup);
+  }
+
+  public toFormGroup(): FormGroup {
+    const formGroup = this.formGroupControl.formBuilder.group({
+      displayName: this.displayNameComponent?.getData(),
+      description: this.descriptionComponent?.getData()
+    });
+
+    return formGroup;
   }
 
   protected updateLocalizationCallback(parentFormGroup: FormGroup, result: FormGroup): void {

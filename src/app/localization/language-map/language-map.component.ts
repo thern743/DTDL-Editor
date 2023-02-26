@@ -15,6 +15,7 @@ export class LanguageMapComponent implements OnInit {
   @Input() public control!: FormControl;
   @Input() public languageMapFormArray!: FormArray;
   @Input() public style: string = "width: 200px";
+  @Output() public change = new EventEmitter<any>();
   private _localizationService: LocalizationService;
   private _formBuilder: FormBuilder
 
@@ -30,6 +31,10 @@ export class LanguageMapComponent implements OnInit {
 
     const languageMapArray = new Array<LanguageMap>(languageMap);
     this.languageMapFormArray = this.toFormArray(languageMapArray);
+  }
+
+  public textChange($event: any): void {
+    this.change.emit($event);
   }
 
   private toFormArray(values: Array<LanguageMap>): FormArray {

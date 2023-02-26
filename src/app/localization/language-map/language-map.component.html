@@ -29,7 +29,7 @@
   <ng-container [formGroup]="getFormGroup(languageMapFormArray.controls[0])">
     <mat-form-field color="accent" [style]="style">
       <mat-label [attr.for]="id">{{labelText}} ({{getLocaleFor(0)}})</mat-label>
-      <input matInput [id]="id" type="text" formControlName="value" />
+      <input matInput [id]="id" type="text" formControlName="value" (change)="textChange($event)" />
     </mat-form-field>
   </ng-container>
 </ng-container>
