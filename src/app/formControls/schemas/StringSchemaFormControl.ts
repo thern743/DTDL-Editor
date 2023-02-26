@@ -13,15 +13,15 @@ export class StringSchemaFormControl extends AbstractCapabilityFormControl<Strin
     this._validationService = validationService;
     this.dialog = dialog;
     this.model = model;
-    this.form = this.toFormGroup();
+    this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: StringSchemaCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description]
+      id: [model.id, [this._validationService.validDtmi()]],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description]
     });
 
     return form;

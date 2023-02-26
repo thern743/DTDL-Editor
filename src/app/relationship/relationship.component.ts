@@ -27,7 +27,7 @@ export class RelationshipComponent extends LocalizationComponent implements OnIn
   }
  
   public ngOnInit(): void { 
-    this.relationship.subscribeModelToForm();
+    this.relationship.subscribeModelToForm(this.relationship.form);
     this.syncHeaderFields();    
   }
 

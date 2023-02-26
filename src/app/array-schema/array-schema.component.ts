@@ -31,7 +31,7 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.array.subscribeModelToForm();
+    this.array.subscribeModelToForm(this.array.form);
   }
 
   private getSchemaTypes(): Array<string> {

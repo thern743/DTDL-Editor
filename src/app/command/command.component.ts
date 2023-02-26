@@ -43,7 +43,7 @@ export class CommandComponent extends LocalizationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.command.subscribeModelToForm();
+    this.command.subscribeModelToForm(this.command.form);
     this.syncHeaderFields();
     this.setPayloadControls();
   }

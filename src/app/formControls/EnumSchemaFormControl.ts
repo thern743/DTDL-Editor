@@ -18,27 +18,29 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
-        this.mapModelSubProperties(model);        
         this.model = model; 
-        this.form = this.toFormGroup();          
+        this.enumValues = this.mapModelSubProperties(model);        
+        this.form = this.toFormGroup(model);          
     }
 
-    private mapModelSubProperties(enumModel: EnumSchemaCapabilityModel): void {  
-      this.enumValues = new Array<EnumValueCapabilityFormControl>();
+    private mapModelSubProperties(enumModel: EnumSchemaCapabilityModel): Array<EnumValueCapabilityFormControl> {  
+      let enumValues = new Array<EnumValueCapabilityFormControl>();
 
       enumModel.enumValues?.map((subModel: EnumValueCapabilityModel) => {
-        this.enumValues.push(new EnumValueCapabilityFormControl(subModel, this.formBuilder, this._validationService, this.dialog));
+        enumValues.push(new EnumValueCapabilityFormControl(subModel, this.formBuilder, this._validationService, this.dialog));
       });
+
+      return enumValues;
     }
     
-    public toFormGroup(): FormGroup { 
+    public toFormGroup(model: EnumSchemaCapabilityModel): FormGroup { 
         let form =  this.formBuilder.group({
-            id: [this.model.id, [this._validationService.validDtmi()]],
-            displayName: [this.model.displayName], 
-            comment: [this.model.comment],
-            description: [this.model.description],
+            id: [model.id, [this._validationService.validDtmi()]],
+            displayName: [model.displayName], 
+            comment: [model.comment],
+            description: [model.description],
             // Enum specific
-            valueSchema: [this.model.valueSchema],
+            valueSchema: [model.valueSchema],
             enumValues: this.formBuilder.array(this.enumValues)            
         });
 

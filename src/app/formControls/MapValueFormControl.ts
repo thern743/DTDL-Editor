@@ -13,24 +13,19 @@ export class MapValueFormControl extends AbstractCapabilityFormControl<MapValueC
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
-        this.mapModelSubProperties(model);
         this.model = model;
-        this.form = this.toFormGroup();
+        this.form = this.toFormGroup(model);
     }
 
-    private mapModelSubProperties(model: MapValueCapabilityModel<AbstractSchemaModel>): void {
-      // NOOP
-    } 
-
-    public toFormGroup(): FormGroup {
+    public toFormGroup(model: MapValueCapabilityModel<AbstractSchemaModel>): FormGroup {
         let form =  this.formBuilder.group({
-            id: [this.model.id, [this._validationService.validDtmi()]],
-            displayName: [this.model.displayName], 
-            comment: [this.model.comment],
-            description: [this.model.description],
+            id: [model.id, [this._validationService.validDtmi()]],
+            displayName: [model.displayName], 
+            comment: [model.comment],
+            description: [model.description],
             // MapValue specific
-            name: [this.model.name],
-            schema: [this.model.schema]
+            name: [model.name],
+            schema: [model.schema]
         });
 
         return form;

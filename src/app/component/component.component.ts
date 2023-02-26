@@ -26,7 +26,7 @@ export class ComponentComponent extends LocalizationComponent implements OnInit 
   }
 
   public ngOnInit(): void { 
-    this.component.subscribeModelToForm();
+    this.component.subscribeModelToForm(this.component.form);
     this.syncHeaderFields();    
   }
 

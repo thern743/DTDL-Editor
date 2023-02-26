@@ -38,7 +38,7 @@ export class PropertyComponent extends LocalizationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.property.subscribeModelToForm();
+    this.property.subscribeModelToForm(this.property.form);
     this.syncHeaderFields();
     this.setSchemaAndSemanticTypeDropDowns();
   }

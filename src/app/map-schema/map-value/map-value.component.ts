@@ -23,6 +23,6 @@ export class MapValueComponent implements OnInit {
   }
 
   public  ngOnInit(): void {
-    this.mapValue.subscribeModelToForm();
+    this.mapValue.subscribeModelToForm(this.mapValue.form);
   }
 }

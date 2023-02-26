@@ -10,19 +10,19 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
-    this.form = this.toFormGroup();
+    this.form = this.toFormGroup(model);
   }
   
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: ComponentCapabilityModel): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      name: [this.model.name],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      type: [model.type],
+      displayName: [model.displayName],
+      name: [model.name],
+      comment: [model.comment],
+      description: [model.description],
       // Component specific
-      schema: [this.model.schema]
+      schema: [model.schema]
     });
 
     return form;

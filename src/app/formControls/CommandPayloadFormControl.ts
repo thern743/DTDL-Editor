@@ -13,19 +13,19 @@ export class CommandPayloadFormControl extends AbstractCapabilityFormControl<Com
     this.dialog = dialog;
     this._validationService = validationService;
     this.model = model;
-    this.form = this.toFormGroup();
+    this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(model: CommandPayload): FormGroup {
     let form = this.formBuilder.group({
-      id: [this.model.id, [this._validationService.validDtmi()]],
-      name: [this.model.name],
-      type: [this.model.type],
-      displayName: [this.model.displayName],
-      comment: [this.model.comment],
-      description: [this.model.description],
+      id: [model.id, [this._validationService.validDtmi()]],
+      name: [model.name],
+      type: [model.type],
+      displayName: [model.displayName],
+      comment: [model.comment],
+      description: [model.description],
       // CommandPayload specific
-      schema: [this.model.schema]
+      schema: [model.schema]
     });
 
     return form;

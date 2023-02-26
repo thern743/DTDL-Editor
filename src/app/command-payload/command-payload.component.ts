@@ -33,7 +33,7 @@ export class CommandPayloadComponent implements OnInit {
   }
 
   public ngOnInit(): void { 
-    this.commandPayload.subscribeModelToForm();
+    this.commandPayload.subscribeModelToForm(this.commandPayload.form);
     this.setSchemaDropDown();
   }
 

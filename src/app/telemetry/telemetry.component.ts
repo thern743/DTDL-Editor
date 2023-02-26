@@ -38,7 +38,7 @@ export class TelemetryComponent extends LocalizationComponent implements OnInit 
   }
 
   public ngOnInit(): void {
-    this.telemetry.subscribeModelToForm();
+    this.telemetry.subscribeModelToForm(this.telemetry.form);
     this.syncHeaderFields();
     this.setSchemaAndSemanticTypeDropDowns();
   }
