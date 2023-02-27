@@ -38,7 +38,7 @@ export class MapSchemaFactory {
 
   public static formFactory(): (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapSchemaFormControl {
     return (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
-      new MapSchemaFormControl(model, formBuilder, validationService, dialog);
+      new MapSchemaFormControl(model, validationService, formBuilder, dialog);
   }  
 
   public static mapValueModelFactory(): (dtmi: string, model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>) => MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>> {

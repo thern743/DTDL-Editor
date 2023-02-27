@@ -1,8 +1,5 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember } from "typedjson";
-import { MapValueComponent } from "../map-schema/map-value/map-value.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 export class MapValueCapabilityModel<TCapabilityModel extends AbstractSchemaModel> extends AbstractSchemaModel {
@@ -18,9 +15,5 @@ export class MapValueCapabilityModel<TCapabilityModel extends AbstractSchemaMode
     //       This is not stable pattern and should be revamped to something more proper.
     super(id, schemaModel.type[0]);
     this.schema = schemaModel;
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return MapValueComponent;
   }
 }

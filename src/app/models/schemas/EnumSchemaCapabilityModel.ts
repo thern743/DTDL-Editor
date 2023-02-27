@@ -1,6 +1,4 @@
-import { ComponentType } from "@angular/cdk/portal";
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
-import { EnumSchemaComponent } from "../../enum-schema/enum-schema.component";
 import { AbstractSchemaModel } from "../AbstractSchemaModel";
 import { EnumValueCapabilityModel } from "../EnumValueCapabilityModel";
 
@@ -15,9 +13,5 @@ export class EnumSchemaCapabilityModel extends AbstractSchemaModel {
   constructor(id: string) {
     super(id, "Enum");
     this.enumValues = new Array<EnumValueCapabilityModel>();
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return EnumSchemaComponent;
   }
 }

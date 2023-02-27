@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
@@ -19,7 +19,7 @@ export class CommandPayloadComponent implements OnInit {
   private _schemaService: SchemaService;
   private _editorService: EditorService;
   public panelOpenState = true;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+  public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
   public schemaDropDownControl: FormControl = new FormControl();
 
   constructor(
@@ -50,7 +50,7 @@ export class CommandPayloadComponent implements OnInit {
     return this._schemaService.getSchemaTypes();
   }
 
-  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+  public compareSchemas = (model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean => {
     return this._schemaService.compareSchemas(model1, model2)
   }
 

@@ -29,10 +29,6 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
     this.contents = new Array<AbstractCapabilityModel>();
   }
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return InterfaceComponent;
-  }
-
   get commands(): ICapabilityModel[] {        
     return this.capabilityByType("Command");
   }

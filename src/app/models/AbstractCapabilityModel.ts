@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
@@ -26,8 +25,6 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
         this.id = id;
         this.type = new Array<string>(type);
     }
-
-    public abstract resolveSchemaComponentType(): ComponentType<any>;
 
     public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
       if (typeof json === 'string')

@@ -1,7 +1,5 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
-import { FieldComponent } from "../field/field.component";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
@@ -20,10 +18,6 @@ export class FieldCapabilityModel extends AbstractCapabilityModel {
 
   constructor(id: string) {
     super(id, "Field");
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return FieldComponent;
   }
 
   // Must exist on the class being deserialized.

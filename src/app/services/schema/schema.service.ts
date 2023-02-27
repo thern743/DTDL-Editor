@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
 import { EnumValueCapabilityModel } from '../../models/EnumValueCapabilityModel';
@@ -15,6 +14,9 @@ import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 import { SettingsService } from '../settings/settings.service';
 import { EnumSchemaFormControl } from '../../formControls/schemas/EnumSchemaFormControl';
 import { ObjectSchemaFormControl } from '../../formControls/schemas/ObjectSchemaFormControl';
+import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
+import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
+import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +34,14 @@ export class SchemaService implements IFormFactory, IModelFactory {
     this.dialog = dialog;
   }
 
-  public createModel(type: string, name: string): AbstractCapabilityModel | undefined {
+  public createModel(type: string, name: string): AbstractSchemaModel | undefined {
     const modelFunc = SchemaFactory.createModel(type, name);
     if (modelFunc == undefined) return;
     const model = modelFunc(this._settingsService.buildDtmi(`New_${type}_${name}`));
     return model;
   }
 
-  public createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined {
+  public createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined {
     const formControlFunc = SchemaFactory.createFormControl(type, name);
     if (formControlFunc == undefined) return;
     const model = this.createModel(type, name);
@@ -72,15 +74,15 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return ["array", "enum", "map", "object"].indexOf(schema?.toLowerCase()) >= 0 ? SchemaTypeEnum.Complex : SchemaTypeEnum.Primitive;
   }
 
-  public compareSchemas(model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean {
+  public compareSchemas(model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean {
     return model1?.type && model2?.type ? model1.type[0].toLowerCase() === model2.type[0].toLowerCase() : model1 === model2;
   }
 
-  public getFormsRegistry(): Map<string, Map<string, (model: AbstractCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractCapabilityModel>>> {
+  public getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
     return SchemaFactory.getFormsRegistry();
   }
 
-  public getModelsRegistry(): Map<string, Map<string, (id: string) => AbstractCapabilityModel>> {
+  public getModelsRegistry(): Map<string, Map<string, (id: string) => AbstractSchemaModel>> {
     return SchemaFactory.getModelsRegistry();
   }
 
@@ -98,26 +100,34 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return schemaTypes;
   }
 
-  public openSchemaEditor(parentForm: FormGroup, schemaFormControl: AbstractCapabilityFormControl<AbstractCapabilityModel>): void {
-    var schemaModel = schemaFormControl?.model;
-    const componentType = schemaModel?.resolveSchemaComponentType();
+  public openSchemaEditor(parentForm: FormGroup, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+    var schemaType = schemaFormControl?.model?.type.toLowerCase();
+
+    const modalParameters = new SchemaModalParameters("TODO HERE", schemaType, schemaFormControl);
 
     this.dialog
-      .open(componentType,
+      .open(SchemaModalComponent,
         {
-          data: schemaFormControl,
+          data: modalParameters,
           height: "60%",
           width: "50%"
         })
       .afterClosed()
-      .subscribe((result: FormGroup) => {
+      .subscribe((result: any) => {
         if (result) {
           // TODO: Parent form's schema attribute name is hard-coded  
           //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
           //      so if these parent controls call `openSchemaEditor()` their schema values
           //      will not be set correctly. Right now this doesn't seem to be an issue since
           //      none of the affected types are calling `openSchemaEditor()`;
-          parentForm?.get("schema")?.setValue(result);
+
+          if(result.interfaceSchema) {
+            console.log("Should be interface schema!");
+          } else {
+            console.log("NOT interface schema!");
+          }
+
+          parentForm?.get("schema")?.setValue(result.model);
         }
       });
   }

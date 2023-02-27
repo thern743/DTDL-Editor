@@ -34,10 +34,6 @@ export class CommandPayload extends AbstractSchemaModel {
     super(id, "CommandPayload");
   }
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return CommandPayloadComponent;
-  }
-
   // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;

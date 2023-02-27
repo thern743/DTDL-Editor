@@ -8,6 +8,7 @@ import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilit
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { FormControl } from '@angular/forms';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'property-definition',
@@ -20,7 +21,7 @@ export class PropertyComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel> | undefined;
   public schemaDropDownControl: FormControl = new FormControl();
   public semanticTypeDropDownControl: FormControl = new FormControl();
   public dialog: MatDialog;
@@ -130,7 +131,7 @@ export class PropertyComponent implements OnInit {
     return false;
   }
 
-  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+  public compareSchemas = (model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean => {
     return this._schemaService.compareSchemas(model1, model2)
   }
 

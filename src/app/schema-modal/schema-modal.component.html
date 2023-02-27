@@ -1,1 +1,30 @@
-<p>schema-modal works!</p>
+<h1 mat-dialog-title>
+{{title}} Schema Definition
+</h1>
+<mat-dialog-content>
+  <mat-card>
+    <mat-slide-toggle matNativeControl id="interfaceSchema" [formControl]="interfaceSchemaControl">Make interface schema</mat-slide-toggle>
+  </mat-card>
+  <br />
+
+  <ng-container [ngSwitch]="schemaType">
+    <ng-container *ngSwitchCase="'array'">
+      <array-schema [array]="getArrayData()"></array-schema>
+    </ng-container>
+    <ng-container *ngSwitchCase="'enum'">
+      <enum-schema [enum]="getEnumData()"></enum-schema>
+    </ng-container>
+    <ng-container *ngSwitchCase="'map'">
+      <map-schema [map]="getMapData()"></map-schema>
+    </ng-container>
+    <ng-container *ngSwitchCase="'object'">
+      <object-schema [object]="getObjectData()"></object-schema>
+    </ng-container>
+  </ng-container>
+
+  <mat-action-row>
+    <button mat-raised-button color="primary" [mat-dialog-close]="getData()">
+      <mat-icon>save</mat-icon> Save
+    </button>
+  </mat-action-row>
+</mat-dialog-content>

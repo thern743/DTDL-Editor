@@ -37,7 +37,7 @@ export class ObjectSchemaFactory {
 
   public static formFactory(): (model: ObjectSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => ObjectSchemaFormControl {
     return (model: ObjectSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
-      new ObjectSchemaFormControl(model, formBuilder, validationService, dialog);
+      new ObjectSchemaFormControl(model, validationService, formBuilder, dialog);
   }
 
   public static mapValueModelFactory(): (dtmi: string, model: ObjectSchemaCapabilityModel) => MapValueCapabilityModel<ObjectSchemaCapabilityModel> {

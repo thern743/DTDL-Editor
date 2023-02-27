@@ -41,7 +41,7 @@ export class ArraySchemaFactory {
 
   public static formFactory(): (model: ArraySchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => ArraySchemaFormControl {
     return (model: ArraySchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
-      new ArraySchemaFormControl(model, formBuilder, validationService, dialog);
+      new ArraySchemaFormControl(model, validationService, formBuilder, dialog);
   }
 
   public static mapValueModelFactory(): (dtmi: string, model: ArraySchemaCapabilityModel) => MapValueCapabilityModel<ArraySchemaCapabilityModel> {

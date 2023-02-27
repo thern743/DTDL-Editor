@@ -25,10 +25,6 @@ export class TelemetryCapabilityModel extends AbstractCapabilityModel {
     super(id, "Telemetry");
   }
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return TelemetryComponent;
-  }
-
   // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;

@@ -1,4 +1,3 @@
-import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { ISchemaModel } from "./interfaces/ISchemaModel";
@@ -25,8 +24,6 @@ export abstract class AbstractSchemaModel implements ISchemaModel {
         this.id = id;
         this.type = type;
     }
-
-    public abstract resolveSchemaComponentType(): ComponentType<any>;
 
     public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
       if (typeof json === 'string')

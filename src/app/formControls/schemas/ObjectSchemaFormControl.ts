@@ -11,7 +11,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
   public dialog: MatDialog;
   public fields!: Array<FieldCapabilityFormControl>;
 
-  constructor(model: ObjectSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: ObjectSchemaCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;

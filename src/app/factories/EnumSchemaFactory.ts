@@ -37,7 +37,7 @@ export class EnumSchemaFactory {
 
   public static formFactory(): (model: EnumSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => EnumSchemaFormControl {
     return (model: EnumSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
-      new EnumSchemaFormControl(model, formBuilder, validationService, dialog);
+      new EnumSchemaFormControl(model, validationService, formBuilder, dialog);
   }
 
   public static mapValueModelFactory(): (dtmi: string, model: EnumSchemaCapabilityModel) => MapValueCapabilityModel<EnumSchemaCapabilityModel> {

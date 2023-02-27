@@ -28,10 +28,6 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
     super(id, "Property");
   }
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return PropertyComponent;
-  }
-
   // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;

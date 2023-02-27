@@ -29,8 +29,4 @@ export class RelationshipCapabilityModel extends AbstractCapabilityModel {
     super(id, "Relationship");
     this.properties = new Array<AbstractCapabilityModel>();
   }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return RelationshipComponent;
-  }
 }

@@ -1,8 +1,5 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { jsonMember, jsonObject } from "typedjson";
-import { EnumValueComponent } from "../enum-schema/enum-value/enum-value.component";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 // TODO: Remove @type output in the JSON-LD for EnumValue
@@ -20,9 +17,5 @@ export class EnumValueCapabilityModel extends AbstractSchemaModel {
 
   constructor(id: string) {
     super(id, "EnumValue");
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return EnumValueComponent;
   }
 }

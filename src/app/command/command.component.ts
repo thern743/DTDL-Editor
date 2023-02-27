@@ -8,6 +8,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'command-definition',
@@ -20,8 +21,8 @@ export class CommandComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _schemaService: SchemaService
   private _validationService: ValidationService;
-  public requestFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public responseFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
+  public requestFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public responseFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
   public requestTextControl: FormControl = new FormControl();
   public responseTextControl: FormControl = new FormControl();
   public dialog: MatDialog;
