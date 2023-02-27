@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container [formGroup]="array.form">
   <mat-form-field color="accent">
     <mat-label for="id">Id</mat-label>
     <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />

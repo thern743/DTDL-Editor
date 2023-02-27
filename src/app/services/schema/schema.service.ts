@@ -101,16 +101,16 @@ export class SchemaService implements IFormFactory, IModelFactory {
   }
 
   public openSchemaEditor(parentForm: FormGroup, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    var schemaType = schemaFormControl?.model?.type.toLowerCase();
-
-    const modalParameters = new SchemaModalParameters("TODO HERE", schemaType, schemaFormControl);
+    var schemaType = schemaFormControl?.model?.type;
+    
+    const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl);
 
     this.dialog
       .open(SchemaModalComponent,
         {
           data: modalParameters,
-          height: "60%",
-          width: "50%"
+          height: "80%",
+          width: "60%"
         })
       .afterClosed()
       .subscribe((result: any) => {
