@@ -12,13 +12,6 @@
         <input matInput id="interface_context_{{formIndex}}" type="text" formControlName="context" readonly />
     </mat-form-field>
     <span class="formSpacer"></span>
-
-    <mat-form-field color="accent">
-        <mat-label attr.for="interface_extends_{{formIndex}}">Extends</mat-label>
-        <mat-select matNativeControl id="interface_extends_{{formIndex}}" formControlName="extends">
-            <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId.value)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
-        </mat-select>
-    </mat-form-field>
     <br/>
 
     <mat-form-field color="accent">
@@ -31,18 +24,17 @@
         <mat-label attr.for="interface_id_{{formIndex}}">Id</mat-label>
         <input matInput id="interface_id_{{formIndex}}" type="text" formControlName="id" #interfaceId placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
-    <span class="formSpacer"></span>  
+    <span class="formSpacer"></span>
 
     <mat-form-field color="accent">
-        <mat-label attr.for="interface_displayName_{{formIndex}}">Display Name</mat-label>
-        <input matInput id="interface_displayName_{{formIndex}}" type="text" formControlName="displayName" />
+      <mat-label attr.for="interface_extends_{{formIndex}}">Extends</mat-label>
+      <mat-select matNativeControl id="interface_extends_{{formIndex}}" formControlName="extends">
+          <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId.value)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
+      </mat-select>
     </mat-form-field>
     <br/>
 
-    <mat-form-field color="accent" style="width: 630px">
-        <mat-label attr.for="interface_description_{{formIndex}}">Description</mat-label>
-        <input matInput id="interface_description_{{formIndex}}" type="text" formControlName="description" />
-    </mat-form-field>
+    <display-name-description [formIndex]="formIndex[1]" [parentFormGroup]="interface.form"></display-name-description>
     <br/>
 
     <mat-form-field color="accent" style="width: 630px">
