@@ -5,7 +5,6 @@ import { MapSchemaComponent } from "../../map-schema/map-schema.component";
 import { MapKeyCapabilityModel } from "../MapKeyCapabilityModel";
 import { MapValueCapabilityModel } from "../MapValueCapabilityModel";
 import { AbstractSchemaModel } from '../AbstractSchemaModel';
-import { RegisterModelFactoryMethod } from '../../reflection/ReflectionMetadata';
 
 @jsonObject
 export class MapSchemaCapabilityModel<TKeyModel extends AbstractSchemaModel, TValueModel extends AbstractSchemaModel> extends AbstractSchemaModel {

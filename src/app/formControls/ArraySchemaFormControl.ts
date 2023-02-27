@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ArraySchemaCapabilityModel } from '../models/ArraySchemaCapabilityModel';
+import { ArraySchemaCapabilityModel } from '../models/schemas/ArraySchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 
@@ -8,7 +8,7 @@ export class ArraySchemaFormControl extends AbstractCapabilityFormControl<ArrayS
     private _validationService: ValidationService;
     public dialog: MatDialog;
     
-    constructor(model: ArraySchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: ArraySchemaCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;

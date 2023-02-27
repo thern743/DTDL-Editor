@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
-import { MapSchemaCapabilityModel } from '../models/MapSchemaCapabilityModel';
+import { MapSchemaCapabilityModel } from '../models/schemas/MapSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { MapKeyFormControl } from './MapKeyFormControl';
@@ -16,7 +16,7 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
     public mapKey!: MapKeyFormControl;
     public mapValue!: MapValueFormControl;
 
-    constructor(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, validationService: ValidationService, formBuilder: FormBuilder, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;

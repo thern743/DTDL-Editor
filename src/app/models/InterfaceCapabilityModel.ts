@@ -5,6 +5,7 @@ import { InterfaceComponent } from '../interface/interface.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
 import { TypeDeserializers } from './TypedDeserializers';
+import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 // TODO: Add support for Interface Schemas
 //       See: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
@@ -14,10 +15,13 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   public context: string = "dtmi:dtdl:context;2";  
 
   @jsonMember
-  public extends!: string;
+  public extends?: string;
 
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: TypeDeserializers.interfaceCapabilityDeserializer } )
   public contents: Array<AbstractCapabilityModel>;
+
+  @jsonArrayMember(AbstractSchemaModel, { deserializer: TypeDeserializers.schemaDeserializer } )
+  public schemas?: Array<AbstractSchemaModel>;
 
   constructor(id: string, context: string) {
     super(id, "Interface");

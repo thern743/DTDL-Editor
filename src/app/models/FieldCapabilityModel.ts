@@ -6,8 +6,9 @@ import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { ArraySchemaCapabilityModel } from './schemas/ArraySchemaCapabilityModel';
+import { EnumSchemaCapabilityModel } from './schemas/EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './schemas/MapSchemaCapabilityModel';
-import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
+import { ObjectSchemaCapabilityModel } from './schemas/ObjectSchemaCapabilityModel';
 
 @jsonObject
 export class FieldCapabilityModel extends AbstractCapabilityModel {

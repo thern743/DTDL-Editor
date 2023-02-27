@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { EnumSchemaCapabilityModel } from '../models/EnumSchemaCapabilityModel';
 import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
+import { EnumSchemaCapabilityModel } from '../models/schemas/EnumSchemaCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { EnumValueCapabilityFormControl } from './EnumValueCapabilityFormControl';
@@ -14,7 +14,7 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
     public dialog: MatDialog;
     public enumValues!: Array<EnumValueCapabilityFormControl>;
 
-    constructor(model: EnumSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: EnumSchemaCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;

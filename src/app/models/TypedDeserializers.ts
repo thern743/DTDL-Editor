@@ -1,9 +1,14 @@
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
 import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
+import { AbstractSchemaModel } from "./AbstractSchemaModel";
 import { CommandCapabilityModel } from "./CommandCapabilityModel";
 import { ComponentCapabilityModel } from "./ComponentCapabilityModel";
 import { PropertyCapabilityModel } from "./PropertyCapabilityModel";
 import { RelationshipCapabilityModel } from "./RelationshipCapabilityModel";
+import { ArraySchemaCapabilityModel } from "./schemas/ArraySchemaCapabilityModel";
+import { EnumSchemaCapabilityModel } from "./schemas/EnumSchemaCapabilityModel";
+import { MapSchemaCapabilityModel } from "./schemas/MapSchemaCapabilityModel";
+import { ObjectSchemaCapabilityModel } from "./schemas/ObjectSchemaCapabilityModel";
 import { TelemetryCapabilityModel } from "./TelemetryCapabilityModel";
 
 export class TypeDeserializers {
@@ -39,6 +44,24 @@ export class TypeDeserializers {
     });
 
     return result;
+  }
+
+  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+    if (!value) return;
+    let schema = typeof value === 'string' ? value : value.type;
+
+    switch (schema?.toLocaleLowerCase()) {
+      case "array":
+        return params.fallback(value, ArraySchemaCapabilityModel);
+      case "map":
+        return params.fallback(value, MapSchemaCapabilityModel);
+      case "enum":
+        return params.fallback(value, EnumSchemaCapabilityModel);
+      case "object":
+        return params.fallback(value, ObjectSchemaCapabilityModel);
+      default:
+        return value;
+    }
   }
 
   public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams) {

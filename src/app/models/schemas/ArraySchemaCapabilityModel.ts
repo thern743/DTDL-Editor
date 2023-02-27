@@ -3,7 +3,6 @@ import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { ArraySchemaComponent } from "../../array-schema/array-schema.component";
 import { AbstractSchemaModel } from '../AbstractSchemaModel';
-import { AbstractCapabilityModel } from '../AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';

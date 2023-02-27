@@ -3,8 +3,6 @@ import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { EnumSchemaComponent } from "../../enum-schema/enum-schema.component";
 import { AbstractSchemaModel } from "../AbstractSchemaModel";
 import { EnumValueCapabilityModel } from "../EnumValueCapabilityModel";
-import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
-import { MapValueCapabilityModel } from "../MapValueCapabilityModel";
 
 @jsonObject
 export class EnumSchemaCapabilityModel extends AbstractSchemaModel {
