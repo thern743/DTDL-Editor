@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Type } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
-import { EditorService } from '../../services/editor/editor-service.service';
+import { EditorService } from '../../services/editor/editor.service';
 import { SchemaService } from '../../services/schema/schema.service';
 
 @Component({

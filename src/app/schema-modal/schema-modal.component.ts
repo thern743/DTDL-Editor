@@ -8,6 +8,7 @@ import { MapSchemaFormControl } from '../formControls/schemas/MapSchemaFormContr
 import { ObjectSchemaFormControl } from '../formControls/schemas/ObjectSchemaFormControl';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaModalParameters } from '../models/SchemaModalParameters';
+import { SchemaModalResult } from '../models/SchemaModalResult';
 
 @Component({
   selector: 'schema-modal',
@@ -47,9 +48,7 @@ export class SchemaModalComponent implements OnInit {
   }
 
   public getData(): any {
-    return {
-      model: this.schemaFormControl.model,
-      interfaceSchema: this.interfaceSchemaControl.value
-    }
+    const schemaResult = new SchemaModalResult(this.schemaFormControl, this.interfaceSchemaControl.value)
+    return schemaResult;
   }
 }

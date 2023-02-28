@@ -50,6 +50,6 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.array.form, this.schemaFormControl)
+    this.schemaService.openSchemaEditor(this.array, this.schemaFormControl)
   }
 }

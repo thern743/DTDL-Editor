@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({

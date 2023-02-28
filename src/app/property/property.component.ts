@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { FormControl } from '@angular/forms';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
@@ -155,6 +154,6 @@ export class PropertyComponent implements OnInit {
 
   public openSchemaEditor(): void {
     if(this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.property.form, this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.property, this.schemaFormControl)
   }
 }

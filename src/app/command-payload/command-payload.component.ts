@@ -6,7 +6,7 @@ import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilit
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
@@ -81,6 +81,6 @@ export class CommandPayloadComponent implements OnInit {
 
   public openSchemaEditor(): void {
     if(this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.commandPayload.form, this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.commandPayload, this.schemaFormControl)
   }
 }

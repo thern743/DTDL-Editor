@@ -69,10 +69,10 @@ export class MapSchemaComponent implements OnInit {
   }
 
   public openKeyEditor(): void {
-    this.schemaService.openSchemaEditor(this.map.form, this.keySchemaFormControl);
+    this.schemaService.openSchemaEditor(this.map, this.keySchemaFormControl);
   }
 
   public openValueEditor(): void {
-    this.schemaService.openSchemaEditor(this.map.form, this.valueSchemaFormControl);
+    this.schemaService.openSchemaEditor(this.map, this.valueSchemaFormControl);
   }
 }

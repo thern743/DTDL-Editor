@@ -50,19 +50,19 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
 
       switch(type[0]) {
         case "Property":          
-          formControl = new PropertyCapabilityFormControl(capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new PropertyCapabilityFormControl(this, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Command":
-          formControl = new CommandCapabilityFormControl(capability as CommandCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new CommandCapabilityFormControl(this,capability as CommandCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Telemetry":
-          formControl = new TelemetryCapabilityFormControl(capability as TelemetryCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new TelemetryCapabilityFormControl(this,capability as TelemetryCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Component":
-          formControl = new ComponentCapabilityFormControl(capability as ComponentCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new ComponentCapabilityFormControl(this,capability as ComponentCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Relationship":
-          formControl = new RelationshipCapabilityFormControl(capability as RelationshipCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new RelationshipCapabilityFormControl(this,capability as RelationshipCapabilityModel, this._validationService, this.formBuilder);
           break;
         default:
           throw new Error("Invalid capability type '" + capability.type + "'");          
@@ -139,7 +139,8 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
       // Interface specific
       context: [model.context],
       extends: [model.extends],
-      contents: this.getCapabilityFormArray()
+      contents: this.getCapabilityFormArray(),
+      schemas: this.getSchemasFormArray()
     });
 
     return form;
@@ -150,6 +151,17 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     
     this.contents.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
       const formGroup = capability.toFormGroup(capability.model);
+      formArray.push(formGroup);
+    });
+
+    return formArray;
+  }
+
+  private getSchemasFormArray(): FormArray {
+    let formArray = this.formBuilder.array([]);
+    
+    this.schemas.forEach((schema: AbstractCapabilityFormControl<AbstractSchemaModel>) => {
+      const formGroup = schema.toFormGroup(schema.model);
       formArray.push(formGroup);
     });
 

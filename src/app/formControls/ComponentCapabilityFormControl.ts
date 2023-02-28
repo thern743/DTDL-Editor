@@ -2,15 +2,17 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { ComponentCapabilityModel } from '../models/ComponentCapabilityModel';
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
+import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
 
 export class ComponentCapabilityFormControl extends AbstractCapabilityFormControl<ComponentCapabilityModel>  {
   private _validationService: ValidationService;
   
-  constructor(model: ComponentCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
+  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: ComponentCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
     this.form = this.toFormGroup(model);
+    this.interface = interfaceInstance;
   }
   
   public toFormGroup(model: ComponentCapabilityModel): FormGroup {

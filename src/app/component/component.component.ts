@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
 import { FormControl } from '@angular/forms';
 

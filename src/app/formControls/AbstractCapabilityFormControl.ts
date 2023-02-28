@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from 
 import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
+import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
 
 // TypedJSON requires a concrete type to work.
 export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel>
@@ -11,6 +12,7 @@ export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICa
     public formBuilder: FormBuilder;
     public model!: TCapabilityModel;  
     public form!: FormGroup;
+    public interface!: InterfaceCapabilityFormControl;
     private _subscriptions: Subscription[];
     
     // TODO: Move common services to the AbstractCapabilityFormControl base class

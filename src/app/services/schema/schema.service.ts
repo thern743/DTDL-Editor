@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldCapabilityFormControl } from '../../formControls/FieldCapabilityFormControl';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,17 +17,22 @@ import { ObjectSchemaFormControl } from '../../formControls/schemas/ObjectSchema
 import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
 import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
+import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
+import { EditorService } from '../editor/editor.service';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchemaService implements IFormFactory, IModelFactory {
+  private _editorService: EditorService
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
   private _formBuilder: FormBuilder;
   public dialog: MatDialog;
 
-  constructor(validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+    this._editorService = editorService;
     this._validationService = validationService;
     this._settingsService = settingsService;
     this._formBuilder = formBuilder;
@@ -100,7 +105,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return schemaTypes;
   }
 
-  public openSchemaEditor(parentForm: FormGroup, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+  public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
     var schemaType = schemaFormControl?.model?.type;
     
     const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl);
@@ -113,7 +118,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
           width: "60%"
         })
       .afterClosed()
-      .subscribe((result: any) => {
+      .subscribe((result: SchemaModalResult) => {
         if (result) {
           // TODO: Parent form's schema attribute name is hard-coded  
           //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
@@ -122,12 +127,10 @@ export class SchemaService implements IFormFactory, IModelFactory {
           //      none of the affected types are calling `openSchemaEditor()`;
 
           if(result.interfaceSchema) {
-            console.log("Should be interface schema!");
+            this._editorService.addSchemaToInterface(capabilityForm.interface, result.schemaFormControl);
           } else {
-            console.log("NOT interface schema!");
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
           }
-
-          parentForm?.get("schema")?.setValue(result.model);
         }
       });
   }

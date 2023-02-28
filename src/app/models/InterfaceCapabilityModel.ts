@@ -27,6 +27,7 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
     super(id, "Interface");
     this.context = context;
     this.contents = new Array<AbstractCapabilityModel>();
+    this.schemas = new Array<AbstractSchemaModel>();
   }
 
   get commands(): ICapabilityModel[] {        

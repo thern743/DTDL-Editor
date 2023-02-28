@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { FormControl } from '@angular/forms';
 

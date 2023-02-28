@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
@@ -152,6 +152,6 @@ export class TelemetryComponent implements OnInit {
 
   public openSchemaEditor(): void {
     if (this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.telemetry, this.schemaFormControl)
   }
 }
