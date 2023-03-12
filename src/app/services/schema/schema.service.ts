@@ -128,6 +128,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
           if(result.interfaceSchema) {
             this._editorService.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model.id);
           } else {
             capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
           }
