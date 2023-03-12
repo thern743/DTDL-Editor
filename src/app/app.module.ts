@@ -61,6 +61,7 @@ import { SchemaFactories } from './factories/SchemaFactories';
 import { LanguageMapComponent } from './localization/language-map/language-map.component';
 import { LocalizedDisplayNameDescriptionComponent } from './localization/localized-display-name-description/localized-display-name-description.component';
 import { DisplayNameDescriptionComponent } from './localization/display-name-description/display-name-description.component';
+import { SchemaModalComponent } from './schema-modal/schema-modal.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { DisplayNameDescriptionComponent } from './localization/display-name-des
     CommandPayloadComponent,
     LanguageMapComponent,
     LocalizedDisplayNameDescriptionComponent,
-    DisplayNameDescriptionComponent
+    DisplayNameDescriptionComponent,
+    SchemaModalComponent
   ],
   imports: [
     BrowserModule,

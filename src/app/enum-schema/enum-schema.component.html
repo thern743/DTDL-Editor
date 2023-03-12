@@ -1,52 +1,46 @@
-<h1 mat-dialog-title>Enum Schema Definition</h1>
-<mat-dialog-content [formGroup]="enum.form" style="height: 90%">
-    <mat-form-field color="accent">
-        <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
-    </mat-form-field>
-    <span class="formSpacer"></span>  
+<ng-container [formGroup]="enum.form">
+  <mat-form-field color="accent">
+    <mat-label for="id">Id</mat-label>
+    <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent">
+    <mat-label for="displayName">Display Name</mat-label>
+    <input matInput id="displayName" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" formControlName="comment" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="comment">Comment</mat-label>
+    <input matInput id="comment" type="text" formControlName="comment" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" formControlName="description" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="description">Description</mat-label>
+    <input matInput id="description" type="text" formControlName="description" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent">
-        <mat-label for="valueSchema">Value Schema</mat-label>
-        <mat-select matNativeControl id="valueSchema" formControlName="valueSchema"
-          (selectionChange)="changeSchema($event)" #valueSchema>
-            <mat-option value="integer">integer</mat-option>
-            <mat-option value="string">string</mat-option>
-        </mat-select>        
-    </mat-form-field>
-    <br/>
-    
-    <ng-container *ngFor="let enumValue of enum.enumValues; let i = index">
-        <enum-value [enumValue]="enumValue" [valueSchema]="valueSchema.value" [formIndex]="i" [panelOpenState]="true"></enum-value>
-    </ng-container>
+  <mat-form-field color="accent">
+    <mat-label for="valueSchema">Value Schema</mat-label>
+    <mat-select matNativeControl id="valueSchema" formControlName="valueSchema" (selectionChange)="changeSchema($event)"
+      #valueSchema>
+      <mat-option value="integer">integer</mat-option>
+      <mat-option value="string">string</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
 
-    <mat-action-row>
-        <button mat-raised-button color="primary" (click)="addValue()">
-            <mat-icon>add_circle</mat-icon>&nbsp;New Value
-        </button>
-    </mat-action-row>
+  <ng-container *ngFor="let enumValue of enum.enumValues; let i = index">
+    <enum-value [enumValue]="enumValue" [valueSchema]="valueSchema.value" [formIndex]="i"
+      [panelOpenState]="true"></enum-value>
+  </ng-container>
 
-    <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="enum.model">
-            <mat-icon>save</mat-icon> Save
-        </button>
-    </div>
-</mat-dialog-content>
+  <mat-action-row>
+    <button mat-raised-button color="primary" (click)="addValue()">
+      <mat-icon>add_circle</mat-icon>&nbsp;New Value
+    </button>
+  </mat-action-row>
+</ng-container>

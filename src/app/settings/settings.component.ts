@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
 import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
@@ -15,10 +15,10 @@ import { SettingsService } from '../services/settings/settings.service';
 export class SettingsComponent implements OnInit {
   private _settingsService: SettingsService;
   private _localizationService: LocalizationService;
-  private _formBuilder: FormBuilder;
-  public form!: FormGroup;
+  private _formBuilder: UntypedFormBuilder;
+  public form!: UntypedFormGroup;
 
-  constructor(settingsService: SettingsService, localizationService: LocalizationService, formBuilder: FormBuilder) {
+  constructor(settingsService: SettingsService, localizationService: LocalizationService, formBuilder: UntypedFormBuilder) {
     this._settingsService = settingsService;
     this._localizationService = localizationService;
     this._formBuilder = formBuilder;

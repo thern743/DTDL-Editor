@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { MapSchemaFormControl } from "../formControls/schemas/MapSchemaFormControl";
@@ -36,16 +36,16 @@ export class MapSchemaFactory {
     return (id: string) => new MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>(id);
   }
 
-  public static formFactory(): (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapSchemaFormControl {
-    return (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
-      new MapSchemaFormControl(model, formBuilder, validationService, dialog);
+  public static formFactory(): (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapSchemaFormControl {
+    return (model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+      new MapSchemaFormControl(model, validationService, formBuilder, dialog);
   }  
 
   public static mapValueModelFactory(): (dtmi: string, model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>) => MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>> {
     return (dtmi: string, model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>) => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, formBuilder, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, formBuilder, validationService, dialog);
   }
 }

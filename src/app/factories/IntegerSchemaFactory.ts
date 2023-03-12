@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { IntegerSchemaFormControl } from "../formControls/schemas/IntegerSchemaFormControl";
@@ -35,8 +35,8 @@ export class IntegerSchemaFactory {
     return (id: string) => new IntegerSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: IntegerSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => IntegerSchemaFormControl {
-    return (model: IntegerSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: IntegerSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => IntegerSchemaFormControl {
+    return (model: IntegerSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new IntegerSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -44,7 +44,7 @@ export class IntegerSchemaFactory {
     return (dtmi: string, model: IntegerSchemaCapabilityModel) => new MapValueCapabilityModel<IntegerSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<IntegerSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<IntegerSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<IntegerSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<IntegerSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

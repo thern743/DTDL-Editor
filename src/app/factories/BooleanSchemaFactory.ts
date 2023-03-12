@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { BooleanSchemaFormControl } from "../formControls/schemas/BooleanSchemaFormControl";
@@ -35,8 +35,8 @@ export class BooleanSchemaFactory {
     return (id: string) => new BooleanSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: BooleanSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => BooleanSchemaFormControl {
-    return (model: BooleanSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: BooleanSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => BooleanSchemaFormControl {
+    return (model: BooleanSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new BooleanSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -44,7 +44,7 @@ export class BooleanSchemaFactory {
     return (dtmi: string, model: BooleanSchemaCapabilityModel) => new MapValueCapabilityModel<BooleanSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<BooleanSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<BooleanSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<BooleanSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<BooleanSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

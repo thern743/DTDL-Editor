@@ -22,8 +22,4 @@ export class CommandCapabilityModel extends AbstractCapabilityModel {
   constructor(id: string) {
     super(id, "Command");
   }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return CommandComponent;
-  }
 }

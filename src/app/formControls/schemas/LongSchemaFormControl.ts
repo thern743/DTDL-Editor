@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { LongSchemaCapabilityModel } from '../../models/schemas/LongSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
@@ -8,7 +8,7 @@ export class LongSchemaFormControl extends AbstractCapabilityFormControl<LongSch
   private _validationService: ValidationService;
   public dialog: MatDialog;
 
-  constructor(model: LongSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: LongSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -16,7 +16,7 @@ export class LongSchemaFormControl extends AbstractCapabilityFormControl<LongSch
     this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(model: LongSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: LongSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'relationship-definition',
@@ -38,8 +38,8 @@ export class RelationshipComponent implements OnInit {
     });    
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.relationship.form.get(name) as FormControl;
+  public getFormControl(name: string): UntypedFormControl {
+    return this.relationship.form.get(name) as UntypedFormControl;
   }
 
   public getProperties(): Array<PropertyCapabilityFormControl> {

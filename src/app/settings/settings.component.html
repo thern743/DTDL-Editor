@@ -37,7 +37,7 @@
   <br />
 
   <mat-form-field color="accent">
-    <mat-label attr.for="locale">Locale</mat-label>
+    <mat-label for="locale">Locale</mat-label>
     <mat-select matNativeControl id="locale" formControlName="locale">
       <mat-option [value]="locale" *ngFor="let locale of getLocales()">{{locale}}</mat-option>
     </mat-select>
@@ -45,13 +45,13 @@
   <br />
 
   <mat-form-field color="accent">
-    <mat-label attr.for="dtdlVersion">DTDL Version</mat-label>
+    <mat-label for="dtdlVersion">DTDL Version</mat-label>
     <mat-select matNativeControl id="dtdlVersion" formControlName="dtdlVersion">
       <mat-option value="2">DTDLv2</mat-option>
       <mat-option value="3">DTDLv3</mat-option>
     </mat-select>
   </mat-form-field>
-  <br />
+  <br /> 
 
   <button mat-raised-button color="primary" class="browse-button" (click)="save()">Save</button>
 </div>

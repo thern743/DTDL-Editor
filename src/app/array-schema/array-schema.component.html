@@ -1,48 +1,40 @@
-<h1 mat-dialog-title>Array Schema Definition</h1>
-<mat-dialog-content [formGroup]="array.form" style="height: 90%">
-    <mat-form-field color="accent">
-        <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
-    </mat-form-field>
-    <span class="formSpacer"></span>  
+<ng-container [formGroup]="array.form">
+  <mat-form-field color="accent">
+    <mat-label for="id">Id</mat-label>
+    <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent">
+    <mat-label for="displayName">Display Name</mat-label>
+    <input matInput id="displayName" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent">
-        <mat-label for="elementSchema">Element Schema</mat-label>
-        <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="elementSchema" 
-                    (selectionChange)="changeSchema($event)" #elementSchema>
-          <mat-option *ngFor="let schemaType of schemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container *ngIf="isComplex(elementSchema.value)">
-        <button mat-raised-button color="primary" (click)="openSchemaEditor()">
-            <mat-icon>edit</mat-icon>
-            Edit Schema
-        </button>
-    </ng-container>
-    <br/>
+  <mat-form-field color="accent">
+    <mat-label for="elementSchema">Element Schema</mat-label>
+    <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="elementSchema"
+      (selectionChange)="changeSchema($event)" #elementSchema>
+      <mat-option *ngFor="let schemaType of schemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="formSpacer"></span>
+  <ng-container *ngIf="isComplex(elementSchema.value)">
+    <button mat-raised-button color="primary" (click)="openSchemaEditor()">
+      <mat-icon>edit</mat-icon>
+      Edit Schema
+    </button>
+  </ng-container>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" formControlName="comment" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="comment">Comment</mat-label>
+    <input matInput id="comment" type="text" formControlName="comment" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" formControlName="description" />
-    </mat-form-field>
-    <br/>
-
-    <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="array.model">
-            <mat-icon>save</mat-icon> Save
-        </button>
-    </div>
-</mat-dialog-content>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="description">Description</mat-label>
+    <input matInput id="description" type="text" formControlName="description" />
+  </mat-form-field>
+</ng-container>

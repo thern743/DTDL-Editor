@@ -1,42 +1,35 @@
-<h1 mat-dialog-title>Object Schema Definition</h1>
-<mat-dialog-content [formGroup]="object.form" style="height: 90%">
-    <mat-form-field color="accent">
-        <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
-    </mat-form-field>
-    <span class="formSpacer"></span>  
+<ng-container [formGroup]="object.form">
+  <mat-form-field color="accent">
+    <mat-label for="id">Id</mat-label>
+    <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
 
-    <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent">
+    <mat-label for="displayName">Display Name</mat-label>
+    <input matInput id="displayName" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" formControlName="comment" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="comment">Comment</mat-label>
+    <input matInput id="comment" type="text" formControlName="comment" />
+  </mat-form-field>
+  <br />
 
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" formControlName="description" />
-    </mat-form-field>
-    <br/>
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="description">Description</mat-label>
+    <input matInput id="description" type="text" formControlName="description" />
+  </mat-form-field>
+  <br />
 
-    <ng-container *ngFor="let field of object.fields; let i = index">
-        <field-schema [field]="field" [formIndex]="i" [panelOpenState]="true"></field-schema>
-    </ng-container>
+  <ng-container *ngFor="let field of object.fields; let i = index">
+    <field-schema [field]="field" [formIndex]="i" [panelOpenState]="true"></field-schema>
+  </ng-container>
 
-    <mat-action-row>
-        <button mat-raised-button color="primary" (click)="schemaService.addFieldToObjectSchema(object)">
-            <mat-icon>add_circle</mat-icon>&nbsp;New Field
-        </button>
-    </mat-action-row>    
-
-    <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="object.model">
-            <mat-icon>save</mat-icon> Save
-        </button>
-    </div>
-</mat-dialog-content>
+  <mat-action-row>
+    <button mat-raised-button color="primary" (click)="schemaService.addFieldToObjectSchema(object)">
+      <mat-icon>add_circle</mat-icon>&nbsp;New Field
+    </button>
+  </mat-action-row>
+</ng-container>

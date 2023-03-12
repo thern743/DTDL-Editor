@@ -1,9 +1,6 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { AnyT, jsonMember, jsonObject } from "typedjson";
-import { ArraySchemaComponent } from "../../array-schema/array-schema.component";
 import { AbstractSchemaModel } from '../AbstractSchemaModel';
-import { AbstractCapabilityModel } from '../AbstractCapabilityModel';
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
@@ -16,10 +13,6 @@ export class ArraySchemaCapabilityModel extends AbstractSchemaModel {
 
   constructor(id: string) {
     super(id, "Array");
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return ArraySchemaComponent;
   }
 
   // Must exist on the class being deserialized.

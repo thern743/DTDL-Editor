@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
@@ -19,8 +19,8 @@ export class CommandPayloadComponent implements OnInit {
   private _schemaService: SchemaService;
   private _editorService: EditorService;
   public panelOpenState = true;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public schemaDropDownControl: FormControl = new FormControl();
+  public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
 
   constructor(
     editorService: EditorService, 
@@ -50,7 +50,7 @@ export class CommandPayloadComponent implements OnInit {
     return this._schemaService.getSchemaTypes();
   }
 
-  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+  public compareSchemas = (model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean => {
     return this._schemaService.compareSchemas(model1, model2)
   }
 
@@ -81,6 +81,6 @@ export class CommandPayloadComponent implements OnInit {
 
   public openSchemaEditor(): void {
     if(this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.commandPayload.form, this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.commandPayload, this.schemaFormControl)
   }
 }

@@ -1,78 +1,70 @@
-<h1 mat-dialog-title>Map Schema Definition</h1>
-<mat-dialog-content [formGroup]="map.form" style="height: 90%">
+<ng-container [formGroup]="map.form">
+  <mat-form-field color="accent">
+    <mat-label for="id">Id</mat-label>
+    <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+  </mat-form-field>
+  <span class="formSpacer"></span>
+
+  <mat-form-field color="accent">
+    <mat-label for="displayName">Display Name</mat-label>
+    <input matInput id="displayName" type="text" formControlName="displayName" />
+  </mat-form-field>
+  <br />
+
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="comment">Comment</mat-label>
+    <input matInput id="comment" type="text" formControlName="comment" />
+  </mat-form-field>
+  <br />
+
+  <mat-form-field color="accent" style="width: 420px">
+    <mat-label for="description">Description</mat-label>
+    <input matInput id="description" type="text" formControlName="description" />
+  </mat-form-field>
+  <br />
+
+  <ng-container formGroupName="mapKey">
     <mat-form-field color="accent">
-        <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+      <mat-label for="keySchema">Map Key</mat-label>
+      <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="keySchema" #mapKeySchema
+        (selectionChange)="changeMapKey($event)">
+        <mat-option *ngFor="let schemaType of keySchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
+      </mat-select>
     </mat-form-field>
-    <span class="formSpacer"></span>  
-
+    <span class="formSpacer"></span>
     <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
+      <mat-label for="name">Name</mat-label>
+      <input matInput type="text" id="name" formControlName="name" />
     </mat-form-field>
-    <br/>
-  
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" formControlName="comment" />
-    </mat-form-field>
-    <br/>
-
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" formControlName="description" />
-    </mat-form-field>
-    <br/>
-
-    <ng-container formGroupName="mapKey">
-        <mat-form-field color="accent">
-            <mat-label for="keySchema">Map Key</mat-label>
-            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="keySchema" #mapKeySchema 
-                        (selectionChange)="changeMapKey($event)">
-                <mat-option *ngFor="let schemaType of keySchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
-            </mat-select>
-        </mat-form-field>    
-        <span class="formSpacer"></span>
-        <mat-form-field color="accent">
-            <mat-label for="name">Name</mat-label>
-            <input matInput type="text" id="name" formControlName="name" />
-        </mat-form-field>
-        <span class="formSpacer"></span>
-        <ng-container>
-            <button mat-raised-button color="primary" (click)="openKeyEditor()">
-                <mat-icon>edit</mat-icon>
-                Edit Schema
-            </button>
-        </ng-container>
+    <span class="formSpacer"></span>
+    <ng-container>
+      <button mat-raised-button color="primary" (click)="openKeyEditor()">
+        <mat-icon>edit</mat-icon>
+        Edit Schema
+      </button>
     </ng-container>
-    <br/>
+  </ng-container>
+  <br />
 
-    <ng-container formGroupName="mapValue">
-        <mat-form-field color="accent">
-            <mat-label for="valueSchema">Map Value</mat-label>
-            <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="valueSchema" #mapValueSchema 
-                        (selectionChange)="changeMapValue($event)">
-                <mat-option *ngFor="let schemaType of valueSchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <span class="formSpacer"></span>
-        <mat-form-field color="accent">
-            <mat-label for="name">Name</mat-label>
-            <input matInput type="text" id="name" formControlName="name" />
-        </mat-form-field>
-        <span class="formSpacer"></span>    
-        <ng-container>
-            <button mat-raised-button color="primary" (click)="openValueEditor()">
-                <mat-icon>edit</mat-icon>
-                Edit Schema
-            </button>
-        </ng-container>    
+  <ng-container formGroupName="mapValue">
+    <mat-form-field color="accent">
+      <mat-label for="valueSchema">Map Value</mat-label>
+      <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="valueSchema" #mapValueSchema
+        (selectionChange)="changeMapValue($event)">
+        <mat-option *ngFor="let schemaType of valueSchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <mat-form-field color="accent">
+      <mat-label for="name">Name</mat-label>
+      <input matInput type="text" id="name" formControlName="name" />
+    </mat-form-field>
+    <span class="formSpacer"></span>
+    <ng-container>
+      <button mat-raised-button color="primary" (click)="openValueEditor()">
+        <mat-icon>edit</mat-icon>
+        Edit Schema
+      </button>
     </ng-container>
-    <br/>
-
-    <mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="map.model">
-            <mat-icon>save</mat-icon> Save
-        </button>
-    </mat-dialog-actions>
-</mat-dialog-content>
+  </ng-container>
+</ng-container>

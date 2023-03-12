@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/schemas/ArraySchemaFormControl';
 import { SchemaService } from '../services/schema/schema.service';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { MatSelectChange } from '@angular/material/select';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'array-schema',
@@ -13,20 +12,15 @@ import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
   styleUrls: ['./array-schema.component.scss']
 })
 export class ArraySchemaComponent implements OnInit {
+  @Input()
   public array!: ArraySchemaFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  public dialog: MatDialog;
   public schemaTypes: Array<string>;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
 
-  constructor(schemaService: SchemaService,
-    dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: ArraySchemaFormControl
-  ) {
+  constructor(schemaService: SchemaService) {
     this.schemaService = schemaService;
-    this.dialog = dialog;
-    this.array = data;
     this.schemaTypes = this.getSchemaTypes();
   }
 
@@ -56,6 +50,6 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.array.form, this.schemaFormControl)
+    this.schemaService.openSchemaEditor(this.array, this.schemaFormControl)
   }
 }

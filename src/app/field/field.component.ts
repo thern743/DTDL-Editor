@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { MatSelectChange } from '@angular/material/select';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'field-schema',
@@ -21,7 +21,7 @@ export class FieldComponent implements OnInit {
   public editorService: EditorService;
   public dialog: MatDialog;
   public schemaTypes: Array<string>;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+  public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
 
   constructor(schemaEditorService: SchemaService, editorService: EditorService, dialog: MatDialog) {
     this.schemaService = schemaEditorService;
@@ -56,6 +56,6 @@ export class FieldComponent implements OnInit {
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.field.form, this.schemaFormControl)
+    this.schemaService.openSchemaEditor(this.field, this.schemaFormControl)
   }
 }

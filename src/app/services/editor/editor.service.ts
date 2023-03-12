@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
@@ -16,13 +16,14 @@ import { ValidationService } from '../validation/validation-service.service';
 import { SettingsService } from '../settings/settings.service';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class EditorService {
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
   private _validationService: ValidationService;
   public classTypes: string[];
   public capabilities: string[];
@@ -33,7 +34,7 @@ export class EditorService {
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
   private _settingsService: SettingsService
   
-  constructor(validationService: ValidationService, formBuilder: FormBuilder, settingsService: SettingsService) { 
+  constructor(validationService: ValidationService, formBuilder: UntypedFormBuilder, settingsService: SettingsService) { 
     this._validationService = validationService;
     this._formBuilder = formBuilder;
     this.classTypes = this.getClassTypes();
@@ -170,40 +171,40 @@ export class EditorService {
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myProperty");
     let model = new PropertyCapabilityModel(dtmi);
-    let formControl = new PropertyCapabilityFormControl(model, this._validationService, this._formBuilder);
+    let formControl = new PropertyCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addCommandToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myCommand");
     let model = new CommandCapabilityModel(dtmi);   
-    let formControl = new CommandCapabilityFormControl(model, this._validationService, this._formBuilder);
+    let formControl = new CommandCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myTelemetry");
     let model = new TelemetryCapabilityModel(dtmi);
-    let formControl = new TelemetryCapabilityFormControl(model, this._validationService, this._formBuilder);
+    let formControl = new TelemetryCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addComponentToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myComponent");
     let model = new ComponentCapabilityModel(dtmi);
-    let formControl = new ComponentCapabilityFormControl(model, this._validationService, this._formBuilder);
+    let formControl = new ComponentCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myRelationship");
     let model = new RelationshipCapabilityModel(dtmi);
-    let formControl = new RelationshipCapabilityFormControl(model, this._validationService, this._formBuilder);
+    let formControl = new RelationshipCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractCapabilityModel>): void {    
-    let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
+    let contentsFormArray = interfaceInstance.form.get("contents") as UntypedFormArray;
     contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
@@ -233,12 +234,12 @@ export class EditorService {
   public addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("NewProperty");
     let model = new PropertyCapabilityModel(dtmi);
-    let capability = new PropertyCapabilityFormControl(model,  this._validationService, this._formBuilder);
+    let capability = new PropertyCapabilityFormControl(relationshipInstance.interface, model,  this._validationService, this._formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
   private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, formControl: PropertyCapabilityFormControl): void {
-    let formArray = relationshipInstance.form.get("properties") as FormArray;
+    let formArray = relationshipInstance.form.get("properties") as UntypedFormArray;
     relationshipInstance.properties.push(formControl);
     formArray.push(formControl.form);
     relationshipInstance.model.properties.push(formControl.model);
@@ -260,10 +261,35 @@ export class EditorService {
 
   public deleteCapabilityFromInterface(interfaceInstance: InterfaceCapabilityFormControl, formIndex: [number, number]): void {
     if(formIndex[0] < 0 || formIndex[1] < 0) return;
-    let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
+    let contentsFormArray = interfaceInstance.form.get("contents") as UntypedFormArray;
     contentsFormArray.removeAt(formIndex[1]);
     interfaceInstance.contents.splice(formIndex[1], 1);
     interfaceInstance.model.contents.splice(formIndex[1], 1);
+    this.interfaces$.next(interfaceInstance);
+  }
+
+  public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
+    // Using the index from the model is NOT a safe assumption here.
+    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+    return schemaIndex == undefined ? -1 : schemaIndex;
+  }
+
+  public addOrUpdateInterfaceSchema(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+    let schemasFormArray = interfaceInstance.form.get("schemas") as UntypedFormArray;
+
+    const schemaIndex = this.getInterfaceSchemaIndex(interfaceInstance, formControl);
+
+    if(schemaIndex > -1) {
+      if(interfaceInstance.model.schemas) {
+        interfaceInstance.model.schemas[schemaIndex] = formControl.model;
+        schemasFormArray.at(schemaIndex).patchValue(formControl.form);
+      }
+    } else {
+      schemasFormArray.push(formControl.form);
+      interfaceInstance.schemas.push(formControl);    
+      interfaceInstance.model.schemas?.push(formControl.model);
+    }
+
     this.interfaces$.next(interfaceInstance);
   }
 }

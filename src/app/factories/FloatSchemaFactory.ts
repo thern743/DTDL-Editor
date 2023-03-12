@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { FloatSchemaFormControl } from "../formControls/schemas/FloatSchemaFormControl";
@@ -36,8 +36,8 @@ export class FloatSchemaFactory {
     return (id: string) => new FloatSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: FloatSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => FloatSchemaFormControl {
-    return (model: FloatSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: FloatSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => FloatSchemaFormControl {
+    return (model: FloatSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new FloatSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -45,7 +45,7 @@ export class FloatSchemaFactory {
     return (dtmi: string, model: FloatSchemaCapabilityModel) => new MapValueCapabilityModel<FloatSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<FloatSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<FloatSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<FloatSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<FloatSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

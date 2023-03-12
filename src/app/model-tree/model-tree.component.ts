@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 
 @Component({

@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { EnumValueCapabilityModel } from "../models/EnumValueCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
@@ -8,7 +8,7 @@ export class EnumValueCapabilityFormControl extends AbstractCapabilityFormContro
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: EnumValueCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: EnumValueCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -16,7 +16,7 @@ export class EnumValueCapabilityFormControl extends AbstractCapabilityFormContro
         this.form = this.toFormGroup(model);
     }
 
-    public toFormGroup(model: EnumValueCapabilityModel): FormGroup {
+    public toFormGroup(model: EnumValueCapabilityModel): UntypedFormGroup {
         let form =  this.formBuilder.group({
             id: [model.id, [this._validationService.validDtmi()]],
             displayName: [model.displayName], 

@@ -22,10 +22,6 @@ export class ComponentCapabilityModel extends AbstractCapabilityModel {
     super(id, "Component");
   }
 
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return ComponentComponent;
-  }
-
   // Must exist on the class being deserialized.
   public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
     if (!value) return;

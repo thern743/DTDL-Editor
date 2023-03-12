@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
@@ -13,51 +13,95 @@ import { ComponentCapabilityModel } from "../models/ComponentCapabilityModel";
 import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
+import { ArraySchemaCapabilityModel } from "../models/schemas/ArraySchemaCapabilityModel";
+import { MapSchemaCapabilityModel } from "../models/schemas/MapSchemaCapabilityModel";
+import { EnumSchemaCapabilityModel } from "../models/schemas/EnumSchemaCapabilityModel";
+import { ObjectSchemaCapabilityModel } from "../models/schemas/ObjectSchemaCapabilityModel";
+import { MatDialog } from "@angular/material/dialog";
+import { ArraySchemaFormControl } from "./schemas/ArraySchemaFormControl";
+import { EnumSchemaFormControl } from "./schemas/EnumSchemaFormControl";
+import { MapSchemaFormControl } from "./schemas/MapSchemaFormControl";
+import { ObjectSchemaFormControl } from "./schemas/ObjectSchemaFormControl";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
   private _validationService: ValidationService;
   public contents!: Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>;
+  public schemas!: Array<AbstractCapabilityFormControl<AbstractSchemaModel>>;
+  private _dialog: MatDialog;
   
-  constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService) {  
+  constructor(model: InterfaceCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {  
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
-    this.contents = this.mapModelSubProperties(model);
+    this.contents = this.mapContents(model);
+    this.schemas = this.mapSchemas(model);
     this.form = this.toFormGroup(model);
+    this._dialog = dialog;
   }
 
-  private mapModelSubProperties(interfaceModel: InterfaceCapabilityModel): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {
+  private mapContents(interfaceModel: InterfaceCapabilityModel): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {
     let contents = new Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>();
 
-    interfaceModel.contents?.map((subModel: AbstractCapabilityModel) => {
+    interfaceModel.contents?.forEach((capability: AbstractCapabilityModel) => {
       let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
       
-      let type = typeof subModel.type === 'string' ? new Array<string>(subModel.type) : subModel.type;
+      let type = typeof capability.type === 'string' ? new Array<string>(capability.type) : capability.type;
 
       switch(type[0]) {
         case "Property":          
-          formControl = new PropertyCapabilityFormControl(subModel as PropertyCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new PropertyCapabilityFormControl(this, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Command":
-          formControl = new CommandCapabilityFormControl(subModel as CommandCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new CommandCapabilityFormControl(this,capability as CommandCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Telemetry":
-          formControl = new TelemetryCapabilityFormControl(subModel as TelemetryCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new TelemetryCapabilityFormControl(this,capability as TelemetryCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Component":
-          formControl = new ComponentCapabilityFormControl(subModel as ComponentCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new ComponentCapabilityFormControl(this,capability as ComponentCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Relationship":
-          formControl = new RelationshipCapabilityFormControl(subModel as RelationshipCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new RelationshipCapabilityFormControl(this,capability as RelationshipCapabilityModel, this._validationService, this.formBuilder);
           break;
         default:
-          throw new Error("Invalid capability type '" + subModel.type + "'");          
+          throw new Error("Invalid capability type '" + capability.type + "'");          
       }
 
       contents.push(formControl);
     });
 
     return contents;
+  }
+
+  private mapSchemas(interfaceModel: InterfaceCapabilityModel): Array<AbstractCapabilityFormControl<AbstractSchemaModel>> { 
+    let schemas = new Array<AbstractCapabilityFormControl<AbstractSchemaModel>>();
+
+    interfaceModel.schemas?.forEach((schema: AbstractSchemaModel) => {
+      let formControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
+      let type = typeof schema.type === 'string' ? new Array<string>(schema.type) : schema.type;
+
+      switch(type[0]) {
+        case "array":          
+          formControl = new ArraySchemaFormControl(schema as ArraySchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
+          break;
+        case "map":
+          formControl = new MapSchemaFormControl(schema as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, this._validationService, this.formBuilder, this._dialog);
+          break;
+        case "enum":
+          formControl = new EnumSchemaFormControl(schema as EnumSchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
+          break;
+        case "object":
+          formControl = new ObjectSchemaFormControl(schema as ObjectSchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
+          break;
+        default:
+          throw new Error("Invalid schema type '" + schema.type + "'");          
+      }
+
+      schemas.push(formControl);
+    });
+
+    return schemas;
   }
   
   get commands(): AbstractCapabilityModel[] {        
@@ -85,7 +129,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     return capabilities;
   }
 
-  public toFormGroup(model: InterfaceCapabilityModel): FormGroup {
+  public toFormGroup(model: InterfaceCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       type: [model.type],
@@ -95,17 +139,29 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
       // Interface specific
       context: [model.context],
       extends: [model.extends],
-      contents: this.getCapabilityFormArray()
+      contents: this.getCapabilityFormArray(),
+      schemas: this.getSchemasFormArray()
     });
 
     return form;
   }
 
-  private getCapabilityFormArray(): FormArray {
+  private getCapabilityFormArray(): UntypedFormArray {
     let formArray = this.formBuilder.array([]);
     
     this.contents.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
       const formGroup = capability.toFormGroup(capability.model);
+      formArray.push(formGroup);
+    });
+
+    return formArray;
+  }
+
+  private getSchemasFormArray(): UntypedFormArray {
+    let formArray = this.formBuilder.array([]);
+    
+    this.schemas.forEach((schema: AbstractCapabilityFormControl<AbstractSchemaModel>) => {
+      const formGroup = schema.toFormGroup(schema.model);
       formArray.push(formGroup);
     });
 

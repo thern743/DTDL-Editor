@@ -4,11 +4,11 @@ import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { CustomDeserializerParams } from 'typedjson/lib/types/metadata';
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
-import { ArraySchemaCapabilityModel } from './ArraySchemaCapabilityModel';
-import { MapSchemaCapabilityModel } from './MapSchemaCapabilityModel';
-import { EnumSchemaCapabilityModel } from './EnumSchemaCapabilityModel';
-import { ObjectSchemaCapabilityModel } from './ObjectSchemaCapabilityModel';
 import { LanguageMap } from './LanguageMap';
+import { ArraySchemaCapabilityModel } from './schemas/ArraySchemaCapabilityModel';
+import { EnumSchemaCapabilityModel } from './schemas/EnumSchemaCapabilityModel';
+import { MapSchemaCapabilityModel } from './schemas/MapSchemaCapabilityModel';
+import { ObjectSchemaCapabilityModel } from './schemas/ObjectSchemaCapabilityModel';
 
 @jsonObject
 export class CommandPayload extends AbstractSchemaModel {
@@ -32,10 +32,6 @@ export class CommandPayload extends AbstractSchemaModel {
 
   constructor(id: string) {
     super(id, "CommandPayload");
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return CommandPayloadComponent;
   }
 
   // Must exist on the class being deserialized.

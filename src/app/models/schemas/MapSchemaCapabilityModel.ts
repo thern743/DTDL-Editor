@@ -1,11 +1,8 @@
 import 'reflect-metadata';
-import { ComponentType } from "@angular/cdk/portal";
 import { jsonMember, jsonObject } from "typedjson";
-import { MapSchemaComponent } from "../../map-schema/map-schema.component";
 import { MapKeyCapabilityModel } from "../MapKeyCapabilityModel";
 import { MapValueCapabilityModel } from "../MapValueCapabilityModel";
 import { AbstractSchemaModel } from '../AbstractSchemaModel';
-import { RegisterModelFactoryMethod } from '../../reflection/ReflectionMetadata';
 
 @jsonObject
 export class MapSchemaCapabilityModel<TKeyModel extends AbstractSchemaModel, TValueModel extends AbstractSchemaModel> extends AbstractSchemaModel {
@@ -17,10 +14,6 @@ export class MapSchemaCapabilityModel<TKeyModel extends AbstractSchemaModel, TVa
 
   constructor(id: string) {
     super(id, "Map");
-  }
-
-  public resolveSchemaComponentType(): ComponentType<any> {
-    return MapSchemaComponent;
   }
 
   public setKey(keyModel: TKeyModel): void {

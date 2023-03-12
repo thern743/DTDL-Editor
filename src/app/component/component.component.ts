@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'component-definition',
@@ -24,8 +24,8 @@ export class ComponentComponent implements OnInit {
     this.syncHeaderFields();    
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.component.form.get(name) as FormControl;
+  public getFormControl(name: string): UntypedFormControl {
+    return this.component.form.get(name) as UntypedFormControl;
   }
 
   public syncHeaderFields() {

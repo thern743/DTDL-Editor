@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import {  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/schemas/EnumSchemaFormControl';
-import { EditorService } from '../services/editor/editor-service.service';
 import { SchemaService } from '../services/schema/schema.service';
 import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
 
@@ -13,19 +11,13 @@ import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
   styleUrls: ['./enum-schema.component.scss']
 })
 export class EnumSchemaComponent implements OnInit {
+  @Input()
   public enum!: EnumSchemaFormControl;
   private _schemaService: SchemaService;
-  private _editorService: EditorService;
   public panelOpenState = true;
 
-  constructor(
-    editorService: EditorService, 
-    schemaService: SchemaService,
-    @Inject(MAT_DIALOG_DATA) data: EnumSchemaFormControl
-  ) { 
-    this._editorService = editorService;
+  constructor(schemaService: SchemaService) { 
     this._schemaService = schemaService;
-    this.enum = data;
   }
 
   public ngOnInit(): void { 

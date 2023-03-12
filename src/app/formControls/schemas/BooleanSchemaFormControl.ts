@@ -1,5 +1,5 @@
 import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata'
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BooleanSchemaCapabilityModel } from '../../models/schemas/BooleanSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
@@ -11,7 +11,7 @@ export class BooleanSchemaFormControl extends AbstractCapabilityFormControl<Bool
   private _validationService: ValidationService;
   public dialog: MatDialog;
 
-  constructor(model: BooleanSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: BooleanSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
     super(formBuilder);
     this.dialog = dialog;
     this._validationService = validationService;
@@ -19,7 +19,7 @@ export class BooleanSchemaFormControl extends AbstractCapabilityFormControl<Bool
     this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(model: BooleanSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: BooleanSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapKeyFormControl } from "../formControls/MapKeyFormControl";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
@@ -47,8 +47,8 @@ export class StringSchemaFactory {
     return (id: string) => new StringSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: StringSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => StringSchemaFormControl {
-    return (model: StringSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: StringSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => StringSchemaFormControl {
+    return (model: StringSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new StringSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -56,15 +56,15 @@ export class StringSchemaFactory {
     return (dtmi: string, model: StringSchemaCapabilityModel) => new MapKeyCapabilityModel<StringSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapKeyFormFactory(): (model: MapKeyCapabilityModel<StringSchemaCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapKeyFormControl {
-    return (model: MapKeyCapabilityModel<StringSchemaCapabilityModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapKeyFormControl(model, formBuilder, validationService, dialog);
+  public static mapKeyFormFactory(): (model: MapKeyCapabilityModel<StringSchemaCapabilityModel>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapKeyFormControl {
+    return (model: MapKeyCapabilityModel<StringSchemaCapabilityModel>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapKeyFormControl(model, formBuilder, validationService, dialog);
   }
 
   public static mapValueModelFactory(): (dtmi: string, model: StringSchemaCapabilityModel) => MapValueCapabilityModel<StringSchemaCapabilityModel> {
     return (dtmi: string, model: StringSchemaCapabilityModel) => new MapValueCapabilityModel<StringSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<StringSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<StringSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<StringSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<StringSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

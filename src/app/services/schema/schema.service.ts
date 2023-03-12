@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FieldCapabilityFormControl } from '../../formControls/FieldCapabilityFormControl';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
 import { EnumValueCapabilityModel } from '../../models/EnumValueCapabilityModel';
@@ -15,31 +14,39 @@ import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 import { SettingsService } from '../settings/settings.service';
 import { EnumSchemaFormControl } from '../../formControls/schemas/EnumSchemaFormControl';
 import { ObjectSchemaFormControl } from '../../formControls/schemas/ObjectSchemaFormControl';
+import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
+import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
+import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
+import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
+import { EditorService } from '../editor/editor.service';
+import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchemaService implements IFormFactory, IModelFactory {
+  private _editorService: EditorService
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
   public dialog: MatDialog;
 
-  constructor(validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
+    this._editorService = editorService;
     this._validationService = validationService;
     this._settingsService = settingsService;
     this._formBuilder = formBuilder;
     this.dialog = dialog;
   }
 
-  public createModel(type: string, name: string): AbstractCapabilityModel | undefined {
+  public createModel(type: string, name: string): AbstractSchemaModel | undefined {
     const modelFunc = SchemaFactory.createModel(type, name);
     if (modelFunc == undefined) return;
     const model = modelFunc(this._settingsService.buildDtmi(`New_${type}_${name}`));
     return model;
   }
 
-  public createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined {
+  public createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined {
     const formControlFunc = SchemaFactory.createFormControl(type, name);
     if (formControlFunc == undefined) return;
     const model = this.createModel(type, name);
@@ -62,7 +69,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
     enumSchema.model.enumValues.push(model);
   }
 
-  public isComplexSchema(form: FormGroup, schemaString: string = 'schema'): boolean {
+  public isComplexSchema(form: UntypedFormGroup, schemaString: string = 'schema'): boolean {
     let type = form.get(schemaString)?.value?.type;
     if (type && type instanceof Array) type = type[0];
     return ["array", "enum", "map", "object"].indexOf(type?.toLowerCase()) >= 0;
@@ -72,15 +79,15 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return ["array", "enum", "map", "object"].indexOf(schema?.toLowerCase()) >= 0 ? SchemaTypeEnum.Complex : SchemaTypeEnum.Primitive;
   }
 
-  public compareSchemas(model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean {
+  public compareSchemas(model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean {
     return model1?.type && model2?.type ? model1.type[0].toLowerCase() === model2.type[0].toLowerCase() : model1 === model2;
   }
 
-  public getFormsRegistry(): Map<string, Map<string, (model: AbstractCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractCapabilityModel>>> {
+  public getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
     return SchemaFactory.getFormsRegistry();
   }
 
-  public getModelsRegistry(): Map<string, Map<string, (id: string) => AbstractCapabilityModel>> {
+  public getModelsRegistry(): Map<string, Map<string, (id: string) => AbstractSchemaModel>> {
     return SchemaFactory.getModelsRegistry();
   }
 
@@ -98,26 +105,33 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return schemaTypes;
   }
 
-  public openSchemaEditor(parentForm: FormGroup, schemaFormControl: AbstractCapabilityFormControl<AbstractCapabilityModel>): void {
-    var schemaModel = schemaFormControl?.model;
-    const componentType = schemaModel?.resolveSchemaComponentType();
+  public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+    const schemaType = schemaFormControl?.model?.type;
+    const isInterfaceSchema = this._editorService.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
+    const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl, isInterfaceSchema);
 
     this.dialog
-      .open(componentType,
+      .open(SchemaModalComponent,
         {
-          data: schemaFormControl,
-          height: "60%",
-          width: "50%"
+          data: modalParameters,
+          height: "80%",
+          width: "60%"
         })
       .afterClosed()
-      .subscribe((result: FormGroup) => {
+      .subscribe((result: SchemaModalResult) => {
         if (result) {
           // TODO: Parent form's schema attribute name is hard-coded  
           //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
           //      so if these parent controls call `openSchemaEditor()` their schema values
           //      will not be set correctly. Right now this doesn't seem to be an issue since
           //      none of the affected types are calling `openSchemaEditor()`;
-          parentForm?.get("schema")?.setValue(result);
+
+          if(result.interfaceSchema) {
+            this._editorService.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model.id);
+          } else {
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
+          }
         }
       });
   }

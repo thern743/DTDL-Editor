@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { DoubleSchemaFormControl } from "../formControls/schemas/DoubleSchemaFormControl";
@@ -35,8 +35,8 @@ export class DoubleSchemaFactory {
     return (id: string) => new DoubleSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: DoubleSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => DoubleSchemaFormControl {
-    return (model: DoubleSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: DoubleSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => DoubleSchemaFormControl {
+    return (model: DoubleSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new DoubleSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -44,7 +44,7 @@ export class DoubleSchemaFactory {
     return (dtmi: string, model: DoubleSchemaCapabilityModel) => new MapValueCapabilityModel<DoubleSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DoubleSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<DoubleSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DoubleSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<DoubleSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

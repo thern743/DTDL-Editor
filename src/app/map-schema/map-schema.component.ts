@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { MapSchemaFormControl } from '../formControls/schemas/MapSchemaFormControl';
-import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { SchemaService } from '../services/schema/schema.service';
 
@@ -13,22 +12,17 @@ import { SchemaService } from '../services/schema/schema.service';
   styleUrls: ['./map-schema.component.scss']
 })
 export class MapSchemaComponent implements OnInit {
+  @Input()
   public map!: MapSchemaFormControl;
   public schemaService: SchemaService;
   public panelOpenState = true;
-  public dialog: MatDialog;
   public keySchemaTypes: string[];
   public valueSchemaTypes: string[]
-  public keySchemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
-  public valueSchemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+  public keySchemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public valueSchemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
 
-  constructor(schemaService: SchemaService,
-    dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) data: MapSchemaFormControl
-  ) {
+  constructor(schemaService: SchemaService) {
     this.schemaService = schemaService;
-    this.dialog = dialog;
-    this.map = data;
     this.keySchemaTypes = new Array<string>();
     this.valueSchemaTypes = new Array<string>();
     this.mapKeysAndValues();
@@ -75,10 +69,10 @@ export class MapSchemaComponent implements OnInit {
   }
 
   public openKeyEditor(): void {
-    this.schemaService.openSchemaEditor(this.map.form, this.keySchemaFormControl);
+    this.schemaService.openSchemaEditor(this.map, this.keySchemaFormControl);
   }
 
   public openValueEditor(): void {
-    this.schemaService.openSchemaEditor(this.map.form, this.valueSchemaFormControl);
+    this.schemaService.openSchemaEditor(this.map, this.valueSchemaFormControl);
   }
 }

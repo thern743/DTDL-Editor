@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EditorService } from '../services/editor/editor-service.service';
+import { EditorService } from '../services/editor/editor.service';
 import { MatSelectChange } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
@@ -7,7 +7,8 @@ import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabil
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'telemetry-definition',
@@ -20,9 +21,9 @@ export class TelemetryComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
-  public schemaFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public schemaDropDownControl: FormControl = new FormControl();
-  public semanticTypeDropDownControl: FormControl = new FormControl();
+  public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
+  public semanticTypeDropDownControl: UntypedFormControl = new UntypedFormControl();
   public dialog: MatDialog;
 
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
@@ -83,8 +84,8 @@ export class TelemetryComponent implements OnInit {
     return undefined;
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.telemetry.form.get(name) as FormControl;
+  public getFormControl(name: string): UntypedFormControl {
+    return this.telemetry.form.get(name) as UntypedFormControl;
   }
 
   public validSchemaTypes = (schemaType: string): boolean => {
@@ -127,7 +128,7 @@ export class TelemetryComponent implements OnInit {
     return false;
   }
 
-  public compareSchemas = (model1: AbstractCapabilityModel, model2: AbstractCapabilityModel): boolean => {
+  public compareSchemas = (model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean => {
     return this._schemaService.compareSchemas(model1, model2)
   }
 
@@ -151,6 +152,6 @@ export class TelemetryComponent implements OnInit {
 
   public openSchemaEditor(): void {
     if (this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.telemetry.form, this.schemaFormControl)
+      this._schemaService.openSchemaEditor(this.telemetry, this.schemaFormControl)
   }
 }

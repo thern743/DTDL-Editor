@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
+import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
   selector: 'command-definition',
@@ -20,10 +21,10 @@ export class CommandComponent implements OnInit {
   @Input() public panelOpenState!: boolean;
   private _schemaService: SchemaService
   private _validationService: ValidationService;
-  public requestFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public responseFormControl!: AbstractCapabilityFormControl<AbstractCapabilityModel> | undefined;
-  public requestTextControl: FormControl = new FormControl();
-  public responseTextControl: FormControl = new FormControl();
+  public requestFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public responseFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  public requestTextControl: UntypedFormControl = new UntypedFormControl();
+  public responseTextControl: UntypedFormControl = new UntypedFormControl();
   public dialog: MatDialog;
 
   constructor(schemaService: SchemaService, validationService: ValidationService, dialog: MatDialog) {
@@ -69,8 +70,8 @@ export class CommandComponent implements OnInit {
     });
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.command.form.get(name) as FormControl;
+  public getFormControl(name: string): UntypedFormControl {
+    return this.command.form.get(name) as UntypedFormControl;
   }
 
   public openRequestSchemaEditor(): void {

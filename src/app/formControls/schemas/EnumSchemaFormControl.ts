@@ -1,6 +1,5 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
 import { EnumSchemaCapabilityModel } from '../../models/schemas/EnumSchemaCapabilityModel';
 import { EnumValueCapabilityModel } from '../../models/EnumValueCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
@@ -12,7 +11,7 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
   public dialog: MatDialog;
   public enumValues!: Array<EnumValueCapabilityFormControl>;
 
-  constructor(model: EnumSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: EnumSchemaCapabilityModel, validationService: ValidationService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -31,7 +30,7 @@ export class EnumSchemaFormControl extends AbstractCapabilityFormControl<EnumSch
     return enumValues;
   }
 
-  public toFormGroup(model: EnumSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: EnumSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

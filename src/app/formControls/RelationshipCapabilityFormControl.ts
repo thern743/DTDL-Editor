@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
@@ -7,18 +7,20 @@ import { ICapabilityFormControl } from './ICapabilityFormControl';
 import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
+import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: PropertyCapabilityFormControl[];
   
   private _validationService: ValidationService;
   
-  constructor(model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
+  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: UntypedFormBuilder) {  
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
     this.properties = this.mapModelSubProperties(model);
     this.form = this.toFormGroup(model);
+    this.interface = interfaceInstance;
   }
   
   private mapModelSubProperties(model: RelationshipCapabilityModel): Array<PropertyCapabilityFormControl> {
@@ -29,7 +31,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
             
       switch(capability.type[0]) {
         case "Property":          
-          formControl = new PropertyCapabilityFormControl(capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
+          formControl = new PropertyCapabilityFormControl(this.interface, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
         case "Command":          
         case "Telemetry":          
@@ -45,7 +47,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     return properties;
   }
 
-  public toFormGroup(model: RelationshipCapabilityModel): FormGroup {
+  public toFormGroup(model: RelationshipCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       type: [model.type],
@@ -64,7 +66,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     return form;
   }
 
-  private getCapabilityFormArray(): FormArray {
+  private getCapabilityFormArray(): UntypedFormArray {
     let formArray = this.formBuilder.array([]);
     
     this.properties.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {

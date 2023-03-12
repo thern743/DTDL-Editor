@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, Output, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 import { LanguageMap } from 'src/app/models/LanguageMap';
 import { LocalizationService } from 'src/app/services/localization/localization.service';
 
@@ -12,13 +12,13 @@ export class LanguageMapComponent implements OnInit {
   @Input() public localize: boolean = true;
   @Input() public id!: string;
   @Input() public labelText!: string;
-  @Input() public languageMapFormArray!: FormArray;
+  @Input() public languageMapFormArray!: UntypedFormArray;
   @Input() public style: string = "width: 200px";
   @Output() public change = new EventEmitter<any>();
   private _localizationService: LocalizationService;
-  private _formBuilder: FormBuilder
+  private _formBuilder: UntypedFormBuilder
 
-  constructor(localizationService: LocalizationService, formBuilder: FormBuilder) { 
+  constructor(localizationService: LocalizationService, formBuilder: UntypedFormBuilder) { 
     this._localizationService = localizationService;
     this._formBuilder = formBuilder;
   }
@@ -36,7 +36,7 @@ export class LanguageMapComponent implements OnInit {
     this.change.emit($event);
   }
 
-  private toFormArray(values: Array<LanguageMap>): FormArray {
+  private toFormArray(values: Array<LanguageMap>): UntypedFormArray {
     const formArray = this._formBuilder.array([]);
 
     values.forEach((languageMap: LanguageMap) => { 
@@ -46,7 +46,7 @@ export class LanguageMapComponent implements OnInit {
     return formArray;
   }
 
-  private toFormGroup(languageMap: LanguageMap): FormGroup {
+  private toFormGroup(languageMap: LanguageMap): UntypedFormGroup {
     const formGroup = this._formBuilder.group({
       key: [languageMap.key],
       value: [languageMap.value],
@@ -55,8 +55,8 @@ export class LanguageMapComponent implements OnInit {
     return formGroup;
   }
 
-  public getFormGroup(group: AbstractControl): FormGroup {
-    return group as FormGroup;
+  public getFormGroup(group: AbstractControl): UntypedFormGroup {
+    return group as UntypedFormGroup;
   }
 
   public getLocales(): Array<string> {
@@ -76,7 +76,7 @@ export class LanguageMapComponent implements OnInit {
     this.languageMapFormArray.removeAt(index);    
   }
 
-  public getData(): FormArray {
+  public getData(): UntypedFormArray {
     return this.languageMapFormArray;
   }
 
