@@ -127,7 +127,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
           //      none of the affected types are calling `openSchemaEditor()`;
 
           if(result.interfaceSchema) {
-            this._editorService.addSchemaToInterface(capabilityForm.interface, result.schemaFormControl);
+            this._editorService.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
           } else {
             capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
           }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
@@ -268,11 +268,23 @@ export class EditorService {
     this.interfaces$.next(interfaceInstance);
   }
 
-  public addSchemaToInterface(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+  public addOrUpdateInterfaceSchema(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
     let schemasFormArray = interfaceInstance.form.get("schemas") as FormArray;
-    schemasFormArray.push(formControl.form);
-    interfaceInstance.schemas.push(formControl);    
-    interfaceInstance.model.schemas?.push(formControl.model);
+
+    // Using the index from the model is NOT a safe assumption here.
+    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+
+    if(schemaIndex && schemaIndex > -1) {
+      if(interfaceInstance.model.schemas) {
+        interfaceInstance.model.schemas[schemaIndex] = formControl.model;
+        schemasFormArray.at(schemaIndex).patchValue(formControl.form);
+      }
+    } else {
+      schemasFormArray.push(formControl.form);
+      interfaceInstance.schemas.push(formControl);    
+      interfaceInstance.model.schemas?.push(formControl.model);
+    }
+
     this.interfaces$.next(interfaceInstance);
   }
 }
