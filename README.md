@@ -16,15 +16,16 @@ A general-purpose editor inspired by [Azure IoT Central's model editor](https://
 * Semantic Types and Units
 * Primitive Schema Types
 * Complex Schema Types (Array, Map, Enum, Object)
+* Interface Schemas (import support coming)
 * [Full DTDL validation](#model-validation)
-* Importing existing models
+* Importing existing models (simple models only)
 * Copy/Save models locally
 * Editor settings
   * Set DTMI scheme, path, and version 
   * Set Context
 
 ## Near-Term Features
-* Interface Schemas
+* Support for importing more complex models
 * Display string localization
 
 ## Long-Term Features

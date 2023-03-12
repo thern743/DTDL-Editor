@@ -1,14 +1,10 @@
 import 'reflect-metadata';
-import { ComponentType } from '@angular/cdk/portal';
 import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
-import { InterfaceComponent } from '../interface/interface.component';
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
 import { TypeDeserializers } from './TypedDeserializers';
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 
-// TODO: Add support for Interface Schemas
-//       See: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md#interface-schemas
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember({ name: '@context' })
