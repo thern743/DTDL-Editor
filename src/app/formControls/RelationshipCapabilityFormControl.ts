@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
@@ -14,7 +14,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
   
   private _validationService: ValidationService;
   
-  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder) {  
+  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: UntypedFormBuilder) {  
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
@@ -47,7 +47,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     return properties;
   }
 
-  public toFormGroup(model: RelationshipCapabilityModel): FormGroup {
+  public toFormGroup(model: RelationshipCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       type: [model.type],
@@ -66,7 +66,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     return form;
   }
 
-  private getCapabilityFormArray(): FormArray {
+  private getCapabilityFormArray(): UntypedFormArray {
     let formArray = this.formBuilder.array([]);
     
     this.properties.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {

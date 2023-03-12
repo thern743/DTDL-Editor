@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
-import { AbstractControl, FormArray, FormBuilder } from '@angular/forms';
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
@@ -23,7 +23,7 @@ import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
 })
 
 export class EditorService {
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
   private _validationService: ValidationService;
   public classTypes: string[];
   public capabilities: string[];
@@ -34,7 +34,7 @@ export class EditorService {
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
   private _settingsService: SettingsService
   
-  constructor(validationService: ValidationService, formBuilder: FormBuilder, settingsService: SettingsService) { 
+  constructor(validationService: ValidationService, formBuilder: UntypedFormBuilder, settingsService: SettingsService) { 
     this._validationService = validationService;
     this._formBuilder = formBuilder;
     this.classTypes = this.getClassTypes();
@@ -204,7 +204,7 @@ export class EditorService {
   }
 
   private pushInterfaceContents(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractCapabilityModel>): void {    
-    let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
+    let contentsFormArray = interfaceInstance.form.get("contents") as UntypedFormArray;
     contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
@@ -239,7 +239,7 @@ export class EditorService {
   }
 
   private pushRelationshipProperties(relationshipInstance: RelationshipCapabilityFormControl, formControl: PropertyCapabilityFormControl): void {
-    let formArray = relationshipInstance.form.get("properties") as FormArray;
+    let formArray = relationshipInstance.form.get("properties") as UntypedFormArray;
     relationshipInstance.properties.push(formControl);
     formArray.push(formControl.form);
     relationshipInstance.model.properties.push(formControl.model);
@@ -261,7 +261,7 @@ export class EditorService {
 
   public deleteCapabilityFromInterface(interfaceInstance: InterfaceCapabilityFormControl, formIndex: [number, number]): void {
     if(formIndex[0] < 0 || formIndex[1] < 0) return;
-    let contentsFormArray = interfaceInstance.form.get("contents") as FormArray;
+    let contentsFormArray = interfaceInstance.form.get("contents") as UntypedFormArray;
     contentsFormArray.removeAt(formIndex[1]);
     interfaceInstance.contents.splice(formIndex[1], 1);
     interfaceInstance.model.contents.splice(formIndex[1], 1);
@@ -269,7 +269,7 @@ export class EditorService {
   }
 
   public addOrUpdateInterfaceSchema(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    let schemasFormArray = interfaceInstance.form.get("schemas") as FormArray;
+    let schemasFormArray = interfaceInstance.form.get("schemas") as UntypedFormArray;
 
     // Using the index from the model is NOT a safe assumption here.
     const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);

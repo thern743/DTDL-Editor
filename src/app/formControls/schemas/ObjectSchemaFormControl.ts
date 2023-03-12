@@ -1,4 +1,4 @@
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { ObjectSchemaCapabilityModel } from '../../models/schemas/ObjectSchemaCapabilityModel';
@@ -11,7 +11,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
   public dialog: MatDialog;
   public fields!: Array<FieldCapabilityFormControl>;
 
-  constructor(model: ObjectSchemaCapabilityModel, validationService: ValidationService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(model: ObjectSchemaCapabilityModel, validationService: ValidationService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -31,7 +31,7 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
     return fields;
   }
 
-  public toFormGroup(model: ObjectSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: ObjectSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

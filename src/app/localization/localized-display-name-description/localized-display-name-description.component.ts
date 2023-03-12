@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { LanguageMapComponent } from '../language-map/language-map.component';
 
 @Component({
@@ -10,9 +10,9 @@ import { LanguageMapComponent } from '../language-map/language-map.component';
 export class LocalizedDisplayNameDescriptionComponent implements OnInit {
   @ViewChild("displayNameComponent") displayNameComponent!: LanguageMapComponent;
   @ViewChild("descriptionComponent") descriptionComponent!: LanguageMapComponent;
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
 
-  constructor(formBuilder: FormBuilder) { 
+  constructor(formBuilder: UntypedFormBuilder) { 
     this._formBuilder = formBuilder;
   }
 
@@ -20,7 +20,7 @@ export class LocalizedDisplayNameDescriptionComponent implements OnInit {
 
   }
 
-  public toFormGroup(): FormGroup {
+  public toFormGroup(): UntypedFormGroup {
     const formGroup = this._formBuilder.group({
       displayName: this.displayNameComponent?.getData(),
       description: this.descriptionComponent?.getData()

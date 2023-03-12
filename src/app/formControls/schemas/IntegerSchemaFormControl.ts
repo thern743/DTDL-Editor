@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { IntegerSchemaCapabilityModel } from '../../models/schemas/IntegerSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
@@ -8,7 +8,7 @@ export class IntegerSchemaFormControl extends AbstractCapabilityFormControl<Inte
   private _validationService: ValidationService;
   public dialog: MatDialog;
 
-  constructor(model: IntegerSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: IntegerSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -16,7 +16,7 @@ export class IntegerSchemaFormControl extends AbstractCapabilityFormControl<Inte
     this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(model: IntegerSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: IntegerSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

@@ -1,4 +1,4 @@
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { DateTimeSchemaFormControl } from "../formControls/schemas/DateTimeSchemaFormControl";
@@ -35,8 +35,8 @@ export class DateTimeSchemaFactory {
     return (id: string) => new DateTimeSchemaCapabilityModel(id);
   }
 
-  public static formFactory(): (model: DateTimeSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => DateTimeSchemaFormControl {
-    return (model: DateTimeSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) =>
+  public static formFactory(): (model: DateTimeSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => DateTimeSchemaFormControl {
+    return (model: DateTimeSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) =>
       new DateTimeSchemaFormControl(model, formBuilder, validationService, dialog);
   }
 
@@ -44,7 +44,7 @@ export class DateTimeSchemaFactory {
     return (dtmi: string, model: DateTimeSchemaCapabilityModel) => new MapValueCapabilityModel<DateTimeSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DateTimeSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<DateTimeSchemaCapabilityModel>, fb: FormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DateTimeSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<DateTimeSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
   }
 }

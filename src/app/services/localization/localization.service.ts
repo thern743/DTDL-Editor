@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localization/localized-display-name-description/localized-display-name-description.component';
 import { SettingsService } from '../settings/settings.service';
@@ -24,7 +24,7 @@ export class LocalizationService {
     return this._locales;
   }
 
-  public openDisplayNameDescriptionLanguageMap(parentFormGroup: FormGroup, callback: Function): void {
+  public openDisplayNameDescriptionLanguageMap(parentFormGroup: UntypedFormGroup, callback: Function): void {
     this._dialog
     .open(LocalizedDisplayNameDescriptionComponent,
       {
@@ -32,7 +32,7 @@ export class LocalizationService {
         width: "60%"
       })
     .afterClosed()
-    .subscribe((result: FormGroup) => {
+    .subscribe((result: UntypedFormGroup) => {
       if (result) {
         callback(parentFormGroup, result);
       }

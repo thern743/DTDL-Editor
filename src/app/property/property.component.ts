@@ -6,7 +6,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 
 @Component({
@@ -21,8 +21,8 @@ export class PropertyComponent implements OnInit {
   private _editorService: EditorService;
   private _schemaService: SchemaService;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel> | undefined;
-  public schemaDropDownControl: FormControl = new FormControl();
-  public semanticTypeDropDownControl: FormControl = new FormControl();
+  public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
+  public semanticTypeDropDownControl: UntypedFormControl = new UntypedFormControl();
   public dialog: MatDialog;
 
   constructor(editorService: EditorService, schemaService: SchemaService, dialog: MatDialog) {
@@ -83,8 +83,8 @@ export class PropertyComponent implements OnInit {
     return undefined;
   }
 
-  public getFormControl(name: string): FormControl {
-    return this.property.form.get(name) as FormControl;
+  public getFormControl(name: string): UntypedFormControl {
+    return this.property.form.get(name) as UntypedFormControl;
   }
 
   // TODO: Passing validSchemaTypes to the FilterPipe doesn't get re-evaluated on changes

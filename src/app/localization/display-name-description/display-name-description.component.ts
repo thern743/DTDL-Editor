@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { LocalizationService } from "src/app/services/localization/localization.service";
 import { LanguageMapComponent } from "../language-map/language-map.component";
 
@@ -11,14 +11,14 @@ import { LanguageMapComponent } from "../language-map/language-map.component";
 export class DisplayNameDescriptionComponent implements OnInit {
   @ViewChild("displayNameComponent") displayNameComponent!: LanguageMapComponent;
   @ViewChild("descriptionComponent") descriptionComponent!: LanguageMapComponent;
-  public displayNameFormArray!: FormArray;
-  public descriptionFormArray!: FormArray;
-  @Input() parentFormGroup!: FormGroup;
+  public displayNameFormArray!: UntypedFormArray;
+  public descriptionFormArray!: UntypedFormArray;
+  @Input() parentFormGroup!: UntypedFormGroup;
   @Input() public formIndex: number = -1;
   private _localizationService: LocalizationService;
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
 
-  constructor(localizationService: LocalizationService, formBuilder: FormBuilder) {
+  constructor(localizationService: LocalizationService, formBuilder: UntypedFormBuilder) {
     this._localizationService = localizationService;
     this._formBuilder = formBuilder;
   }
@@ -36,7 +36,7 @@ export class DisplayNameDescriptionComponent implements OnInit {
     this.updateLocalizationInternal(this.parentFormGroup, result, "description");
   }
 
-  public displayNameToFormGroup(): FormGroup {
+  public displayNameToFormGroup(): UntypedFormGroup {
     const formGroup = this._formBuilder.group({
       displayName: this.displayNameComponent?.getData(),
     });
@@ -44,7 +44,7 @@ export class DisplayNameDescriptionComponent implements OnInit {
     return formGroup;
   }
 
-  public descriptionToFormGroup(): FormGroup {
+  public descriptionToFormGroup(): UntypedFormGroup {
     const formGroup = this._formBuilder.group({
       description: this.descriptionComponent?.getData()
     });
@@ -52,25 +52,25 @@ export class DisplayNameDescriptionComponent implements OnInit {
     return formGroup;
   }
 
-  protected updateLocalizationCallback(parentFormGroup: FormGroup, formGroup: FormGroup): void {
+  protected updateLocalizationCallback(parentFormGroup: UntypedFormGroup, formGroup: UntypedFormGroup): void {
     if(!parentFormGroup || !formGroup) return;
 
     let controlName = "displayName";
-    this.displayNameFormArray = formGroup.get(controlName) as FormArray;
+    this.displayNameFormArray = formGroup.get(controlName) as UntypedFormArray;
     this.updateLocalizationInternal(parentFormGroup, formGroup, controlName);
 
     controlName = "description";
-    this.descriptionFormArray = formGroup.get(controlName) as FormArray;
+    this.descriptionFormArray = formGroup.get(controlName) as UntypedFormArray;
     this.updateLocalizationInternal(parentFormGroup, formGroup, controlName);
   }
 
-  private updateLocalizationInternal(parentFormGroup: FormGroup, formGroup: FormGroup, controlName: string): void {
+  private updateLocalizationInternal(parentFormGroup: UntypedFormGroup, formGroup: UntypedFormGroup, controlName: string): void {
     const newValues = this.updateLocalizationValues(formGroup, controlName);
     parentFormGroup.get(controlName)?.setValue(newValues);
   }
 
-  public updateLocalizationValues(formGroup: FormGroup, controlName: string): any {
-    const controlArray = formGroup.get(controlName) as FormArray;
+  public updateLocalizationValues(formGroup: UntypedFormGroup, controlName: string): any {
+    const controlArray = formGroup.get(controlName) as UntypedFormArray;
 
     let newValues: any = {};
 

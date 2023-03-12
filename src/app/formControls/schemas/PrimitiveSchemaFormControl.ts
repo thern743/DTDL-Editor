@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
 import { PrimitiveSchemaCapabilityModel } from '../../models/schemas/PrimitiveSchemaCapabilityModel';
@@ -9,7 +9,7 @@ export class PrimitiveSchemaFormControl extends AbstractCapabilityFormControl<Pr
   private _validationService: ValidationService;
   public dialog: MatDialog;
 
-  constructor(model: PrimitiveSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: PrimitiveSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -17,7 +17,7 @@ export class PrimitiveSchemaFormControl extends AbstractCapabilityFormControl<Pr
     this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(model: PrimitiveSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: PrimitiveSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

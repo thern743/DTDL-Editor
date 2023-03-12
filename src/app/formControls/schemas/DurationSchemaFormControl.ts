@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
 import { DurationSchemaCapabilityModel } from '../../models/schemas/DurationSchemaCapabilityModel';
@@ -9,7 +9,7 @@ export class DurationSchemaFormControl extends AbstractCapabilityFormControl<Dur
   private _validationService: ValidationService;
   public dialog: MatDialog;
 
-  constructor(model: DurationSchemaCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+  constructor(model: DurationSchemaCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
     super(formBuilder);
     this._validationService = validationService;
     this.dialog = dialog;
@@ -17,7 +17,7 @@ export class DurationSchemaFormControl extends AbstractCapabilityFormControl<Dur
     this.form = this.toFormGroup(model);
   }
 
-  public toFormGroup(model: DurationSchemaCapabilityModel): FormGroup {
+  public toFormGroup(model: DurationSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       displayName: [model.displayName],

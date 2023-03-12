@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { AbstractCapabilityFormControl } from "./AbstractCapabilityFormControl";
@@ -30,7 +30,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   public schemas!: Array<AbstractCapabilityFormControl<AbstractSchemaModel>>;
   private _dialog: MatDialog;
   
-  constructor(model: InterfaceCapabilityModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {  
+  constructor(model: InterfaceCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {  
     super(formBuilder);
     this._validationService = validationService;
     this.model = model;
@@ -129,7 +129,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     return capabilities;
   }
 
-  public toFormGroup(model: InterfaceCapabilityModel): FormGroup {
+  public toFormGroup(model: InterfaceCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model.id, [this._validationService.validDtmi()]],
       type: [model.type],
@@ -146,7 +146,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     return form;
   }
 
-  private getCapabilityFormArray(): FormArray {
+  private getCapabilityFormArray(): UntypedFormArray {
     let formArray = this.formBuilder.array([]);
     
     this.contents.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
@@ -157,7 +157,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     return formArray;
   }
 
-  private getSchemasFormArray(): FormArray {
+  private getSchemasFormArray(): UntypedFormArray {
     let formArray = this.formBuilder.array([]);
     
     this.schemas.forEach((schema: AbstractCapabilityFormControl<AbstractSchemaModel>) => {

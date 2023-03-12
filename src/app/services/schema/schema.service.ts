@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldCapabilityFormControl } from '../../formControls/FieldCapabilityFormControl';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
@@ -28,10 +28,10 @@ export class SchemaService implements IFormFactory, IModelFactory {
   private _editorService: EditorService
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
-  private _formBuilder: FormBuilder;
+  private _formBuilder: UntypedFormBuilder;
   public dialog: MatDialog;
 
-  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, formBuilder: FormBuilder, dialog: MatDialog) {
+  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     this._editorService = editorService;
     this._validationService = validationService;
     this._settingsService = settingsService;
@@ -69,7 +69,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
     enumSchema.model.enumValues.push(model);
   }
 
-  public isComplexSchema(form: FormGroup, schemaString: string = 'schema'): boolean {
+  public isComplexSchema(form: UntypedFormGroup, schemaString: string = 'schema'): boolean {
     let type = form.get(schemaString)?.value?.type;
     if (type && type instanceof Array) type = type[0];
     return ["array", "enum", "map", "object"].indexOf(type?.toLowerCase()) >= 0;
@@ -83,7 +83,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return model1?.type && model2?.type ? model1.type[0].toLowerCase() === model2.type[0].toLowerCase() : model1 === model2;
   }
 
-  public getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
+  public getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
     return SchemaFactory.getFormsRegistry();
   }
 

@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
 import { MapKeyCapabilityModel } from "../models/MapKeyCapabilityModel";
@@ -9,7 +9,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
     private _validationService: ValidationService;
     public dialog: MatDialog;
 
-    constructor(model: MapKeyCapabilityModel<AbstractSchemaModel>, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) {
+    constructor(model: MapKeyCapabilityModel<AbstractSchemaModel>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {
         super(formBuilder);
         this._validationService = validationService;
         this.dialog = dialog;
@@ -17,7 +17,7 @@ export class MapKeyFormControl extends AbstractCapabilityFormControl<MapKeyCapab
         this.form = this.toFormGroup(model);
     }
 
-    public toFormGroup(model: MapKeyCapabilityModel<AbstractSchemaModel>): FormGroup {
+    public toFormGroup(model: MapKeyCapabilityModel<AbstractSchemaModel>): UntypedFormGroup {
         let form =  this.formBuilder.group({
             id: [model.id, [this._validationService.validDtmi()]],
             displayName: [model.displayName], 

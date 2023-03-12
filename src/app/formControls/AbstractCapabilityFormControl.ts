@@ -1,5 +1,5 @@
 import { OnDestroy } from "@angular/core";
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
@@ -9,22 +9,22 @@ import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl
 export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel>
     implements ICapabilityFormControl<TCapabilityModel>
 {    
-    public formBuilder: FormBuilder;
+    public formBuilder: UntypedFormBuilder;
     public model!: TCapabilityModel;  
-    public form!: FormGroup;
+    public form!: UntypedFormGroup;
     public interface!: InterfaceCapabilityFormControl;
     private _subscriptions: Subscription[];
     
     // TODO: Move common services to the AbstractCapabilityFormControl base class
     //       Currently, all subclasses have their own private instances of common services. E.g., `ValidationService`.
-    constructor(formBuilder: FormBuilder) {
+    constructor(formBuilder: UntypedFormBuilder) {
         this.formBuilder = formBuilder; 
         this._subscriptions = new Array<Subscription>();       
     }
   
-    public abstract toFormGroup(model: TCapabilityModel): FormGroup;
+    public abstract toFormGroup(model: TCapabilityModel): UntypedFormGroup;
 
-    public subscribeModelToForm(formGroup: FormGroup): void {
+    public subscribeModelToForm(formGroup: UntypedFormGroup): void {
       console.groupCollapsed("Creating Subscriptions");
 
       Object.keys(formGroup.controls).forEach(key => {        
@@ -32,9 +32,9 @@ export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICa
 
         let control = formGroup.controls[key];        
         
-        if(control instanceof FormGroup) {
+        if(control instanceof UntypedFormGroup) {
           this.subscribeModelToForm(control);
-        } else if(!(control instanceof FormArray)) {          
+        } else if(!(control instanceof UntypedFormArray)) {          
           this.createSubscription(control, key);
         }
       });

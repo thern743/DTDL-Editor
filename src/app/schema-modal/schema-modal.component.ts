@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/schemas/ArraySchemaFormControl';
@@ -18,7 +18,7 @@ import { SchemaModalResult } from '../models/SchemaModalResult';
 export class SchemaModalComponent implements OnInit {
   public title: string = "TODO";
   public schemaType!: string;
-  public interfaceSchemaControl: FormControl = new FormControl(false);
+  public interfaceSchemaControl: UntypedFormControl = new UntypedFormControl(false);
   public schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>;
   
   constructor(@Inject(MAT_DIALOG_DATA) data: SchemaModalParameters) {

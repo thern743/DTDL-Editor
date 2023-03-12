@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
@@ -20,7 +20,7 @@ export class CommandPayloadComponent implements OnInit {
   private _editorService: EditorService;
   public panelOpenState = true;
   public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
-  public schemaDropDownControl: FormControl = new FormControl();
+  public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
 
   constructor(
     editorService: EditorService, 

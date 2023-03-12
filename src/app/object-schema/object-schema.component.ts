@@ -3,7 +3,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ObjectSchemaFormControl } from '../formControls/schemas/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'object-schema',
@@ -16,7 +16,7 @@ export class ObjectSchemaComponent implements OnInit {
   public schemaService: SchemaService;
   public panelOpenState = true;
   private MAX_LEVEL: number = 5;
-  public interfaceSchemaControl: FormControl = new FormControl();
+  public interfaceSchemaControl: UntypedFormControl = new UntypedFormControl();
 
   constructor(schemaService: SchemaService) { 
     this.schemaService = schemaService; 

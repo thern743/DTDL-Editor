@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilityFormControl";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
@@ -32,7 +32,7 @@ export class SchemaFactory {
     map?.set(name, factory);
   }
 
-  public static createFormControl(type: string, name: string): ((model: AbstractSchemaModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>) | undefined {
+  public static createFormControl(type: string, name: string): ((model: AbstractSchemaModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>) | undefined {
     let func = SchemaFactory.formRegistry.get(type)?.get(name);
     return func === undefined ? undefined : func;
   }
@@ -47,7 +47,7 @@ export class SchemaFactory {
     return func === undefined ? undefined : func;
   }
 
-  public static getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: FormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
+  public static getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
     return SchemaFactory.formRegistry;
   }
 
