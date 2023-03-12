@@ -274,7 +274,7 @@ export class EditorService {
     // Using the index from the model is NOT a safe assumption here.
     const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
 
-    if(schemaIndex && schemaIndex > -1) {
+    if(schemaIndex != undefined && schemaIndex > -1) {
       if(interfaceInstance.model.schemas) {
         interfaceInstance.model.schemas[schemaIndex] = formControl.model;
         schemasFormArray.at(schemaIndex).patchValue(formControl.form);
