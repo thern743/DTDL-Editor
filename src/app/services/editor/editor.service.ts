@@ -268,13 +268,18 @@ export class EditorService {
     this.interfaces$.next(interfaceInstance);
   }
 
+  public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
+    // Using the index from the model is NOT a safe assumption here.
+    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+    return schemaIndex == undefined ? -1 : schemaIndex;
+  }
+
   public addOrUpdateInterfaceSchema(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
     let schemasFormArray = interfaceInstance.form.get("schemas") as UntypedFormArray;
 
-    // Using the index from the model is NOT a safe assumption here.
-    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+    const schemaIndex = this.getInterfaceSchemaIndex(interfaceInstance, formControl);
 
-    if(schemaIndex != undefined && schemaIndex > -1) {
+    if(schemaIndex > -1) {
       if(interfaceInstance.model.schemas) {
         interfaceInstance.model.schemas[schemaIndex] = formControl.model;
         schemasFormArray.at(schemaIndex).patchValue(formControl.form);

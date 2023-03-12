@@ -106,9 +106,9 @@ export class SchemaService implements IFormFactory, IModelFactory {
   }
 
   public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    var schemaType = schemaFormControl?.model?.type;
-    
-    const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl);
+    const schemaType = schemaFormControl?.model?.type;
+    const isInterfaceSchema = this._editorService.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
+    const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl, isInterfaceSchema);
 
     this.dialog
       .open(SchemaModalComponent,

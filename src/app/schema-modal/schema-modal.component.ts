@@ -18,13 +18,14 @@ import { SchemaModalResult } from '../models/SchemaModalResult';
 export class SchemaModalComponent implements OnInit {
   public title: string = "TODO";
   public schemaType!: string;
-  public interfaceSchemaControl: UntypedFormControl = new UntypedFormControl(false);
+  public interfaceSchemaControl: UntypedFormControl;
   public schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>;
   
   constructor(@Inject(MAT_DIALOG_DATA) data: SchemaModalParameters) {
     this.title = data.title;
     this.schemaType = data.schemaType;
     this.schemaFormControl = data.schemaFormControl;
+    this.interfaceSchemaControl = new UntypedFormControl(data.isInterfaceSchema);
   }
 
   public ngOnInit(): void {
