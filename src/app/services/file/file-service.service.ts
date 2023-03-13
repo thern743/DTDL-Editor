@@ -22,7 +22,7 @@ export class FileService {
     this.files = new Array<File>(); 
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
     this.fileData$ = new Subject<any>();
-    this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true});
+    this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
   }
 
   // TODO: The schema attribute is failing deserialization
@@ -41,19 +41,37 @@ export class FileService {
   public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
+
+      const parseInternal = (capability: any) => {
+        capability instanceof InterfaceCapabilityModel;
+        this.files.push(file);      
+        this.interfaces$.next(capability);
+      };
       
       [...file.target.files].map((file: File) => {                
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = (data: any) => {
-          let file = data.target.result;
+          const file = data.target.result;
+          const fileString = file as string;
 
-          console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
-      
+          console.debug("Reading File: %s ...", fileString.substring(0, 25));
+
           try {
-            let capability = this.typedJson.parse(file);
-            capability instanceof InterfaceCapabilityModel;
-            this.files.push(file);      
-            this.interfaces$.next(capability);                                    
+            // We first attempt to deserialize as an array and fallback to single record.
+            this.typedJson.config({
+              errorHandler: (error: Error) => {
+                if (error.name == "TypeError") {
+                  const capability = this.typedJson.parse(file);
+                  parseInternal(capability);
+                }
+              }
+            });
+
+            const capabilities = this.typedJson.parseAsArray(file);
+
+            capabilities?.forEach((capability: any) => {
+              parseInternal(capability);
+            });            
           } catch(error) {
             const msg = "Invalid DTDL (JSON-LD) File";
             console.error(msg + ": " + error); 
