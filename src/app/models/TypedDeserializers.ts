@@ -65,7 +65,7 @@ export class TypeDeserializers {
   }
 
   public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams) {
-    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, AbstractCapabilityModel));
+    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, PropertyCapabilityModel));
     return result;
   }
 }
