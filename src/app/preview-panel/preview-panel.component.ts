@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
@@ -13,18 +14,15 @@ import { ValidationService } from '../services/validation/validation-service.ser
 })
 export class PreviewPanelComponent implements OnInit {
   public panelOpenState = false;
-  @Input() public formIndex: number = 0;
-  @Input() public interfaces!: Array<InterfaceCapabilityFormControl>;
-  @Input('cdkCopyToClipboard') public text!: string
+  public interfaces!: Array<InterfaceCapabilityFormControl>;
   private _fileService: FileService;
   private _validationService: ValidationService;
-  private _typedJson: TypedJSON<InterfaceCapabilityModel>;
   public validationResults!: IDtdlValidationResult[];
 
-  constructor(fileService: FileService, validationService: ValidationService) {
+  constructor(fileService: FileService, validationService: ValidationService, @Inject(MAT_DIALOG_DATA) data: Array<InterfaceCapabilityFormControl>) {
     this._fileService = fileService;
     this._validationService = validationService;
-    this._typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
+    this.interfaces = data;
   }
 
   public ngOnInit(): void {
@@ -36,8 +34,6 @@ export class PreviewPanelComponent implements OnInit {
   //       built-in JSON.stringify()/parse() for now. This may be okay but we should
   //       investigate why it's breaking so we can remain consistent between importing and exporting behavior.
   public getJsonLd(): any {
-    //let str = this._typedJson.stringify(this.interface.model);    
-    //let result = this._typedJson.parse(str);
     const interfaces = this.interfaces.map((formControl: InterfaceCapabilityFormControl) => formControl.model);
     let str = JSON.stringify(interfaces);
     let result = JSON.parse(str);

@@ -3,6 +3,7 @@ import { UntypedFormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
+import { PreviewPanelComponent } from '../preview-panel/preview-panel.component';
 import { EditorService } from '../services/editor/editor.service';
 import { SettingsService } from '../services/settings/settings.service';
 import { ValidationService } from '../services/validation/validation-service.service';
@@ -35,5 +36,15 @@ export class MainEditorComponent implements OnInit {
     let model = new InterfaceCapabilityModel(dtmi, this._settingsService.editorSettings.context);
     let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder, this._validationService, this._dialog);
     this.editorService.addInterface(interfaceInstance);
+  }
+
+  public openPreviewPanel(): void {
+    this._dialog
+      .open(PreviewPanelComponent,
+        {
+          data: this.editorService.interfaces,
+          height: "90%",
+          width: "80%"
+        })
   }
 }

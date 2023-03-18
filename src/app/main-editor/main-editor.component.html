@@ -1,15 +1,13 @@
+<mat-toolbar>
+  <button mat-button color="accent" (click)="addInterface()"><mat-icon>add_circle</mat-icon> Add Interface</button>
+  <span class="toolbar-spacer"></span>
+  <button mat-button color="accent" (click)="openPreviewPanel()"><mat-icon>visibility</mat-icon> Preview DTDL</button>
+</mat-toolbar>
 <mat-card>
   <mat-accordion>
     <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
       <interface-definition [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
       <br />
-    </ng-container>
-    <mat-action-row>
-      <button mat-raised-button color="primary" (click)="addInterface()">
-        <mat-icon>add_circle</mat-icon>&nbsp;New Interface
-      </button>
-    </mat-action-row>
+    </ng-container>    
   </mat-accordion>
-  <br />
-  <preview-panel [interfaces]="editorService.interfaces"></preview-panel>
 </mat-card>

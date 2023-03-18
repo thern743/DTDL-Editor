@@ -1,40 +1,38 @@
-<mat-expansion-panel class="mat-elevation-z3" [expanded]="panelOpenState" (opened)="panelOpenState = true"
-  (closed)="panelOpenState = false">
-  <mat-expansion-panel-header>
-    <mat-panel-title>DTDL Preview</mat-panel-title>
-  </mat-expansion-panel-header>
+<mat-card>
+  <mat-card-title>DTDL Preview</mat-card-title>
+  <mat-card-content style="overflow:auto">
+    <pre #previewPanel id="previewPanel" style="width: 100%;">
+      {{ getJsonLd() | jsonld }}
+    </pre>
+  </mat-card-content>
+</mat-card>
+<mat-card-actions style="display: flex">
+  <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Validate" (click)="validateModel(previewPanel.innerText)">
+    <mat-icon>check_circle</mat-icon>
+  </button>
+  <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model" (click)="saveFile(previewPanel.innerText)">
+    <mat-icon>cloud_download</mat-icon>
+  </button>
+  <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model" [cdkCopyToClipboard]="previewPanel.innerText">
+    <mat-icon>content_copy</mat-icon>
+  </button>
+  <span class="toolbar-spacer"> </span>
+  <!-- <mat-divider [vertical]="true" [inset]="true" class="vertical"></mat-divider> -->
+  <button mat-raised-button color="primary" [mat-dialog-close]>Close</button>
+</mat-card-actions>
+<br />
 
-  <mat-form-field appearance="fill" style="width: 100%;">
-    <textarea matInput #previewPanel id="previewPanel" cdkTextareaAutosize cdkAutosizeMinRows="5"
-      cdkAutosizeMaxRows="100" readonly [value]="(panelOpenState ? getJsonLd() : '') | jsonld">
-    </textarea>
-    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model"
-      style="float:right; margin-left: 15px" [cdkCopyToClipboard]="previewPanel.value">
-      <mat-icon>content_copy</mat-icon>
-    </button>
-    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model"
-      style="float:right; margin-left: 15px" (click)="saveFile(previewPanel.value)">
-      <mat-icon>cloud_download</mat-icon>
-    </button>
-    <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Validate"
-      style="float:right; margin-left: 15px" (click)="validateModel(previewPanel.value)">
-      <mat-icon>check_circle</mat-icon>
-    </button>
-  </mat-form-field>
-  <br />
-
-  <mat-card *ngIf="validationResults && validationResults.length > 0">
-    <mat-list role="list" *ngFor="let value of validationResults">
-      <div>
-        <h3 matListItemTitle><mat-icon matListItemIcon color="warn" style="margin-right: 10px">error_outline</mat-icon>{{value.cause}}</h3>
-        <h4 matListItemLine style="margin-left: 35px; margin-top: -15px"><b>Action:</b> {{value.action}}</h4>
-      </div>
-    </mat-list>
-  </mat-card>
-
-  <mat-card *ngIf="validationResults?.length == 0">
+<mat-card *ngIf="validationResults && validationResults.length > 0">
+  <mat-list role="list" *ngFor="let value of validationResults">
     <div>
-      <h3><mat-icon matListItemIcon color="accent">check_circle</mat-icon> DTDL passed validation.</h3>
+      <h3 matListItemTitle><mat-icon matListItemIcon color="warn"
+          style="margin-right: 10px">error_outline</mat-icon>{{value.cause}}</h3>
+      <h4 matListItemLine style="margin-left: 35px; margin-top: -15px"><b>Action:</b> {{value.action}}</h4>
     </div>
-  </mat-card>
-</mat-expansion-panel>
+  </mat-list>
+</mat-card>
+<mat-card *ngIf="validationResults?.length == 0">
+  <div>
+    <h3><mat-icon matListItemIcon color="accent">check_circle</mat-icon> DTDL passed validation.</h3>
+  </div>
+</mat-card>
