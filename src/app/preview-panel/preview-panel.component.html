@@ -8,17 +8,16 @@
 </mat-card>
 <mat-card-actions style="display: flex">
   <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Validate" (click)="validateModel(previewPanel.innerText)">
-    <mat-icon>check_circle</mat-icon>
+    <mat-icon>check_circle</mat-icon> Validate
   </button>
   <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model" (click)="saveFile(previewPanel.innerText)">
-    <mat-icon>cloud_download</mat-icon>
+    <mat-icon>cloud_download</mat-icon> Download
   </button>
   <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model" [cdkCopyToClipboard]="previewPanel.innerText">
-    <mat-icon>content_copy</mat-icon>
+    <mat-icon>content_copy</mat-icon> Copy
   </button>
   <span class="toolbar-spacer"> </span>
-  <!-- <mat-divider [vertical]="true" [inset]="true" class="vertical"></mat-divider> -->
-  <button mat-raised-button color="primary" [mat-dialog-close]>Close</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]><mat-icon>close</mat-icon> Close</button>
 </mat-card-actions>
 <br />
 
