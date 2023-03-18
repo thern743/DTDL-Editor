@@ -1,8 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { JsonTypes, TypedJSON } from 'typedjson';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
-import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
 import { IDtdlValidationResult } from '../models/interfaces/IDtdlValidationResult';
 import { FileService } from '../services/file/file-service.service';
 import { ValidationService } from '../services/validation/validation-service.service';
@@ -18,11 +16,13 @@ export class PreviewPanelComponent implements OnInit {
   private _fileService: FileService;
   private _validationService: ValidationService;
   public validationResults!: IDtdlValidationResult[];
+  public editMode: boolean;
 
   constructor(fileService: FileService, validationService: ValidationService, @Inject(MAT_DIALOG_DATA) data: Array<InterfaceCapabilityFormControl>) {
     this._fileService = fileService;
     this._validationService = validationService;
     this.interfaces = data;
+    this.editMode = false;
   }
 
   public ngOnInit(): void {
@@ -60,5 +60,9 @@ export class PreviewPanelComponent implements OnInit {
 
       }
     });
+  }
+
+  public toggleEditMode(): void {
+    this.editMode = !this.editMode; 
   }
 }

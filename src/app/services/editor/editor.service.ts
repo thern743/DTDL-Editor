@@ -292,4 +292,9 @@ export class EditorService {
 
     this.interfaces$.next(interfaceInstance);
   }
+
+  public parseNameFromDtmi(dtmi: string) {
+    const tokens = dtmi.split(/(?::|;)+/)
+    return tokens[tokens.length - 2];
+  }
 }

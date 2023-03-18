@@ -80,6 +80,7 @@ $my-theme: mat.define-dark-theme((color: (primary: $primary,
   }
 
   .vertical {
+    display: inline;
     height: 25px;
   }
 
