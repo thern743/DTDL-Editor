@@ -14,7 +14,7 @@ import { ValidationService } from '../services/validation/validation-service.ser
 export class PreviewPanelComponent implements OnInit {
   public panelOpenState = false;
   @Input() public formIndex: number = 0;
-  @Input() public interface!: InterfaceCapabilityFormControl;
+  @Input() public interfaces!: Array<InterfaceCapabilityFormControl>;
   @Input('cdkCopyToClipboard') public text!: string
   private _fileService: FileService;
   private _validationService: ValidationService;
@@ -38,7 +38,8 @@ export class PreviewPanelComponent implements OnInit {
   public getJsonLd(): any {
     //let str = this._typedJson.stringify(this.interface.model);    
     //let result = this._typedJson.parse(str);
-    let str = JSON.stringify(this.interface.model);
+    const interfaces = this.interfaces.map((formControl: InterfaceCapabilityFormControl) => formControl.model);
+    let str = JSON.stringify(interfaces);
     let result = JSON.parse(str);
     return result;
   }

@@ -4,7 +4,7 @@
     <mat-panel-title>DTDL Preview</mat-panel-title>
   </mat-expansion-panel-header>
 
-  <mat-form-field appearance="fill" style="width: 90%;">
+  <mat-form-field appearance="fill" style="width: 100%;">
     <textarea matInput #previewPanel id="previewPanel" cdkTextareaAutosize cdkAutosizeMinRows="5"
       cdkAutosizeMaxRows="100" readonly [value]="(panelOpenState ? getJsonLd() : '') | jsonld">
     </textarea>
