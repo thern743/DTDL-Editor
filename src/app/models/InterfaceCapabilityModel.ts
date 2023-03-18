@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { jsonArrayMember, jsonMember, jsonObject } from "typedjson";
+import { AnyT, jsonArrayMember, jsonMember, jsonObject } from "typedjson";
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
 import { TypeDeserializers } from './TypedDeserializers';
@@ -7,8 +7,8 @@ import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember({ name: '@context' })
-  public context: string = "dtmi:dtdl:context;2";  
+  @jsonMember(AnyT, { name: '@context', deserializer: TypeDeserializers.arrayOrStringDeserializer })
+  public context: string | Array<string>;  
 
   @jsonMember
   public extends?: string;

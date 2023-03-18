@@ -80,6 +80,8 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     interfaceModel.schemas?.forEach((schema: AbstractSchemaModel) => {
       let formControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
       let type = typeof schema.type === 'string' ? new Array<string>(schema.type) : schema.type;
+      
+      if (type == undefined) return;
 
       switch(type[0]) {
         case "array":          

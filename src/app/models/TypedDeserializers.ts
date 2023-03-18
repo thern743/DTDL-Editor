@@ -1,5 +1,4 @@
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from "./AbstractSchemaModel";
 import { CommandCapabilityModel } from "./CommandCapabilityModel";
 import { ComponentCapabilityModel } from "./ComponentCapabilityModel";
@@ -13,7 +12,7 @@ import { TelemetryCapabilityModel } from "./TelemetryCapabilityModel";
 
 export class TypeDeserializers {
 
-  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {
+  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams): any {
     let result = json.map((value: any) => {
       // TODO: SemanticTypeArray TypedJSON.mapType() isn't being used correctly
       //       See class SemanticTypeArray. The deserialization logic there should be executing when
@@ -46,7 +45,7 @@ export class TypeDeserializers {
     return result;
   }
 
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams): any {
     if (!value) return;
     let schema = typeof value === 'string' ? value : value.type;
 
@@ -64,8 +63,17 @@ export class TypeDeserializers {
     }
   }
 
-  public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams) {
-    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, AbstractCapabilityModel));
+  public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams): any {
+    let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, PropertyCapabilityModel));
     return result;
+  }
+
+  public static arrayOrStringDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
+    if (typeof json === 'string')
+      return new Array<string>(json);
+    else if (json instanceof Array)
+      return new Array<string>(...json)
+    else
+      return params.fallback(json, Object)
   }
 }

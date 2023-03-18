@@ -268,6 +268,11 @@ export class EditorService {
     this.interfaces$.next(interfaceInstance);
   }
 
+  public deleteInterface(formIndex: number): void {
+    this.interfaces.splice(formIndex, 1);
+    this.interfaces$.next();
+  }
+
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
     // Using the index from the model is NOT a safe assumption here.
     const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
@@ -291,5 +296,10 @@ export class EditorService {
     }
 
     this.interfaces$.next(interfaceInstance);
+  }
+
+  public parseNameFromDtmi(dtmi: string) {
+    const tokens = dtmi.split(/(?::|;)+/)
+    return tokens[tokens.length - 2];
   }
 }

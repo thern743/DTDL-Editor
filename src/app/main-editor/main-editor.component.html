@@ -1,13 +1,18 @@
+<mat-toolbar>
+  <button mat-button color="accent" (click)="addInterface()"><mat-icon>add_circle</mat-icon> Add Interface</button>
+  <mat-divider [vertical]="true" class="vertical"></mat-divider>
+  <span class="toolbar-spacer"></span>
+  <mat-divider [vertical]="true" class="vertical"></mat-divider>
+  <button mat-button color="accent" (click)="openPreviewPanel()"><mat-icon>visibility</mat-icon> Preview DTDL</button>
+</mat-toolbar>
 <mat-card>
-    <mat-accordion>
-        <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
-            <interface-definition [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
-            <br/>
-        </ng-container>
-        <mat-action-row>
-            <button mat-raised-button color="primary" (click)="addInterface()">
-                <mat-icon>add_circle</mat-icon>&nbsp;New Interface
-            </button>
-        </mat-action-row>    
-    </mat-accordion>
+  <mat-accordion class="flex-accordion">
+    <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
+      <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true" (panelToggle)="panelOpenState = $event"></interface-definition>
+      <div class="flex-header-button" *ngIf="!panelOpenState">
+        <button mat-raised-button color="accent" class="action-button" (click)="delete($event, i)"><mat-icon>delete_outline</mat-icon> Remove</button>
+      </div>
+      <mat-divider class="flex-divider"></mat-divider>
+    </ng-container>    
+  </mat-accordion>
 </mat-card>

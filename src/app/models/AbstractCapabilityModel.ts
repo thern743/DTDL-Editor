@@ -9,7 +9,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember({ name: '@id' })
     public id!: string;
 
-    @jsonMember(AnyT, { name: '@type', deserializer: AbstractCapabilityModel.typeDeserializer })
+    @jsonMember(AnyT, { name: '@type', deserializer: AbstractCapabilityModel.arrayOrStringDeserializer })
     public type!: string | Array<string>;
 
     @jsonMember(AnyT)
@@ -26,7 +26,7 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
         this.type = new Array<string>(type);
     }
 
-    public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
+    public static arrayOrStringDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
       if (typeof json === 'string')
         return new Array<string>(json);
       else if (json instanceof Array)
