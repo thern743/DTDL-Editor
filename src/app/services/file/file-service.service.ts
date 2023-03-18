@@ -60,9 +60,11 @@ export class FileService {
             // We first attempt to deserialize as an array and fallback to single record.
             this.typedJson.config({
               errorHandler: (error: Error) => {
-                if (error.name == "TypeError") {
+                if (error.name == "TypeError" && error.message === "Could not deserialize object: expected 'Array', got 'Object'.") {
                   const capability = this.typedJson.parse(file);
                   parseInternal(capability);
+                } else {
+                  throw error;
                 }
               }
             });
