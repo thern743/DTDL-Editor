@@ -6,10 +6,13 @@
   <button mat-button color="accent" (click)="openPreviewPanel()"><mat-icon>visibility</mat-icon> Preview DTDL</button>
 </mat-toolbar>
 <mat-card>
-  <mat-accordion>
+  <mat-accordion class="flex-accordion">
     <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
-      <interface-definition [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
-      <br />
+      <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
+      <div class="flex-header-button" >
+        <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon> Remove</button>
+      </div>
+      <mat-divider class="flex-divider"></mat-divider>
     </ng-container>    
   </mat-accordion>
 </mat-card>

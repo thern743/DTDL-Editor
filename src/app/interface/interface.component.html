@@ -3,7 +3,7 @@
                         [formGroup]="interface.form"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title>Interface &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; {{editorService.parseNameFromDtmi(interface.model.id)}}</mat-panel-title>
+        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model.id)}}</em></mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -48,32 +48,32 @@
     <br/>
 
     <mat-card formArrayName="contents">
-        <mat-card-title>Capability List</mat-card-title>
+        <mat-card-title><h3>Capabilities</h3></mat-card-title>
         <mat-card-content>
-            <mat-accordion>
-                <div *ngFor="let capability of getContents(); let i = index;" style="display: flex;">
+            <mat-accordion class="flex-accordion">
+                <ng-container *ngFor="let capability of getContents(); let i = index;">
                     <ng-container [ngSwitch]="getType(capability)">
                         <ng-container *ngSwitchCase="'Property'">
-                            <property-definition [property]="getProperty(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></property-definition>
+                            <property-definition class="flex-header" [property]="getProperty(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></property-definition>
                         </ng-container>
                         <ng-container *ngSwitchCase="'Command'">
-                            <command-definition [command]="getCommand(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></command-definition>
+                            <command-definition class="flex-header" [command]="getCommand(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></command-definition>
                         </ng-container>
                         <ng-container *ngSwitchCase="'Telemetry'">
-                            <telemetry-definition [telemetry]="getTelemetry(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></telemetry-definition>
+                            <telemetry-definition class="flex-header" [telemetry]="getTelemetry(capability)" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></telemetry-definition>
                         </ng-container>
                         <ng-container *ngSwitchCase="'Component'">
-                            <component-definition [component]="getComponent(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></component-definition>
+                            <component-definition class="flex-header" [component]="getComponent(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></component-definition>
                         </ng-container>
                         <ng-container *ngSwitchCase="'Relationship'">
-                            <relationship-definition [relationship]="getRelationship(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
+                            <relationship-definition class="flex-header" [relationship]="getRelationship(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
                         </ng-container>
-                        <div class="action-row">
-                            <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon></button>
+                        <div class="flex-header-button" >
+                          <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon> Remove</button>
                         </div>
-                        <mat-divider></mat-divider>
+                        <mat-divider class="flex-divider"></mat-divider>
                     </ng-container>
-                </div>
+                </ng-container>
             </mat-accordion>
         </mat-card-content>
     </mat-card>

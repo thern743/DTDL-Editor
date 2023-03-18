@@ -84,14 +84,37 @@ $my-theme: mat.define-dark-theme((color: (primary: $primary,
     height: 25px;
   }
 
+  .flex-accordion {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .flex-header {
+    flex: 5 1 90%;
+  }
+
+  .flex-header-button {
+    display: flex;
+    flex: 1 5 10%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  mat-divider.flex-divider {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%; 
+    flex: 0 0 auto;
+  }
+
   mat-card {
     background-color: mat.get-color-from-palette($background, background) !important;
   }
 
   mat-card-actions.preview-actions {
-    display: flex; 
-    position: sticky; 
-    z-index: 999; 
+    display: flex;
+    position: sticky;
+    z-index: 999;
     bottom: -25px;
     background-color: mat.get-color-from-palette($background, card);
   }
@@ -111,6 +134,14 @@ $my-theme: mat.define-dark-theme((color: (primary: $primary,
   .content-container {
     margin-top: 15px;
     margin-left: 15px;
+  }
+
+  .action-button {
+    background-color: mat.get-color-from-palette($accent, 200); //rgb(105, 240, 174, .25);
+  }
+
+  .action-button:hover {
+    background-color: mat.get-color-from-palette($accent, A200); // rgb(105, 240, 174);
   }
 }
 

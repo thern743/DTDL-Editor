@@ -38,6 +38,9 @@ export class MainEditorComponent implements OnInit {
     this.editorService.addInterface(interfaceInstance);
   }
 
+  public delete(event: any, temp: any): void {
+  }
+
   public openPreviewPanel(): void {
     this._dialog
       .open(PreviewPanelComponent,
