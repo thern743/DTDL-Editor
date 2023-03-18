@@ -38,7 +38,9 @@ export class MainEditorComponent implements OnInit {
     this.editorService.addInterface(interfaceInstance);
   }
 
-  public delete(event: any, temp: any): void {
+  public delete($event: Event, formIndex: number): void {
+    $event.stopImmediatePropagation();
+    this.editorService.deleteInterface(formIndex);
   }
 
   public openPreviewPanel(): void {
