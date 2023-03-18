@@ -87,6 +87,14 @@ $my-theme: mat.define-dark-theme((color: (primary: $primary,
     background-color: mat.get-color-from-palette($background, background) !important;
   }
 
+  mat-card-actions.preview-actions {
+    display: flex; 
+    position: sticky; 
+    z-index: 999; 
+    bottom: -25px;
+    background-color: mat.get-color-from-palette($background, card);
+  }
+
   .selected-panel {
     border: 1px solid mat.get-color-from-palette($primary, 300);
   }
