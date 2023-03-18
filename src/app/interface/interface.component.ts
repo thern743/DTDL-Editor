@@ -56,6 +56,10 @@ export class InterfaceComponent implements OnInit {
     return capability as RelationshipCapabilityFormControl;
   }
   
+  public addContext($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
+    
+  }
+
   public delete($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
     $event.stopImmediatePropagation();
     this.editorService.deleteCapabilityFromInterface(interfaceDefinition, this.formIndex);

@@ -1,5 +1,4 @@
 import { CustomDeserializerParams } from "typedjson/lib/types/metadata";
-import { AbstractCapabilityModel } from "./AbstractCapabilityModel";
 import { AbstractSchemaModel } from "./AbstractSchemaModel";
 import { CommandCapabilityModel } from "./CommandCapabilityModel";
 import { ComponentCapabilityModel } from "./ComponentCapabilityModel";
@@ -69,9 +68,12 @@ export class TypeDeserializers {
     return result;
   }
 
-  public static contextDeserializer(value: string | Array<string>, params: CustomDeserializerParams): any {
-    if (!value) return;
-    let schema = typeof value === 'string' ? value : value[0];
-    return schema;
+  public static arrayOrStringDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
+    if (typeof json === 'string')
+      return new Array<string>(json);
+    else if (json instanceof Array)
+      return new Array<string>(...json)
+    else
+      return params.fallback(json, Object)
   }
 }

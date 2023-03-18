@@ -9,9 +9,10 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_context_{{formIndex}}">Context</mat-label>
-        <input matInput id="interface_context_{{formIndex}}" type="text" formControlName="context" readonly />
+        <input matInput id="interface_context_{{formIndex}}" type="text" formControlName="context" readonly propertyFormatter />
     </mat-form-field>
     <span class="formSpacer"></span>
+    <button mat-raised-button color="primary" (click)="addContext($event, interface)"><mat-icon>add_circle</mat-icon> Add Context</button>
     <br/>
 
     <mat-form-field color="accent">
@@ -76,9 +77,6 @@
             </mat-accordion>
         </mat-card-content>
     </mat-card>
-
-    <br/>
-    <preview-panel [interface]="interface"></preview-panel>
 
     <mat-action-row>
         <button mat-raised-button color="primary" (click)="editorService.addPropertyToInterface(interface)">
