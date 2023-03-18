@@ -13,7 +13,7 @@ import { TelemetryCapabilityModel } from "./TelemetryCapabilityModel";
 
 export class TypeDeserializers {
 
-  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams) {
+  public static interfaceCapabilityDeserializer(json: Array<any>, params: CustomDeserializerParams): any {
     let result = json.map((value: any) => {
       // TODO: SemanticTypeArray TypedJSON.mapType() isn't being used correctly
       //       See class SemanticTypeArray. The deserialization logic there should be executing when
@@ -46,7 +46,7 @@ export class TypeDeserializers {
     return result;
   }
 
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams): any {
     if (!value) return;
     let schema = typeof value === 'string' ? value : value.type;
 
@@ -64,8 +64,14 @@ export class TypeDeserializers {
     }
   }
 
-  public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams) {
+  public static relationshipCapabilityDeserializer(json: Array<{ prop: string; shouldDeserialize: boolean }>, params: CustomDeserializerParams): any {
     let result = json.filter(value => !value.shouldDeserialize).map(value => params.fallback(value, PropertyCapabilityModel));
     return result;
+  }
+
+  public static contextDeserializer(value: string | Array<string>, params: CustomDeserializerParams): any {
+    if (!value) return;
+    let schema = typeof value === 'string' ? value : value[0];
+    return schema;
   }
 }

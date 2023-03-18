@@ -7,8 +7,8 @@ import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 @jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember({ name: '@context' })
-  public context: string = "dtmi:dtdl:context;2";  
+  @jsonArrayMember(AbstractCapabilityModel, { name: '@context', deserializer: TypeDeserializers.contextDeserializer } )
+  public context: string | Array<string>;  
 
   @jsonMember
   public extends?: string;
