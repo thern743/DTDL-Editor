@@ -302,4 +302,15 @@ export class EditorService {
     const tokens = dtmi.split(/(?::|;)+/)
     return tokens[tokens.length - 2];
   }
+
+  public getContexts(): Map<string, string> {
+    return new Map<string, string>([
+      [ "DTDL v2", "dtmi:dtdl:context;2" ],
+      [ "DTDL v3", "dtmi:dtdl:context;3" ],
+      [ "QuantitativeTypes v1", "dtmi:dtdl:extension:quantitativeTypes;1" ],
+      [ "Historization v1", "dtmi:dtdl:extension:historization;1" ],
+      [ "Annotation v1", "dtmi:dtdl:extension:annotation;1" ],
+      [ "Overriding v1", "" ]
+    ]);
+  }
 }

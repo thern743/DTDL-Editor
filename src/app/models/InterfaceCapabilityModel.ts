@@ -10,8 +10,8 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonMember(AnyT, { name: '@context', deserializer: TypeDeserializers.arrayOrStringDeserializer })
   public context: string | Array<string>;  
 
-  @jsonMember
-  public extends?: string;
+  @jsonMember(AnyT, { deserializer: TypeDeserializers.arrayOrStringDeserializer })
+  public extends?: string | Array<string>;
 
   @jsonArrayMember(AbstractCapabilityModel, { deserializer: TypeDeserializers.interfaceCapabilityDeserializer } )
   public contents: Array<AbstractCapabilityModel>;
