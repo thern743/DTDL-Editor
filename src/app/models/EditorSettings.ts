@@ -1,5 +1,5 @@
 export class EditorSettings {
-    public static CONTEXT_DEFAULT: string = "dtmi:dtdl:context;2";
+    public static CONTEXT_DEFAULT: string = "dtmi:dtdl:context;";
     public static SCHEME_DEFAULT: string = "dtmi";
     public static PATH_DEFAULT: Array<string> = new Array<string>("com", "dtdlEditor", "1");
     public static VERSION_DEFAULT: string = "1";
@@ -45,7 +45,7 @@ export class EditorSettings {
 
     public static fromDto(settings: EditorSettingsDto): EditorSettings {
       let newSettings = new EditorSettings();
-      newSettings.context = settings.context ?? EditorSettings.CONTEXT_DEFAULT;
+      newSettings.context = settings.context ?? `${EditorSettings.CONTEXT_DEFAULT}${EditorSettings.DTDLVERSION_DEFAULT}`;
       newSettings.scheme = settings.scheme ?? EditorSettings.SCHEME_DEFAULT;
       newSettings.path = settings.fullPath.split(":") ?? EditorSettings.PATH_DEFAULT;
       newSettings.version = settings.version ?? EditorSettings.VERSION_DEFAULT;

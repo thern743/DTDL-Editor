@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
 import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
@@ -42,6 +43,12 @@ export class SettingsComponent implements OnInit {
 
   public getLocales(): Array<string> {
     return this._localizationService.getLocales();
+  }
+
+  public changeDtdlVersion($event: MatSelectChange): void {
+    const tokens = (this.form.get("context")?.value as string)?.split(';')
+    if (tokens.length > 1)
+      this.form.get("context")?.setValue(`${tokens[0]};${$event.value}`)
   }
 
   public save() {
