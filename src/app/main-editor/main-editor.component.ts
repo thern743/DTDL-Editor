@@ -19,6 +19,7 @@ export class MainEditorComponent implements OnInit {
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
   private _dialog: MatDialog;
+  public panelOpenState: boolean = false;
 
   constructor(editorService: EditorService, formBuilder: UntypedFormBuilder, validationService: ValidationService, settingsService: SettingsService, dialog: MatDialog) {
     this.editorService = editorService;

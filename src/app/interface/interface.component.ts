@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor.service'
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
@@ -15,7 +15,7 @@ import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilit
   styleUrls: ['./interface.component.scss']
 })
 
-export class InterfaceComponent implements OnInit {
+export class InterfaceComponent implements OnInit, AfterViewInit {
   // Tuple: 
   //    [0] = interface's index within the model, 
   //    [1] = index of the capability within the interface
@@ -23,13 +23,18 @@ export class InterfaceComponent implements OnInit {
   @Input() public interface!: InterfaceCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
   @Input() public selectedIndex!: number;
+  @Output() public panelToggle: EventEmitter<boolean>;
   
   constructor(public editorService: EditorService) {
-   
+    this.panelToggle = new EventEmitter<boolean>();
   }
 
   public ngOnInit(): void {
     this.interface.subscribeModelToForm(this.interface.form);
+  }
+
+  public ngAfterViewInit(): void {
+    this.panelToggle.emit(this.panelOpenState);
   }
 
   public getContents(): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {
@@ -58,6 +63,16 @@ export class InterfaceComponent implements OnInit {
   
   public addContext($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {
     
+  }
+
+  public open(): void {
+    this.panelOpenState = true;
+    this.panelToggle.emit(this.panelOpenState);
+  }
+
+  public close(): void {
+    this.panelOpenState = false;
+    this.panelToggle.emit(this.panelOpenState);
   }
 
   public delete($event: Event, interfaceDefinition: InterfaceCapabilityFormControl): void {

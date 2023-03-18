@@ -1,6 +1,8 @@
 <mat-expansion-panel    class="mat-elevation-z3"
-                        [expanded]="panelOpenState"                        
+                        [expanded]="panelOpenState"                                                
                         [formGroup]="interface.form"
+                        (opened)="open()"
+                        (closed)="close()"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
         <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model.id)}}</em></mat-panel-title>

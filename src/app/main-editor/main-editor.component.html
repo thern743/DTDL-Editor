@@ -8,8 +8,8 @@
 <mat-card>
   <mat-accordion class="flex-accordion">
     <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
-      <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true"></interface-definition>
-      <div class="flex-header-button" >
+      <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true" (panelToggle)="panelOpenState = $event"></interface-definition>
+      <div class="flex-header-button" *ngIf="!panelOpenState">
         <button mat-raised-button color="accent" class="action-button" (click)="delete($event, i)"><mat-icon>delete_outline</mat-icon> Remove</button>
       </div>
       <mat-divider class="flex-divider"></mat-divider>
