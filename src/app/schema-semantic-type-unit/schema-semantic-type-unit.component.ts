@@ -4,7 +4,9 @@ import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
+import { PropertyCapabilityModel } from '../models/PropertyCapabilityModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
+import { TelemetryCapabilityModel } from '../models/TelemetryCapabilityModel';
 import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
 
@@ -29,6 +31,33 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.setSchemaAndSemanticTypeDropDowns();
+  }
+
+  // TODO: Importing a Property/Telemetry model does not allow editing the schema
+  //       Because the models are deserialized directly, the factory methods are not called when importing
+  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
+  private setSchemaAndSemanticTypeDropDowns(): void {
+    if (this.parentForm.model?.type instanceof Array && this.parentForm.model.type?.length > 1) {
+      // Only set Semantic Type is it's an additional @type value
+      const type = this.parentForm.model.type[1];
+      this.semanticTypeDropDownControl?.setValue(type);
+    }
+
+    let model: any;
+
+    // This is not clean.
+    if (this.type === "Property") {
+      model = <PropertyCapabilityModel>this.parentForm.model;
+    } else if (this.type = "Telemetry") {
+      model = <TelemetryCapabilityModel>this.parentForm.model;
+    } else {
+      return;
+    }
+
+    const schema = typeof model?.schema === 'string' ? model.schema : model.schema?.type;
+    if (!schema) return;
+    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
 
   // TODO: Passing validSchemaTypes to the FilterPipe doesn't get re-evaluated on changes
@@ -54,9 +83,9 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
 
   public getUnits(): string[] | undefined {
-    let semanticType = this.semanticTypeDropDownControl?.value;
+    const semanticType = this.semanticTypeDropDownControl?.value;
     if(semanticType) {
-      let units = this._editorService.getUnits().get(semanticType);
+      const units = this._editorService.getUnits().get(semanticType);
       return units;
     }
 
@@ -71,23 +100,24 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
 
   public changeSemanticType($event: MatSelectChange): void {
-    let value = $event.value;
+    const value = $event.value;
     this.changeSemanticTypeInternal(value);
   }
 
   public changeSemanticTypeInternal(value: string): void {
-    let type = this.parentForm.form.get("type");
+    const type = this.parentForm.form.get("type");
+    const titleType =  this.toTitleCase(this.type);
 
     if (["", null, undefined].indexOf(value) > -1) {
-      let semanticType = new Array<string>("Property");
+      const semanticType = new Array<string>(titleType);
       type?.setValue(semanticType);
-      let unit = this.parentForm.form.get("unit");
+      const unit = this.parentForm.form.get("unit");
       unit?.setValue(undefined);
     } else {
-      let semanticType = new Array<string>("Property", value);
+      const semanticType = new Array<string>(titleType, value);
       type?.setValue(semanticType);
 
-      let schema = this.parentForm.form.get("schema")?.value;
+      const schema = this.parentForm.form.get("schema")?.value;
       if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
         this.parentForm.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
@@ -97,18 +127,18 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
   
   public changeSchema($event: MatSelectChange): void {
-    let value = $event.value;
+    const value = $event.value;
     this.changeSchemaInternal(value);
   }
 
   private changeSchemaInternal(value: any): void {
     if (value instanceof AbstractCapabilityFormControl) return;
-    let key = value.toLowerCase();
-    let schemaType = this._schemaService.getSchemaTypeEnum(key);
+    const key = value.toLowerCase();
+    const schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.parentForm.form.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      const formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
       this.schemaFormControl = formControl;
     }
   }
@@ -116,6 +146,15 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   public openSchemaEditor(): void {
     if(this.schemaFormControl)
       this._schemaService.openSchemaEditor(this.parentForm, this.schemaFormControl)
+  }
+
+  private toTitleCase(value: string): string {
+    return value.replace(
+      /\w\S*/g,
+      function(txt: string) {
+        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+      }
+    );
   }
 }
 

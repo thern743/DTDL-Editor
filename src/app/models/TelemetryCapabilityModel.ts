@@ -13,7 +13,7 @@ import { AbstractSchemaModel } from './AbstractSchemaModel';
 @jsonObject
 export class TelemetryCapabilityModel extends AbstractCapabilityModel {
   @jsonMember 
-  public  name!: string;
+  public name!: string;
 
   @jsonMember(AnyT, { deserializer: TelemetryCapabilityModel.schemaDeserializer })
   public schema!: string | AbstractSchemaModel; 
