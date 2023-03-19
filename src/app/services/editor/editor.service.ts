@@ -17,6 +17,8 @@ import { SettingsService } from '../settings/settings.service';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
+import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
+import { SchemaService } from '../schema/schema.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +36,7 @@ export class EditorService {
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
   private _settingsService: SettingsService
   
-  constructor(validationService: ValidationService, formBuilder: UntypedFormBuilder, settingsService: SettingsService) { 
+  constructor(validationService: ValidationService, formBuilder: UntypedFormBuilder, settingsService: SettingsService) {
     this._validationService = validationService;
     this._formBuilder = formBuilder;
     this.classTypes = this.getClassTypes();

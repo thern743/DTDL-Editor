@@ -133,3 +133,8 @@ For instance, when working with a nested `FormArray` on a parent `FormGroup`, us
 
 Good question. First, there's no doubt that Reactive Forms are the future and for good reason. There are many benefits to them. Really, our choices come down to betting on the future: we believe Reactive Forms will be improved to work more intuitively with backing models. At a minimum, we believe there will be ways of hooking into the behavior of `getRawValue()` (or otherwise having a more intuitive way of controlling the serdes).
 
+- When editing existing array schema, element is not set
+- When editing existing map schema, key and value are not set
+- Editing map schemas not correctly saving key and value
+- Importing interfaces with localized displayName and description not working
+- Importing properties with complex schemas not setting schema properly

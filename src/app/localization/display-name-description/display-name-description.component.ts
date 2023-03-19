@@ -13,7 +13,7 @@ export class DisplayNameDescriptionComponent implements OnInit {
   @ViewChild("descriptionComponent") descriptionComponent!: LanguageMapComponent;
   public displayNameFormArray!: UntypedFormArray;
   public descriptionFormArray!: UntypedFormArray;
-  @Input() parentFormGroup!: UntypedFormGroup;
+  @Input() public parentFormGroup!: UntypedFormGroup;
   @Input() public formIndex: number = -1;
   private _localizationService: LocalizationService;
   private _formBuilder: UntypedFormBuilder;

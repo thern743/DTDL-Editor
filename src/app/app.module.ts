@@ -62,6 +62,7 @@ import { LanguageMapComponent } from './localization/language-map/language-map.c
 import { LocalizedDisplayNameDescriptionComponent } from './localization/localized-display-name-description/localized-display-name-description.component';
 import { DisplayNameDescriptionComponent } from './localization/display-name-description/display-name-description.component';
 import { SchemaModalComponent } from './schema-modal/schema-modal.component';
+import { SchemaSemanticTypeUnitComponent } from './schema-semantic-type-unit/schema-semantic-type-unit.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { SchemaModalComponent } from './schema-modal/schema-modal.component';
     LanguageMapComponent,
     LocalizedDisplayNameDescriptionComponent,
     DisplayNameDescriptionComponent,
-    SchemaModalComponent
+    SchemaModalComponent,
+    SchemaSemanticTypeUnitComponent
   ],
   imports: [
     BrowserModule,
