@@ -310,7 +310,11 @@ export class EditorService {
       [ "QuantitativeTypes v1", "dtmi:dtdl:extension:quantitativeTypes;1" ],
       [ "Historization v1", "dtmi:dtdl:extension:historization;1" ],
       [ "Annotation v1", "dtmi:dtdl:extension:annotation;1" ],
-      [ "Overriding v1", "" ]
+      [ "Overriding v1", "dtmi:dtdl:extension:overriding;1" ]
     ]);
+  }
+
+  public compareContexts(context1: string, context2: string): boolean {
+    return context1 === context2;
   }
 }

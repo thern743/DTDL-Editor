@@ -11,7 +11,7 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_context_{{formIndex}}">Context</mat-label>
-        <mat-select matNativeControl id="interface_context_{{formIndex}}" formControlName="context" multiple>
+        <mat-select matNativeControl id="interface_context_{{formIndex}}" formControlName="context" multiple [compareWith]="editorService.compareContexts">
           <mat-option *ngFor="let context of editorService.getContexts() | keyvalue" [value]="context.value"> {{ context.key }} </mat-option>
       </mat-select>
     </mat-form-field>

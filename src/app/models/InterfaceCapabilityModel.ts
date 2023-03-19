@@ -21,7 +21,7 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
 
   constructor(id: string, context: string) {
     super(id, "Interface");
-    this.context = context;
+    this.context = new Array<string>(context);
     this.contents = new Array<AbstractCapabilityModel>();
     this.schemas = new Array<AbstractSchemaModel>();
   }

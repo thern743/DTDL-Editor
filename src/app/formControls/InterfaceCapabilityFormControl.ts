@@ -139,8 +139,8 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
       comment: [model.comment],
       description: [model.description],
       // Interface specific
-      context: [model.context],
-      extends: [model.extends],
+      context: [[...model.context]],
+      extends: [[...model.extends ?? ""]],
       contents: this.getCapabilityFormArray(),
       schemas: this.getSchemasFormArray()
     });
