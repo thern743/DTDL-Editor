@@ -21,9 +21,9 @@ export abstract class AbstractCapabilityModel implements ICapabilityModel {
     @jsonMember
     public comment!: string;
 
-    constructor(id: string, type: string) {
+    constructor(id: string, type: string | Array<string>) {
         this.id = id;
-        this.type = new Array<string>(type);
+        this.type = type;
     }
 
     public static arrayOrStringDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {

@@ -5,7 +5,7 @@ import { EnumValueCapabilityModel } from "../EnumValueCapabilityModel";
 @jsonObject
 export class EnumSchemaCapabilityModel extends AbstractSchemaModel {
   @jsonMember
-  public valueSchema!: number | string;
+  public valueSchema!: string;
 
   @jsonArrayMember(EnumValueCapabilityModel)
   public enumValues!: Array<EnumValueCapabilityModel>;

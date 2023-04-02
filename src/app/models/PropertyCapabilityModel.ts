@@ -29,11 +29,15 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
   }
 
   // Must exist on the class being deserialized.
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+  public static schemaDeserializer(value: string | any, params: CustomDeserializerParams) {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
+    
+    if (typeof value === 'string')
+      return value;
 
-    switch (schema?.toLocaleLowerCase()) {
+    if (!value["@type"]) return;
+
+    switch (value["@type"]?.toLocaleLowerCase()) {
       case "array":
         return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":
@@ -41,7 +45,7 @@ export class PropertyCapabilityModel extends AbstractCapabilityModel {
       case "enum":
         return params.fallback(value, EnumSchemaCapabilityModel);
       case "object":
-        return params.fallback(value, ObjectSchemaCapabilityModel);
+        return params.  fallback(value, ObjectSchemaCapabilityModel);
       default:
         return value;
     }

@@ -26,16 +26,16 @@ export class TypeDeserializers {
       //       in `InterfaceCapabilityModel.interfaceCapabilityDeserializer()` method.
       //       There should be some form of delegation to these types that can be wired up for
       //       TypedJSON to handle.
-      switch (type[0]) {
-        case "Property":
+      switch (type[0].toLocaleLowerCase()) {
+        case "property":
           return params.fallback(value, PropertyCapabilityModel);
-        case "Command":
+        case "command":
           return params.fallback(value, CommandCapabilityModel);
-        case "Telemetry":
+        case "telemetry":
           return params.fallback(value, TelemetryCapabilityModel);
-        case "Component":
+        case "component":
           return params.fallback(value, ComponentCapabilityModel);
-        case "Relationship":
+        case "relationship":
           return params.fallback(value, RelationshipCapabilityModel);
         default:
           break;
@@ -45,11 +45,15 @@ export class TypeDeserializers {
     return result;
   }
 
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams): any {
+  public static schemaDeserializer(value: string | any, params: CustomDeserializerParams): any {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
+    
+    if (typeof value === 'string')
+      return params.fallback(value, String);
 
-    switch (schema?.toLocaleLowerCase()) {
+    if (!value["@type"]) return;
+
+    switch (value["@type"]?.toLocaleLowerCase()) {
       case "array":
         return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":

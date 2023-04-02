@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { jsonMember, jsonObject } from "typedjson";
+import { AnyT, jsonMember, jsonObject } from "typedjson";
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 
 // TODO: Remove @type output in the JSON-LD for EnumValue
@@ -12,7 +12,7 @@ export class EnumValueCapabilityModel extends AbstractSchemaModel {
   @jsonMember
   public name!: string;
 
-  @jsonMember
+  @jsonMember(AnyT)
   public enumValue!: number | string;
 
   constructor(id: string) {

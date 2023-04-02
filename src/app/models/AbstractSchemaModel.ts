@@ -24,13 +24,4 @@ export abstract class AbstractSchemaModel implements ISchemaModel {
         this.id = id;
         this.type = type;
     }
-
-    public static typeDeserializer(json: Array<string> | string, params: CustomDeserializerParams) {
-      if (typeof json === 'string')
-        return new Array<string>(json);
-      else if (json instanceof Array)
-        return new Array<string>(...json)
-      else
-        return params.fallback(json, Object)
-    }
 }

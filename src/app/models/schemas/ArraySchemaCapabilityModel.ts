@@ -16,11 +16,15 @@ export class ArraySchemaCapabilityModel extends AbstractSchemaModel {
   }
 
   // Must exist on the class being deserialized.
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+  public static schemaDeserializer(value: string | any, params: CustomDeserializerParams) {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
+    
+    if (typeof value === 'string')
+      return params.fallback(value, String);
 
-    switch (schema?.toLocaleLowerCase()) {
+    if (!value["@type"]) return;
+
+    switch (value["@type"]?.toLocaleLowerCase()) {
       case "array":
         return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":

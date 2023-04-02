@@ -19,9 +19,9 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   @jsonArrayMember(AbstractSchemaModel, { deserializer: TypeDeserializers.schemaDeserializer } )
   public schemas?: Array<AbstractSchemaModel>;
 
-  constructor(id: string, context: string) {
+  constructor(id: string, context: string | Array<string>) {
     super(id, "Interface");
-    this.context = new Array<string>(context);
+    this.context = context;
     this.contents = new Array<AbstractCapabilityModel>();
     this.schemas = new Array<AbstractSchemaModel>();
   }

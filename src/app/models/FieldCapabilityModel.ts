@@ -7,9 +7,10 @@ import { ArraySchemaCapabilityModel } from './schemas/ArraySchemaCapabilityModel
 import { EnumSchemaCapabilityModel } from './schemas/EnumSchemaCapabilityModel';
 import { MapSchemaCapabilityModel } from './schemas/MapSchemaCapabilityModel';
 import { ObjectSchemaCapabilityModel } from './schemas/ObjectSchemaCapabilityModel';
+import { PrimitiveSchemaCapabilityModel } from './schemas/PrimitiveSchemaCapabilityModel';
 
 @jsonObject
-export class FieldCapabilityModel extends AbstractCapabilityModel {
+export class FieldCapabilityModel extends AbstractSchemaModel {
   @jsonMember
   public name!: string;
 
@@ -21,21 +22,25 @@ export class FieldCapabilityModel extends AbstractCapabilityModel {
   }
 
   // Must exist on the class being deserialized.
-  public static schemaDeserializer(value: string | AbstractSchemaModel, params: CustomDeserializerParams) {
+  public static schemaDeserializer(value: string | any, params: CustomDeserializerParams) {
     if (!value) return;
-    let schema = typeof value === 'string' ? value : value.type;
+    
+    if (typeof value === 'string')
+      return value;
 
-    switch (schema?.toLocaleLowerCase()) {
+    if (!value["@type"]) return;
+
+    switch (value["@type"]?.toLocaleLowerCase()) {
       case "array":
-        //return params.fallback(value, ArraySchemaCapabilityModel);
+        return params.fallback(value, ArraySchemaCapabilityModel);
       case "map":
-        //return params.fallback(value, MapSchemaCapabilityModel);
+        return params.fallback(value, MapSchemaCapabilityModel);
       case "enum":
-        //return params.fallback(value, EnumSchemaCapabilityModel);
+        return params.fallback(value, EnumSchemaCapabilityModel);
       // TODO: Circular dependency between ObjectSchemaCapabilityModel and FieldCapabilityModel causes webpack error
       //       Error: Cannot access 'FieldCapabilityModel' before initialization
       case "object":
-        //return params.fallback(value, ObjectSchemaCapabilityModel);
+        return params.fallback(value, ObjectSchemaCapabilityModel);
       default:
         return value;
     }

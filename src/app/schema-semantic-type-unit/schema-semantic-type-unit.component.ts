@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
@@ -15,7 +15,7 @@ import { SchemaService } from '../services/schema/schema.service';
   templateUrl: './schema-semantic-type-unit.component.html',
   styleUrls: ['./schema-semantic-type-unit.component.scss']
 })
-export class SchemaSemanticTypeUnitComponent implements OnInit {
+export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   @Input() public type!: string;
   @Input() public formIndex!: number;
   @Input() public parentForm!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
@@ -31,33 +31,47 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.setSchemaAndSemanticTypeDropDowns();
+  }
+
+  public ngAfterViewInit(): void {
+    this.setSemanticTypeDropDowns();
+    this.setSchemaDropDowns();
   }
 
   // TODO: Importing a Property/Telemetry model does not allow editing the schema
   //       Because the models are deserialized directly, the factory methods are not called when importing
   //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
-  private setSchemaAndSemanticTypeDropDowns(): void {
+  private setSemanticTypeDropDowns(): void {
     if (this.parentForm.model?.type instanceof Array && this.parentForm.model.type?.length > 1) {
       // Only set Semantic Type is it's an additional @type value
-      const type = this.parentForm.model.type[1];
-      this.semanticTypeDropDownControl?.setValue(type);
+      const semanticType = this.parentForm.model.type[1];
+      this.changeSemanticTypeInternal(semanticType);
     }
+  }
 
+  private setSchemaDropDowns(): void {
     let model: any;
 
     // This is not clean.
-    if (this.type === "Property") {
+    if (this.type === "property") {
       model = <PropertyCapabilityModel>this.parentForm.model;
-    } else if (this.type = "Telemetry") {
+    } else if (this.type = "telemetry") {
       model = <TelemetryCapabilityModel>this.parentForm.model;
     } else {
       return;
     }
 
-    const schema = typeof model?.schema === 'string' ? model.schema : model.schema?.type;
-    if (!schema) return;
-    this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
+    const key = model?.schema["@type"]?.toLowerCase();
+    const schemaType = this._schemaService.getSchemaTypeEnum(key);
+
+    if (schemaType == SchemaTypeEnum.Complex) {
+      const formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      this.schemaFormControl = formControl;
+    } else {
+      this.parentForm.form.get("schema")?.setValue(key);
+    }
+
+    this.schemaDropDownControl.setValue(key);
   }
 
   // TODO: Passing validSchemaTypes to the FilterPipe doesn't get re-evaluated on changes
@@ -132,6 +146,7 @@ export class SchemaSemanticTypeUnitComponent implements OnInit {
   }
 
   private changeSchemaInternal(value: any): void {
+    if (!value) return;
     if (value instanceof AbstractCapabilityFormControl) return;
     const key = value.toLowerCase();
     const schemaType = this._schemaService.getSchemaTypeEnum(key);
