@@ -1,4 +1,3 @@
-import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata'
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BooleanSchemaCapabilityModel } from '../../models/schemas/BooleanSchemaCapabilityModel';
@@ -21,7 +20,7 @@ export class BooleanSchemaFormControl extends AbstractCapabilityFormControl<Bool
 
   public toFormGroup(model: BooleanSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
+      id: [model["@id"], [this._validationService.validDtmi()]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

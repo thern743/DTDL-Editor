@@ -1,6 +1,5 @@
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterFormFactoryMethod } from '../../reflection/ReflectionMetadata';
 import { DateTimeSchemaCapabilityModel } from '../../models/schemas/DateTimeSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from '../AbstractCapabilityFormControl';
@@ -19,7 +18,7 @@ export class DateTimeSchemaFormControl extends AbstractCapabilityFormControl<Dat
 
   public toFormGroup(model: DateTimeSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
+      id: [model["@id"], [this._validationService.validDtmi()]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

@@ -46,7 +46,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     interfaceModel.contents?.forEach((capability: AbstractCapabilityModel) => {
       let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
       
-      let type = typeof capability.type === 'string' ? new Array<string>(capability.type) : capability.type;
+      let type = typeof capability["@type"] === 'string' ? new Array<string>(capability["@type"]) : capability["@type"];
 
       switch(type[0]) {
         case "Property":          
@@ -65,7 +65,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
           formControl = new RelationshipCapabilityFormControl(this,capability as RelationshipCapabilityModel, this._validationService, this.formBuilder);
           break;
         default:
-          throw new Error("Invalid capability type '" + capability.type + "'");          
+          throw new Error("Invalid capability type '" + capability["@type"] + "'");          
       }
 
       contents.push(formControl);
@@ -79,11 +79,11 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
 
     interfaceModel.schemas?.forEach((schema: AbstractSchemaModel) => {
       let formControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
-      let type = typeof schema.type === 'string' ? new Array<string>(schema.type) : schema.type;
+      let type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
       
       if (type == undefined) return;
 
-      switch(type[0]) {
+      switch(type[0].toLocaleLowerCase()) {
         case "array":          
           formControl = new ArraySchemaFormControl(schema as ArraySchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
           break;
@@ -97,7 +97,7 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
           formControl = new ObjectSchemaFormControl(schema as ObjectSchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
           break;
         default:
-          throw new Error("Invalid schema type '" + schema.type + "'");          
+          throw new Error("Invalid schema type '" + schema["@type"] + "'");          
       }
 
       schemas.push(formControl);
@@ -127,19 +127,19 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   }
 
   private capabilityByType(type: string): AbstractCapabilityModel[] {    
-    let capabilities = this.model.contents.filter(x => x.type.indexOf(type) > -1);
+    let capabilities = this.model.contents.filter(x => x["@type"].indexOf(type) > -1);
     return capabilities;
   }
 
   public toFormGroup(model: InterfaceCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
-      type: [model.type],
+      id: [model["@id"], [this._validationService.validDtmi()]],
+      type: [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],
       // Interface specific
-      context: [[...model.context]],
+      context: [[...model["@context"]]],
       extends: [[...model.extends ?? ""]],
       contents: this.getCapabilityFormArray(),
       schemas: this.getSchemasFormArray()

@@ -81,7 +81,7 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
   }
 
   public getType(capability: AbstractCapabilityFormControl<AbstractCapabilityModel>): string {
-    let type = capability.model.type; //capability.form.get("type")?.value;
+    let type = capability.model["@type"];
     let val = type instanceof Array ? type[0] : type;
     return val;
   }

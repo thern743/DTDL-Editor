@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
 import { InterfaceCapabilityModel } from '../../models/InterfaceCapabilityModel';
-import { TypedJSON } from 'typedjson';
 import * as FileSaver from 'file-saver';
 
 @Injectable({
@@ -14,7 +13,6 @@ export class FileService {
   public files: File[];
   public interfaces$: Subject<InterfaceCapabilityModel>;
   public fileData$: Subject<any>;
-  public typedJson: TypedJSON<InterfaceCapabilityModel>;
   private _snackBar: MatSnackBar;
 
   constructor(snackBar: MatSnackBar) {
@@ -22,22 +20,8 @@ export class FileService {
     this.files = new Array<File>(); 
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
     this.fileData$ = new Subject<any>();
-    this.typedJson = new TypedJSON(InterfaceCapabilityModel, { preserveNull: true });
   }
 
-  // TODO: The schema attribute is failing deserialization
-  //       Importing a model causes the following error:
-  //
-  //         `Could not deserialize 'PropertyCapabilityModel.schema'; don't know how to deserialize type.`
-  //
-  //       The schema attribute is treated as either a string for primitive types (boolean, integer, etc)
-  //       but is an object for complex types (map, enum, etc). It's not being deserialized correctly...
-
-  // TODO: The name property is not being set correctly and causes validation to fail
-  //       Importing an existing interface with a Property will fail validation for missing a 
-  //       'name' attribute even though it exists:
-  //
-  //         `property 'contents' requires property 'name' to be specified but it is not.`
   public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
@@ -57,20 +41,7 @@ export class FileService {
           console.debug("Reading File: %s ...", fileString.substring(0, 25));
 
           try {
-            // We first attempt to deserialize as an array and fallback to single record.
-            this.typedJson.config({
-              errorHandler: (error: Error) => {
-                if (error.name == "TypeError" && error.message === "Could not deserialize object: expected 'Array', got 'Object'.") {
-                  const capability = this.typedJson.parse(file);
-                  parseInternal(capability);
-                } else {
-                  throw error;
-                }
-              }
-            });
-
-            const capabilities = this.typedJson.parseAsArray(file);
-
+            const capabilities = JSON.parse(file);
             capabilities?.forEach((capability: any) => {
               parseInternal(capability);
             });            

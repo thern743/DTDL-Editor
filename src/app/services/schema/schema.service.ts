@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FieldCapabilityFormControl } from '../../formControls/FieldCapabilityFormControl';
-import { FormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { MatDialog } from '@angular/material/dialog';
@@ -80,7 +80,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
   }
 
   public compareSchemas(model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean {
-    return model1?.type && model2?.type ? model1.type[0].toLowerCase() === model2.type[0].toLowerCase() : model1 === model2;
+    return model1["@type"] && model2["@type"] ? model1["@type"][0].toLowerCase() === model2["@type"][0].toLowerCase() : model1 === model2;
   }
 
   public getFormsRegistry(): Map<string, Map<string, (model: AbstractSchemaModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => AbstractCapabilityFormControl<AbstractSchemaModel>>> {
@@ -106,7 +106,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
   }
 
   public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    const schemaType = schemaFormControl?.model?.type;
+    const schemaType = schemaFormControl?.model["@type"];
     const isInterfaceSchema = this._editorService.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
     const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl, isInterfaceSchema);
 
@@ -128,7 +128,7 @@ export class SchemaService implements IFormFactory, IModelFactory {
 
           if(result.interfaceSchema) {
             this._editorService.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
-            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model.id);
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model["@id"]);
           } else {
             capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
           }

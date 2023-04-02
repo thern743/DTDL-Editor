@@ -29,7 +29,7 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
     model.properties.map((capability: ICapabilityModel) => {
       let formControl!: ICapabilityFormControl<ICapabilityModel>;
             
-      switch(capability.type[0]) {
+      switch(capability["@type"][0]) {
         case "Property":          
           formControl = new PropertyCapabilityFormControl(this.interface, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
           break;
@@ -49,8 +49,8 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
 
   public toFormGroup(model: RelationshipCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
-      type: [model.type],
+      id: [model["@id"], [this._validationService.validDtmi()]],
+      type: [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],

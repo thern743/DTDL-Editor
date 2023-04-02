@@ -18,7 +18,7 @@ export class LongSchemaFormControl extends AbstractCapabilityFormControl<LongSch
 
   public toFormGroup(model: LongSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
+      id: [model["@id"], [this._validationService.validDtmi()]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

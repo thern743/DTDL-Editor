@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
-import { AbstractControl, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
@@ -17,8 +17,6 @@ import { SettingsService } from '../settings/settings.service';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
-import { SchemaTypeEnum } from 'src/app/models/SchemaTypeEnum';
-import { SchemaService } from '../schema/schema.service';
 
 @Injectable({
   providedIn: 'root'
@@ -257,7 +255,7 @@ export class EditorService {
 
   public filterInterfacesForExtends(id: string): string[] {
     let result = new Array<string>("");
-    result.push(...this.interfaces.filter(x => x.model.id != id).map(x => x.model.id));
+    result.push(...this.interfaces.filter(x => x.model["@id"] != id).map(x => x.model["@id"]));
     return result;
   }
 
@@ -277,7 +275,7 @@ export class EditorService {
 
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
     // Using the index from the model is NOT a safe assumption here.
-    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x["@id"] == formControl.model["@id"]);
     return schemaIndex == undefined ? -1 : schemaIndex;
   }
 

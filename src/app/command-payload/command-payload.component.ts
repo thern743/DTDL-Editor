@@ -41,7 +41,7 @@ export class CommandPayloadComponent implements OnInit {
   //       Because the models are deserialized directly, the factory methods are not called when importing
   //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
   private setSchemaDropDown(): void {
-    let schema = typeof this.commandPayload.model?.schema === 'string' ? this.commandPayload.model.schema : this.commandPayload.model.schema?.type;
+    let schema = typeof this.commandPayload.model?.schema === 'string' ? this.commandPayload.model.schema : this.commandPayload.model.schema["@type"];
     if (!schema) return;
     this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }

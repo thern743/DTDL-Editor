@@ -42,9 +42,9 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   //       Because the models are deserialized directly, the factory methods are not called when importing
   //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
   private setSemanticTypeDropDowns(): void {
-    if (this.parentForm.model?.type instanceof Array && this.parentForm.model.type?.length > 1) {
+    if (this.parentForm.model && this.parentForm.model["@type"] instanceof Array && this.parentForm.model["@type"]?.length > 1) {
       // Only set Semantic Type is it's an additional @type value
-      const semanticType = this.parentForm.model.type[1];
+      const semanticType = this.parentForm.model["@type"][1];
       this.changeSemanticTypeInternal(semanticType);
     }
   }

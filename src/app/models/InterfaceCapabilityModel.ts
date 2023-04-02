@@ -1,27 +1,20 @@
-import 'reflect-metadata';
-import { AnyT, jsonArrayMember, jsonMember, jsonObject } from "typedjson";
+
 import { AbstractCapabilityModel } from './AbstractCapabilityModel';
 import { ICapabilityModel } from "./interfaces/ICapabilityModel";
-import { TypeDeserializers } from './TypedDeserializers';
 import { AbstractSchemaModel } from './AbstractSchemaModel';
 
-@jsonObject
 export class InterfaceCapabilityModel extends AbstractCapabilityModel {
-  @jsonMember(AnyT, { name: '@context', deserializer: TypeDeserializers.arrayOrStringDeserializer })
-  public context: string | Array<string>;  
+  public "@context": string | Array<string>;  
 
-  @jsonMember(AnyT, { deserializer: TypeDeserializers.arrayOrStringDeserializer })
   public extends?: string | Array<string>;
 
-  @jsonArrayMember(AbstractCapabilityModel, { deserializer: TypeDeserializers.interfaceCapabilityDeserializer } )
   public contents: Array<AbstractCapabilityModel>;
 
-  @jsonArrayMember(AbstractSchemaModel, { deserializer: TypeDeserializers.schemaDeserializer } )
   public schemas?: Array<AbstractSchemaModel>;
 
   constructor(id: string, context: string | Array<string>) {
     super(id, "Interface");
-    this.context = context;
+    this["@context"] = context;
     this.contents = new Array<AbstractCapabilityModel>();
     this.schemas = new Array<AbstractSchemaModel>();
   }
@@ -47,7 +40,7 @@ export class InterfaceCapabilityModel extends AbstractCapabilityModel {
   }
 
   private capabilityByType(type: string): ICapabilityModel[] {    
-    let capabilities = this.contents.filter(x => x.type.indexOf(type) > -1);
+    let capabilities = this.contents.filter(x => x["@type"].indexOf(type) > -1);
     return capabilities;
   }
 }
