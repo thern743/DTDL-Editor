@@ -65,17 +65,8 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
 
     if (!model?.schema) return;
 
-    const key = typeof model.schema === "string" ? model.schema : model?.schema["@type"]?.toLowerCase();
-    const schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.schemaFormControl = this.parentForm.schemaFormControl;
-
-    // if (schemaType == SchemaTypeEnum.Complex) {
-    //   const formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
-    //   this.schemaFormControl = formControl;
-    // } else {
-    //   this.parentForm.form.get("schema")?.setValue(key);
-    // }
-
+    const key = typeof model.schema === "string" ? model.schema : model?.schema["@type"]?.toLowerCase();
     this.schemaDropDownControl.setValue(key);
   }
 
