@@ -26,7 +26,7 @@
   <ng-container formGroupName="mapKey">
     <mat-form-field color="accent">
       <mat-label for="keySchema">Map Key</mat-label>
-      <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="keySchema" #mapKeySchema
+      <mat-select [compareWith]="compareSchemas" matNativeControl id="keySchema" #mapKeySchema
         (selectionChange)="changeMapKey($event)">
         <mat-option *ngFor="let schemaType of keySchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
       </mat-select>
@@ -49,7 +49,7 @@
   <ng-container formGroupName="mapValue">
     <mat-form-field color="accent">
       <mat-label for="valueSchema">Map Value</mat-label>
-      <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="valueSchema" #mapValueSchema
+      <mat-select [compareWith]="compareSchemas" matNativeControl id="valueSchema" #mapValueSchema
         (selectionChange)="changeMapValue($event)">
         <mat-option *ngFor="let schemaType of valueSchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
       </mat-select>

@@ -9,6 +9,8 @@ import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { TelemetryCapabilityModel } from '../models/TelemetryCapabilityModel';
 import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
+import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
+import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 
 @Component({
   selector: 'schema-semantic-type-unit',
@@ -18,7 +20,7 @@ import { SchemaService } from '../services/schema/schema.service';
 export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   @Input() public type!: string;
   @Input() public formIndex!: number;
-  @Input() public parentForm!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
+  @Input() public parentForm!: PropertyCapabilityFormControl | TelemetryCapabilityFormControl;
   private _editorService: EditorService;
   private _schemaService: SchemaService;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel> | undefined;
@@ -61,15 +63,18 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const key = model?.schema["@type"]?.toLowerCase();
-    const schemaType = this._schemaService.getSchemaTypeEnum(key);
+    if (!model?.schema) return;
 
-    if (schemaType == SchemaTypeEnum.Complex) {
-      const formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
-      this.schemaFormControl = formControl;
-    } else {
-      this.parentForm.form.get("schema")?.setValue(key);
-    }
+    const key = typeof model.schema === "string" ? model.schema : model?.schema["@type"]?.toLowerCase();
+    const schemaType = this._schemaService.getSchemaTypeEnum(key);
+    this.schemaFormControl = this.parentForm.schemaFormControl;
+
+    // if (schemaType == SchemaTypeEnum.Complex) {
+    //   const formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
+    //   this.schemaFormControl = formControl;
+    // } else {
+    //   this.parentForm.form.get("schema")?.setValue(key);
+    // }
 
     this.schemaDropDownControl.setValue(key);
   }
@@ -159,11 +164,12 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   }
 
   public openSchemaEditor(): void {
-    if(this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.parentForm, this.schemaFormControl)
+    if(this.schemaFormControl) {
+      this._editorService.openSchemaEditor(this.parentForm, this.schemaFormControl);
+    }
   }
 
-  private toTitleCase(value: string): string {
+  public toTitleCase(value: string): string {
     return value.replace(
       /\w\S*/g,
       function(txt: string) {

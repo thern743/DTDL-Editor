@@ -5,6 +5,7 @@ import { MapSchemaFormControl } from '../formControls/schemas/MapSchemaFormContr
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { SchemaService } from '../services/schema/schema.service';
+import { EditorService } from '../services/editor/editor.service';
 
 @Component({
   selector: 'map-schema',
@@ -14,15 +15,17 @@ import { SchemaService } from '../services/schema/schema.service';
 export class MapSchemaComponent implements OnInit {
   @Input()
   public map!: MapSchemaFormControl;
-  public schemaService: SchemaService;
   public panelOpenState = true;
   public keySchemaTypes: string[];
   public valueSchemaTypes: string[]
   public keySchemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
   public valueSchemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  private _editorService: EditorService;
+  private _schemaService: SchemaService;
 
-  constructor(schemaService: SchemaService) {
-    this.schemaService = schemaService;
+  constructor(editorService: EditorService, schemaService: SchemaService) {
+    this._editorService = editorService;
+    this._schemaService = schemaService;
     this.keySchemaTypes = new Array<string>();
     this.valueSchemaTypes = new Array<string>();
     this.mapKeysAndValues();
@@ -33,11 +36,11 @@ export class MapSchemaComponent implements OnInit {
   }
 
   private mapKeysAndValues(): void {
-    this.schemaService.getFormsRegistry().get("MapKey")?.forEach((value, key) => {
+    this._schemaService.getFormsRegistry().get("MapKey")?.forEach((value, key) => {
       this.keySchemaTypes.push(key);
     });
 
-    this.schemaService.getModelsRegistry().get("MapValue")?.forEach((value, key) => {
+    this._schemaService.getModelsRegistry().get("MapValue")?.forEach((value, key) => {
       this.valueSchemaTypes.push(key)
     });
   }
@@ -45,11 +48,11 @@ export class MapSchemaComponent implements OnInit {
   public changeMapKey($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaTypeEnum(key);
+    let schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.map.form.get("mapKey")?.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this.schemaService.createForm("MapKey", key);
+      let formControl = this._schemaService.createForm("MapKey", key);
       if (formControl === undefined) return;
       this.keySchemaFormControl = formControl;
     }
@@ -58,21 +61,25 @@ export class MapSchemaComponent implements OnInit {
   public changeMapValue($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaTypeEnum(key);
+    let schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.map.form.get("mapValue")?.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this.schemaService.createForm("MapValue", key);
+      let formControl = this._schemaService.createForm("MapValue", key);
       if (formControl === undefined) return;
       this.valueSchemaFormControl = formControl;
     }
   }
 
+  public compareSchemas(model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean {
+    return this._schemaService.compareSchemas(model1, model2);
+  }
+
   public openKeyEditor(): void {
-    this.schemaService.openSchemaEditor(this.map, this.keySchemaFormControl);
+    this._editorService.openSchemaEditor(this.map, this.keySchemaFormControl);
   }
 
   public openValueEditor(): void {
-    this.schemaService.openSchemaEditor(this.map, this.valueSchemaFormControl);
+    this._editorService.openSchemaEditor(this.map, this.valueSchemaFormControl);
   }
 }

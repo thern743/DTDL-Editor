@@ -4,7 +4,7 @@
     <mat-select [compareWith]="compareSchemas" matNativeControl id="{{type}}_schema_{{formIndex}}"
       (selectionChange)="changeSchema($event)" [formControl]="schemaDropDownControl" #schema>
       <mat-option *ngFor="let schemaType of getSchemaTypes().filter(validSchemaTypes)"
-        [value]="schemaType">{{schemaType}}</mat-option>
+        [value]="schemaType">{{ toTitleCase(schemaType) }}</mat-option>
     </mat-select>
   </mat-form-field>
   <span class="formSpacer"></span>
@@ -21,7 +21,7 @@
     <mat-label attr.for="{{type}}_semanticType_{{formIndex}}">Semantic Type</mat-label>
     <mat-select matNativeControl id="{{type}}_semanticType_{{formIndex}}" (selectionChange)="changeSemanticType($event)"
       [formControl]="semanticTypeDropDownControl" #semanticType>
-      <mat-option *ngFor="let semanticType of getSemanticTypes()" [value]="semanticType">{{semanticType}}</mat-option>
+      <mat-option *ngFor="let semanticType of getSemanticTypes()" [value]="semanticType">{{ toTitleCase(semanticType) }}</mat-option>
     </mat-select>
   </mat-form-field>
   <span class="formSpacer"></span>
@@ -29,7 +29,7 @@
   <mat-form-field color="accent">
     <mat-label attr.for="{{type}}_unit_{{formIndex}}">Unit</mat-label>
     <mat-select matNativeControl id="{{type}}_unit_{{formIndex}}" formControlName="unit">
-      <mat-option *ngFor="let unit of getUnits()" [value]="unit"> {{ unit }} </mat-option>
+      <mat-option *ngFor="let unit of getUnits()" [value]="unit"> {{ toTitleCase(unit) }} </mat-option>
     </mat-select>
   </mat-form-field>
 </ng-container>

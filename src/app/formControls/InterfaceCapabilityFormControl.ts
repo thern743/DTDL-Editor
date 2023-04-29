@@ -23,16 +23,20 @@ import { ArraySchemaFormControl } from "./schemas/ArraySchemaFormControl";
 import { EnumSchemaFormControl } from "./schemas/EnumSchemaFormControl";
 import { MapSchemaFormControl } from "./schemas/MapSchemaFormControl";
 import { ObjectSchemaFormControl } from "./schemas/ObjectSchemaFormControl";
+import { ArraySchemaFactory } from "../factories/ArraySchemaFactory";
+import { SchemaService } from "../services/schema/schema.service";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {
-  private _validationService: ValidationService;
   public contents!: Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>;
   public schemas!: Array<AbstractCapabilityFormControl<AbstractSchemaModel>>;
+  private _validationService: ValidationService;
+  private _schemaService: SchemaService;  
   private _dialog: MatDialog;
   
-  constructor(model: InterfaceCapabilityModel, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) {  
+  constructor(model: InterfaceCapabilityModel, validationService: ValidationService, schemaService: SchemaService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {  
     super(formBuilder);
     this._validationService = validationService;
+    this._schemaService = schemaService;
     this.model = model;
     this.contents = this.mapContents(model);
     this.schemas = this.mapSchemas(model);
@@ -44,25 +48,25 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
     let contents = new Array<AbstractCapabilityFormControl<AbstractCapabilityModel>>();
 
     interfaceModel.contents?.forEach((capability: AbstractCapabilityModel) => {
-      let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
-      
       let type = typeof capability["@type"] === 'string' ? new Array<string>(capability["@type"]) : capability["@type"];
+      
+      let formControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
 
-      switch(type[0]) {
-        case "Property":          
-          formControl = new PropertyCapabilityFormControl(this, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
+      switch(type[0].toLocaleLowerCase()) {
+        case "property":          
+          formControl = new PropertyCapabilityFormControl(this, capability as PropertyCapabilityModel, this._validationService, this._schemaService, this.formBuilder);
           break;
-        case "Command":
+        case "command":
           formControl = new CommandCapabilityFormControl(this,capability as CommandCapabilityModel, this._validationService, this.formBuilder);
           break;
-        case "Telemetry":
-          formControl = new TelemetryCapabilityFormControl(this,capability as TelemetryCapabilityModel, this._validationService, this.formBuilder);
+        case "telemetry":
+          formControl = new TelemetryCapabilityFormControl(this,capability as TelemetryCapabilityModel, this._validationService, this._schemaService, this.formBuilder);
           break;
-        case "Component":
+        case "component":
           formControl = new ComponentCapabilityFormControl(this,capability as ComponentCapabilityModel, this._validationService, this.formBuilder);
           break;
-        case "Relationship":
-          formControl = new RelationshipCapabilityFormControl(this,capability as RelationshipCapabilityModel, this._validationService, this.formBuilder);
+        case "relationship":
+          formControl = new RelationshipCapabilityFormControl(this,capability as RelationshipCapabilityModel, this._validationService, this._schemaService, this.formBuilder);
           break;
         default:
           throw new Error("Invalid capability type '" + capability["@type"] + "'");          
@@ -77,29 +81,12 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
   private mapSchemas(interfaceModel: InterfaceCapabilityModel): Array<AbstractCapabilityFormControl<AbstractSchemaModel>> { 
     let schemas = new Array<AbstractCapabilityFormControl<AbstractSchemaModel>>();
 
-    interfaceModel.schemas?.forEach((schema: AbstractSchemaModel) => {
-      let formControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
+    interfaceModel.schemas?.forEach((schema: AbstractSchemaModel) => {      
       let type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
-      
       if (type == undefined) return;
-
-      switch(type[0].toLocaleLowerCase()) {
-        case "array":          
-          formControl = new ArraySchemaFormControl(schema as ArraySchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
-          break;
-        case "map":
-          formControl = new MapSchemaFormControl(schema as MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>, this._validationService, this.formBuilder, this._dialog);
-          break;
-        case "enum":
-          formControl = new EnumSchemaFormControl(schema as EnumSchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
-          break;
-        case "object":
-          formControl = new ObjectSchemaFormControl(schema as ObjectSchemaCapabilityModel, this._validationService, this.formBuilder, this._dialog);
-          break;
-        default:
-          throw new Error("Invalid schema type '" + schema["@type"] + "'");          
-      }
-
+      const group = this._schemaService.isComplexSchemaByType(type[0]) ? "Complex" : "Primitive";
+      let formControl = this._schemaService.createForm(group, type[0].toLocaleLowerCase());
+      if (!formControl) throw new Error("Invalid schema type '" + schema["@type"] + "'");
       schemas.push(formControl);
     });
 

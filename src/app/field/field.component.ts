@@ -17,15 +17,15 @@ export class FieldComponent implements OnInit {
   @Input() public formIndex!: number;
   @Input() public field!: FieldCapabilityFormControl;
   @Input() public panelOpenState = true;
-  public schemaService: SchemaService;
-  public editorService: EditorService;
   public dialog: MatDialog;
   public schemaTypes: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
+  private _schemaService: SchemaService;
+  private _editorService: EditorService;
 
   constructor(schemaEditorService: SchemaService, editorService: EditorService, dialog: MatDialog) {
-    this.schemaService = schemaEditorService;
-    this.editorService = editorService;
+    this._schemaService = schemaEditorService;
+    this._editorService = editorService;
     this.dialog = dialog;
     this.schemaTypes = this.getSchemaTypes();
   }
@@ -35,27 +35,31 @@ export class FieldComponent implements OnInit {
   }
 
   private getSchemaTypes(): Array<string> {
-    return this.schemaService.getSchemaTypes();
+    return this._schemaService.getSchemaTypes();
   }
 
   public isComplex(schema: string): boolean {
-    return this.schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
+    return this._schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
+  }
+
+  public compareSchemas(model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean {
+    return this._schemaService.compareSchemas(model1, model2);
   }
 
   public changeSchema($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaTypeEnum(key);
+    let schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.field.form.get("schema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      let formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
       if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.field, this.schemaFormControl)
+    this._editorService.openSchemaEditor(this.field, this.schemaFormControl)
   }
 }

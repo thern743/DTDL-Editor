@@ -14,25 +14,18 @@ import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 import { SettingsService } from '../settings/settings.service';
 import { EnumSchemaFormControl } from '../../formControls/schemas/EnumSchemaFormControl';
 import { ObjectSchemaFormControl } from '../../formControls/schemas/ObjectSchemaFormControl';
-import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
-import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
-import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
-import { EditorService } from '../editor/editor.service';
-import { AbstractCapabilityModel } from 'src/app/models/AbstractCapabilityModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchemaService implements IFormFactory, IModelFactory {
-  private _editorService: EditorService
+  public dialog: MatDialog;
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
   private _formBuilder: UntypedFormBuilder;
-  public dialog: MatDialog;
 
-  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
-    this._editorService = editorService;
+  constructor(validationService: ValidationService, settingsService: SettingsService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     this._validationService = validationService;
     this._settingsService = settingsService;
     this._formBuilder = formBuilder;
@@ -55,6 +48,14 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return formControl;
   }
 
+  public createFormWithModel(type: string, name: string, model: AbstractSchemaModel): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined {
+    if (model == undefined) return;
+    const formControlFunc = SchemaFactory.createFormControl(type, name);
+    if (formControlFunc == undefined) return;
+    const formControl = formControlFunc(model, this._formBuilder, this._validationService, this.dialog);
+    return formControl;
+  }
+
   public addFieldToObjectSchema(objectSchema: ObjectSchemaFormControl): void {
     const model = new FieldCapabilityModel(this._settingsService.buildDtmi("New_Field"));
     const form = new FieldCapabilityFormControl(model, this._formBuilder, this._validationService);
@@ -72,6 +73,10 @@ export class SchemaService implements IFormFactory, IModelFactory {
   public isComplexSchema(form: UntypedFormGroup, schemaString: string = 'schema'): boolean {
     let type = form.get(schemaString)?.value?.type;
     if (type && type instanceof Array) type = type[0];
+    return this.isComplexSchemaByType(type);
+  }
+
+  public isComplexSchemaByType(type: string): boolean {
     return ["array", "enum", "map", "object"].indexOf(type?.toLowerCase()) >= 0;
   }
 
@@ -105,34 +110,25 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return schemaTypes;
   }
 
-  public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    const schemaType = schemaFormControl?.model["@type"];
-    const isInterfaceSchema = this._editorService.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
-    const modalParameters = new SchemaModalParameters(schemaType, schemaType.toLowerCase(), schemaFormControl, isInterfaceSchema);
+  public getSchemaFormControl(schema: string | AbstractSchemaModel): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined
+  {
+    if (!schema) return;
+    
+    let type: string[];
 
-    this.dialog
-      .open(SchemaModalComponent,
-        {
-          data: modalParameters,
-          height: "80%",
-          width: "60%"
-        })
-      .afterClosed()
-      .subscribe((result: SchemaModalResult) => {
-        if (result) {
-          // TODO: Parent form's schema attribute name is hard-coded  
-          //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
-          //      so if these parent controls call `openSchemaEditor()` their schema values
-          //      will not be set correctly. Right now this doesn't seem to be an issue since
-          //      none of the affected types are calling `openSchemaEditor()`;
+    if (typeof schema === "string")
+      return undefined; //type = new Array<string>(schema);
+    else  
+      type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
 
-          if(result.interfaceSchema) {
-            this._editorService.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
-            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model["@id"]);
-          } else {
-            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
-          }
-        }
-      });
+    if (type == undefined) return;
+
+    // TODO: Do not assume that the first element is the schema type and not an annotation.
+    const schemaType = type[0].toLocaleLowerCase();
+    const group = this.isComplexSchemaByType(schemaType) ? "Complex" : "Primitive"; 
+
+    const formControl = this.createFormWithModel(group, schemaType, schema);
+    if (!formControl) throw new Error("Invalid schema type '" + schemaType + "'");
+    return formControl;
   }
 }

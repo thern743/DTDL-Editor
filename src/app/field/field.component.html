@@ -24,7 +24,7 @@
 
   <mat-form-field color="accent">
     <mat-label for="field_schema">Schema</mat-label>
-    <mat-select [compareWith]="schemaService.compareSchemas" matNativeControl id="field_schema"
+    <mat-select [compareWith]="compareSchemas" matNativeControl id="field_schema"
       (selectionChange)="changeSchema($event)" #schema>
       <mat-option *ngFor="let schemaType of schemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
     </mat-select>

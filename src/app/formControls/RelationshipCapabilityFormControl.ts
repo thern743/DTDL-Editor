@@ -1,4 +1,4 @@
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { ICapabilityModel } from '../models/interfaces/ICapabilityModel';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
 import { RelationshipCapabilityModel } from '../models/RelationshipCapabilityModel';
@@ -6,45 +6,22 @@ import { PropertyCapabilityFormControl } from './PropertyCapabilityFormControl';
 import { ICapabilityFormControl } from './ICapabilityFormControl';
 import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
-import { AbstractCapabilityModel } from "../models/AbstractCapabilityModel";
 import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
+import { SchemaService } from "../services/schema/schema.service";
 
 export class RelationshipCapabilityFormControl extends AbstractCapabilityFormControl<RelationshipCapabilityModel> {
   public properties: PropertyCapabilityFormControl[];
-  
   private _validationService: ValidationService;
-  
-  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: RelationshipCapabilityModel, validationService: ValidationService, formBuilder: UntypedFormBuilder) {  
+  private _schemaService: SchemaService;
+
+  constructor(interfaceInstance: InterfaceCapabilityFormControl, model: RelationshipCapabilityModel, validationService: ValidationService, schemaService: SchemaService, formBuilder: UntypedFormBuilder) {
     super(formBuilder);
     this._validationService = validationService;
+    this._schemaService = schemaService;
     this.model = model;
-    this.properties = this.mapModelSubProperties(model);
     this.form = this.toFormGroup(model);
+    this.properties = this.getPropertiesFormControls(model);
     this.interface = interfaceInstance;
-  }
-  
-  private mapModelSubProperties(model: RelationshipCapabilityModel): Array<PropertyCapabilityFormControl> {
-    let properties = new Array<PropertyCapabilityFormControl>();
-
-    model.properties.map((capability: ICapabilityModel) => {
-      let formControl!: ICapabilityFormControl<ICapabilityModel>;
-            
-      switch(capability["@type"][0]) {
-        case "Property":          
-          formControl = new PropertyCapabilityFormControl(this.interface, capability as PropertyCapabilityModel, this._validationService, this.formBuilder);
-          break;
-        case "Command":          
-        case "Telemetry":          
-        case "Component":          
-        case "Relationship":          
-        default:
-          break;
-      }
-
-      properties.push(<PropertyCapabilityFormControl>formControl);
-    });
-
-    return properties;
   }
 
   public toFormGroup(model: RelationshipCapabilityModel): UntypedFormGroup {
@@ -59,21 +36,35 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
       minMultiplicity: [model.minMultiplicity],
       maxMultiplicity: [model.maxMultiplicity],
       target: [model.target],
-      writable: [model.writable],
-      properties: this.getCapabilityFormArray()
+      writable: [model.writable]
     });
 
     return form;
   }
 
-  private getCapabilityFormArray(): UntypedFormArray {
-    let formArray = this.formBuilder.array([]);
+  private getPropertiesFormControls(model: RelationshipCapabilityModel): Array<PropertyCapabilityFormControl> {
+    let properties = new Array<PropertyCapabilityFormControl>();
+
+    model.properties.map((capability: ICapabilityModel) => {
+      let formControl!: ICapabilityFormControl<ICapabilityModel>;
+
+      const type = capability["@type"][0].toLocaleLowerCase();
     
-    this.properties.forEach((capability: AbstractCapabilityFormControl<AbstractCapabilityModel>) => {
-      const formGroup = capability.toFormGroup(capability.model);
-      formArray.push(formGroup);
+      switch (type) {
+        case "property":
+          formControl = new PropertyCapabilityFormControl(this.interface, capability as PropertyCapabilityModel, this._validationService, this._schemaService, this.formBuilder);
+          break;
+        case "command":
+        case "telemetry":
+        case "component":
+        case "relationship":
+        default:
+          break;
+      }
+
+      properties.push(<PropertyCapabilityFormControl>formControl);
     });
 
-    return formArray;
+    return properties;
   }
 }
