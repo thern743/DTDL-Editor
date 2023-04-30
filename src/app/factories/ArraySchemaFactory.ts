@@ -14,15 +14,15 @@ import { SchemaService } from "../services/schema/schema.service";
   name: "array",
   factoryMethod: "modelFactory"
 })
-@RegisterModelFactoryMethod({
-  type: "MapValue",
-  name: "array",
-  factoryMethod: "mapValueModelFactory"
-})
 @RegisterFormFactoryMethod({
   type: "Complex",
   name: "array",
   factoryMethod: "formFactory"
+})
+@RegisterModelFactoryMethod({
+  type: "MapValue",
+  name: "array",
+  factoryMethod: "mapValueModelFactory"
 })
 @RegisterFormFactoryMethod({
   type: "MapValue",

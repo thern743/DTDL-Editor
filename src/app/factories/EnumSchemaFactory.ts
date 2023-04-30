@@ -13,20 +13,20 @@ import { SchemaService } from "../services/schema/schema.service";
   name: "enum",
   factoryMethod: "modelFactory"
 })
+@RegisterFormFactoryMethod({
+  type: "Complex",
+  name: "enum",
+  factoryMethod: "formFactory"
+})
 @RegisterModelFactoryMethod({
   type: "MapValue",
   name: "enum",
   factoryMethod: "mapValueModelFactory"
 })
 @RegisterFormFactoryMethod({
-  type: "Complex",
-  name: "enum",
-  factoryMethod: "formFactory"
-})
-@RegisterFormFactoryMethod({
   type: "MapValue",
   name: "enum",
-  factoryMethod: "formFactory"
+  factoryMethod: "mapValueFormFactory"
 })
 export class EnumSchemaFactory {
   constructor() {

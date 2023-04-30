@@ -13,20 +13,20 @@ import { SchemaService } from "../services/schema/schema.service";
   name: "object",
   factoryMethod: "modelFactory"
 })
+@RegisterFormFactoryMethod({
+  type: "Complex",
+  name: "object",
+  factoryMethod: "formFactory"
+})
 @RegisterModelFactoryMethod({
   type: "MapValue",
   name: "object",
   factoryMethod: "mapValueModelFactory"
 })
 @RegisterFormFactoryMethod({
-  type: "Complex",
-  name: "object",
-  factoryMethod: "formFactory"
-})
-@RegisterFormFactoryMethod({
   type: "MapValue",
   name: "object",
-  factoryMethod: "formFactory"
+  factoryMethod: "mapValueFormFactory"
 })
 export class ObjectSchemaFactory {
   constructor() {
