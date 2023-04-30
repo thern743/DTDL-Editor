@@ -1,4 +1,4 @@
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractSchemaModel } from '../../models/AbstractSchemaModel';
 import { MapSchemaCapabilityModel } from '../../models/schemas/MapSchemaCapabilityModel';
@@ -6,6 +6,8 @@ import { ValidationService } from '../../services/validation/validation-service.
 import { AbstractCapabilityFormControl } from '../AbstractCapabilityFormControl';
 import { MapKeyFormControl } from '../MapKeyFormControl';
 import { MapValueFormControl } from '../MapValueFormControl';
+import { MapKeyCapabilityModel } from 'src/app/models/MapKeyCapabilityModel';
+import { MapValueCapabilityModel } from 'src/app/models/MapValueCapabilityModel';
 
 export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>> {
   private _validationService: ValidationService;
@@ -21,16 +23,6 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
     this.form = this.toFormGroup(model);
   }
 
-  public setMapKeyForm(form: MapKeyFormControl): void {
-    this.mapKey = form;
-    this.model.setKey(this.mapKey.model);
-  }
-
-  public setMapValueForm(form: MapValueFormControl): void {
-    this.mapValue = form;
-    this.model.setValue(this.mapValue.model);
-  }
-
   public toFormGroup(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>): UntypedFormGroup {
     let form = this.formBuilder.group({
       id: [model["@id"], [this._validationService.validDtmi()]],
@@ -38,10 +30,20 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
       comment: [model.comment],
       description: [model.description],
       // Map specific
-      mapKey: this.formBuilder.group({ name: [], schema: [] }),
-      mapValue: this.formBuilder.group({ name: [], schema: [] })
+      mapKey: this.getMapKeyFormGroup(model.mapKey),
+      mapValue: this.getMapValueFormGroup(model.mapValue)
     });
 
     return form;
+  }
+
+  private getMapKeyFormGroup(mapKey: MapKeyCapabilityModel<AbstractSchemaModel>): FormGroup {
+    const formGroup = this.mapKey?.toFormGroup(mapKey);
+    return formGroup;
+  }
+
+  private getMapValueFormGroup(mapValue: MapValueCapabilityModel<AbstractSchemaModel>): FormGroup {
+    const formGroup = this.mapKey?.toFormGroup(mapValue);
+    return formGroup;
   }
 }

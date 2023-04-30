@@ -6,6 +6,7 @@ import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { EnumSchemaCapabilityModel } from "../models/schemas/EnumSchemaCapabilityModel";
 import { RegisterFormFactoryMethod, RegisterModelFactoryMethod } from "../reflection/ReflectionMetadata";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { SchemaService } from "../services/schema/schema.service";
 
 @RegisterModelFactoryMethod({
   type: "Complex",
@@ -44,7 +45,7 @@ export class EnumSchemaFactory {
     return (dtmi: string, model: EnumSchemaCapabilityModel) => new MapValueCapabilityModel<EnumSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<EnumSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<EnumSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<EnumSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<EnumSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, schemaService, dialog);
   }
 }

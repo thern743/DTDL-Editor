@@ -63,6 +63,7 @@ import { LocalizedDisplayNameDescriptionComponent } from './localization/localiz
 import { DisplayNameDescriptionComponent } from './localization/display-name-description/display-name-description.component';
 import { SchemaModalComponent } from './schema-modal/schema-modal.component';
 import { SchemaSemanticTypeUnitComponent } from './schema-semantic-type-unit/schema-semantic-type-unit.component';
+import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { SchemaSemanticTypeUnitComponent } from './schema-semantic-type-unit/sch
     LocalizedDisplayNameDescriptionComponent,
     DisplayNameDescriptionComponent,
     SchemaModalComponent,
-    SchemaSemanticTypeUnitComponent
+    SchemaSemanticTypeUnitComponent,
+    MapKeyValueComponent
   ],
   imports: [
     BrowserModule,

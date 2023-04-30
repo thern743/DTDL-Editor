@@ -56,9 +56,9 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
 
     // This is not clean.
     if (this.type === "property") {
-      model = <PropertyCapabilityModel>this.parentForm.model;
+      model = <PropertyCapabilityModel>this.parentForm?.model;
     } else if (this.type = "telemetry") {
-      model = <TelemetryCapabilityModel>this.parentForm.model;
+      model = <TelemetryCapabilityModel>this.parentForm?.model;
     } else {
       return;
     }

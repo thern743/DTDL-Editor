@@ -39,12 +39,32 @@ export class SchemaService implements IFormFactory, IModelFactory {
     return model;
   }
 
+  public createMapModel(type: string, name: string): AbstractSchemaModel | undefined {
+    const schemaType = this.getSchemaTypeEnum(name);
+    const subModelFunc = SchemaFactory.createModel(SchemaTypeEnum[schemaType], name);
+    if (subModelFunc == undefined) return;
+    const subModel = subModelFunc(this._settingsService.buildDtmi(`New_${type}_${name}`));
+    const modelFunc = SchemaFactory.createMapModel(type, name);
+    if (modelFunc == undefined) return;
+    const model = modelFunc(this._settingsService.buildDtmi(`New_${type}`), subModel);
+    return model;
+  }
+
   public createForm(type: string, name: string): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined {
     const formControlFunc = SchemaFactory.createFormControl(type, name);
     if (formControlFunc == undefined) return;
     const model = this.createModel(type, name);
     if (model == undefined) return;
     const formControl = formControlFunc(model, this._formBuilder, this._validationService, this.dialog);
+    return formControl;
+  }
+
+  public createMapForm(type: string, name: string): AbstractCapabilityFormControl<AbstractSchemaModel> | undefined {
+    const formControlFunc = SchemaFactory.createMapFormControl(type, name);
+    if (formControlFunc == undefined) return;
+    const model = this.createMapModel(type, name);
+    if (model == undefined) return;
+    const formControl = formControlFunc(model, this._formBuilder, this._validationService, this, this.dialog);
     return formControl;
   }
 

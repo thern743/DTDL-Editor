@@ -6,6 +6,7 @@ import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { DurationSchemaCapabilityModel } from "../models/schemas/DurationSchemaCapabilityModel";
 import { RegisterFormFactoryMethod, RegisterModelFactoryMethod } from "../reflection/ReflectionMetadata";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { SchemaService } from "../services/schema/schema.service";
 
 @RegisterModelFactoryMethod({
   type: "Primitive",
@@ -44,7 +45,7 @@ export class DurationSchemaFactory {
     return (dtmi: string, model: DurationSchemaCapabilityModel) => new MapValueCapabilityModel<DurationSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DurationSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<DurationSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<DurationSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<DurationSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, schemaService, dialog);
   }
 }

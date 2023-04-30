@@ -1,0 +1,22 @@
+<ng-container [formGroup]="parentForm.form">
+  <mat-form-field color="accent">
+    <mat-label attr.for="{{type}}_schema">{{ title }}</mat-label>
+    <mat-select [compareWith]="compareSchemas" matNativeControl id="{{type}}_schema"
+      (selectionChange)="changeSchema($event)" [formControl]="schemaDropDownControl" #schema>
+      <mat-option *ngFor="let schemaType of getSchemaTypes()"
+        [value]="schemaType">{{ toTitleCase(schemaType) }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="formSpacer"></span>
+  <!-- <mat-form-field color="accent">
+    <mat-label for="name">Name</mat-label>
+    <input matInput type="text" id="name" formControlName="name" />
+  </mat-form-field>
+  <span class="formSpacer"></span> -->
+  <ng-container *ngIf="isComplex(schema.value)">
+    <button mat-raised-button color="primary" (click)="openSchemaEditor()">
+      <mat-icon>edit</mat-icon>
+      Edit Schema
+    </button>
+  </ng-container>
+</ng-container>

@@ -1,4 +1,6 @@
 export enum SchemaTypeEnum {
     Primitive,
-    Complex
+    Complex,
+    MapKey,
+    MapValue
 }
