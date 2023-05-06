@@ -16,11 +16,11 @@ import { SchemaService } from '../services/schema/schema.service';
 })
 export class CommandPayloadComponent implements OnInit {
   public commandPayload!: CommandPayloadFormControl;
-  private _schemaService: SchemaService;
-  private _editorService: EditorService;
   public panelOpenState = true;
   public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
   public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
+  private _schemaService: SchemaService;
+  private _editorService: EditorService;
 
   constructor(
     editorService: EditorService, 
@@ -41,7 +41,7 @@ export class CommandPayloadComponent implements OnInit {
   //       Because the models are deserialized directly, the factory methods are not called when importing
   //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
   private setSchemaDropDown(): void {
-    let schema = typeof this.commandPayload.model?.schema === 'string' ? this.commandPayload.model.schema : this.commandPayload.model.schema?.type;
+    let schema = typeof this.commandPayload.model?.schema === 'string' ? this.commandPayload.model.schema : this.commandPayload.model.schema["@type"];
     if (!schema) return;
     this.schemaDropDownControl?.setValue(schema.toLocaleLowerCase());
   }
@@ -80,7 +80,8 @@ export class CommandPayloadComponent implements OnInit {
   }
 
   public openSchemaEditor(): void {
-    if(this.schemaFormControl)
-      this._schemaService.openSchemaEditor(this.commandPayload, this.schemaFormControl)
-  }
+    if(this.schemaFormControl) {
+      this._editorService.openSchemaEditor(this.commandPayload, this.schemaFormControl);
+    }
+  };
 }

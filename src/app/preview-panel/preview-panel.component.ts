@@ -29,10 +29,6 @@ export class PreviewPanelComponent implements OnInit {
 
   }
 
-  // TODO: TypedJSON is breaking when rendering JSON-LD output
-  //       Using TypedJSON is causing "circular reference" errors and so we're relying on
-  //       built-in JSON.stringify()/parse() for now. This may be okay but we should
-  //       investigate why it's breaking so we can remain consistent between importing and exporting behavior.
   public getJsonLd(): any {
     const interfaces = this.interfaces.map((formControl: InterfaceCapabilityFormControl) => formControl.model);
     let str = JSON.stringify(interfaces);

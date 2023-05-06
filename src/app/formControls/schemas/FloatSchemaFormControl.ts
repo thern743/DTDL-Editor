@@ -18,7 +18,7 @@ export class FloatSchemaFormControl extends AbstractCapabilityFormControl<FloatS
 
   public toFormGroup(model: FloatSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model.id, [this._validationService.validDtmi()]],
+      id: [model["@id"], [this._validationService.validDtmi()]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

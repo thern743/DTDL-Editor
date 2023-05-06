@@ -1,4 +1,4 @@
-import { FormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { FieldCapabilityModel } from '../models/FieldCapabilityModel';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from './AbstractCapabilityFormControl';
@@ -19,7 +19,7 @@ export class FieldCapabilityFormControl extends AbstractCapabilityFormControl<Fi
 
     public toFormGroup() : UntypedFormGroup { 
         let form =  this.formBuilder.group({
-            id: [this.model.id, [this._validationService.validDtmi()]],
+            id: [this.model["@id"], [this._validationService.validDtmi()]],
             displayName: [this.model.displayName],              
             comment: [this.model.comment],
             description: [this.model.description],

@@ -6,11 +6,17 @@ import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { ObjectSchemaCapabilityModel } from "../models/schemas/ObjectSchemaCapabilityModel";
 import { RegisterFormFactoryMethod, RegisterModelFactoryMethod } from "../reflection/ReflectionMetadata";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { SchemaService } from "../services/schema/schema.service";
 
 @RegisterModelFactoryMethod({
   type: "Complex",
   name: "object",
   factoryMethod: "modelFactory"
+})
+@RegisterFormFactoryMethod({
+  type: "Complex",
+  name: "object",
+  factoryMethod: "formFactory"
 })
 @RegisterModelFactoryMethod({
   type: "MapValue",
@@ -18,14 +24,9 @@ import { ValidationService } from "../services/validation/validation-service.ser
   factoryMethod: "mapValueModelFactory"
 })
 @RegisterFormFactoryMethod({
-  type: "Complex",
-  name: "object",
-  factoryMethod: "formFactory"
-})
-@RegisterFormFactoryMethod({
   type: "MapValue",
   name: "object",
-  factoryMethod: "formFactory"
+  factoryMethod: "mapValueFormFactory"
 })
 export class ObjectSchemaFactory {
   constructor() {
@@ -44,7 +45,7 @@ export class ObjectSchemaFactory {
     return (dtmi: string, model: ObjectSchemaCapabilityModel) => new MapValueCapabilityModel<ObjectSchemaCapabilityModel>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<ObjectSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<ObjectSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<ObjectSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<ObjectSchemaCapabilityModel>, fb: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => new MapValueFormControl(model, fb, validationService, schemaService, dialog);
   }
 }

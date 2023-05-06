@@ -5,13 +5,15 @@
                         (closed)="close()"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model.id)}}</em></mat-panel-title>
+        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model["@id"])}}</em></mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
     </mat-expansion-panel-header>
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_context_{{formIndex}}">Context</mat-label>
-        <input matInput id="interface_context_{{formIndex}}" type="text" formControlName="context" readonly propertyFormatter />
+        <mat-select matNativeControl id="interface_context_{{formIndex}}" formControlName="context" multiple [compareWith]="editorService.compareContexts">
+          <mat-option *ngFor="let context of editorService.getContexts() | keyvalue" [value]="context.value"> {{ context.key }} </mat-option>
+      </mat-select>
     </mat-form-field>
     <span class="formSpacer"></span>
     <button mat-raised-button color="primary" (click)="addContext($event, interface)"><mat-icon>add_circle</mat-icon> Add Context</button>
@@ -27,11 +29,11 @@
         <mat-label attr.for="interface_id_{{formIndex}}">Id</mat-label>
         <input matInput id="interface_id_{{formIndex}}" type="text" formControlName="id" #interfaceId placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
-    <span class="formSpacer"></span>
+    <span class="formSpacer"></span> 
 
     <mat-form-field color="accent">
       <mat-label attr.for="interface_extends_{{formIndex}}">Extends</mat-label>
-      <mat-select matNativeControl id="interface_extends_{{formIndex}}" formControlName="extends">
+      <mat-select matNativeControl id="interface_extends_{{formIndex}}" formControlName="extends" multiple>
           <mat-option *ngFor="let interfaceId of editorService.filterInterfacesForExtends(interfaceId.value)" [value]="interfaceId"> {{ interfaceId }} </mat-option>
       </mat-select>
     </mat-form-field>

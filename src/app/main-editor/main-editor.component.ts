@@ -7,6 +7,7 @@ import { PreviewPanelComponent } from '../preview-panel/preview-panel.component'
 import { EditorService } from '../services/editor/editor.service';
 import { SettingsService } from '../services/settings/settings.service';
 import { ValidationService } from '../services/validation/validation-service.service';
+import { SchemaService } from '../services/schema/schema.service';
 
 @Component({
   selector: 'main-editor',
@@ -14,18 +15,21 @@ import { ValidationService } from '../services/validation/validation-service.ser
   styleUrls: ['./main-editor.component.scss']
 })
 export class MainEditorComponent implements OnInit {
-  public editorService: EditorService;
+  public editorService: EditorService;  
+  public panelOpenState: boolean = false;
   private _formBuilder: UntypedFormBuilder;
   private _validationService: ValidationService;
   private _settingsService: SettingsService;
+  private _schemaService: SchemaService;
   private _dialog: MatDialog;
-  public panelOpenState: boolean = false;
+  
 
-  constructor(editorService: EditorService, formBuilder: UntypedFormBuilder, validationService: ValidationService, settingsService: SettingsService, dialog: MatDialog) {
+  constructor(editorService: EditorService, validationService: ValidationService, settingsService: SettingsService, schemaService: SchemaService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     this.editorService = editorService;
     this._validationService = validationService;
-    this._formBuilder = formBuilder;    
     this._settingsService = settingsService;
+    this._schemaService = schemaService;
+    this._formBuilder = formBuilder;    
     this._dialog = dialog;
   }
 
@@ -35,7 +39,7 @@ export class MainEditorComponent implements OnInit {
   public addInterface(): void {
     let dtmi = this._settingsService.buildDtmi("myInterface");
     let model = new InterfaceCapabilityModel(dtmi, this._settingsService.editorSettings.context);
-    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._formBuilder, this._validationService, this._dialog);
+    let interfaceInstance = new InterfaceCapabilityFormControl(model, this._validationService, this._schemaService, this._formBuilder, this._dialog);
     this.editorService.addInterface(interfaceInstance);
   }
 

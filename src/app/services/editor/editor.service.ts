@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../../formControls/InterfaceCapabilityFormControl';
-import { AbstractControl, UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder } from '@angular/forms';
 import { CommandCapabilityFormControl } from '../../formControls/CommandCapabilityFormControl';
 import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabilityFormControl';
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
@@ -17,14 +17,17 @@ import { SettingsService } from '../settings/settings.service';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../../models/AbstractCapabilityModel';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';
+import { SchemaService } from '../schema/schema.service';
+import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
+import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
+import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class EditorService {
-  private _formBuilder: UntypedFormBuilder;
-  private _validationService: ValidationService;
   public classTypes: string[];
   public capabilities: string[];
   public semanticTypes: string[];
@@ -32,11 +35,17 @@ export class EditorService {
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
+  private _validationService: ValidationService;
+  private _schemaService: SchemaService;
   private _settingsService: SettingsService
+  private _formBuilder: UntypedFormBuilder;
+  private _dialog: MatDialog;
   
-  constructor(validationService: ValidationService, formBuilder: UntypedFormBuilder, settingsService: SettingsService) { 
+  constructor(validationService: ValidationService, schemaService: SchemaService, formBuilder: UntypedFormBuilder, settingsService: SettingsService, dialog: MatDialog) {
     this._validationService = validationService;
+    this._schemaService = schemaService;
     this._formBuilder = formBuilder;
+    this._dialog = dialog;
     this.classTypes = this.getClassTypes();
     this.capabilities = this.getCapabilityTypes();
     this.semanticTypes = this.getSemanticTypes();
@@ -171,7 +180,7 @@ export class EditorService {
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myProperty");
     let model = new PropertyCapabilityModel(dtmi);
-    let formControl = new PropertyCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
+    let formControl = new PropertyCapabilityFormControl(interfaceInstance, model, this._validationService, this._schemaService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
@@ -185,7 +194,7 @@ export class EditorService {
   public addTelemetryToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myTelemetry");
     let model = new TelemetryCapabilityModel(dtmi);
-    let formControl = new TelemetryCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
+    let formControl = new TelemetryCapabilityFormControl(interfaceInstance, model, this._validationService, this._schemaService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
@@ -199,7 +208,7 @@ export class EditorService {
   public addRelationshipToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("myRelationship");
     let model = new RelationshipCapabilityModel(dtmi);
-    let formControl = new RelationshipCapabilityFormControl(interfaceInstance, model, this._validationService, this._formBuilder);
+    let formControl = new RelationshipCapabilityFormControl(interfaceInstance, model, this._validationService, this._schemaService, this._formBuilder);
     this.pushInterfaceContents(interfaceInstance, formControl);
   }
 
@@ -234,7 +243,7 @@ export class EditorService {
   public addPropertyToRelationship(relationshipInstance: RelationshipCapabilityFormControl): void {
     let dtmi = this._settingsService.buildDtmi("NewProperty");
     let model = new PropertyCapabilityModel(dtmi);
-    let capability = new PropertyCapabilityFormControl(relationshipInstance.interface, model,  this._validationService, this._formBuilder);
+    let capability = new PropertyCapabilityFormControl(relationshipInstance.interface, model,  this._validationService, this._schemaService, this._formBuilder);
     this.pushRelationshipProperties(relationshipInstance, capability);
   }
 
@@ -255,7 +264,7 @@ export class EditorService {
 
   public filterInterfacesForExtends(id: string): string[] {
     let result = new Array<string>("");
-    result.push(...this.interfaces.filter(x => x.model.id != id).map(x => x.model.id));
+    result.push(...this.interfaces.filter(x => x.model["@id"] != id).map(x => x.model["@id"]));
     return result;
   }
 
@@ -275,7 +284,7 @@ export class EditorService {
 
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
     // Using the index from the model is NOT a safe assumption here.
-    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x.id == formControl.model.id);
+    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x["@id"] == formControl.model["@id"]);
     return schemaIndex == undefined ? -1 : schemaIndex;
   }
 
@@ -301,5 +310,57 @@ export class EditorService {
   public parseNameFromDtmi(dtmi: string) {
     const tokens = dtmi.split(/(?::|;)+/)
     return tokens[tokens.length - 2];
+  }
+
+  public getContexts(): Map<string, string> {
+    return new Map<string, string>([
+      [ "DTDL v2", "dtmi:dtdl:context;2" ],
+      [ "DTDL v3", "dtmi:dtdl:context;3" ],
+      [ "QuantitativeTypes v1", "dtmi:dtdl:extension:quantitativeTypes;1" ],
+      [ "Historization v1", "dtmi:dtdl:extension:historization;1" ],
+      [ "Annotation v1", "dtmi:dtdl:extension:annotation;1" ],
+      [ "Overriding v1", "dtmi:dtdl:extension:overriding;1" ]
+    ]);
+  }
+
+  public compareContexts(context1: string, context2: string): boolean {
+    return context1 === context2;
+  }
+
+  public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
+    const schema = schemaFormControl?.model;
+    const type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
+
+    if (type == undefined) return;
+
+    // We should not make the assumption that the first element is the schema type and not an annotation.
+    const schemaType = type[0].toLocaleLowerCase();
+    const isInterfaceSchema = this.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
+    const modalParameters = new SchemaModalParameters(`Edit ${schemaType}`, schemaType, schemaFormControl, isInterfaceSchema);
+
+    this._dialog
+      .open(SchemaModalComponent,
+        {
+          data: modalParameters,
+          height: "80%",
+          width: "60%"
+        })
+      .afterClosed()
+      .subscribe((result: SchemaModalResult) => {
+        if (result) {
+          // TODO: Parent form's schema attribute name is hard-coded  
+          //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
+          //      so if these parent controls call `openSchemaEditor()` their schema values
+          //      will not be set correctly. Right now this doesn't seem to be an issue since
+          //      none of the affected types are calling `openSchemaEditor()`;
+
+          if(result.interfaceSchema) {
+            this.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model["@id"]);
+          } else {
+            capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model);
+          }
+        }
+      });
   }
 }

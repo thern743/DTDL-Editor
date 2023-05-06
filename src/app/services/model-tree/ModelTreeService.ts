@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FlatTreeControl, NestedTreeControl } from "@angular/cdk/tree";
+import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
 import { CapabilityNode } from "../../models/CapabilityNode";
 import { AbstractCapabilityModel } from "../../models/AbstractCapabilityModel";
@@ -26,7 +26,7 @@ export class ModelTreeService {
         let data = new Array<CapabilityNode>();
         
         interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
-            let node = new CapabilityNode(interfaceInstance.model.id, interfaceInstance.model.type[0]);            
+            let node = new CapabilityNode(interfaceInstance.model["@id"], interfaceInstance.model["@type"][0]);            
             node = this.mapChildren(interfaceInstance.model.contents, node);
             data.push(node);            
         });
@@ -37,14 +37,14 @@ export class ModelTreeService {
     
     public mapChildren(capabilities: AbstractCapabilityModel[], node: CapabilityNode): CapabilityNode {        
         capabilities.forEach((capability: AbstractCapabilityModel) => {     
-            if(capability.type[0] == "Relationship") {
+            if(capability["@type"][0] == "Relationship") {
                 let data = new Array<CapabilityNode>();
-                let innerNode = new CapabilityNode(capability.id, capability.type[0]);                
+                let innerNode = new CapabilityNode(capability["@id"], capability["@type"][0]);                
                 innerNode = this.mapChildren((<RelationshipCapabilityModel>capability).properties, innerNode);
                 data.push(innerNode);
                 node.children?.push(innerNode);
             } else {
-                let child = new CapabilityNode(capability.id, capability.type[0]);
+                let child = new CapabilityNode(capability["@id"], capability["@type"][0]);
                 node.children?.push(child);
             }
         });
@@ -53,7 +53,7 @@ export class ModelTreeService {
     }
 
     public addNode(model: AbstractCapabilityModel) {
-        let node = new CapabilityNode(model.id, model.type[0]);
+        let node = new CapabilityNode(model["@id"], model["@type"][0]);
         this.treeDataSource.data.push(node);
     }
 

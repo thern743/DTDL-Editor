@@ -1,15 +1,11 @@
-import 'reflect-metadata';
-import { jsonMember, jsonObject } from "typedjson";
+
 import { MapKeyCapabilityModel } from "../MapKeyCapabilityModel";
 import { MapValueCapabilityModel } from "../MapValueCapabilityModel";
 import { AbstractSchemaModel } from '../AbstractSchemaModel';
 
-@jsonObject
 export class MapSchemaCapabilityModel<TKeyModel extends AbstractSchemaModel, TValueModel extends AbstractSchemaModel> extends AbstractSchemaModel {
-  @jsonMember
   public mapKey!: MapKeyCapabilityModel<TKeyModel>;
 
-  @jsonMember
   public mapValue!: MapValueCapabilityModel<TValueModel>;
 
   constructor(id: string) {

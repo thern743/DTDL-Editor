@@ -4,10 +4,10 @@ import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
 import { ICapabilityFormControl } from "./ICapabilityFormControl";
 import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl";
+import { ISchemaModel } from "../models/interfaces/ISchemaModel";
 
-// TypedJSON requires a concrete type to work.
-export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel>
-    implements ICapabilityFormControl<TCapabilityModel>
+export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel | ISchemaModel>
+    implements ICapabilityFormControl<TCapabilityModel | ISchemaModel>
 {    
     public formBuilder: UntypedFormBuilder;
     public model!: TCapabilityModel;  

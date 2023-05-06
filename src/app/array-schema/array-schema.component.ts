@@ -5,6 +5,7 @@ import { SchemaService } from '../services/schema/schema.service';
 import { MatSelectChange } from '@angular/material/select';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
+import { EditorService } from '../services/editor/editor.service';
 
 @Component({
   selector: 'array-schema',
@@ -14,13 +15,15 @@ import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 export class ArraySchemaComponent implements OnInit {
   @Input()
   public array!: ArraySchemaFormControl;
-  public schemaService: SchemaService;
   public panelOpenState = true;
   public schemaTypes: Array<string>;
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel>;
-
-  constructor(schemaService: SchemaService) {
-    this.schemaService = schemaService;
+  private _editorService: EditorService;
+  public _schemaService: SchemaService;
+  
+  constructor(editorService: EditorService, schemaService: SchemaService) {
+    this._editorService = editorService;
+    this._schemaService = schemaService;
     this.schemaTypes = this.getSchemaTypes();
   }
 
@@ -29,27 +32,31 @@ export class ArraySchemaComponent implements OnInit {
   }
 
   private getSchemaTypes(): Array<string> {
-    return this.schemaService.getSchemaTypes();
+    return this._schemaService.getSchemaTypes();
   }
 
   public isComplex(schema: string): boolean {
-    return this.schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
+    return this._schemaService.getSchemaTypeEnum(schema) == SchemaTypeEnum.Complex;
+  }
+
+  public compareSchemas = (model1: AbstractSchemaModel, model2: AbstractSchemaModel): boolean => {
+    return this._schemaService.compareSchemas(model1, model2)
   }
 
   public changeSchema($event: MatSelectChange): void {
     if ($event.value instanceof AbstractCapabilityFormControl) return;
     let key = $event.value.toLowerCase();
-    let schemaType = this.schemaService.getSchemaTypeEnum(key);
+    let schemaType = this._schemaService.getSchemaTypeEnum(key);
     this.array.form.get("elementSchema")?.setValue(key);
 
     if (schemaType == SchemaTypeEnum.Complex) {
-      let formControl = this.schemaService.createForm(SchemaTypeEnum[schemaType], key);
+      let formControl = this._schemaService.createForm(SchemaTypeEnum[schemaType], key);
       if (formControl === undefined) return;
       this.schemaFormControl = formControl;
     }
   }
 
   public openSchemaEditor(): void {
-    this.schemaService.openSchemaEditor(this.array, this.schemaFormControl)
+    this._editorService.openSchemaEditor(this.array, this.schemaFormControl)
   }
 }

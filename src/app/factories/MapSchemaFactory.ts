@@ -7,6 +7,7 @@ import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { MapSchemaCapabilityModel } from "../models/schemas/MapSchemaCapabilityModel";
 import { RegisterFormFactoryMethod, RegisterModelFactoryMethod } from "../reflection/ReflectionMetadata";
 import { ValidationService } from "../services/validation/validation-service.service";
+import { SchemaService } from "../services/schema/schema.service";
 
 @RegisterModelFactoryMethod({
   type: "Complex",
@@ -45,7 +46,7 @@ export class MapSchemaFactory {
     return (dtmi: string, model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>) => new MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>(dtmi, model);
   }
 
-  public static mapValueFormFactory(): (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => MapValueFormControl {
-    return (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, dialog: MatDialog) => new MapValueFormControl(model, formBuilder, validationService, dialog);
+  public static mapValueFormFactory(): (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => MapValueFormControl {
+    return (model: MapValueCapabilityModel<MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>>, formBuilder: UntypedFormBuilder, validationService: ValidationService, schemaService: SchemaService, dialog: MatDialog) => new MapValueFormControl(model, formBuilder, validationService, schemaService, dialog);
   }
 }
