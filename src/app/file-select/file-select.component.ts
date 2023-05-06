@@ -23,13 +23,13 @@ export class FileSelectComponent implements OnInit {
   public executeAction(data: any): any {
     let action = this.action.toLocaleLowerCase();
     if (action === "import")
-      return this.uploadFiles(data);
+      return this.importFiles(data);
     else if (action  === "copy")
       return this.copyFile(data);
   }
 
-  public uploadFiles(file: any): void {
-    this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
+  public importFiles(file: any): void {
+    this.fileService.importFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
       console.debug("Loaded file '%s'.", capability.displayName);
 
       if (!capability) {

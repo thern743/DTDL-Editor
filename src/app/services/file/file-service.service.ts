@@ -22,7 +22,7 @@ export class FileService {
     this.fileData$ = new Subject<any>();
   }
 
-  public uploadFiles(file: any): Subject<InterfaceCapabilityModel> {
+  public importFiles(file: any): Subject<InterfaceCapabilityModel> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
 
