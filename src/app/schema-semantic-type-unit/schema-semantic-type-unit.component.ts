@@ -128,7 +128,10 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
       type?.setValue(semanticType);
 
       const schema = this.parentForm.form.get("schema")?.value;
-      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
+
+      if (typeof schema == "string" &&
+          ["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1
+      ) {
         this.parentForm.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
         this.schemaFormControl = undefined;
