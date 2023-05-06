@@ -22,6 +22,7 @@ import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/mat
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { MainEditorComponent } from './main-editor/main-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -128,7 +129,8 @@ import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
     MatSnackBarModule,
     ClipboardModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [
     SchemaFactories,
