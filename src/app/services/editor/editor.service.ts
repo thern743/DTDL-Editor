@@ -369,4 +369,13 @@ export class EditorService {
         }
       });
   }
+
+  public toTitleCase(value: string): string {
+    return value.replace(
+    /\w\S*/g,
+    function(txt: string) {
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    }
+  );
+}
 }

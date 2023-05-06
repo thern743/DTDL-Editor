@@ -103,13 +103,8 @@ export class MapKeyValueComponent implements OnInit, AfterViewInit {
   }
 
   public toTitleCase(value: string): string {
-    return value.replace(
-      /\w\S*/g,
-      function(txt: string) {
-        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
-      }
-    );
-  }
+    return this._editorService.toTitleCase(value);
+}
 }
 
 
