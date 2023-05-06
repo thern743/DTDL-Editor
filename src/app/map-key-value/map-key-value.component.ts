@@ -104,7 +104,7 @@ export class MapKeyValueComponent implements OnInit, AfterViewInit {
 
   public toTitleCase(value: string): string {
     return this._editorService.toTitleCase(value);
-}
+  }
 }
 
 
