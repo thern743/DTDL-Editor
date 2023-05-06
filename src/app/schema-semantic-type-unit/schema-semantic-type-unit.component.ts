@@ -26,6 +26,7 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel> | undefined;
   public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
   public semanticTypeDropDownControl: UntypedFormControl = new UntypedFormControl();
+  private _previousSemanticType: string = "";
 
   constructor(editorService: EditorService, schemaService: SchemaService) { 
     this._editorService = editorService;
@@ -119,24 +120,28 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   public changeSemanticType($event: MatSelectChange): void {
     const value = $event.value;
     this.changeSemanticTypeInternal(value);
+    this._previousSemanticType = value;
   }
 
   public changeSemanticTypeInternal(value: string): void {
-    const type = this.parentForm.form.get("type");
-    const titleType =  this.toTitleCase(this.type);
+    const typeForm = this.parentForm.form.get("type");
+    const typesArray = (typeForm?.value instanceof Array) ? typeForm.value : new Array<string>(typeForm?.value);
+    const idx = typesArray.indexOf(this._previousSemanticType);
+    
+    if(idx > -1)
+      typesArray.splice(idx, 1);
 
     if (["", null, undefined].indexOf(value) > -1) {
-      const semanticType = new Array<string>(titleType);
-      type?.setValue(semanticType);
-      const unit = this.parentForm.form.get("unit");
-      unit?.setValue(undefined);
+      typeForm?.setValue(typesArray);
+      const unitForm = this.parentForm.form.get("unit");
+      unitForm?.setValue(undefined);
     } else {
-      const semanticType = new Array<string>(titleType, value);
-      type?.setValue(semanticType);
+      typesArray.push(value);
+      typeForm?.setValue(typesArray);
 
       const schema = this.parentForm.form.get("schema")?.value;
 
-      if (typeof schema == "string" &&
+      if (typeof schema === "string" &&
           ["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1
       ) {
         this.parentForm.form.get("schema")?.setValue(undefined);
