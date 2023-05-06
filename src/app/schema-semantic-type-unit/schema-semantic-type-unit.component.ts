@@ -89,14 +89,20 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
     return this._schemaService.getSchemaTypes();
   }
 
-  public getSemanticTypes(): Array<string> {
-    return this._editorService.getSemanticTypes();
+  public getSemanticTypes(): Array<string> | undefined {
+    const schemaType = this.schemaDropDownControl?.value;
+    if(["double", "float", "integer", "long"].indexOf(schemaType) > -1) {
+      const semanticTypes = this._editorService.semanticTypes;
+      return semanticTypes;
+    }
+
+    return undefined;
   }
 
-  public getUnits(): string[] | undefined {
+  public getUnits(): Array<string> | undefined {
     const semanticType = this.semanticTypeDropDownControl?.value;
     if(semanticType) {
-      const units = this._editorService.getUnits().get(semanticType);
+      const units = this._editorService.units.get(semanticType);
       return units;
     }
 
