@@ -41,12 +41,8 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
     this.setSchemaDropDowns();
   }
 
-  // TODO: Importing a Property/Telemetry model does not allow editing the schema
-  //       Because the models are deserialized directly, the factory methods are not called when importing
-  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
   private setSemanticTypeDropDowns(): void {
     if (this.parentForm.model && this.parentForm.model["@type"] instanceof Array && this.parentForm.model["@type"]?.length > 1) {
-      // Only set Semantic Type is it's an additional @type value
       const semanticType = this._editorService.getSemanticTypeFromType(this.parentForm.model["@type"]);
       if (semanticType)
         this.changeSemanticTypeInternal(semanticType);
@@ -120,7 +116,6 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   public changeSemanticType($event: MatSelectChange): void {
     const value = $event.value;
     this.changeSemanticTypeInternal(value);
-    this._previousSemanticType = value;
   }
 
   public changeSemanticTypeInternal(value: string): void {
@@ -136,7 +131,12 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
       const unitForm = this.parentForm.form.get("unit");
       unitForm?.setValue(undefined);
     } else {
-      typesArray.push(value);
+      // When model is imported value already exist in the array so we just need to set the dropdown.
+      if (typesArray.indexOf(value) === -1)
+        typesArray.push(value);
+      else
+        this.semanticTypeDropDownControl.setValue(value);
+
       typeForm?.setValue(typesArray);
 
       const schema = this.parentForm.form.get("schema")?.value;
@@ -149,6 +149,8 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
         this.schemaFormControl = undefined;
       }
     }
+
+    this._previousSemanticType = value;
   }
   
   public changeSchema($event: MatSelectChange): void {
