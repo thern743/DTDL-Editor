@@ -8,13 +8,15 @@
     </mat-select>
   </mat-form-field>
   <span class="formSpacer"></span>
-
+  
   <ng-container *ngIf="isComplex(schema.value)">
     <button mat-raised-button color="primary" (click)="openSchemaEditor()">
       <mat-icon>edit</mat-icon>
       Edit Schema
     </button>
   </ng-container>
+  <span class="formSpacer"></span>
+  <mat-icon matTooltip="Schema Type must be numeric to enable Semantic Types." color="accent">info</mat-icon>
   <br />
 
   <mat-form-field color="accent">
@@ -32,4 +34,6 @@
       <mat-option *ngFor="let unit of getUnits()" [value]="unit"> {{ toTitleCase(unit) }} </mat-option>
     </mat-select>
   </mat-form-field>
+  <span class="formSpacer"></span>
+  <mat-icon *ngIf="semanticType.value" matTooltip="Clear the Semantic Type to choose a non-numeric Schema Type." color="accent">info</mat-icon>
 </ng-container>

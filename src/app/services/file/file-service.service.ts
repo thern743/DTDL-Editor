@@ -17,7 +17,7 @@ export class FileService {
 
   constructor(snackBar: MatSnackBar) {
     this._snackBar = snackBar;
-    this.files = new Array<File>(); 
+    this.files = new Array<File>();
     this.interfaces$ = new Subject<InterfaceCapabilityModel>();
     this.fileData$ = new Subject<any>();
   }
@@ -28,11 +28,11 @@ export class FileService {
 
       const parseInternal = (capability: any) => {
         capability instanceof InterfaceCapabilityModel;
-        this.files.push(file);      
+        this.files.push(file);
         this.interfaces$.next(capability);
       };
-      
-      [...file.target.files].map((file: File) => {                
+
+      [...file.target.files].map((file: File) => {
         const reader = new FileReader();
         reader.onload = (data: any) => {
           const file = data.target.result;
@@ -42,13 +42,18 @@ export class FileService {
 
           try {
             const capabilities = JSON.parse(file);
-            capabilities?.forEach((capability: any) => {
-              parseInternal(capability);
-            });            
-          } catch(error) {
+
+            if (capabilities instanceof Array) {
+              capabilities?.forEach((capability: any) => {
+                parseInternal(capability);
+              });
+            } else {
+              parseInternal(capabilities);
+            }
+          } catch (error) {
             const msg = "Invalid DTDL (JSON-LD) File";
-            console.error(msg + ": " + error); 
-      
+            console.error(msg + ": " + error);
+
             // TODO: Use common ErrorService to control error SnackBar (FileService)
             //       Several services currently call `snackBar.openFromComponent(ErrorSnackbarComponent)`
             //       but should be calling through to an ErrorService which will do these common operations.
@@ -59,14 +64,14 @@ export class FileService {
               panelClass: ['mat-toolbar', 'mat-warn'],
               data: { msg: msg }
             });
-      
-            this.fileAttr = "Choose Files...";           
+
+            this.fileAttr = "Choose Files...";
           }
-        };        
-        
+        };
+
         reader.readAsText(file);
         this.fileAttr += file.name + ", ";
-      });     
+      });
     } else {
       this.fileAttr = "Choose Files...";
     }
@@ -77,22 +82,22 @@ export class FileService {
   public copyFile(file: any): Subject<any> {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
-      
-      [...file.target.files].map((file: File) => {                
+
+      [...file.target.files].map((file: File) => {
         let reader = new FileReader();
         reader.onload = (data: any) => {
           let file = data.target.result;
 
           console.debug("Reading File: %s ...", (<string>file).substring(0, 25));
-      
+
           try {
             let data = JSON.parse(file);
-            this.files.push(file);      
+            this.files.push(file);
             this.fileData$.next(data);
-          } catch(error) {
+          } catch (error) {
             const msg = "Could not parse file contents.";
-            console.error(msg + ": " + error); 
-      
+            console.error(msg + ": " + error);
+
             this._snackBar.openFromComponent(ErrorSnackbarComponent, {
               horizontalPosition: "center",
               verticalPosition: "top",
@@ -100,14 +105,14 @@ export class FileService {
               panelClass: ['mat-toolbar', 'mat-warn'],
               data: { msg: msg }
             });
-      
-            this.fileAttr = "Choose Files...";           
+
+            this.fileAttr = "Choose Files...";
           }
-        };        
-        
+        };
+
         reader.readAsText(file);
         this.fileAttr += file.name + ", ";
-      });     
+      });
     } else {
       this.fileAttr = "Choose Files...";
     }

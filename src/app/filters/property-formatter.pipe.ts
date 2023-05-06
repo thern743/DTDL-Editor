@@ -16,10 +16,11 @@ export class PropertyFormatterPipe implements PipeTransform {
       let val2 = "";
 
       for(let i = 1; i < value.length; i++) {
-        val2 += value[i] + ",";
+        val2 += `${value[i]}, `;
       }
 
-      return val2.length > 1 ? val1 + " (" + val2.substring(0, val2.length - 1) + ")" : val1;
+      let ret = val2.length > 1 ?  `${val1} (${val2.substring(0, val2.length - 2)})` : val1;
+      return ret;
     }
 
     return value;

@@ -327,6 +327,12 @@ export class EditorService {
     return context1 === context2;
   }
 
+  public getSemanticTypeFromType(type: string | Array<string>): string | undefined {
+    var needles = typeof type === "string" ? new Array<string>(type) : type;
+    var result = this.getSemanticTypes().find(needle => needles.includes(needle));
+    return result;
+  }
+
   public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
     const schema = schemaFormControl?.model;
     const type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
@@ -363,4 +369,13 @@ export class EditorService {
         }
       });
   }
+
+  public toTitleCase(value: string): string {
+    return value.replace(
+    /\w\S*/g,
+    function(txt: string) {
+      return txt.charAt(0).toUpperCase() + txt.slice(1);
+    }
+  );
+}
 }

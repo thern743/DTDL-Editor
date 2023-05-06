@@ -26,6 +26,7 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   public schemaFormControl!: AbstractCapabilityFormControl<AbstractSchemaModel> | undefined;
   public schemaDropDownControl: UntypedFormControl = new UntypedFormControl();
   public semanticTypeDropDownControl: UntypedFormControl = new UntypedFormControl();
+  private _previousSemanticType: string = "";
 
   constructor(editorService: EditorService, schemaService: SchemaService) { 
     this._editorService = editorService;
@@ -40,14 +41,11 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
     this.setSchemaDropDowns();
   }
 
-  // TODO: Importing a Property/Telemetry model does not allow editing the schema
-  //       Because the models are deserialized directly, the factory methods are not called when importing
-  //       a model and so the SchemaFormControl value isn't set for `openSchemaEditor()`.
   private setSemanticTypeDropDowns(): void {
     if (this.parentForm.model && this.parentForm.model["@type"] instanceof Array && this.parentForm.model["@type"]?.length > 1) {
-      // Only set Semantic Type is it's an additional @type value
-      const semanticType = this.parentForm.model["@type"][1];
-      this.changeSemanticTypeInternal(semanticType);
+      const semanticType = this._editorService.getSemanticTypeFromType(this.parentForm.model["@type"]);
+      if (semanticType)
+        this.changeSemanticTypeInternal(semanticType);
     }
   }
 
@@ -88,14 +86,20 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
     return this._schemaService.getSchemaTypes();
   }
 
-  public getSemanticTypes(): Array<string> {
-    return this._editorService.getSemanticTypes();
+  public getSemanticTypes(): Array<string> | undefined {
+    const schemaType = this.schemaDropDownControl?.value;
+    if(["double", "float", "integer", "long"].indexOf(schemaType) > -1) {
+      const semanticTypes = this._editorService.semanticTypes;
+      return semanticTypes;
+    }
+
+    return undefined;
   }
 
-  public getUnits(): string[] | undefined {
+  public getUnits(): Array<string> | undefined {
     const semanticType = this.semanticTypeDropDownControl?.value;
     if(semanticType) {
-      const units = this._editorService.getUnits().get(semanticType);
+      const units = this._editorService.units.get(semanticType);
       return units;
     }
 
@@ -115,25 +119,38 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   }
 
   public changeSemanticTypeInternal(value: string): void {
-    const type = this.parentForm.form.get("type");
-    const titleType =  this.toTitleCase(this.type);
+    const typeForm = this.parentForm.form.get("type");
+    const typesArray = (typeForm?.value instanceof Array) ? typeForm.value : new Array<string>(typeForm?.value);
+    const idx = typesArray.indexOf(this._previousSemanticType);
+    
+    if(idx > -1)
+      typesArray.splice(idx, 1);
 
     if (["", null, undefined].indexOf(value) > -1) {
-      const semanticType = new Array<string>(titleType);
-      type?.setValue(semanticType);
-      const unit = this.parentForm.form.get("unit");
-      unit?.setValue(undefined);
+      typeForm?.setValue(typesArray);
+      const unitForm = this.parentForm.form.get("unit");
+      unitForm?.setValue(undefined);
     } else {
-      const semanticType = new Array<string>(titleType, value);
-      type?.setValue(semanticType);
+      // When model is imported value already exist in the array so we just need to set the dropdown.
+      if (typesArray.indexOf(value) === -1)
+        typesArray.push(value);
+      else
+        this.semanticTypeDropDownControl.setValue(value);
+
+      typeForm?.setValue(typesArray);
 
       const schema = this.parentForm.form.get("schema")?.value;
-      if (["double", "float", "integer", "long"].indexOf(schema?.toLowerCase()) === -1) {
+
+      if (typeof schema === "string" &&
+          ["double", "float", "integer", "long"].indexOf(schema.toLowerCase()) === -1
+      ) {
         this.parentForm.form.get("schema")?.setValue(undefined);
         this.schemaDropDownControl.setValue(undefined);
         this.schemaFormControl = undefined;
       }
     }
+
+    this._previousSemanticType = value;
   }
   
   public changeSchema($event: MatSelectChange): void {
@@ -161,12 +178,7 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   }
 
   public toTitleCase(value: string): string {
-    return value.replace(
-      /\w\S*/g,
-      function(txt: string) {
-        return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
-      }
-    );
+      return this._editorService.toTitleCase(value);
   }
 }
 
