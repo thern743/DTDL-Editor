@@ -46,8 +46,9 @@ export class SchemaSemanticTypeUnitComponent implements OnInit, AfterViewInit {
   private setSemanticTypeDropDowns(): void {
     if (this.parentForm.model && this.parentForm.model["@type"] instanceof Array && this.parentForm.model["@type"]?.length > 1) {
       // Only set Semantic Type is it's an additional @type value
-      const semanticType = this.parentForm.model["@type"][1];
-      this.changeSemanticTypeInternal(semanticType);
+      const semanticType = this._editorService.getSemanticTypeFromType(this.parentForm.model["@type"]);
+      if (semanticType)
+        this.changeSemanticTypeInternal(semanticType);
     }
   }
 
