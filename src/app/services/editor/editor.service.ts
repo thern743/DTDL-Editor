@@ -22,6 +22,9 @@ import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
 import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
 import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
 import { MatDialog } from '@angular/material/dialog';
+import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
+import { FileService } from '../file/file.service';
+import { ModelData } from 'src/app/models/ModelData';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +40,16 @@ export class EditorService {
   public interfaces$: Subject<InterfaceCapabilityFormControl>;  
   private _validationService: ValidationService;
   private _schemaService: SchemaService;
-  private _settingsService: SettingsService
+  private _settingsService: SettingsService;
+  private _fileService: FileService;
   private _formBuilder: UntypedFormBuilder;
   private _dialog: MatDialog;
   
-  constructor(validationService: ValidationService, schemaService: SchemaService, formBuilder: UntypedFormBuilder, settingsService: SettingsService, dialog: MatDialog) {
+  constructor(validationService: ValidationService, schemaService: SchemaService, settingsService: SettingsService, fileService: FileService, formBuilder: UntypedFormBuilder, dialog: MatDialog) {
     this._validationService = validationService;
     this._schemaService = schemaService;
+    this._settingsService = settingsService;
+    this._fileService = fileService; 
     this._formBuilder = formBuilder;
     this._dialog = dialog;
     this.classTypes = this.getClassTypes();
@@ -53,7 +59,7 @@ export class EditorService {
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.interfaces$ = new Subject<InterfaceCapabilityFormControl>(); 
-    this._settingsService = settingsService; 
+    this.loadModels();
   }
 
   public getClassTypes() : string[] {
@@ -170,6 +176,27 @@ export class EditorService {
 
   public getCommandTypes() : string[] {
     return ["synchronous", "asynchronous"];
+  }
+
+  private loadModels(): void {
+    const data = localStorage.getItem(SettingsService.MODEL_FILES);
+    if (!data) return;
+
+    const files: Array<ModelData> = JSON.parse(data);
+
+    if (files) {
+      files.forEach((file: ModelData) => {
+        if (!file?.data) return;
+        const model = JSON.parse(file.data);
+        this._fileService.addFile(file, model);
+        this.addInterfaceForm(model);
+      });
+    }
+  }
+
+  public addInterfaceForm(model: InterfaceCapabilityModel) {
+    var formControl = new InterfaceCapabilityFormControl(model, this._validationService, this._schemaService, this._formBuilder, this._dialog);
+    this.addInterface(formControl);
   }
 
   public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import { EditorSettings, EditorSettingsDto } from '../models/EditorSettings';
 import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
+import { EditorSettings } from '../models/EditorSettings';
 
 // TODO: Add option to disable automatically filling in default DTMI from SettingsService
 //       Some users may prefer to manually type in the DTMI for each component and so we should
@@ -52,9 +52,8 @@ export class SettingsComponent implements OnInit {
   }
 
   public save() {
-    let settings: EditorSettingsDto = this.form.getRawValue();
+    let settings: EditorSettings = this.form.getRawValue();
     this._settingsService.save(settings); 
-    this._settingsService.load();
     this.toFormGroup();   
   }
 }

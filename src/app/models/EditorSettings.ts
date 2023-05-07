@@ -5,14 +5,11 @@ export class EditorSettings {
     public static VERSION_DEFAULT: string = "1";
     public static LOCALE_DEFAULT: string = "en-US";
     public static DTDLVERSION_DEFAULT: string = "2";
-
     
     public context: string;
     public scheme: string;
     public path: string[];
     public version: string;
-    public baseDtmi!: string;
-    public fullPath!: string;
     public locale!: string;
     public dtdlVersion!: string;
 
@@ -23,16 +20,14 @@ export class EditorSettings {
         this.version = EditorSettings.VERSION_DEFAULT;
         this.locale = EditorSettings.LOCALE_DEFAULT;
         this.dtdlVersion = EditorSettings.DTDLVERSION_DEFAULT;
-        this.setFullPath();
-        this.setBaseDtmi();
     }
 
-    public setBaseDtmi() {
-      this.baseDtmi = `${this.scheme}:${this.fullPath}:default;${this.version}`
+    public get baseDtmi(): string {
+      return `${this.scheme}:${this.fullPath}:default;${this.version}`
     }
 
-    public setFullPath() {
-      if(this.path.length == 0) return;
+    public get fullPath(): string {
+      if(this.path.length == 0) return "";
 
       let path = "";
 
@@ -40,10 +35,10 @@ export class EditorSettings {
         path = `${path}:${text}`;
       });
 
-      this.fullPath = path.substring(1);
+      return path.substring(1);
     }
 
-    public static fromDto(settings: EditorSettingsDto): EditorSettings {
+    public static fromExisting(settings: EditorSettings): EditorSettings {
       let newSettings = new EditorSettings();
       newSettings.context = settings.context ?? `${EditorSettings.CONTEXT_DEFAULT}${EditorSettings.DTDLVERSION_DEFAULT}`;
       newSettings.scheme = settings.scheme ?? EditorSettings.SCHEME_DEFAULT;
@@ -51,20 +46,6 @@ export class EditorSettings {
       newSettings.version = settings.version ?? EditorSettings.VERSION_DEFAULT;
       newSettings.locale = settings.locale ?? EditorSettings.LOCALE_DEFAULT;
       newSettings.dtdlVersion = settings.dtdlVersion ?? EditorSettings.DTDLVERSION_DEFAULT;
-      newSettings.setFullPath();
-      newSettings.setBaseDtmi();
       return newSettings;
     }
-}
-
-export class EditorSettingsDto {
-  public context!: string;
-  public scheme!: string;
-  public version!: string;
-  public baseDtmi!: string;
-  public fullPath!: string;
-  public locale!: string;
-  public dtdlVersion!: string;
-
-  constructor() {}
 }

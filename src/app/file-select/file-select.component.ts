@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
-import { FileService } from '../services/file/file-service.service';
+import { FileService } from '../services/file/file.service';
 
 @Component({
   selector: 'file-select',
@@ -23,14 +23,14 @@ export class FileSelectComponent implements OnInit {
   public executeAction(data: any): any {
     let action = this.action.toLocaleLowerCase();
     if (action === "import")
-      return this.uploadFiles(data);
+      return this.importFiles(data);
     else if (action  === "copy")
       return this.copyFile(data);
   }
 
-  public uploadFiles(file: any): void {
-    this.fileService.uploadFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
-      console.debug("Loaded file '%s'.", capability.displayName);
+  public importFiles(file: any): void {
+    this.fileService.importFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
+      console.debug(`Loaded file '${capability.displayName}'.`);
 
       if (!capability) {
         console.error("Error loading file.");
@@ -39,14 +39,22 @@ export class FileSelectComponent implements OnInit {
       
       this.fileSelect.emit(capability);
     });
+
     this.fileInput.nativeElement.value = "";
   }
 
   public copyFile(file: any): void {
-    this.fileService.copyFile(file).subscribe((data: any) => {
+    this.fileService.copyFile(file).subscribe((capability: any) => {
       console.debug("Loaded JSON.");
-      this.fileSelect.emit(data);
+
+      if (!capability) {
+        console.error("Error loading file.");
+        return;
+      }
+
+      this.fileSelect.emit(capability);
     });
+
     this.fileInput.nativeElement.value = "";
   }
 }

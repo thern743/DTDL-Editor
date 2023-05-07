@@ -1,23 +1,32 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
-import { EditorSettings, EditorSettingsDto } from '../../models/EditorSettings';
+import { EditorSettings } from '../../models/EditorSettings';
 import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';
+import { FileService } from '../file/file.service';
+import { v4 as uuidv4 } from 'uuid';
+import { ModelData } from 'src/app/models/ModelData';
+import { EditorService } from '../editor/editor.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private static EDITOR_SETTINGS: string = "dtdlEditor://settings";
+  public static EDITOR_SETTINGS: string = "dtdlEditor://settings";
+  public static MODEL_FILES: string = "dtdlEditor://models";
+  private _fileService: FileService;
   private _snackBar: MatSnackBar;
   public editorSettings!: EditorSettings;
+  public models!: Array<string>;
 
-  constructor(snackBar: MatSnackBar) {
-    this._snackBar = snackBar;    
-    this.load();
+  constructor(fileService: FileService, snackBar: MatSnackBar) {
+    this._fileService = fileService;
+    this._snackBar = snackBar;
+    this.editorSettings = this.loadSettings();
+    this.subscribeToFileData();
   }
 
-  public save(editorSettings: EditorSettingsDto): void {
+  public save(editorSettings: EditorSettings): void {
     try {
       let settings = JSON.stringify(editorSettings);
       localStorage.setItem(SettingsService.EDITOR_SETTINGS, settings);
@@ -44,17 +53,24 @@ export class SettingsService {
     });
   }
 
-  public load(): EditorSettingsDto {
+  private loadSettings(): EditorSettings {
     let settings = localStorage.getItem(SettingsService.EDITOR_SETTINGS) ?? JSON.stringify(new EditorSettings());
 
     try {
-      let dto: EditorSettingsDto = JSON.parse(settings);
-      this.editorSettings = EditorSettings.fromDto(dto);      
+      const existing: EditorSettings = JSON.parse(settings);
+      const editorSettings = EditorSettings.fromExisting(existing);
+      return editorSettings;
     } catch (error) {
       console.error("Could not load editor settings from local storage: %o", error);
     }
 
-    return this.editorSettings;
+    return new EditorSettings();
+  }
+
+  private subscribeToFileData(): void {
+    this._fileService.interfaceFiles$.subscribe((modelData: Array<ModelData>) => {
+      localStorage.setItem(SettingsService.MODEL_FILES, JSON.stringify(modelData));
+    });
   }
 
   public buildDtmi(name: string): string {
