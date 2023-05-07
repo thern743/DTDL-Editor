@@ -4,13 +4,16 @@ import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.comp
 import { EditorSettings } from '../../models/EditorSettings';
 import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';
 import { FileService } from '../file/file.service';
+import { v4 as uuidv4 } from 'uuid';
+import { ModelData } from 'src/app/models/ModelData';
+import { EditorService } from '../editor/editor.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private static EDITOR_SETTINGS: string = "dtdlEditor://settings";
-  private static MODEL_FILES: string = "dtdlEditor://models";
+  public static EDITOR_SETTINGS: string = "dtdlEditor://settings";
+  public static MODEL_FILES: string = "dtdlEditor://models";
   private _fileService: FileService;
   private _snackBar: MatSnackBar;
   public editorSettings!: EditorSettings;
@@ -18,9 +21,9 @@ export class SettingsService {
 
   constructor(fileService: FileService, snackBar: MatSnackBar) {
     this._fileService = fileService;
-    this._snackBar = snackBar;    
+    this._snackBar = snackBar;
     this.editorSettings = this.loadSettings();
-    this.loadModels();
+    this.subscribeToFileData();
   }
 
   public save(editorSettings: EditorSettings): void {
@@ -56,7 +59,7 @@ export class SettingsService {
     try {
       const existing: EditorSettings = JSON.parse(settings);
       const editorSettings = EditorSettings.fromExisting(existing);
-      return editorSettings;     
+      return editorSettings;
     } catch (error) {
       console.error("Could not load editor settings from local storage: %o", error);
     }
@@ -64,13 +67,10 @@ export class SettingsService {
     return new EditorSettings();
   }
 
-  private loadModels(): void {
-    const files = localStorage.getItem(SettingsService.MODEL_FILES);
-    if (files) {
-      [...files].forEach((file: string) => {
-        this._fileService.parseModelContent(file);
-      });
-    }
+  private subscribeToFileData(): void {
+    this._fileService.interfaceFiles$.subscribe((modelData: Array<ModelData>) => {
+      localStorage.setItem(SettingsService.MODEL_FILES, JSON.stringify(modelData));
+    });
   }
 
   public buildDtmi(name: string): string {

@@ -30,7 +30,7 @@ export class FileSelectComponent implements OnInit {
 
   public importFiles(file: any): void {
     this.fileService.importFiles(file).subscribe((capability: InterfaceCapabilityModel) => { 
-      console.debug("Loaded file '%s'.", capability.displayName);
+      console.debug(`Loaded file '${capability.displayName}'.`);
 
       if (!capability) {
         console.error("Error loading file.");
@@ -39,14 +39,22 @@ export class FileSelectComponent implements OnInit {
       
       this.fileSelect.emit(capability);
     });
+
     this.fileInput.nativeElement.value = "";
   }
 
   public copyFile(file: any): void {
-    this.fileService.copyFile(file).subscribe((data: any) => {
+    this.fileService.copyFile(file).subscribe((capability: any) => {
       console.debug("Loaded JSON.");
-      this.fileSelect.emit(data);
+
+      if (!capability) {
+        console.error("Error loading file.");
+        return;
+      }
+
+      this.fileSelect.emit(capability);
     });
+
     this.fileInput.nativeElement.value = "";
   }
 }

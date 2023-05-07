@@ -14,24 +14,15 @@ import { SchemaService } from '../services/schema/schema.service';
 })
 export class ImportModelComponent implements OnInit {
   private _editorService: EditorService;
-  private _validationService: ValidationService;
-  private _schemaService: SchemaService;
-  private _formBuilder: UntypedFormBuilder;
-  private _dialog: MatDialog;
 
-  constructor(editorService: EditorService, validationService: ValidationService, schemaService: SchemaService, formBuilder: UntypedFormBuilder, dialog: MatDialog) { 
+  constructor(editorService: EditorService) { 
     this._editorService = editorService;
-    this._validationService = validationService;
-    this._schemaService = schemaService;
-    this._formBuilder = formBuilder;
-    this._dialog = dialog;
   }
 
   public ngOnInit(): void {
   }
 
   public addInterface($event: InterfaceCapabilityModel): void {
-    var formControl = new InterfaceCapabilityFormControl($event, this._validationService, this._schemaService, this._formBuilder, this._dialog);
-    this._editorService.addInterface(formControl);
+    this._editorService.addInterfaceForm($event);
   }
 }
