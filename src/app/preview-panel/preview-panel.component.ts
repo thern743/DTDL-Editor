@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { IDtdlValidationResult } from '../models/interfaces/IDtdlValidationResult';
-import { FileService } from '../services/file/file-service.service';
+import { FileService } from '../services/file/file.service';
 import { ValidationService } from '../services/validation/validation-service.service';
 
 @Component({

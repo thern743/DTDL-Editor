@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
-import { EditorSettings, EditorSettingsDto } from '../../models/EditorSettings';
+import { EditorSettings } from '../../models/EditorSettings';
 import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';
+import { FileService } from '../file/file.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
   private static EDITOR_SETTINGS: string = "dtdlEditor://settings";
+  private static MODEL_FILES: string = "dtdlEditor://models";
+  private _fileService: FileService;
   private _snackBar: MatSnackBar;
   public editorSettings!: EditorSettings;
+  public models!: Array<string>;
 
-  constructor(snackBar: MatSnackBar) {
+  constructor(fileService: FileService, snackBar: MatSnackBar) {
+    this._fileService = fileService;
     this._snackBar = snackBar;    
-    this.load();
+    this.editorSettings = this.loadSettings();
+    this.loadModels();
   }
 
-  public save(editorSettings: EditorSettingsDto): void {
+  public save(editorSettings: EditorSettings): void {
     try {
       let settings = JSON.stringify(editorSettings);
       localStorage.setItem(SettingsService.EDITOR_SETTINGS, settings);
@@ -44,17 +50,27 @@ export class SettingsService {
     });
   }
 
-  public load(): EditorSettingsDto {
+  private loadSettings(): EditorSettings {
     let settings = localStorage.getItem(SettingsService.EDITOR_SETTINGS) ?? JSON.stringify(new EditorSettings());
 
     try {
-      let dto: EditorSettingsDto = JSON.parse(settings);
-      this.editorSettings = EditorSettings.fromDto(dto);      
+      const existing: EditorSettings = JSON.parse(settings);
+      const editorSettings = EditorSettings.fromExisting(existing);
+      return editorSettings;     
     } catch (error) {
       console.error("Could not load editor settings from local storage: %o", error);
     }
 
-    return this.editorSettings;
+    return new EditorSettings();
+  }
+
+  private loadModels(): void {
+    const files = localStorage.getItem(SettingsService.MODEL_FILES);
+    if (files) {
+      [...files].forEach((file: string) => {
+        this._fileService.parseModelContent(file);
+      });
+    }
   }
 
   public buildDtmi(name: string): string {

@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { InterfaceCapabilityModel } from '../models/InterfaceCapabilityModel';
-import { FileService } from '../services/file/file-service.service';
+import { FileService } from '../services/file/file.service';
 
 @Component({
   selector: 'file-select',

@@ -26,34 +26,19 @@ export class FileService {
     if (file.target.files && file.target.files.length > 0) {
       this.fileAttr = "";
 
-      const parseInternal = (capability: any) => {
-        capability instanceof InterfaceCapabilityModel;
-        this.files.push(file);
-        this.interfaces$.next(capability);
-      };
-
-      [...file.target.files].map((file: File) => {
+      [...file.target.files].forEach((file: File) => {
         const reader = new FileReader();
         reader.onload = (data: any) => {
-          const file = data.target.result;
-          const fileString = file as string;
-
+          const localFile = data.target.result;
+          const fileString = localFile as string;
           console.debug("Reading File: %s ...", fileString.substring(0, 25));
 
           try {
-            const capabilities = JSON.parse(file);
-
-            if (capabilities instanceof Array) {
-              capabilities?.forEach((capability: any) => {
-                parseInternal(capability);
-              });
-            } else {
-              parseInternal(capabilities);
-            }
+            this.parseModelContent(localFile);
           } catch (error) {
             const msg = "Invalid DTDL (JSON-LD) File";
             console.error(msg + ": " + error);
-
+      
             // TODO: Use common ErrorService to control error SnackBar (FileService)
             //       Several services currently call `snackBar.openFromComponent(ErrorSnackbarComponent)`
             //       but should be calling through to an ErrorService which will do these common operations.
@@ -64,7 +49,7 @@ export class FileService {
               panelClass: ['mat-toolbar', 'mat-warn'],
               data: { msg: msg }
             });
-
+      
             this.fileAttr = "Choose Files...";
           }
         };
@@ -77,6 +62,24 @@ export class FileService {
     }
 
     return this.interfaces$;
+  }
+
+  public parseModelContent(modelData: any): void {
+    const parseInternal = (capability: any) => {
+      capability instanceof InterfaceCapabilityModel;
+      this.files.push(modelData);
+      this.interfaces$.next(capability);
+    };
+
+    const capabilities = JSON.parse(modelData);
+
+    if (capabilities instanceof Array) {
+      capabilities?.forEach((capability: any) => {
+        parseInternal(capability);
+      });
+    } else {
+      parseInternal(capabilities);
+    }
   }
 
   public copyFile(file: any): Subject<any> {
