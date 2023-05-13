@@ -28,11 +28,10 @@
   </mat-drawer>
   <mat-drawer-content>
     <mat-sidenav-container fullscreen>
-      <mat-sidenav #tree mode="side" [opened]="navOpenState" (opened)="navOpenState = true"
-        (closed)="navOpenState = false">
+      <mat-sidenav #tree mode="side" [fixedInViewport]="false">
         <model-tree></model-tree>
       </mat-sidenav>
-      <mat-sidenav-content>
+      <mat-sidenav-content [style.left]="tree.opened ? '.10%' : '0'">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>

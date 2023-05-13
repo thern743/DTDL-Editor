@@ -14,16 +14,7 @@ import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
-import { ArraySchemaCapabilityModel } from "../models/schemas/ArraySchemaCapabilityModel";
-import { MapSchemaCapabilityModel } from "../models/schemas/MapSchemaCapabilityModel";
-import { EnumSchemaCapabilityModel } from "../models/schemas/EnumSchemaCapabilityModel";
-import { ObjectSchemaCapabilityModel } from "../models/schemas/ObjectSchemaCapabilityModel";
 import { MatDialog } from "@angular/material/dialog";
-import { ArraySchemaFormControl } from "./schemas/ArraySchemaFormControl";
-import { EnumSchemaFormControl } from "./schemas/EnumSchemaFormControl";
-import { MapSchemaFormControl } from "./schemas/MapSchemaFormControl";
-import { ObjectSchemaFormControl } from "./schemas/ObjectSchemaFormControl";
-import { ArraySchemaFactory } from "../factories/ArraySchemaFactory";
 import { SchemaService } from "../services/schema/schema.service";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {

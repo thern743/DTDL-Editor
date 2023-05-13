@@ -6,45 +6,62 @@ import { InterfaceCapabilityModel } from '../../models/InterfaceCapabilityModel'
 import * as FileSaver from 'file-saver';
 import { ModelData } from 'src/app/models/ModelData';
 import { v4 as uuidv4 } from 'uuid';
+import { FileData } from 'src/app/models/FileData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
   public fileAttr = 'Choose Files...';
-  public interfaceFiles: Array<ModelData>;
-  private _interfaceFiles$: Subject<Array<ModelData>>;
-  private _interfaces$: Subject<InterfaceCapabilityModel>;
-  private _fileData$: Subject<string>;
+  private _modelData$: Subject<ModelData>;
+  private _model$: Subject<InterfaceCapabilityModel>;
+  private _file$: Subject<any>;
+  private _files$: Subject<Array<FileData>>;
+  private _files: Array<FileData>;
   private _snackBar: MatSnackBar;
 
   constructor(snackBar: MatSnackBar) {
     this._snackBar = snackBar;
-    this.interfaceFiles = new Array<ModelData>();
-    this._interfaceFiles$ = new Subject<Array<ModelData>>();
-    this._interfaces$ = new Subject<InterfaceCapabilityModel>();
-    this._fileData$ = new Subject<string>();
+    this._modelData$ = new Subject<ModelData>();
+    this._model$ = new Subject<InterfaceCapabilityModel>();
+    this._file$ = new Subject<any>();
+    this._files$ = new Subject<Array<FileData>>();
+    this._files = new Array<FileData>();
+    this.subscribeToFile();
   }
 
-  private parseInternal = (file: any, model: any) => {
+  private subscribeToFile(): void {
+    this._file$.subscribe((file: any) => {
+      const fileData = new FileData();
+      fileData.id = uuidv4();
+      fileData.sortOrder = 1;
+      fileData.data = file;
+
+      this._files.push(fileData);
+      this._files$.next(this._files);
+    });
+  }
+
+  private parseInternal = (fileData: any, model: any) => {
     const modelData = new ModelData();
     modelData.id = uuidv4();
     modelData.sortOrder = 1;
-    modelData.data = file;
+    modelData.data = fileData;
 
-    this.addFile(modelData, model);
+    this.addModel(modelData, model);
   }
 
-  public importFiles(file: any): Subject<InterfaceCapabilityModel> {
-    if (file.target.files && file.target.files.length > 0) {
+  public importFiles(fileUpload: any): Subject<InterfaceCapabilityModel> {
+    if (fileUpload.target.files && fileUpload.target.files.length > 0) {
       this.fileAttr = "";
 
-      [...file.target.files].forEach((file: File) => {
+      [...fileUpload.target.files].forEach((file: File) => {
         const reader = new FileReader();
 
         reader.onload = (data: any) => {
-          const file = data.target.result;
-          this.parseFileData(file);
+          const rawFileData = data.target.result;
+          this.parseFileData(rawFileData);   
+          this._file$.next(rawFileData);       
         };
 
         reader.readAsText(file);
@@ -54,22 +71,20 @@ export class FileService {
       this.fileAttr = "Choose Files...";
     }
 
-    return this._interfaces$;
+    return this._model$;
   }
 
-  public parseFileData(file: any) {
+  public parseFileData(fileData: any) {
     try {
-      const models = JSON.parse(file);
+      const models = JSON.parse(fileData);
 
       if (models instanceof Array) {
         models?.forEach((model: any) => {
-          this.parseInternal(file, model);
+          this.parseInternal(fileData, model);
         });
       } else {
-        this.parseInternal(file, models);
+        this.parseInternal(fileData, models);
       }
-
-      this._interfaceFiles$.next(this.interfaceFiles);
     } catch (error) {
       const msg = "Invalid DTDL (JSON-LD) File";
       console.error(`${msg}:${error}`);
@@ -89,10 +104,10 @@ export class FileService {
     }
   }
 
-  public addFile(modelData: ModelData, model: any): void {
+  public addModel(modelData: ModelData, model: any): void {
     model instanceof InterfaceCapabilityModel;
-    this.interfaceFiles.push(modelData);
-    this._interfaces$.next(model);
+    this._modelData$.next(modelData);
+    this._model$.next(model);
   }
 
   public copyFile(file: any): Subject<any> {
@@ -102,17 +117,17 @@ export class FileService {
       [...file.target.files].forEach((file: File) => {
         let reader = new FileReader();
 
-        reader.onload = (data: any) => {
+        reader.onload = (fileData: any) => {
           try {
-            const file = data.target.result;
-            const models = JSON.parse(file);
+            const rawFileData = fileData.target.result;
+            const models = JSON.parse(rawFileData);
 
             if (models instanceof Array) {
               models?.forEach((model: any) => {
-                this._fileData$.next(model);
+                this.parseInternal(rawFileData, model);
               });
             } else {
-              this._fileData$.next(models);
+              this.parseInternal(rawFileData, models);
             }
           } catch (error) {
             const msg = "Could not parse file contents.";
@@ -137,11 +152,15 @@ export class FileService {
       this.fileAttr = "Choose Files...";
     }
 
-    return this._fileData$;
+    return this._model$;
   }
 
-  public get interfaceFiles$(): Subject<Array<ModelData>> {
-    return this._interfaceFiles$;
+  public get models$(): Subject<InterfaceCapabilityModel> {
+    return this._model$;
+  }
+  
+  public get files$(): Subject<Array<FileData>> {
+    return this._files$;
   }
 
   public saveFile(jsonLd: string): void {

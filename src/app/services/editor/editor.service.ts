@@ -24,7 +24,6 @@ import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.componen
 import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { FileService } from '../file/file.service';
-import { ModelData } from 'src/app/models/ModelData';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +58,7 @@ export class EditorService {
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
     this.interfaces$ = new Subject<InterfaceCapabilityFormControl>(); 
+    this.subscribeToModels();
     this.loadModels();
   }
 
@@ -181,20 +181,24 @@ export class EditorService {
   private loadModels(): void {
     const data = localStorage.getItem(SettingsService.MODEL_FILES);
     if (!data) return;
+    const fileData = JSON.parse(data);
 
-    const files: Array<ModelData> = JSON.parse(data);
-
-    if (files) {
-      files.forEach((file: ModelData) => {
-        if (!file?.data) return;
-        const model = JSON.parse(file.data);
-        this._fileService.addFile(file, model);
-        this.addInterfaceForm(model);
+    if (fileData instanceof Array) {
+      fileData.forEach((file: any) => {
+        this._fileService.parseFileData(file.data);
       });
+    } else {
+      this._fileService.parseFileData(fileData.data);
     }
   }
 
-  public addInterfaceForm(model: InterfaceCapabilityModel) {
+  private subscribeToModels(): void {
+    this._fileService.models$.subscribe((model: InterfaceCapabilityModel) => {
+      this.addInterfaceForm(model);
+    });
+  }
+
+  public addInterfaceForm(model: InterfaceCapabilityModel): void {
     var formControl = new InterfaceCapabilityFormControl(model, this._validationService, this._schemaService, this._formBuilder, this._dialog);
     this.addInterface(formControl);
   }

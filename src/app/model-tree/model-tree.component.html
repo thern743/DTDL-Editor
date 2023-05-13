@@ -3,7 +3,7 @@
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">    
       <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
         <mat-icon>chevron_right</mat-icon>
-        {{node.name}}
+        {{node.displayName ? node.displayName : node.name}}
       </button>
   </mat-tree-node>
 
@@ -11,7 +11,7 @@
   <mat-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
       <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
         <mat-icon>{{modelTreeService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
-        {{node.name}}
+        {{node.displayName ? node.displayName : node.name}}
       </button>
   </mat-tree-node> 
 </mat-tree>

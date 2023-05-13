@@ -4,9 +4,7 @@ import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.comp
 import { EditorSettings } from '../../models/EditorSettings';
 import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';
 import { FileService } from '../file/file.service';
-import { v4 as uuidv4 } from 'uuid';
-import { ModelData } from 'src/app/models/ModelData';
-import { EditorService } from '../editor/editor.service';
+import { FileData } from 'src/app/models/FileData';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +20,8 @@ export class SettingsService {
   constructor(fileService: FileService, snackBar: MatSnackBar) {
     this._fileService = fileService;
     this._snackBar = snackBar;
+    this.subscribeToFiles();
     this.editorSettings = this.loadSettings();
-    this.subscribeToFileData();
   }
 
   public save(editorSettings: EditorSettings): void {
@@ -67,9 +65,10 @@ export class SettingsService {
     return new EditorSettings();
   }
 
-  private subscribeToFileData(): void {
-    this._fileService.interfaceFiles$.subscribe((modelData: Array<ModelData>) => {
-      localStorage.setItem(SettingsService.MODEL_FILES, JSON.stringify(modelData));
+  private subscribeToFiles(): void {
+    this._fileService.files$.subscribe((files: Array<FileData>) => {
+      const fileData = JSON.stringify(files);
+      localStorage.setItem(SettingsService.MODEL_FILES, fileData);
     });
   }
 
