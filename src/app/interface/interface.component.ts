@@ -85,4 +85,9 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
     let val = type instanceof Array ? type[0] : type;
     return val;
   }
+
+  public parseNameFromDtmi(dtmi: string): string {
+    const result = this.editorService.parseNameFromDtmi(dtmi);
+    return result;
+  }
 }

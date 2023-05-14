@@ -32,4 +32,16 @@ export class ModelTreeComponent implements OnInit {
       //this.modelTreeService.addNode(interfaceInstance.model);
     });
   } 
+
+  public getDisplayName(node: any): string {
+    if (node.displayName)
+      return node.displayName
+    
+    if (node.name) {
+      const result = this.editorService.parseNameFromDtmi(node.name);
+      return result;
+    }
+
+    return "Interface";
+  }
 }

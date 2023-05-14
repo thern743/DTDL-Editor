@@ -5,7 +5,7 @@
                         (closed)="close()"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model["@id"])}}</em></mat-panel-title>
+        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{parseNameFromDtmi(interface.model["@id"])}}</em></mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
     </mat-expansion-panel-header>
 
