@@ -32,14 +32,14 @@ export class ModelTreeService {
     });
 
     this.treeDataSource.data = data;
-    this.treeControl.expandAll();
+    this.treeControl.collapseAll();
   }
 
   public mapChildren(capabilities: AbstractCapabilityModel[], node: CapabilityNode): CapabilityNode {
     capabilities.forEach((capability: AbstractCapabilityModel) => {
       const type = capability["@type"] instanceof Array ? capability["@type"][0] : capability["@type"];
       const dtmi = capability["@id"];
-      
+
       if (type == "Relationship") {
         let data = new Array<CapabilityNode>();
         let innerNode = new CapabilityNode(dtmi, type);
