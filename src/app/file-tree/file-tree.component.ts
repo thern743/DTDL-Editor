@@ -35,7 +35,7 @@ export class FileTreeComponent implements OnInit {
     return node.displayName;
   }
 
-  public hasChild = (_: number, node: CapabilityFlatNode) => this.fileTreeService.hasChild;
+  public hasChild = (_: number, node: CapabilityFlatNode) => this.fileTreeService.hasChild(_, node);
 
   public isExpanded(node: CapabilityFlatNode): boolean {
     return this.fileTreeService.treeControl.isExpanded(node);

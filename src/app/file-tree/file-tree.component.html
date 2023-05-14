@@ -1,16 +1,25 @@
 <mat-tree [dataSource]="fileTreeService.treeDataSource" [treeControl]="fileTreeService.treeControl">
   <!-- No children... -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+    <div style="width: 100%;">
+      <mat-icon class="drag">drag_indicator</mat-icon>
       <mat-icon>insert_drive_file</mat-icon>
+      {{ getDisplayName(node) }}
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
     </button>
   </mat-tree-node>
 
   <!-- Has children... -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="50">
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+    <div style="width: 100%;">
+      <mat-icon>drag_indicator</mat-icon>
       <mat-icon>insert_drive_file</mat-icon>
       {{ getDisplayName(node) }}
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
     </button>
   </mat-tree-node>
 </mat-tree>

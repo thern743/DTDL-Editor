@@ -5,3 +5,11 @@
 .mat-tree-node {
   border-bottom: solid 1px rgba(255,255,255,.12)
 }
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.drag {
+  cursor:grab;
+}
