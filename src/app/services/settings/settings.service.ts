@@ -11,11 +11,10 @@ import { FileData } from 'src/app/models/FileData';
 })
 export class SettingsService {
   public static EDITOR_SETTINGS: string = "dtdlEditor://settings";
-  public static MODEL_FILES: string = "dtdlEditor://models";
+  public static MODEL_FILES: string = "dtdlEditor://files";
   private _fileService: FileService;
   private _snackBar: MatSnackBar;
   public editorSettings!: EditorSettings;
-  public models!: Array<string>;
 
   constructor(fileService: FileService, snackBar: MatSnackBar) {
     this._fileService = fileService;
