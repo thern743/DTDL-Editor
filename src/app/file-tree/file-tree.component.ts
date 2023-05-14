@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CapabilityNode } from '../models/CapabilityNode';
-import { EditorService } from '../services/editor/editor.service';
 import { FileTreeService } from '../services/file-tree/file-tree.service';
 import { FileData } from '../models/FileData';
 import { CapabilityFlatNode } from '../models/CapabilityFlatNode';
 import { FileService } from '../services/file/file.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'file-tree',
@@ -39,5 +39,9 @@ export class FileTreeComponent implements OnInit {
 
   public isExpanded(node: CapabilityFlatNode): boolean {
     return this.fileTreeService.treeControl.isExpanded(node);
+  }
+
+  public drop($event: any) {
+
   }
 }

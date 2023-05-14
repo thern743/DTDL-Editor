@@ -4,6 +4,7 @@ import { EditorService } from '../services/editor/editor.service';
 import { CapabilityNode } from '../models/CapabilityNode';
 import { CapabilityFlatNode } from '../models/CapabilityFlatNode';
 import { ModelTreeService } from '../services/model-tree/model-tree.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'model-tree',
@@ -47,5 +48,9 @@ export class ModelTreeComponent implements OnInit {
 
   public isExpanded(node: CapabilityFlatNode): boolean {
     return this.modelTreeService.treeControl.isExpanded(node);
+  }
+
+  public drop($event: any) {
+
   }
 }

@@ -3,8 +3,8 @@ import { FlatTreeControl } from "@angular/cdk/tree";
 import { MatTreeFlatDataSource, MatTreeFlattener } from "@angular/material/tree";
 import { CapabilityNode } from "../../models/CapabilityNode";
 import { CapabilityFlatNode } from "../../models/CapabilityFlatNode";
-import { LocalizationService } from "../localization/localization.service";
 import { FileData } from "src/app/models/FileData";
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Injectable({
   providedIn: 'root'
