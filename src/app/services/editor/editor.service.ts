@@ -185,10 +185,10 @@ export class EditorService {
 
     if (fileData instanceof Array) {
       fileData.forEach((file: any) => {
-        this._fileService.parseFileData(file.data);
+        this._fileService.parseRawFileData(file.data);
       });
     } else {
-      this._fileService.parseFileData(fileData.data);
+      this._fileService.parseRawFileData(fileData.data);
     }
   }
 
