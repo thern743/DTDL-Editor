@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { EditorService } from '../services/editor/editor.service';
 import { ModelTreeService } from '../services/model-tree/ModelTreeService';
+import { CapabilityNode } from '../models/CapabilityNode';
+import { CapabilityFlatNode } from '../models/CapabilityFlatNode';
 
 @Component({
   selector: 'model-tree',
@@ -36,12 +38,14 @@ export class ModelTreeComponent implements OnInit {
   public getDisplayName(node: any): string {
     if (node.displayName)
       return node.displayName
-    
-    if (node.name) {
+    else if (node.name) {
       const result = this.editorService.parseNameFromDtmi(node.name);
       return result;
+    } else if (node.title) {
+      return node.title;
+    } else {
+      return "Unknown";
     }
 
-    return "Interface";
   }
 }
