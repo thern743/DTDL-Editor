@@ -8,7 +8,11 @@
         <mat-icon mat-list-icon>edit</mat-icon>
         <h4 mat-line *ngIf="menuOpenState">Main Editor</h4>
       </mat-list-item>
-      <mat-list-item (click)="tree.toggle()">
+      <mat-list-item routerLink="/files" (click)="sidenav.toggle()" routerLinkActive="active">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h4 mat-line *ngIf="menuOpenState">Files</h4>
+      </mat-list-item>
+      <mat-list-item (click)="sidenav.toggle()">
         <mat-icon mat-list-icon>list_alt</mat-icon>
         <h4 mat-line *ngIf="menuOpenState">Model Tree</h4>
       </mat-list-item>
@@ -28,10 +32,10 @@
   </mat-drawer>
   <mat-drawer-content>
     <mat-sidenav-container fullscreen>
-      <mat-sidenav #tree mode="side" [fixedInViewport]="false">
+      <mat-sidenav #sidenav mode="side" [fixedInViewport]="false">
         <model-tree></model-tree>
       </mat-sidenav>
-      <mat-sidenav-content [style.left]="tree.opened ? '.10%' : '0'">
+      <mat-sidenav-content [style.left]="sidenav.opened ? '.10%' : '0'">
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
