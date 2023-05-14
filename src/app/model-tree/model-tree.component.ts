@@ -3,7 +3,6 @@ import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabil
 import { EditorService } from '../services/editor/editor.service';
 import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 import { CapabilityNode } from '../models/CapabilityNode';
-import { CapabilityFlatNode } from '../models/CapabilityFlatNode';
 
 @Component({
   selector: 'model-tree',
@@ -35,14 +34,14 @@ export class ModelTreeComponent implements OnInit {
     });
   } 
 
-  public getDisplayName(node: any): string {
+  public getDisplayName(node: CapabilityNode): string {
     if (node.displayName)
       return node.displayName
-    else if (node.name) {
-      const result = this.editorService.parseNameFromDtmi(node.name);
+    else if (node.id) {
+      const result = this.editorService.parseNameFromDtmi(node.id);
       return result;
-    } else if (node.title) {
-      return node.title;
+    } else if (node.type) {
+      return node.type;
     } else {
       return "Unknown";
     }

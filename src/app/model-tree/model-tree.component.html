@@ -7,7 +7,7 @@
   </mat-tree-node>
 
   <!-- Has children... -->
-  <mat-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
+  <mat-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild" matTreeNodePadding matTreeNodePaddingIndent="50">
     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
       <mat-icon>{{modelTreeService.treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}</mat-icon>
       {{ getDisplayName(node) }}
