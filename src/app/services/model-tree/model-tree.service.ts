@@ -6,7 +6,6 @@ import { AbstractCapabilityModel } from "../../models/AbstractCapabilityModel";
 import { InterfaceCapabilityFormControl } from "../../formControls/InterfaceCapabilityFormControl";
 import { CapabilityFlatNode } from "../../models/CapabilityFlatNode";
 import { RelationshipCapabilityModel } from "../../models/RelationshipCapabilityModel";
-import { LanguageMap } from "src/app/models/LanguageMap";
 import { LocalizationService } from "../localization/localization.service";
 import { ICapabilityModel } from "src/app/models/interfaces/ICapabilityModel";
 

@@ -66,7 +66,7 @@ import { DisplayNameDescriptionComponent } from './localization/display-name-des
 import { SchemaModalComponent } from './schema-modal/schema-modal.component';
 import { SchemaSemanticTypeUnitComponent } from './schema-semantic-type-unit/schema-semantic-type-unit.component';
 import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
-import { FileNavComponent } from './file-nav/file-nav.component';
+import { FileTreeComponent } from './file-tree/file-tree.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +107,7 @@ import { FileNavComponent } from './file-nav/file-nav.component';
     SchemaModalComponent,
     SchemaSemanticTypeUnitComponent,
     MapKeyValueComponent,
-    FileNavComponent
+    FileTreeComponent
   ],
   imports: [
     BrowserModule,

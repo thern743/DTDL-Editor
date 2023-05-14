@@ -6,7 +6,7 @@ import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabi
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../../formControls/RelationshipCapabilityFormControl';
 import { ComponentCapabilityFormControl } from '../../formControls/ComponentCapabilityFormControl';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { RelationshipCapabilityModel } from '../../models/RelationshipCapabilityModel';
 import { PropertyCapabilityModel } from '../../models/PropertyCapabilityModel';
 import { CommandCapabilityModel } from '../../models/CommandCapabilityModel';
@@ -37,7 +37,7 @@ export class EditorService {
   public units: Map<string, Array<string>>;
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
-  public interfaces$: Subject<InterfaceCapabilityFormControl>;  
+  public interfaces$: BehaviorSubject<InterfaceCapabilityFormControl[]>;  
   private _validationService: ValidationService;
   private _schemaService: SchemaService;
   private _settingsService: SettingsService;
@@ -58,7 +58,7 @@ export class EditorService {
     this.units = this.getUnits();
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
-    this.interfaces$ = new Subject<InterfaceCapabilityFormControl>(); 
+    this.interfaces$ = new BehaviorSubject<Array<InterfaceCapabilityFormControl>>(this.interfaces); 
     this.subscribeToModels();
     this.loadModels();
   }
@@ -202,7 +202,7 @@ export class EditorService {
 
   public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     this.interfaces.push(interfaceInstance);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
@@ -245,7 +245,7 @@ export class EditorService {
     contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
 
     console.groupCollapsed("Interface Form Capabilities");
 
@@ -302,12 +302,12 @@ export class EditorService {
     contentsFormArray.removeAt(formIndex[1]);
     interfaceInstance.contents.splice(formIndex[1], 1);
     interfaceInstance.model.contents.splice(formIndex[1], 1);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public deleteInterface(formIndex: number): void {
     this.interfaces.splice(formIndex, 1);
-    this.interfaces$.next();
+    this.interfaces$.next(this.interfaces);
   }
 
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
@@ -332,7 +332,7 @@ export class EditorService {
       interfaceInstance.model.schemas?.push(formControl.model);
     }
 
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public parseNameFromDtmi(dtmi: string) {

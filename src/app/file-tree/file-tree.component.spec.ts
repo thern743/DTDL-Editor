@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FileNavComponent } from './file-nav.component';
+import { FileTreeComponent } from './file-tree.component';
 
-describe('FileNavComponent', () => {
-  let component: FileNavComponent;
-  let fixture: ComponentFixture<FileNavComponent>;
+describe('FileTreeComponent', () => {
+  let component: FileTreeComponent;
+  let fixture: ComponentFixture<FileTreeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FileNavComponent ]
+      declarations: [ FileTreeComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FileNavComponent);
+    fixture = TestBed.createComponent(FileTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

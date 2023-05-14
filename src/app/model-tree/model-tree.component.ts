@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { EditorService } from '../services/editor/editor.service';
-import { ModelTreeService } from '../services/model-tree/ModelTreeService';
 import { CapabilityNode } from '../models/CapabilityNode';
+import { CapabilityFlatNode } from '../models/CapabilityFlatNode';
+import { ModelTreeService } from '../services/model-tree/model-tree.service';
 
 @Component({
   selector: 'model-tree',
@@ -10,27 +11,22 @@ import { CapabilityNode } from '../models/CapabilityNode';
   styleUrls: ['./model-tree.component.scss']
 })
 export class ModelTreeComponent implements OnInit {
-  public editorService: EditorService
+  private _editorService: EditorService;
   public modelTreeService: ModelTreeService;
 
   constructor(editorService: EditorService, modelTreeService: ModelTreeService) {
-    this.editorService = editorService;
+    this._editorService = editorService;
     this.modelTreeService = modelTreeService;
   }
 
   public ngOnInit(): void {
-    this.modelTreeService.mapDataSource(this.editorService.interfaces);
+    this.modelTreeService.mapDataSource(this._editorService.interfaces);
     this.subscribe();
   }  
 
   private subscribe() {
-    // TODO: Push new interface instances onto model tree structure without iterating all interfaces
-    //       The underlying call to `ModelTreeService.mapDataSource` iterates through all the interface 
-    //       instances. Instead, we should push the new instance onto the array using `ModelTreeService.addNode()` and 
-    //       re-map the children. Currently, `addNode()` doesn't work properly.
-    this.editorService.interfaces$.subscribe((interfaceInstance: InterfaceCapabilityFormControl) => {
-      this.modelTreeService.mapDataSource(this.editorService.interfaces);
-      //this.modelTreeService.addNode(interfaceInstance.model);
+    this._editorService.interfaces$.subscribe((interfaces: Array<InterfaceCapabilityFormControl>) => {
+      this.modelTreeService.mapDataSource(interfaces);
     });
   } 
 
@@ -38,13 +34,18 @@ export class ModelTreeComponent implements OnInit {
     if (node.displayName)
       return node.displayName
     else if (node.id) {
-      const result = this.editorService.parseNameFromDtmi(node.id);
+      const result = this._editorService.parseNameFromDtmi(node.id);
       return result;
     } else if (node.type) {
       return node.type;
     } else {
       return "Unknown";
     }
+  }
 
+  public hasChild = (_: number, node: CapabilityFlatNode) => this.modelTreeService.hasChild;
+
+  public isExpanded(node: CapabilityFlatNode): boolean {
+    return this.modelTreeService.treeControl.isExpanded(node);
   }
 }

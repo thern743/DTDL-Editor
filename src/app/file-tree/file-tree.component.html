@@ -1,15 +1,15 @@
-<mat-tree [dataSource]="modelTreeService.treeDataSource" [treeControl]="modelTreeService.treeControl">
+<mat-tree [dataSource]="fileTreeService.treeDataSource" [treeControl]="fileTreeService.treeControl">
   <!-- No children... -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-      {{ getDisplayName(node) }}
+      <mat-icon>insert_drive_file</mat-icon>
     </button>
   </mat-tree-node>
 
   <!-- Has children... -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="50">
     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-      <mat-icon>{{ isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}</mat-icon>
+      <mat-icon>insert_drive_file</mat-icon>
       {{ getDisplayName(node) }}
     </button>
   </mat-tree-node>

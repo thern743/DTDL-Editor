@@ -7,7 +7,7 @@
 </mat-toolbar>
 <mat-card>
   <mat-accordion class="flex-accordion">
-    <ng-container *ngFor="let interface of editorService.interfaces; let i = index;">
+    <ng-container *ngFor="let interface of interfaces; index as i;">
       <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true" (panelToggle)="panelOpenState = $event"></interface-definition>
       <div class="flex-header-button" *ngIf="!panelOpenState">
         <button mat-raised-button color="accent" class="action-button" (click)="delete($event, i)"><mat-icon>delete_outline</mat-icon> Remove</button>

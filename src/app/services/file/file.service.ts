@@ -17,7 +17,7 @@ export class FileService {
   private _model$: Subject<InterfaceCapabilityModel>;
   private _file$: Subject<any>;
   private _files$: Subject<Array<FileData>>;
-  private _files: Array<FileData>;
+  public files: Array<FileData>;
   private _snackBar: MatSnackBar;
 
   constructor(snackBar: MatSnackBar) {
@@ -26,7 +26,7 @@ export class FileService {
     this._model$ = new Subject<InterfaceCapabilityModel>();
     this._file$ = new Subject<any>();
     this._files$ = new Subject<Array<FileData>>();
-    this._files = new Array<FileData>();
+    this.files = new Array<FileData>();
   }
 
   private parseInternal = (rawFileData: any, model: any) => {
@@ -100,8 +100,9 @@ export class FileService {
   }
 
   public addFile(file: FileData): void {
-    this._files.push(file);
-    this._files$.next(this._files);
+    this.files.push(file);
+    this._file$.next(file);
+    this._files$.next(this.files);
   }
 
   public addModel(modelData: ModelData, model: any): void {
@@ -161,6 +162,10 @@ export class FileService {
 
   public get files$(): Subject<Array<FileData>> {
     return this._files$;
+  }
+
+  public get file$(): Subject<FileData> {
+    return this._file$;
   }
 
   public saveFile(jsonLd: string): void {
