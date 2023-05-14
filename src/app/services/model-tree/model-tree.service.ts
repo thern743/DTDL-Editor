@@ -64,9 +64,9 @@ export class ModelTreeService {
     return node;
   }
 
-  private getDisplayName(model: ICapabilityModel): string {
+  private getDisplayName(model: ICapabilityModel): string | undefined {
     let locale = this._localizationService.defaultLocale;
-    let displayName: string = "Unknown";
+    let displayName: string | undefined = undefined;
 
     if (!model?.displayName) return displayName;
 

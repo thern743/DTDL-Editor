@@ -31,7 +31,7 @@ export class FileTreeComponent implements OnInit {
     });
   }  
 
-  public getDisplayName(node: CapabilityNode): string {
+  public getDisplayName(node: CapabilityNode): string | undefined {
     return node.displayName;
   }
 
