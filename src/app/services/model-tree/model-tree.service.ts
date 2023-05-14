@@ -68,7 +68,11 @@ export class ModelTreeService {
     let locale = this._localizationService.defaultLocale;
     let displayName: string = "Unknown";
 
-    if (model?.displayName && Object.keys(model.displayName).length > 0) {
+    if (!model?.displayName) return displayName;
+
+    if (typeof(model?.displayName) === "string") {
+      displayName = model.displayName;
+    } else if (Object.keys(model.displayName).length > 0) {
       if (Object.keys(model.displayName).indexOf(locale) === -1) {
         locale = Object.keys(model.displayName)[0];
       }
