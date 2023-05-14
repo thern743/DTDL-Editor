@@ -1,16 +1,20 @@
 <mat-tree [dataSource]="modelTreeService.treeDataSource" [treeControl]="modelTreeService.treeControl">
   <!-- No children... -->
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-      {{ getDisplayName(node) }}
-    </button>
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="50">
+    {{ getDisplayName(node) }}
   </mat-tree-node>
 
   <!-- Has children... -->
   <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="50">
-    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-      <mat-icon>{{ isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}</mat-icon>
-      {{ getDisplayName(node) }}
+    <div style="width: 100%">
+      <mat-icon class="drag">drag_indicator</mat-icon>
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon>{{ isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}</mat-icon>
+        {{ getDisplayName(node) }}
+      </button>
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
     </button>
   </mat-tree-node>
 </mat-tree>

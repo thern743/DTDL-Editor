@@ -43,7 +43,7 @@ export class ModelTreeComponent implements OnInit {
     }
   }
 
-  public hasChild = (_: number, node: CapabilityFlatNode) => this.modelTreeService.hasChild;
+  public hasChild = (_: number, node: CapabilityFlatNode) => this.modelTreeService.hasChild(_, node);
 
   public isExpanded(node: CapabilityFlatNode): boolean {
     return this.modelTreeService.treeControl.isExpanded(node);

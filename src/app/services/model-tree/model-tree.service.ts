@@ -26,7 +26,7 @@ export class ModelTreeService {
     this.treeDataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   }
 
-  public mapDataSource(interfaces: InterfaceCapabilityFormControl[]): void {
+  public mapDataSource(interfaces: Array<InterfaceCapabilityFormControl>): void {
     let data = new Array<CapabilityNode>();
 
     interfaces.forEach((interfaceInstance: InterfaceCapabilityFormControl) => {
@@ -68,7 +68,7 @@ export class ModelTreeService {
     let locale = this._localizationService.defaultLocale;
     let displayName: string = "Unknown";
 
-    if (Object.keys(model.displayName).length > 0) {
+    if (model?.displayName && Object.keys(model.displayName).length > 0) {
       if (Object.keys(model.displayName).indexOf(locale) === -1) {
         locale = Object.keys(model.displayName)[0];
       }
