@@ -48,7 +48,7 @@ export class FileService {
 
         reader.onload = (data: any) => {
           const rawFileData = data.target.result;
-          this.parseRawFileData(rawFileData);
+          this.parseRawFileData(file.name, rawFileData);
         };
 
         reader.readAsText(file);
@@ -61,7 +61,7 @@ export class FileService {
     return this._model$;
   }
 
-  public parseRawFileData(rawFileData: any) {
+  public parseRawFileData(filename: string, rawFileData: any) {
     try {
       const models = JSON.parse(rawFileData);
 
@@ -75,7 +75,7 @@ export class FileService {
 
       const fileData = new FileData();
       fileData.id = uuidv4();
-      fileData.name = "filename.txt";
+      fileData.name = filename ?? "file.json";
       fileData.sortOrder = -1;
       fileData.data = rawFileData;
 

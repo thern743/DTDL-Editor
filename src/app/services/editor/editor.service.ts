@@ -24,6 +24,7 @@ import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.componen
 import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { FileService } from '../file/file.service';
+import { FileData } from 'src/app/models/FileData';
 
 @Injectable({
   providedIn: 'root'
@@ -181,15 +182,11 @@ export class EditorService {
   private loadModels(): void {
     const data = localStorage.getItem(SettingsService.MODEL_FILES);
     if (!data) return;
-    const fileData = JSON.parse(data);
+    const fileData: Array<FileData> = [...JSON.parse(data)];
 
-    if (fileData instanceof Array) {
-      fileData.forEach((file: any) => {
-        this._fileService.parseRawFileData(file.data);
-      });
-    } else {
-      this._fileService.parseRawFileData(fileData.data);
-    }
+    fileData.forEach((file: FileData) => {
+      this._fileService.parseRawFileData(file.name ?? "test.json", file.data);
+    });
   }
 
   private subscribeToModels(): void {
