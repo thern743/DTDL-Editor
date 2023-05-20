@@ -73,7 +73,7 @@
                             <relationship-definition class="flex-header" [relationship]="getRelationship(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
                         </ng-container>
                         <div class="flex-header-button" >
-                          <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon> Remove</button>
+                          <button mat-icon-button color="accent" (click)="delete($event, interface)"><mat-icon>cancel</mat-icon></button>
                         </div>
                         <mat-divider class="flex-divider"></mat-divider>
                     </ng-container>

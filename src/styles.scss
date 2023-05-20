@@ -95,9 +95,9 @@ $my-theme: mat.define-dark-theme((color: (primary: $primary,
 
   .flex-header-button {
     display: flex;
-    flex: 1 5 10%;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    margin: 0 10px 0 10px;
   }
 
   mat-divider.flex-divider {
