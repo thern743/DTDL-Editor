@@ -1,0 +1,25 @@
+<mat-tree [dataSource]="fileTreeService.treeDataSource" [treeControl]="fileTreeService.treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
+  <!-- No children... -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="50" cdkDrag [cdkDragData]="node">
+    <div style="width: 100%;">
+      <mat-icon>insert_drive_file</mat-icon>
+      {{ getDisplayName(node) }}
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <mat-icon class="drag">drag_indicator</mat-icon>
+  </mat-tree-node>
+
+  <!-- Has children... -->
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="50" cdkDrag [cdkDragData]="node">
+    <div style="width: 100%;">
+      <mat-icon>drag_indicator</mat-icon>
+      <mat-icon>insert_drive_file</mat-icon>
+      {{ getDisplayName(node) }}
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </mat-tree-node>
+</mat-tree>

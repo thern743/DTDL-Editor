@@ -22,7 +22,6 @@ export class ImportModelComponent implements OnInit {
   public ngOnInit(): void {
   }
 
-  public addInterface($event: InterfaceCapabilityModel): void {
-    this._editorService.addInterfaceForm($event);
+  public fileSelected($event: InterfaceCapabilityModel): void {
   }
 }

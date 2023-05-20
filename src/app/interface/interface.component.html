@@ -5,7 +5,7 @@
                         (closed)="close()"
                         [class.selected-panel]="false">
     <mat-expansion-panel-header>
-        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{editorService.parseNameFromDtmi(interface.model["@id"])}}</em></mat-panel-title>
+        <mat-panel-title><strong>Interface</strong> &nbsp;<mat-divider [vertical]="true" class="vertical"></mat-divider>&nbsp; <em>{{parseNameFromDtmi(interface.model["@id"])}}</em></mat-panel-title>
         <mat-panel-description>Define a DTDL Model Interface</mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -73,7 +73,7 @@
                             <relationship-definition class="flex-header" [relationship]="getRelationship(capability)" [interfaceId]="interfaceId.value" [formIndex]="[formIndex[0], i]" [panelOpenState]="false"></relationship-definition>
                         </ng-container>
                         <div class="flex-header-button" >
-                          <button mat-raised-button color="accent" class="action-button" (click)="delete($event, interface)"><mat-icon>delete_outline</mat-icon> Remove</button>
+                          <button mat-icon-button color="accent" (click)="delete($event, interface)"><mat-icon>cancel</mat-icon></button>
                         </div>
                         <mat-divider class="flex-divider"></mat-divider>
                     </ng-container>

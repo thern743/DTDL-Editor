@@ -1,17 +1,20 @@
-<mat-tree [dataSource]="modelTreeService.treeDataSource" [treeControl]="modelTreeService.treeControl">
+<mat-tree [dataSource]="modelTreeService.treeDataSource" [treeControl]="modelTreeService.treeControl" cdkDropList (cdkDropListDropped)="drop($event)">
   <!-- No children... -->
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">    
-      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-        <mat-icon>chevron_right</mat-icon>
-        {{node.displayName ? node.displayName : node.name}}
-      </button>
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="50" cdkDrag [cdkDragData]="node">
+    {{ getDisplayName(node) }}
   </mat-tree-node>
 
   <!-- Has children... -->
-  <mat-tree-node *matTreeNodeDef="let node; when: modelTreeService.hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="50" cdkDrag [cdkDragData]="node">
+    <div style="width: 100%">
       <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
-        <mat-icon>{{modelTreeService.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}</mat-icon>
-        {{node.displayName ? node.displayName : node.name}}
+        <mat-icon>{{ isExpanded(node) ? 'arrow_drop_down' : 'arrow_right'}}</mat-icon>
+        {{ getDisplayName(node) }}
       </button>
-  </mat-tree-node> 
+    </div>
+    <button mat-icon-button color="accent">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <mat-icon class="drag">drag_indicator</mat-icon>
+  </mat-tree-node>
 </mat-tree>

@@ -23,6 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips'; 
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { MainEditorComponent } from './main-editor/main-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,6 +67,7 @@ import { DisplayNameDescriptionComponent } from './localization/display-name-des
 import { SchemaModalComponent } from './schema-modal/schema-modal.component';
 import { SchemaSemanticTypeUnitComponent } from './schema-semantic-type-unit/schema-semantic-type-unit.component';
 import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
+import { FileTreeComponent } from './file-tree/file-tree.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +107,8 @@ import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
     DisplayNameDescriptionComponent,
     SchemaModalComponent,
     SchemaSemanticTypeUnitComponent,
-    MapKeyValueComponent
+    MapKeyValueComponent,
+    FileTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -130,7 +134,9 @@ import { MapKeyValueComponent } from './map-key-value/map-key-value.component';
     ClipboardModule,
     MatSlideToggleModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule,
+    DragDropModule
   ],
   providers: [
     SchemaFactories,

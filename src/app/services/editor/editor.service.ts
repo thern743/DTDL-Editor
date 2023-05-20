@@ -6,7 +6,7 @@ import { PropertyCapabilityFormControl } from '../../formControls/PropertyCapabi
 import { TelemetryCapabilityFormControl } from '../../formControls/TelemetryCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../../formControls/RelationshipCapabilityFormControl';
 import { ComponentCapabilityFormControl } from '../../formControls/ComponentCapabilityFormControl';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { RelationshipCapabilityModel } from '../../models/RelationshipCapabilityModel';
 import { PropertyCapabilityModel } from '../../models/PropertyCapabilityModel';
 import { CommandCapabilityModel } from '../../models/CommandCapabilityModel';
@@ -24,6 +24,7 @@ import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.componen
 import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { FileService } from '../file/file.service';
+import { FileData } from 'src/app/models/FileData';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,7 @@ export class EditorService {
   public units: Map<string, Array<string>>;
   public commandTypes: string[];
   public interfaces: InterfaceCapabilityFormControl[];
-  public interfaces$: Subject<InterfaceCapabilityFormControl>;  
+  public interfaces$: BehaviorSubject<InterfaceCapabilityFormControl[]>;  
   private _validationService: ValidationService;
   private _schemaService: SchemaService;
   private _settingsService: SettingsService;
@@ -57,7 +58,7 @@ export class EditorService {
     this.units = this.getUnits();
     this.commandTypes = this.getCommandTypes();
     this.interfaces = new Array<InterfaceCapabilityFormControl>();
-    this.interfaces$ = new Subject<InterfaceCapabilityFormControl>(); 
+    this.interfaces$ = new BehaviorSubject<Array<InterfaceCapabilityFormControl>>(this.interfaces); 
     this.subscribeToModels();
     this.loadModels();
   }
@@ -181,15 +182,11 @@ export class EditorService {
   private loadModels(): void {
     const data = localStorage.getItem(SettingsService.MODEL_FILES);
     if (!data) return;
-    const fileData = JSON.parse(data);
+    const fileData: Array<FileData> = [...JSON.parse(data)];
 
-    if (fileData instanceof Array) {
-      fileData.forEach((file: any) => {
-        this._fileService.parseFileData(file.data);
-      });
-    } else {
-      this._fileService.parseFileData(fileData.data);
-    }
+    fileData.forEach((file: FileData) => {
+      this._fileService.parseRawFileData(file.name ?? "test.json", file.data);
+    });
   }
 
   private subscribeToModels(): void {
@@ -205,7 +202,7 @@ export class EditorService {
 
   public addInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
     this.interfaces.push(interfaceInstance);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public addPropertyToInterface(interfaceInstance: InterfaceCapabilityFormControl): void {
@@ -248,7 +245,7 @@ export class EditorService {
     contentsFormArray.push(formControl.form);
     interfaceInstance.contents.push(formControl);    
     interfaceInstance.model.contents.push(formControl.model);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
 
     console.groupCollapsed("Interface Form Capabilities");
 
@@ -305,12 +302,12 @@ export class EditorService {
     contentsFormArray.removeAt(formIndex[1]);
     interfaceInstance.contents.splice(formIndex[1], 1);
     interfaceInstance.model.contents.splice(formIndex[1], 1);
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public deleteInterface(formIndex: number): void {
     this.interfaces.splice(formIndex, 1);
-    this.interfaces$.next();
+    this.interfaces$.next(this.interfaces);
   }
 
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
@@ -335,7 +332,7 @@ export class EditorService {
       interfaceInstance.model.schemas?.push(formControl.model);
     }
 
-    this.interfaces$.next(interfaceInstance);
+    this.interfaces$.next(this.interfaces);
   }
 
   public parseNameFromDtmi(dtmi: string) {

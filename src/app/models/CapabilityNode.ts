@@ -1,11 +1,13 @@
 export class CapabilityNode {
-    public title: string;
-    public name: string;
-    public children?: CapabilityNode[];
+  public id: string;
+  public type: string;
+  public displayName: string | undefined;
+  public children?: Array<CapabilityNode>;
 
-    constructor(name: string, title: string) {
-        this.name = name;
-        this.title = title;
-        this.children = new Array<CapabilityNode>();
-    }
+  constructor(id: string, type: string, displayName: string | undefined) {
+    this.id = id;
+    this.type = type;
+    this.displayName = displayName;
+    this.children = new Array<CapabilityNode>();
+  }
 }

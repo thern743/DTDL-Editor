@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SchemaService } from './services/schema/schema.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app',
@@ -11,7 +11,13 @@ export class AppComponent {
   public menuOpenState = true;
   public navOpenState = false;
   public treeView = false;
+  private _router: Router;
 
-  constructor() { 
+  constructor(router: Router) {
+    this._router = router; 
+  }
+
+  public shouldToggle(link: string): boolean {
+    return this._router.url.includes(link);
   }
 }

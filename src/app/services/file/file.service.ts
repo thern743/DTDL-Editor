@@ -17,7 +17,7 @@ export class FileService {
   private _model$: Subject<InterfaceCapabilityModel>;
   private _file$: Subject<any>;
   private _files$: Subject<Array<FileData>>;
-  private _files: Array<FileData>;
+  public files: Array<FileData>;
   private _snackBar: MatSnackBar;
 
   constructor(snackBar: MatSnackBar) {
@@ -26,27 +26,14 @@ export class FileService {
     this._model$ = new Subject<InterfaceCapabilityModel>();
     this._file$ = new Subject<any>();
     this._files$ = new Subject<Array<FileData>>();
-    this._files = new Array<FileData>();
-    this.subscribeToFile();
+    this.files = new Array<FileData>();
   }
 
-  private subscribeToFile(): void {
-    this._file$.subscribe((file: any) => {
-      const fileData = new FileData();
-      fileData.id = uuidv4();
-      fileData.sortOrder = 1;
-      fileData.data = file;
-
-      this._files.push(fileData);
-      this._files$.next(this._files);
-    });
-  }
-
-  private parseInternal = (fileData: any, model: any) => {
+  private parseInternal = (rawFileData: any, model: any) => {
     const modelData = new ModelData();
     modelData.id = uuidv4();
     modelData.sortOrder = 1;
-    modelData.data = fileData;
+    modelData.data = rawFileData;
 
     this.addModel(modelData, model);
   }
@@ -57,11 +44,11 @@ export class FileService {
 
       [...fileUpload.target.files].forEach((file: File) => {
         const reader = new FileReader();
+        file.name
 
         reader.onload = (data: any) => {
           const rawFileData = data.target.result;
-          this.parseFileData(rawFileData);   
-          this._file$.next(rawFileData);       
+          this.parseRawFileData(file.name, rawFileData);
         };
 
         reader.readAsText(file);
@@ -74,17 +61,25 @@ export class FileService {
     return this._model$;
   }
 
-  public parseFileData(fileData: any) {
+  public parseRawFileData(filename: string, rawFileData: any) {
     try {
-      const models = JSON.parse(fileData);
+      const models = JSON.parse(rawFileData);
 
       if (models instanceof Array) {
         models?.forEach((model: any) => {
-          this.parseInternal(fileData, model);
+          this.parseInternal(rawFileData, model);
         });
       } else {
-        this.parseInternal(fileData, models);
+        this.parseInternal(rawFileData, models);
       }
+
+      const fileData = new FileData();
+      fileData.id = uuidv4();
+      fileData.name = filename ?? "file.json";
+      fileData.sortOrder = -1;
+      fileData.data = rawFileData;
+
+      this.addFile(fileData);
     } catch (error) {
       const msg = "Invalid DTDL (JSON-LD) File";
       console.error(`${msg}:${error}`);
@@ -102,6 +97,12 @@ export class FileService {
 
       this.fileAttr = "Choose Files...";
     }
+  }
+
+  public addFile(file: FileData): void {
+    this.files.push(file);
+    this._file$.next(file);
+    this._files$.next(this.files);
   }
 
   public addModel(modelData: ModelData, model: any): void {
@@ -158,9 +159,13 @@ export class FileService {
   public get models$(): Subject<InterfaceCapabilityModel> {
     return this._model$;
   }
-  
+
   public get files$(): Subject<Array<FileData>> {
     return this._files$;
+  }
+
+  public get file$(): Subject<FileData> {
+    return this._file$;
   }
 
   public saveFile(jsonLd: string): void {
