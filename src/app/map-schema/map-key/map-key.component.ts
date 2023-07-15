@@ -61,7 +61,7 @@ export class MapKeyComponent implements OnInit, AfterViewInit {
   }
 
   public getSchemaTypes(): Array<string> {
-    return new Array<string>("String"); 
+    return new Array<string>("string"); 
   }
 
   public isComplex(schema: string): boolean {
