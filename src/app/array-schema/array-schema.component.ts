@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { ArraySchemaFormControl } from '../formControls/schemas/ArraySchemaFormControl';
 import { SchemaService } from '../services/schema/schema.service';
@@ -12,7 +12,7 @@ import { EditorService } from '../services/editor/editor.service';
   templateUrl: './array-schema.component.html',
   styleUrls: ['./array-schema.component.scss']
 })
-export class ArraySchemaComponent implements OnInit {
+export class ArraySchemaComponent implements OnInit, OnDestroy {
   @Input()
   public array!: ArraySchemaFormControl;
   public panelOpenState = true;
@@ -29,6 +29,10 @@ export class ArraySchemaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.array.subscribeModelToForm(this.array.form);
+  }
+
+  public ngOnDestroy(): void {
+    this.array.unsubscribeModelFromForm();
   }
 
   private getSchemaTypes(): Array<string> {

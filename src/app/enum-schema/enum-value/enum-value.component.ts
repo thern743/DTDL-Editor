@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Type } from '@angular/core';
+import { Component, OnInit, Input, Type, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
 import { EditorService } from '../../services/editor/editor.service';
@@ -9,7 +9,7 @@ import { SchemaService } from '../../services/schema/schema.service';
   templateUrl: './enum-value.component.html',
   styleUrls: ['./enum-value.component.scss']
 })
-export class EnumValueComponent implements OnInit {
+export class EnumValueComponent implements OnInit, OnDestroy {
   @Input() public formIndex!: number;
   @Input() public enumValue!: EnumValueCapabilityFormControl;
   @Input() public valueSchema!: string;
@@ -28,6 +28,10 @@ export class EnumValueComponent implements OnInit {
 
   public ngOnInit(): void {
     this.enumValue.subscribeModelToForm(this.enumValue.form);
+  }
+
+  public ngOnDestroy(): void {
+    this.enumValue.unsubscribeModelFromForm();
   }
 
   private getSchemaTypes(): Array<string> {

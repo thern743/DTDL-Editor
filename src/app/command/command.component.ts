@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
 import { UntypedFormControl } from '@angular/forms';
@@ -15,7 +15,7 @@ import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
   templateUrl: './command.component.html',
   styleUrls: ['./command.component.scss']
 })
-export class CommandComponent implements OnInit {
+export class CommandComponent implements OnInit, OnDestroy {
   @Input() public formIndex!: [number, number];
   @Input() public command!: CommandCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
@@ -39,6 +39,10 @@ export class CommandComponent implements OnInit {
     this.setPayloadControls();
   }
 
+  public ngOnDestroy(): void {
+    this.command.unsubscribeModelFromForm();
+  }
+
   private setPayloadControls(): void {
     if (this.command.model.request) {
       // Create and call a factory method that takes in a model instead
@@ -58,7 +62,7 @@ export class CommandComponent implements OnInit {
   }
 
   public syncHeaderFields() {
-    const id = this.command.form.get("id");
+    const id = this.command.form.get("@id");
     const name = this.command.form.get("name");
 
     id?.valueChanges.subscribe(value => {

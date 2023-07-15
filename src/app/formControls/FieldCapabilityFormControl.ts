@@ -19,7 +19,7 @@ export class FieldCapabilityFormControl extends AbstractCapabilityFormControl<Fi
 
     public toFormGroup() : UntypedFormGroup { 
         let form =  this.formBuilder.group({
-            id: [this.model["@id"], [this._validationService.validDtmi()]],
+            "@id": [this.model["@id"], [this._validationService.validDtmi()]],
             displayName: [this.model.displayName],              
             comment: [this.model.comment],
             description: [this.model.description],

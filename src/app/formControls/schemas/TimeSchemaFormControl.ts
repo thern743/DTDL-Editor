@@ -18,7 +18,8 @@ export class TimeSchemaFormControl extends AbstractCapabilityFormControl<TimeSch
 
   public toFormGroup(model: TimeSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

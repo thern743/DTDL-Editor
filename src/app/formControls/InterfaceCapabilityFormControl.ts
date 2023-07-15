@@ -111,13 +111,13 @@ export class InterfaceCapabilityFormControl extends AbstractCapabilityFormContro
 
   public toFormGroup(model: InterfaceCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
-      type: [model["@type"]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],
       // Interface specific
-      context: [[...model["@context"]]],
+      "@context": [[...model["@context"]]],
       extends: [[...model.extends ?? ""]],
       contents: this.getCapabilityFormArray(),
       schemas: this.getSchemasFormArray()

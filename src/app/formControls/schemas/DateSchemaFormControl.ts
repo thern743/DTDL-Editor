@@ -18,7 +18,8 @@ export class DateSchemaFormControl extends AbstractCapabilityFormControl<DateSch
 
   public toFormGroup(model: DateSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description]

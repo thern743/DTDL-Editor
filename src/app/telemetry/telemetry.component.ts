@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabilityFormControl';
 
@@ -7,7 +7,7 @@ import { TelemetryCapabilityFormControl } from '../formControls/TelemetryCapabil
   templateUrl: './telemetry.component.html',
   styleUrls: ['./telemetry.component.scss']
 })
-export class TelemetryComponent implements OnInit {
+export class TelemetryComponent implements OnInit, OnDestroy {
   @Input() public formIndex!: [number, number];
   @Input() public telemetry!: TelemetryCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
@@ -22,8 +22,12 @@ export class TelemetryComponent implements OnInit {
     this.syncHeaderFields();
   }
 
+  public ngOnDestroy(): void {
+    this.telemetry.unsubscribeModelFromForm();
+  }
+
   public syncHeaderFields() {
-    const id = this.telemetry.form.get("id");
+    const id = this.telemetry.form.get("@id");
     const name = this.telemetry.form.get("name");
 
     id?.valueChanges.subscribe(value => {

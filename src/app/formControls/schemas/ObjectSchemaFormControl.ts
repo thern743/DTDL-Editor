@@ -33,7 +33,8 @@ export class ObjectSchemaFormControl extends AbstractCapabilityFormControl<Objec
 
   public toFormGroup(model: ObjectSchemaCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],

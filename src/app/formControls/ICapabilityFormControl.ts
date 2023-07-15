@@ -7,4 +7,5 @@ export interface ICapabilityFormControl<TCapabilityModel extends ICapabilityMode
     form: UntypedFormGroup;   
     toFormGroup(model: TCapabilityModel): UntypedFormGroup;
     subscribeModelToForm(formGroup: UntypedFormGroup): void;
+    unsubscribeModelFromForm(): void;
 }

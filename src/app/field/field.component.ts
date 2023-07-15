@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
@@ -13,7 +13,7 @@ import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, OnDestroy {
   @Input() public formIndex!: number;
   @Input() public field!: FieldCapabilityFormControl;
   @Input() public panelOpenState = true;
@@ -32,6 +32,10 @@ export class FieldComponent implements OnInit {
 
   public ngOnInit(): void {
     this.field.subscribeModelToForm(this.field.form);
+  }
+
+  public ngOnDestroy(): void {
+    this.field.unsubscribeModelFromForm();
   }
 
   private getSchemaTypes(): Array<string> {

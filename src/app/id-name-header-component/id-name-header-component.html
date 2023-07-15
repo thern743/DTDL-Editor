@@ -1,13 +1,13 @@
 <ng-container [formGroup]="formGroupControl.form">
     <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)">
         <mat-label attr.for="capability_type_{{formIndex}}">Type</mat-label>
-        <input matInput id="capability_type_{{formIndex}}" type="text" formControlName="type" readonly propertyFormatter />
+        <input matInput id="capability_type_{{formIndex}}" type="text" formControlName="@type" readonly propertyFormatter />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)">
         <mat-label attr.for="capability_id_{{formIndex}}">Id</mat-label>
-        <input matInput id="capability_id_{{formIndex}}" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+        <input matInput id="capability_id_{{formIndex}}" type="text" formControlName="@id" placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
     <span class="formSpacer"></span>  
 

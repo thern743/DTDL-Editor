@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
@@ -14,7 +14,7 @@ import { SchemaService } from '../services/schema/schema.service';
   templateUrl: './command-payload.component.html',
   styleUrls: ['./command-payload.component.scss']
 })
-export class CommandPayloadComponent implements OnInit {
+export class CommandPayloadComponent implements OnInit, OnDestroy {
   public commandPayload!: CommandPayloadFormControl;
   public panelOpenState = true;
   public schemaFormControl?: AbstractCapabilityFormControl<AbstractSchemaModel>;
@@ -35,6 +35,10 @@ export class CommandPayloadComponent implements OnInit {
   public ngOnInit(): void { 
     this.commandPayload.subscribeModelToForm(this.commandPayload.form);
     this.setSchemaDropDown();
+  }
+
+  public ngOnDestroy(): void {
+    this.commandPayload.unsubscribeModelFromForm();
   }
 
   // TODO: Importing a CommandPayload model does not allow editing the schema

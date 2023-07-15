@@ -11,7 +11,7 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_context_{{formIndex}}">Context</mat-label>
-        <mat-select matNativeControl id="interface_context_{{formIndex}}" formControlName="context" multiple [compareWith]="editorService.compareContexts">
+        <mat-select matNativeControl id="interface_context_{{formIndex}}" formControlName="@context" multiple [compareWith]="editorService.compareContexts">
           <mat-option *ngFor="let context of editorService.getContexts() | keyvalue" [value]="context.value"> {{ context.key }} </mat-option>
       </mat-select>
     </mat-form-field>
@@ -21,13 +21,13 @@
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_type_{{formIndex}}">Type</mat-label>
-        <input matInput id="interface_type_{{formIndex}}" type="text" formControlName="type" readonly />        
+        <input matInput id="interface_type_{{formIndex}}" type="text" formControlName="@type" readonly />        
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field color="accent">
         <mat-label attr.for="interface_id_{{formIndex}}">Id</mat-label>
-        <input matInput id="interface_id_{{formIndex}}" type="text" formControlName="id" #interfaceId placeholder="dtmi:com:example:Thermostat;1" />
+        <input matInput id="interface_id_{{formIndex}}" type="text" formControlName="@id" #interfaceId placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
     <span class="formSpacer"></span> 
 

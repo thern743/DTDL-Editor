@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { EditorService } from '../services/editor/editor.service';
 import { ComponentCapabilityFormControl } from '../formControls/ComponentCapabilityFormControl';
 import { UntypedFormControl } from '@angular/forms';
@@ -8,7 +8,7 @@ import { UntypedFormControl } from '@angular/forms';
   templateUrl: './component.component.html',
   styleUrls: ['./component.component.scss']
 })
-export class ComponentComponent implements OnInit {
+export class ComponentComponent implements OnInit, OnDestroy {
   @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public component!: ComponentCapabilityFormControl;
@@ -24,12 +24,16 @@ export class ComponentComponent implements OnInit {
     this.syncHeaderFields();    
   }
 
+  public ngOnDestroy(): void {
+    this.component.unsubscribeModelFromForm();
+  }
+
   public getFormControl(name: string): UntypedFormControl {
     return this.component.form.get(name) as UntypedFormControl;
   }
 
   public syncHeaderFields() {
-    const id = this.component.form.get("id");
+    const id = this.component.form.get("@id");
     const name = this.component.form.get("name");
 
     id?.valueChanges.subscribe(value => {      

@@ -1,44 +1,54 @@
-<h1 mat-dialog-title>Map Key Definition</h1>
-<mat-dialog-content [formGroup]="mapKey.form">
-    <mat-form-field color="accent">
+<mat-expansion-panel class="mat-elevation-z5" [expanded]="panelOpenState" (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)">
+        <mat-label attr.for="mapKey_schema">Map Key Schema</mat-label>
+        <mat-select [compareWith]="compareSchemas" matNativeControl id="mapKey_schema"
+          (selectionChange)="changeSchema($event)" [formControl]="schemaDropDownControl" #schema>
+          <mat-option *ngFor="let schemaType of getSchemaTypes()" [value]="schemaType">{{ toTitleCase(schemaType)
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <span class="formSpacer"></span>
+
+      <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)" (change)="nameChanged($event)">
         <mat-label for="name">Name</mat-label>
-        <input matInput id="name" type="text" formControlName="name" />
+        <input matInput type="text" id="name" [formControl]="nameFormControl" />
+      </mat-form-field>
+      <span class="formSpacer"></span>
+
+      <mat-icon matTooltip="Choose a Schema to enable Map Value form and Schema editor." color="accent">info</mat-icon>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <ng-container *ngIf="parentForm.mapKey?.form">
+    <ng-container [formGroup]="parentForm.mapKey.form">
+    <div class="formSpacer"></div>
+
+    <mat-form-field color="accent">
+      <mat-label for="id">Id</mat-label>
+      <input matInput id="id" type="text" formControlName="@id" placeholder="dtmi:com:example:Thermostat;1" />
     </mat-form-field>
     <span class="formSpacer"></span>
 
     <mat-form-field color="accent">
-        <mat-label for="schema">Schema</mat-label>
-        <input matInput id="name" type="text" formControlName="schema" readonly />
+      <mat-label for="displayName">Display Name</mat-label>
+      <input matInput id="displayName" type="text" formControlName="displayName" />
     </mat-form-field>
-    <br/>
-
-    <mat-form-field color="accent">
-        <mat-label for="id">Id</mat-label>
-        <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
-    </mat-form-field>
-    <span class="formSpacer"></span>  
-
-    <mat-form-field color="accent">
-        <mat-label for="displayName">Display Name</mat-label>
-        <input matInput id="displayName" type="text" formControlName="displayName" />
-    </mat-form-field>
-    <br/>
-  
-    <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="comment">Comment</mat-label>
-        <input matInput id="comment" type="text" formControlName="comment" />
-    </mat-form-field>
-    <br/>
+    <br />
 
     <mat-form-field color="accent" style="width: 420px">
-        <mat-label for="description">Description</mat-label>
-        <input matInput id="description" type="text" formControlName="description" />
+      <mat-label for="comment">Comment</mat-label>
+      <input matInput id="comment" type="text" formControlName="comment" />
     </mat-form-field>
-    <br/>
+    <br />
 
-    <div mat-dialog-actions>
-        <button mat-raised-button color="primary" [mat-dialog-close]="mapKey.model">
-            <mat-icon>save</mat-icon> Save
-        </button>
-    </div>
-</mat-dialog-content>
+    <mat-form-field color="accent" style="width: 420px">
+      <mat-label for="description">Description</mat-label>
+      <input matInput id="description" type="text" formControlName="description" />
+    </mat-form-field>
+  </ng-container>
+  </ng-container>
+
+</mat-expansion-panel>

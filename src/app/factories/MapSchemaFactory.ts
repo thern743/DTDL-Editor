@@ -19,7 +19,7 @@ import { SchemaService } from "../services/schema/schema.service";
   name: "map",
   factoryMethod: "formFactory"
 })
-@RegisterFormFactoryMethod({
+@RegisterModelFactoryMethod({
   type: "MapValue",
   name: "map",
   factoryMethod: "mapValueModelFactory"

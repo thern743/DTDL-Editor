@@ -25,7 +25,8 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
 
   public toFormGroup(model: MapSchemaCapabilityModel<AbstractSchemaModel, AbstractSchemaModel>): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],
@@ -43,7 +44,7 @@ export class MapSchemaFormControl extends AbstractCapabilityFormControl<MapSchem
   }
 
   private getMapValueFormGroup(mapValue: MapValueCapabilityModel<AbstractSchemaModel>): FormGroup {
-    const formGroup = this.mapKey?.toFormGroup(mapValue);
+    const formGroup = this.mapValue?.toFormGroup(mapValue);
     return formGroup;
   }
 }

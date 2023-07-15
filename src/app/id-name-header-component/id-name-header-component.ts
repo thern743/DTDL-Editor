@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
 
@@ -7,7 +7,7 @@ import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';
   templateUrl: './id-name-header-component.html',
   styleUrls: ['./id-name-header-component.scss']
 })
-export class IdNameHeaderComponent implements OnInit {
+export class IdNameHeaderComponent implements OnInit, OnDestroy {
   @Input() public panelOpenState: boolean = false;
   @Input() public formIndex: number = -1;
   @Input() public formGroupControl!: AbstractCapabilityFormControl<AbstractCapabilityModel>;
@@ -15,6 +15,10 @@ export class IdNameHeaderComponent implements OnInit {
   constructor() { }
 
   public ngOnInit(): void {
+  }
+
+  public ngOnDestroy(): void {
+    this.formGroupControl.unsubscribeModelFromForm();
   }
   
   public stopPropagation($event: Event): void {    

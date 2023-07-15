@@ -18,7 +18,7 @@ export class EnumValueCapabilityFormControl extends AbstractCapabilityFormContro
 
     public toFormGroup(model: EnumValueCapabilityModel): UntypedFormGroup {
         let form =  this.formBuilder.group({
-            id: [model["@id"], [this._validationService.validDtmi()]],
+            "@id": [model["@id"], [this._validationService.validDtmi()]],
             displayName: [model.displayName], 
             comment: [model.comment],
             description: [model.description],

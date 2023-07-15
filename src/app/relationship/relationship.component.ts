@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
 import { EditorService } from '../services/editor/editor.service';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
@@ -9,7 +9,7 @@ import { UntypedFormControl } from '@angular/forms';
   templateUrl: './relationship.component.html',
   styleUrls: ['./relationship.component.scss']
 })
-export class RelationshipComponent implements OnInit {
+export class RelationshipComponent implements OnInit, OnDestroy {
   @Input() public interfaceId!: string;
   @Input() public formIndex!: [number, number];
   @Input() public relationship!: RelationshipCapabilityFormControl;
@@ -25,8 +25,12 @@ export class RelationshipComponent implements OnInit {
     this.syncHeaderFields();    
   }
 
+  public ngOnDestroy(): void {
+    this.relationship.unsubscribeModelFromForm();
+  }
+
   public syncHeaderFields() {
-    const id = this.relationship.form.get("id");
+    const id = this.relationship.form.get("@id");
     const name = this.relationship.form.get("name");
 
     id?.valueChanges.subscribe(value => {      

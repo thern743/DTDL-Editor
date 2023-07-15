@@ -7,7 +7,7 @@
   </mat-card>
   <br />
 
-  <ng-container [ngSwitch]="schemaType">
+  <ng-container [ngSwitch]="schemaType.toLocaleLowerCase()">
     <ng-container *ngSwitchCase="'array'">
       <array-schema [array]="getArrayData()"></array-schema>
     </ng-container>

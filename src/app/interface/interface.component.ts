@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import { EditorService } from '../services/editor/editor.service'
 import { InterfaceCapabilityFormControl } from '../formControls/InterfaceCapabilityFormControl';
 import { RelationshipCapabilityFormControl } from '../formControls/RelationshipCapabilityFormControl';
@@ -15,7 +15,7 @@ import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilit
   styleUrls: ['./interface.component.scss']
 })
 
-export class InterfaceComponent implements OnInit, AfterViewInit {
+export class InterfaceComponent implements OnInit, OnDestroy, AfterViewInit {
   // Tuple: 
   //    [0] = interface's index within the model, 
   //    [1] = index of the capability within the interface
@@ -35,6 +35,10 @@ export class InterfaceComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.panelToggle.emit(this.panelOpenState);
+  }
+
+  public ngOnDestroy(): void {
+    this.interface.unsubscribeModelFromForm();
   }
 
   public getContents(): Array<AbstractCapabilityFormControl<AbstractCapabilityModel>> {

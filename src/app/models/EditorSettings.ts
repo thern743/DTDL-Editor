@@ -1,7 +1,7 @@
 export class EditorSettings {
     public static CONTEXT_DEFAULT: string = "dtmi:dtdl:context;";
     public static SCHEME_DEFAULT: string = "dtmi";
-    public static PATH_DEFAULT: Array<string> = new Array<string>("com", "dtdlEditor", "1");
+    public static PATH_DEFAULT: Array<string> = new Array<string>("com", "dtdlEditor");
     public static VERSION_DEFAULT: string = "1";
     public static LOCALE_DEFAULT: string = "en-US";
     public static DTDLVERSION_DEFAULT: string = "2";
@@ -42,7 +42,7 @@ export class EditorSettings {
       let newSettings = new EditorSettings();
       newSettings.context = settings.context ?? `${EditorSettings.CONTEXT_DEFAULT}${EditorSettings.DTDLVERSION_DEFAULT}`;
       newSettings.scheme = settings.scheme ?? EditorSettings.SCHEME_DEFAULT;
-      newSettings.path = settings.fullPath.split(":") ?? EditorSettings.PATH_DEFAULT;
+      newSettings.path = settings.fullPath?.split(":") ?? EditorSettings.PATH_DEFAULT;
       newSettings.version = settings.version ?? EditorSettings.VERSION_DEFAULT;
       newSettings.locale = settings.locale ?? EditorSettings.LOCALE_DEFAULT;
       newSettings.dtdlVersion = settings.dtdlVersion ?? EditorSettings.DTDLVERSION_DEFAULT;

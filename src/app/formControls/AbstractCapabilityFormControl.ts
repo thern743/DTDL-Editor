@@ -1,4 +1,3 @@
-import { OnDestroy } from "@angular/core";
 import { AbstractControl, UntypedFormArray, UntypedFormBuilder, FormControl, UntypedFormGroup } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { ICapabilityModel } from "../models/interfaces/ICapabilityModel";
@@ -7,7 +6,7 @@ import { InterfaceCapabilityFormControl } from "./InterfaceCapabilityFormControl
 import { ISchemaModel } from "../models/interfaces/ISchemaModel";
 
 export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICapabilityModel | ISchemaModel>
-    implements ICapabilityFormControl<TCapabilityModel | ISchemaModel>
+    implements ICapabilityFormControl<TCapabilityModel>
 {    
     public formBuilder: UntypedFormBuilder;
     public model!: TCapabilityModel;  
@@ -25,11 +24,7 @@ export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICa
     public abstract toFormGroup(model: TCapabilityModel): UntypedFormGroup;
 
     public subscribeModelToForm(formGroup: UntypedFormGroup): void {
-      console.groupCollapsed("Creating Subscriptions");
-
       Object.keys(formGroup.controls).forEach(key => {        
-        console.debug(key);
-
         let control = formGroup.controls[key];        
         
         if(control instanceof UntypedFormGroup) {
@@ -38,8 +33,6 @@ export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICa
           this.createSubscription(control, key);
         }
       });
-
-      console.groupEnd();
     }
 
     private createSubscription(control: AbstractControl, key: string): void {
@@ -52,13 +45,8 @@ export abstract class AbstractCapabilityFormControl<TCapabilityModel extends ICa
       this._subscriptions.push(subscription);
     }
 
-    // TODO: Each form component should implement OnDestroy lifecycle hook
-    //       Each form-based component implements `AbstractCapabilityFormControl.subscribeModelToForm()`. 
-    //       These components should call `AbstractCapabilityFormControl.onDestroy()` to unsubscribe cleanly via the OnDestroy()
-    //       component lifecycle hook.
-    public onDestroy(): void {
-      console.groupCollapsed("Unsubscribing");
+    public unsubscribeModelFromForm(): void {
+      console.debug(`Unsubscribing from ${this._subscriptions.length} subscriptions.`);
       this._subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
-      console.groupEnd();
     }
 }

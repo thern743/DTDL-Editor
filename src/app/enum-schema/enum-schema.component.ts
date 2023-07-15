@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/schemas/EnumSchemaFormControl';
@@ -10,7 +10,7 @@ import { EnumValueCapabilityModel } from '../models/EnumValueCapabilityModel';
   templateUrl: './enum-schema.component.html',
   styleUrls: ['./enum-schema.component.scss']
 })
-export class EnumSchemaComponent implements OnInit {
+export class EnumSchemaComponent implements OnInit, OnDestroy {
   @Input()
   public enum!: EnumSchemaFormControl;
   private _schemaService: SchemaService;
@@ -22,6 +22,10 @@ export class EnumSchemaComponent implements OnInit {
 
   public ngOnInit(): void { 
     this.enum.subscribeModelToForm(this.enum.form);
+  }
+
+  public ngOnDestroy(): void {
+    this.enum.unsubscribeModelFromForm();
   }
 
   public addValue(): void {

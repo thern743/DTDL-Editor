@@ -26,8 +26,8 @@ export class RelationshipCapabilityFormControl extends AbstractCapabilityFormCon
 
   public toFormGroup(model: RelationshipCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
-      type: [model["@type"]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       comment: [model.comment],
       description: [model.description],

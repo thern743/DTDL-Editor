@@ -1,7 +1,7 @@
 <ng-container [formGroup]="map.form">
   <mat-form-field color="accent">
     <mat-label for="id">Id</mat-label>
-    <input matInput id="id" type="text" formControlName="id" placeholder="dtmi:com:example:Thermostat;1" />
+    <input matInput id="id" type="text" formControlName="@id" placeholder="dtmi:com:example:Thermostat;1" />
   </mat-form-field>
   <span class="formSpacer"></span>
 
@@ -23,53 +23,8 @@
   </mat-form-field>
   <br />
 
-  <map-key-value type="mapKey" title="Map Key" [parentForm]="map"></map-key-value>
+  <map-key [parentForm]="map"></map-key>
   <br />
 
-  <map-key-value type="mapValue" title="Map Value" [parentForm]="map"></map-key-value>
-
-  <!-- <ng-container formGroupName="mapKey">
-    <mat-form-field color="accent">
-      <mat-label for="keySchema">Map Key</mat-label>
-      <mat-select [compareWith]="compareSchemas" matNativeControl id="keySchema" #mapKeySchema
-        (selectionChange)="changeMapKey($event)">
-        <mat-option *ngFor="let schemaType of keySchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <mat-form-field color="accent">
-      <mat-label for="name">Name</mat-label>
-      <input matInput type="text" id="name" formControlName="name" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container>
-      <button mat-raised-button color="primary" (click)="openKeyEditor()">
-        <mat-icon>edit</mat-icon>
-        Edit Schema
-      </button>
-    </ng-container>
-  </ng-container>
-  <br /> -->
-
-  <!-- <ng-container formGroupName="mapValue">
-    <mat-form-field color="accent">
-      <mat-label for="valueSchema">Map Value</mat-label>
-      <mat-select [compareWith]="compareSchemas" matNativeControl id="valueSchema" #mapValueSchema
-        (selectionChange)="changeMapValue($event)">
-        <mat-option *ngFor="let schemaType of valueSchemaTypes" [value]="schemaType">{{schemaType}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <mat-form-field color="accent">
-      <mat-label for="name">Name</mat-label>
-      <input matInput type="text" id="name" formControlName="name" />
-    </mat-form-field>
-    <span class="formSpacer"></span>
-    <ng-container>
-      <button mat-raised-button color="primary" (click)="openValueEditor()">
-        <mat-icon>edit</mat-icon>
-        Edit Schema
-      </button>
-    </ng-container>
-  </ng-container> -->
+  <map-value [parentForm]="map"></map-value>
 </ng-container>

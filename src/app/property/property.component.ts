@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilityFormControl';
 
@@ -7,7 +7,7 @@ import { PropertyCapabilityFormControl } from '../formControls/PropertyCapabilit
   templateUrl: './property.component.html',
   styleUrls: ['./property.component.scss']
 })
-export class PropertyComponent implements OnInit {
+export class PropertyComponent implements OnInit, OnDestroy {
   @Input() public formIndex!: [number, number];
   @Input() public property!: PropertyCapabilityFormControl;
   @Input() public panelOpenState!: boolean;
@@ -22,8 +22,12 @@ export class PropertyComponent implements OnInit {
     this.syncHeaderFields();
   }
 
+  public ngOnDestroy(): void {
+    this.property.unsubscribeModelFromForm();
+  }
+
   public syncHeaderFields() {
-    const id = this.property.form.get("id");
+    const id = this.property.form.get("@id");
     const name = this.property.form.get("name");
 
     id?.valueChanges.subscribe(value => {

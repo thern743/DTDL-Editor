@@ -17,8 +17,8 @@ export class ComponentCapabilityFormControl extends AbstractCapabilityFormContro
   
   public toFormGroup(model: ComponentCapabilityModel): UntypedFormGroup {
     let form = this.formBuilder.group({
-      id: [model["@id"], [this._validationService.validDtmi()]],
-      type: [model["@type"]],
+      "@id": [model["@id"], [this._validationService.validDtmi()]],
+      "@type": [model["@type"]],
       displayName: [model.displayName],
       name: [model.name],
       comment: [model.comment],

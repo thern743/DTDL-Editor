@@ -25,6 +25,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { FileService } from '../file/file.service';
 import { FileData } from 'src/app/models/FileData';
+import { MapValueFormControl } from 'src/app/formControls/MapValueFormControl';
 
 @Injectable({
   providedIn: 'root'
@@ -312,22 +313,19 @@ export class EditorService {
 
   public getInterfaceSchemaIndex(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): number {
     // Using the index from the model is NOT a safe assumption here.
-    const schemaIndex = interfaceInstance.model.schemas?.findIndex(x => x["@id"] == formControl.model["@id"]);
+    const schemaIndex = interfaceInstance?.model?.schemas?.findIndex(x => x["@id"] == formControl.model["@id"]);
     return schemaIndex == undefined ? -1 : schemaIndex;
   }
 
   public addOrUpdateInterfaceSchema(interfaceInstance: InterfaceCapabilityFormControl, formControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    let schemasFormArray = interfaceInstance.form.get("schemas") as UntypedFormArray;
-
     const schemaIndex = this.getInterfaceSchemaIndex(interfaceInstance, formControl);
 
     if(schemaIndex > -1) {
       if(interfaceInstance.model.schemas) {
+        interfaceInstance.schemas[schemaIndex] = formControl;
         interfaceInstance.model.schemas[schemaIndex] = formControl.model;
-        schemasFormArray.at(schemaIndex).patchValue(formControl.form);
       }
     } else {
-      schemasFormArray.push(formControl.form);
       interfaceInstance.schemas.push(formControl);    
       interfaceInstance.model.schemas?.push(formControl.model);
     }
@@ -362,13 +360,10 @@ export class EditorService {
   }
 
   public openSchemaEditor(capabilityForm: AbstractCapabilityFormControl<AbstractCapabilityModel>, schemaFormControl: AbstractCapabilityFormControl<AbstractSchemaModel>): void {
-    const schema = schemaFormControl?.model;
-    const type = typeof schema["@type"] === 'string' ? new Array<string>(schema["@type"]) : schema["@type"];
-
-    if (type == undefined) return;
+    let schemaType = schemaFormControl?.model["@type"];
+    if (schemaType == undefined) return;
 
     // We should not make the assumption that the first element is the schema type and not an annotation.
-    const schemaType = type[0].toLocaleLowerCase();
     const isInterfaceSchema = this.getInterfaceSchemaIndex(capabilityForm.interface, schemaFormControl) > -1;
     const modalParameters = new SchemaModalParameters(`Edit ${schemaType}`, schemaType, schemaFormControl, isInterfaceSchema);
 
@@ -376,18 +371,12 @@ export class EditorService {
       .open(SchemaModalComponent,
         {
           data: modalParameters,
-          height: "80%",
-          width: "60%"
+          height: "90%",
+          width: "80%"
         })
       .afterClosed()
       .subscribe((result: SchemaModalResult) => {
         if (result) {
-          // TODO: Parent form's schema attribute name is hard-coded  
-          //      Not all schema forms have a schema value of "schema" ((e.g. EnumValue)
-          //      so if these parent controls call `openSchemaEditor()` their schema values
-          //      will not be set correctly. Right now this doesn't seem to be an issue since
-          //      none of the affected types are calling `openSchemaEditor()`;
-
           if(result.interfaceSchema) {
             this.addOrUpdateInterfaceSchema(capabilityForm.interface, result.schemaFormControl);
             capabilityForm?.form.get("schema")?.setValue(result.schemaFormControl.model["@id"]);
