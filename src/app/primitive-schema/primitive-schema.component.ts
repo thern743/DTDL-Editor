@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { AbstractCapabilityModel } from '../models/AbstractCapabilityModel';

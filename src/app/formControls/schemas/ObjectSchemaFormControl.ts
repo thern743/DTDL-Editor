@@ -1,5 +1,5 @@
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
 import { ObjectSchemaCapabilityModel } from '../../models/schemas/ObjectSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';

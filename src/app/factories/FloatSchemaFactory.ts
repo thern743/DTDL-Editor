@@ -1,5 +1,5 @@
 import { UntypedFormBuilder } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { MapValueFormControl } from "../formControls/MapValueFormControl";
 import { FloatSchemaFormControl } from "../formControls/schemas/FloatSchemaFormControl";
 import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";

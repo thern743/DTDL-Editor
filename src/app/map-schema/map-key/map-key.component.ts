@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { SchemaTypeEnum } from '../../models/SchemaTypeEnum';
 import { EditorService } from '../../services/editor/editor.service';
 import { SchemaService } from '../../services/schema/schema.service';

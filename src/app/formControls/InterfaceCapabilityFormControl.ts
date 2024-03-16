@@ -14,7 +14,7 @@ import { PropertyCapabilityModel } from "../models/PropertyCapabilityModel";
 import { TelemetryCapabilityModel } from "../models/TelemetryCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { SchemaService } from "../services/schema/schema.service";
 
 export class InterfaceCapabilityFormControl extends AbstractCapabilityFormControl<InterfaceCapabilityModel> {

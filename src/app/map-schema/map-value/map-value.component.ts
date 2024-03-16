@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { MapValueFormControl } from '../../formControls/MapValueFormControl';
 import { SchemaService } from '../../services/schema/schema.service';
 import { UntypedFormControl } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { AbstractCapabilityFormControl } from 'src/app/formControls/AbstractCapabilityFormControl';
 import { MapSchemaFormControl } from 'src/app/formControls/schemas/MapSchemaFormControl';
 import { AbstractSchemaModel } from 'src/app/models/AbstractSchemaModel';

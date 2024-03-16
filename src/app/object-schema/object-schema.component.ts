@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { SchemaService } from '../services/schema/schema.service';
-import { MatLegacyDialog as MatDialog, MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ObjectSchemaFormControl } from '../formControls/schemas/ObjectSchemaFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 import { UntypedFormControl } from '@angular/forms';

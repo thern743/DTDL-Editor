@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { UntypedFormBuilder } from "@angular/forms";
-import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { AbstractCapabilityFormControl } from "../formControls/AbstractCapabilityFormControl";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
 import { ValidationService } from "../services/validation/validation-service.service";

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarComponent } from '../../error-snackbar/error-snackbar.component';
 import { EditorSettings } from '../../models/EditorSettings';
 import { SuccessSnackbarComponent } from '../../success-snackbar/success-snackbar.component';

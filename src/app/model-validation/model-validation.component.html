@@ -45,7 +45,7 @@
   </button>
   <br />
 
-  <mat-card *ngIf="hasResults()">
+  <mat-card appearance="outlined" *ngIf="hasResults()">
     <mat-list role="list" *ngFor="let value of validationResults">
       <div>
         <h3 matListItemTitle><mat-icon matListItemIcon color="warn"
@@ -55,7 +55,7 @@
     </mat-list>
   </mat-card>
 
-  <mat-card *ngIf="!hasResults()">
+  <mat-card appearance="outlined" *ngIf="!hasResults()">
     <div>
       <h3><mat-icon matListItemIcon color="accent">check_circle</mat-icon> DTDL passed validation.</h3>
     </div>

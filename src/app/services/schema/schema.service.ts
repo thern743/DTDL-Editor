@@ -3,7 +3,7 @@ import { FieldCapabilityFormControl } from '../../formControls/FieldCapabilityFo
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ValidationService } from '../validation/validation-service.service';
 import { FieldCapabilityModel } from '../../models/FieldCapabilityModel';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AbstractCapabilityFormControl } from '../../formControls/AbstractCapabilityFormControl';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
 import { EnumValueCapabilityModel } from '../../models/EnumValueCapabilityModel';

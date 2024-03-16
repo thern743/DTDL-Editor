@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
-import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
+import { MatSelectChange } from '@angular/material/select';
 import { LocalizationService } from '../services/localization/localization.service';
 import { SettingsService } from '../services/settings/settings.service';
 import { EditorSettings } from '../models/EditorSettings';
