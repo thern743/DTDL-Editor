@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ValidationService } from '../services/validation/validation-service.service';
 import { CommandCapabilityFormControl } from '../formControls/CommandCapabilityFormControl';
 import { UntypedFormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { CommandPayloadComponent } from '../command-payload/command-payload.component';
 import { SchemaService } from '../services/schema/schema.service';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';

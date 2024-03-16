@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { FieldCapabilityFormControl } from '../formControls/FieldCapabilityFormControl';
 import { EditorService } from '../services/editor/editor.service';
 import { SchemaService } from '../services/schema/schema.service';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { SchemaTypeEnum } from '../models/SchemaTypeEnum';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';
 

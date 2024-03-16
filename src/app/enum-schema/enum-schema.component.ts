@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { EnumSchemaFormControl } from '../formControls/schemas/EnumSchemaFormControl';
 import { SchemaService } from '../services/schema/schema.service';

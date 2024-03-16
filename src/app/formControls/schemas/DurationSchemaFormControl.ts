@@ -1,5 +1,5 @@
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DurationSchemaCapabilityModel } from '../../models/schemas/DurationSchemaCapabilityModel';
 import { ValidationService } from '../../services/validation/validation-service.service';
 import { AbstractCapabilityFormControl } from '../AbstractCapabilityFormControl';

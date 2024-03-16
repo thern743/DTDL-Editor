@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
+import { MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { AbstractCapabilityFormControl } from '../formControls/AbstractCapabilityFormControl';
 import { CommandPayloadFormControl } from '../formControls/CommandPayloadFormControl';
 import { AbstractSchemaModel } from '../models/AbstractSchemaModel';

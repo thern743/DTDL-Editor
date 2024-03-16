@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
 import { AbstractSchemaModel } from "../models/AbstractSchemaModel";
 import { MapValueCapabilityModel } from "../models/MapValueCapabilityModel";
 import { ValidationService } from "../services/validation/validation-service.service";

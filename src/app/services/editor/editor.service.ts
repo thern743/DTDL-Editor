@@ -21,7 +21,7 @@ import { SchemaService } from '../schema/schema.service';
 import { SchemaModalParameters } from 'src/app/models/SchemaModalParameters';
 import { SchemaModalResult } from 'src/app/models/SchemaModalResult';
 import { SchemaModalComponent } from 'src/app/schema-modal/schema-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { InterfaceCapabilityModel } from 'src/app/models/InterfaceCapabilityModel';
 import { FileService } from '../file/file.service';
 import { FileData } from 'src/app/models/FileData';

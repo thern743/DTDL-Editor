@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Type, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { EnumValueCapabilityFormControl } from '../../formControls/EnumValueCapabilityFormControl';
 import { EditorService } from '../../services/editor/editor.service';
 import { SchemaService } from '../../services/schema/schema.service';

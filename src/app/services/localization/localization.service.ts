@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { LocalizedDisplayNameDescriptionComponent } from 'src/app/localization/localized-display-name-description/localized-display-name-description.component';
 import { SettingsService } from '../settings/settings.service';
 
