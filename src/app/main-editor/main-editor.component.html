@@ -5,7 +5,7 @@
   <mat-divider [vertical]="true" class="vertical"></mat-divider>
   <button mat-button color="accent" (click)="openPreviewPanel()"><mat-icon>visibility</mat-icon> Preview DTDL</button>
 </mat-toolbar>
-<mat-card>
+<mat-card appearance="outlined">
   <mat-accordion class="flex-accordion">
     <ng-container *ngFor="let interface of interfaces; index as i;">
       <interface-definition class="flex-header" [interface]="interface" [formIndex]="[0, i]" [panelOpenState]="true" (panelToggle)="panelOpenState = $event"></interface-definition>

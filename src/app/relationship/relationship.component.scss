@@ -1,6 +1,20 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
+
+@include mat.all-component-typographies();
 @include mat.core();
+
+// The following mixins include base theme styles that are only needed once per application. These
+// theme styles do not depend on the color, typography, or density settings in your theme. However,
+// these styles may differ depending on the theme's design system. Currently all themes use the
+// Material 2 design system, but in the future it may be possible to create theme based on other
+// design systems, such as Material 3.
+//
+// Please note: you do not need to include the 'base' mixins, if you include the corresponding
+// 'theme' mixin elsewhere in your Sass. The full 'theme' mixins already include the base styles.
+//
+// To learn more about "base" theme styles visit our theming guide:
+// https://material.angular.io/guide/theming#theming-dimensions
 
 // default, light, dark, text, foreground, background
 $primary: mat.$purple-palette;
@@ -29,10 +43,11 @@ $my-theme: mat.define-dark-theme(
   // **************************
   // Start custom theming here
   // **************************
-
+  /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.*/
   mat-card {
       background-color: mat.get-color-from-palette($background, 'background') !important;
   }
 }
 
 @include custom($my-theme);
+@include mat.all-component-bases($my-theme);

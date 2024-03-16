@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "DtdlEditor:build:production"
+              "buildTarget": "DtdlEditor:build:production"
             },
             "development": {
-              "browserTarget": "DtdlEditor:build:development"
+              "buildTarget": "DtdlEditor:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DtdlEditor:build"
+            "buildTarget": "DtdlEditor:build"
           }
         },
         "test": {

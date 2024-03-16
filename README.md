@@ -2,7 +2,7 @@
 
 A general-purpose editor inspired by [Azure IoT Central's model editor](https://docs.microsoft.com/en-us/azure/iot-central/core/howto-set-up-template) currently supporting [DTDLv2](https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md).
 
-**NOTE:** This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.6 and uses [Angular Material](https://material.angular.io/).
+**NOTE:** This project currently supports NodeJS 20.11.1, Typescript 5.4.0, with Angular 17 and Material 17.
 
 ## Currently Supported Features
 * Basic support for:
