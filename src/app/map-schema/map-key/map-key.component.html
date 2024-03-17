@@ -3,7 +3,7 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <mat-form-field color="accent" (keydown)="stopPropagation($event)" (click)="stopPropagation($event)">
-        <mat-label attr.for="mapKey_schema">Map Key Schema</mat-label>
+        <mat-label for="mapKey_schema">Map Key Schema</mat-label>
         <mat-select [compareWith]="compareSchemas" matNativeControl id="mapKey_schema"
           (selectionChange)="changeSchema($event)" [formControl]="schemaDropDownControl" #schema>
           <mat-option *ngFor="let schemaType of getSchemaTypes()" [value]="schemaType">{{ toTitleCase(schemaType) }}</mat-option>

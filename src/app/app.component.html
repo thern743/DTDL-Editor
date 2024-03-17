@@ -6,27 +6,27 @@
     <mat-nav-list>
       <mat-list-item routerLink="/editor" routerLinkActive="active">
         <mat-icon matListItemIcon>edit</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Main Editor</a> }
+        @if (menuOpenState) { <a>Main Editor</a> }
       </mat-list-item>
       <mat-list-item [routerLink]="[{ outlets: { sidenav: ['files'] } }]" (click)="shouldToggle('files') ? sidenav.toggle() : false" routerLinkActive="active">
         <mat-icon matListItemIcon>folder</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Files</a> }
+        @if (menuOpenState) { <a>Files</a> }
       </mat-list-item>
       <mat-list-item [routerLink]="[{ outlets: { sidenav: ['models'] } }]" (click)="shouldToggle('models') ? sidenav.toggle() : false" routerLinkActive="active">
         <mat-icon matListItemIcon>list_alt</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Model Tree</a> }
+        @if (menuOpenState) { <a>Model Tree</a> }
       </mat-list-item>
       <mat-list-item routerLink="import" routerLinkActive="active">
         <mat-icon matListItemIcon>import_export</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Import Model</a> }
+        @if (menuOpenState) { <a>Import Model</a> }
       </mat-list-item>
       <mat-list-item routerLink="validate" routerLinkActive="active">
         <mat-icon matListItemIcon>check</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Validate Model</a> }
+        @if (menuOpenState) { <a>Validate Model</a> }
       </mat-list-item>
       <mat-list-item routerLink="settings" routerLinkActive="active">
         <mat-icon matListItemIcon>settings</mat-icon>
-        @if (menuOpenState) { <a matListItemLine>Settings</a> }
+        @if (menuOpenState) { <a>Settings</a> }
       </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
