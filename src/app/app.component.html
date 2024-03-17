@@ -5,28 +5,28 @@
     </button>
     <mat-nav-list>
       <mat-list-item routerLink="/editor" routerLinkActive="active">
-        <mat-icon mat-list-icon>edit</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Main Editor</h4>
+        <mat-icon matListItemIcon>edit</mat-icon>
+        @if (menuOpenState) { <a>Main Editor</a> }
       </mat-list-item>
       <mat-list-item [routerLink]="[{ outlets: { sidenav: ['files'] } }]" (click)="shouldToggle('files') ? sidenav.toggle() : false" routerLinkActive="active">
-        <mat-icon mat-list-icon>folder</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Files</h4>
+        <mat-icon matListItemIcon>folder</mat-icon>
+        @if (menuOpenState) { <a>Files</a> }
       </mat-list-item>
       <mat-list-item [routerLink]="[{ outlets: { sidenav: ['models'] } }]" (click)="shouldToggle('models') ? sidenav.toggle() : false" routerLinkActive="active">
-        <mat-icon mat-list-icon>list_alt</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Model Tree</h4>
+        <mat-icon matListItemIcon>list_alt</mat-icon>
+        @if (menuOpenState) { <a>Model Tree</a> }
       </mat-list-item>
       <mat-list-item routerLink="import" routerLinkActive="active">
-        <mat-icon mat-list-icon>import_export</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Import Model</h4>
+        <mat-icon matListItemIcon>import_export</mat-icon>
+        @if (menuOpenState) { <a>Import Model</a> }
       </mat-list-item>
       <mat-list-item routerLink="validate" routerLinkActive="active">
-        <mat-icon mat-list-icon>check</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Validate Model</h4>
+        <mat-icon matListItemIcon>check</mat-icon>
+        @if (menuOpenState) { <a>Validate Model</a> }
       </mat-list-item>
       <mat-list-item routerLink="settings" routerLinkActive="active">
-        <mat-icon mat-list-icon>settings</mat-icon>
-        <h4 mat-line *ngIf="menuOpenState">Settings</h4>
+        <mat-icon matListItemIcon>settings</mat-icon>
+        @if (menuOpenState) { <a>Settings</a> }
       </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
