@@ -17,10 +17,12 @@
     (click)="validateModel(previewPanel.value)">
     <mat-icon>check_circle</mat-icon> Validate
   </button>
+  <span class="formSpacer"></span>
   <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Save Model"
     (click)="saveFile(previewPanel.value)">
     <mat-icon>cloud_download</mat-icon> Download
   </button>
+  <span class="formSpacer"></span>
   <button mat-raised-button color="accent" class="action-button" aria-hidden="false" aria-label="Copy Model"
     [cdkCopyToClipboard]="previewPanel.value">
     <mat-icon>content_copy</mat-icon> Copy
@@ -29,6 +31,7 @@
   <button mat-raised-button color="primary" aria-hidden="false" aria-label="Edit Model" (click)="toggleEditMode()">
     <mat-icon>edit</mat-icon> {{ editMode ? 'Stop Editing' : 'Edit' }}
   </button>
+  <span class="formSpacer"></span>
   <button mat-raised-button color="primary" [mat-dialog-close]><mat-icon>close</mat-icon> Close</button>
 </mat-card-actions>
 <br />
